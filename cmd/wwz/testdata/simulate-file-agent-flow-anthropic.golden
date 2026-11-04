@@ -1,0 +1,225 @@
+--- turn 1/6 status=200 attempt=1 scenario=file-agent-flow seed=42 step=read
+{
+  "model": "wwz-fast",
+  "id": "msg_011Cr67sLYINKZOcsxluQARA",
+  "type": "message",
+  "role": "assistant",
+  "content": [
+    {
+      "type": "thinking",
+      "thinking": "Let me outline the steps and then produce the response. I will keep the answer concise and structured. Double-checking the edge cases before finalising. The user wants a concrete answer, so I should check the constraints. The user wants a concrete answer",
+      "signature": "EulQqv75hnzxg/RUm1qT+XNfsyLyYhVwRM44NZinOFQTPWyeTU6fXbZSK3V+ifSpV6c7fuV68sE9h7onXnFKnoFW0JzPzvh9tBF0qGb+NU9Fyc4iepMqo1FIhbWTTa7FwjmTtyIQKMuK0cjcRYfNnunCRsinOuRodl8P+xffOPSDfgjLChHz/FSXdUNZ3inKbXaqHG//JxcLxgBQTzWuhR1FB20j7Vma8zJ6g0pMuDo9Fnhl5GT3l+FgZEwzdloQzA2vixCOE8H2BdOXYVcLmgnqW+8ruIAlFHTJnzwXxozw9whGs4xNmP374/Dq+iayIi77hQh4mjUlYAu0Z+w1L7nzTzd4QbjAnqVyR04EzhJz06qc8i8AlkDXvQYZRuPsA9UlNb3hwIvyMqbYsGHr/32Sr0DfM6n9stEhIccXwQ4c+if0k0Nib9aTEmvC1RfPHBptN2MDd9liEEJLj3l0FkbhwcfE"
+    },
+    {
+      "type": "tool_use",
+      "id": "toolu_file-agent-flow_read_0_12mndqf",
+      "name": "read_file",
+      "input": {
+        "path": "/tmp/notes-8418.txt"
+      },
+      "caller": {
+        "type": "direct"
+      }
+    }
+  ],
+  "container": null,
+  "stop_reason": "tool_use",
+  "stop_sequence": null,
+  "stop_details": null,
+  "usage": {
+    "input_tokens": 776,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0,
+    "cache_creation": {
+      "ephemeral_5m_input_tokens": 0,
+      "ephemeral_1h_input_tokens": 0
+    },
+    "output_tokens": 79,
+    "output_tokens_details": {
+      "thinking_tokens": 59
+    },
+    "service_tier": "standard",
+    "inference_geo": "not_available",
+    "speed": "standard"
+  },
+  "diagnostics": null
+}
+--- turn 2/6 status=200 attempt=1 scenario=file-agent-flow seed=42 step=write
+{
+  "model": "wwz-fast",
+  "id": "msg_011CWMtwhKjxzTfoGJ9FAzgV",
+  "type": "message",
+  "role": "assistant",
+  "content": [
+    {
+      "type": "tool_use",
+      "id": "toolu_file-agent-flow_write_0_19elotg",
+      "name": "write_file",
+      "input": {
+        "content": "Labore consequat consequat nulla veniam deserunt consectetur anim dolor pariatur anim anim. Est labore laboris aliquip consequat id in minim duis nisi aliqua labore. In sint ad qui sit incididunt quis ex do veniam sint fugiat. Do ex in adipiscing magna enim eiusmod ad culpa in aliqua cupidatat. Officia in consequat incididunt esse incididunt qui aute ipsum fugiat minim aute. Reprehenderit aliquip ad occaecat magna commodo aute cillum adipiscing est eiusmod non. Pariatur anim proident sint cillum consectetur anim fugiat consequat ipsum elit qui. Ea non do sed aliquip sed fugiat mollit excepteur lorem proident commodo. Officia do mollit tempor quis cillum fugiat nostrud id non tempor amet. Proident minim ullamco non reprehenderit cupidatat laborum amet ipsum lorem et esse. Non tempor adipiscing ipsum ad magna eiusmod eiusmod tempor id et sed. Minim occaecat enim duis irure nisi magna culpa amet mollit ea labore. Consectetur do irure excepteur qui ea proident magna est incididunt nisi cupidatat. Adipiscing enim deserunt qui aliqua duis proident enim aliquip quis occaecat pariatur. Et veniam id anim labore et quis incididunt nulla incididunt esse id. Aliqua et laboris occaecat duis ad eiusmod tempor consequat nisi ut cupidatat. Dolore reprehenderit ea nulla quis adipiscing do aliquip nostrud consequat velit qui. Ea sunt commodo consequat minim deserunt et voluptate quis magna mollit laboris. Aute consequat amet nostrud dolor aute amet dolore sed amet sunt aute. Ut minim incididunt eiusmod adipiscing nulla elit sint consequat commodo esse tempor. Nulla ut aliquip quis voluptate incididunt nisi deserunt irure exercitation cupidatat culpa. Magna commodo deserunt mollit do velit voluptate veniam in magna aliquip et. Ex duis culpa cillum elit quis officia elit et excepteur occaecat ea. Elit dolor occaecat officia aliquip laboris ex mollit sit mollit esse ipsum. Irure commodo nostrud magna pariatur consequat pariatur laborum quis sint aute ipsum.",
+        "path": "/tmp/notes-8418.txt"
+      },
+      "caller": {
+        "type": "direct"
+      }
+    }
+  ],
+  "container": null,
+  "stop_reason": "tool_use",
+  "stop_sequence": null,
+  "stop_details": null,
+  "usage": {
+    "input_tokens": 874,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0,
+    "cache_creation": {
+      "ephemeral_5m_input_tokens": 0,
+      "ephemeral_1h_input_tokens": 0
+    },
+    "output_tokens": 455,
+    "service_tier": "standard",
+    "inference_geo": "not_available",
+    "speed": "standard"
+  },
+  "diagnostics": null
+}
+--- turn 3/6 status=200 attempt=1 scenario=file-agent-flow seed=42 step=edit
+{
+  "model": "wwz-fast",
+  "id": "msg_011CebSSDtK73edvKLNiwAFo",
+  "type": "message",
+  "role": "assistant",
+  "content": [
+    {
+      "type": "tool_use",
+      "id": "toolu_file-agent-flow_edit_0_1fnah5s",
+      "name": "edit_file",
+      "input": {
+        "new_text": "oscar",
+        "old_text": "sierra juliet",
+        "path": "charlie yankee alpha"
+      },
+      "caller": {
+        "type": "direct"
+      }
+    }
+  ],
+  "container": null,
+  "stop_reason": "tool_use",
+  "stop_sequence": null,
+  "stop_details": null,
+  "usage": {
+    "input_tokens": 1415,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0,
+    "cache_creation": {
+      "ephemeral_5m_input_tokens": 0,
+      "ephemeral_1h_input_tokens": 0
+    },
+    "output_tokens": 37,
+    "service_tier": "standard",
+    "inference_geo": "not_available",
+    "speed": "standard"
+  },
+  "diagnostics": null
+}
+--- turn 4/6 status=200 attempt=1 scenario=file-agent-flow seed=42 step=delete
+{
+  "model": "wwz-fast",
+  "id": "msg_011CU7e6bReuLlChzt0cMo2I",
+  "type": "message",
+  "role": "assistant",
+  "content": [
+    {
+      "type": "tool_use",
+      "id": "toolu_file-agent-flow_delete_0_h5jnnk",
+      "name": "delete_file",
+      "input": {
+        "path": "/tmp/notes-8418.txt"
+      },
+      "caller": {
+        "type": "direct"
+      }
+    }
+  ],
+  "container": null,
+  "stop_reason": "tool_use",
+  "stop_sequence": null,
+  "stop_details": null,
+  "usage": {
+    "input_tokens": 1547,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0,
+    "cache_creation": {
+      "ephemeral_5m_input_tokens": 0,
+      "ephemeral_1h_input_tokens": 0
+    },
+    "output_tokens": 20,
+    "service_tier": "standard",
+    "inference_geo": "not_available",
+    "speed": "standard"
+  },
+  "diagnostics": null
+}
+--- turn 5/6 status=200 attempt=1 scenario=file-agent-flow seed=42 step=done
+{
+  "model": "wwz-fast",
+  "id": "msg_011CoyPreY4T6T4fZXuRxE16",
+  "type": "message",
+  "role": "assistant",
+  "content": [
+    {
+      "type": "text",
+      "text": "The schema matches the expected structure and all required fields are present. Performance under load depends mostly on connection reuse and payload size. This summary covers the main points without going into implementation detail. Everything requested has been completed and verified. The service responded within the expected time window. Caching the intermediate result avoids recomputing it on every"
+    }
+  ],
+  "container": null,
+  "stop_reason": "end_turn",
+  "stop_sequence": null,
+  "stop_details": null,
+  "usage": {
+    "input_tokens": 1644,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0,
+    "cache_creation": {
+      "ephemeral_5m_input_tokens": 0,
+      "ephemeral_1h_input_tokens": 0
+    },
+    "output_tokens": 86,
+    "service_tier": "standard",
+    "inference_geo": "not_available",
+    "speed": "standard"
+  },
+  "diagnostics": null
+}
+--- turn 6/6 status=200 attempt=2 scenario=file-agent-flow seed=42 step=done
+{
+  "model": "wwz-fast",
+  "id": "msg_011C3M6pBivPGj4zgRdSYDez",
+  "type": "message",
+  "role": "assistant",
+  "content": [
+    {
+      "type": "text",
+      "text": "Each option has trade-offs in latency, cost and operational complexity. Based on the information provided, the most reasonable approach is to proceed step by step. A simple baseline is often the best starting point for comparison. The request has been processed and the result is summarised below. The configuration appears valid, although a few parameters could be tuned"
+    }
+  ],
+  "container": null,
+  "stop_reason": "end_turn",
+  "stop_sequence": null,
+  "stop_details": null,
+  "usage": {
+    "input_tokens": 1739,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0,
+    "cache_creation": {
+      "ephemeral_5m_input_tokens": 0,
+      "ephemeral_1h_input_tokens": 0
+    },
+    "output_tokens": 86,
+    "service_tier": "standard",
+    "inference_geo": "not_available",
+    "speed": "standard"
+  },
+  "diagnostics": null
+}

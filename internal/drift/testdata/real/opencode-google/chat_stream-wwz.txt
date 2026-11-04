@@ -1,0 +1,34 @@
+HTTP 200
+Cache-Control: no-cache
+Content-Type: text/event-stream
+Date: Sat, 31 Oct 2026 17:00:53 GMT
+X-Opencode-Log-Id: 01a192e8-3893-7373-a8a2-0f712f9d63c4
+X-Wwz-Seed: 1
+X-Zen-Model: deepseek-v4.1-flash
+
+data: {"candidates":[{"content":{"role":"model","parts":[{"text":"First","thought":true}]},"index":0}],"modelVersion":"deepseek-v4.1-flash"}
+
+data: {"candidates":[{"content":{"role":"model","parts":[{"text":",","thought":true}]},"index":0}],"modelVersion":"deepseek-v4.1-flash"}
+
+data: {"candidates":[{"content":{"role":"model","parts":[{"text":" I","thought":true}]},"index":0}],"modelVersion":"deepseek-v4.1-flash"}
+
+data: {"candidates":[{"content":{"role":"model","parts":[{"text":" need","thought":true}]},"index":0}],"modelVersion":"deepseek-v4.1-flash"}
+
+data: {"candidates":[{"content":{"role":"model","parts":[{"text":" to","thought":true}]},"index":0}],"modelVersion":"deepseek-v4.1-flash"}
+
+data: {"candidates":[{"content":{"role":"model","parts":[{"text":" unders","thought":true}]},"index":0}],"modelVersion":"deepseek-v4.1-flash"}
+
+data: {"candidates":[{"content":{"role":"model","parts":[{"text":"tand","thought":true}]},"index":0}],"modelVersion":"deepseek-v4.1-flash"}
+
+data: {"candidates":[{"content":{"role":"model","parts":[{"text":" what","thought":true}]},"index":0}],"modelVersion":"deepseek-v4.1-flash"}
+
+data: {"candidates":[{"content":{"role":"model","parts":[{"text":" is","thought":true}]},"index":0}],"modelVersion":"deepseek-v4.1-flash"}
+
+data: {"candidates":[{"content":{"role":"model","parts":[{"text":" being","thought":true}]},"index":0}],"modelVersion":"deepseek-v4.1-flash"}
+
+data: {"candidates":[{"content":{"role":"model","parts":[{"text":" asked","thought":true}]},"index":0}],"modelVersion":"deepseek-v4.1-flash"}
+
+data: {"candidates":[{"content":{"role":"model","parts":[{"text":"Based"}]},"index":0}],"modelVersion":"deepseek-v4.1-flash"}
+
+data: {"candidates":[{"content":{"role":"model","parts":[]},"finishReason":"STOP","index":0}],"usageMetadata":{"promptTokenCount":12,"candidatesTokenCount":1,"totalTokenCount":24,"thoughtsTokenCount":11,"cost":0,"opencode":{"billing_source":"go","list_cost":0.000009,"allowance":0.0000054,"tokens":{"input":12,"output":12,"reasoning":11,"cache_read":0,"cache_write_5m":0,"cache_write_1h":0}}},"modelVersion":"deepseek-v4.1-flash"}
+

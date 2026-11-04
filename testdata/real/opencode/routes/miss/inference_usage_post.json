@@ -1,0 +1,22 @@
+{
+  "provider": "opencode",
+  "name": "inference_usage_post",
+  "recorded_at": "2026-10-31",
+  "note": "",
+  "request": {
+    "method": "POST",
+    "path": "/inference/v1/usage",
+    "headers": {
+      "authorization": "Bearer <key>",
+      "content-type": "application/json"
+    },
+    "body": "{}"
+  },
+  "response": {
+    "status": 404,
+    "headers": {
+      "x-opencode-log-id": "<log_id>"
+    },
+    "body": ""
+  }
+}

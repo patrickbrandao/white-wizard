@@ -1,0 +1,5 @@
+# Versões iguais às de tmp/venv (spec 018: nada de pip install fora dele).
+openai==3.42.0
+anthropic==2.3.0
+pytest==9.2.0
+google-genai==2.34.0

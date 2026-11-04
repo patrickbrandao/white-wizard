@@ -1,0 +1,23 @@
+{
+  "provider": "opencode",
+  "name": "gen_badgoog",
+  "recorded_at": "2026-10-31",
+  "note": "rota Gemini do gateway (task 241)",
+  "request": {
+    "method": "POST",
+    "path": "/inference/go/google/v1beta/models/gemini-4-argon:generateContent",
+    "headers": {
+      "x-goog-api-key": "oc_sk_bad",
+      "x-opencode-session": "<session>"
+    },
+    "body": "{\"contents\":[{\"role\":\"user\",\"parts\":[{\"text\":\"Responda só: ok\"}]}],\"generationConfig\":{\"maxOutputTokens\":16}}"
+  },
+  "response": {
+    "status": 401,
+    "headers": {
+      "content-type": "application/json",
+      "x-opencode-log-id": "<log_id>"
+    },
+    "body": "{\"error\":{\"code\":401,\"status\":\"UNKNOWN\",\"message\":\"Upstream request failed: Invalid credential\"}}"
+  }
+}

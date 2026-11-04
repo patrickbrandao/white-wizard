@@ -1,0 +1,18 @@
+{
+  "provider": "openai",
+  "name": "type_int_presence_penalty",
+  "recorded_at": "2026-10-31",
+  "request": {
+    "method": "POST",
+    "path": "/v1/chat/completions",
+    "headers": {
+      "authorization": "Bearer <key>"
+    },
+    "body": "{\"model\": \"gpt-4o-mini\", \"messages\": [{\"role\": \"user\", \"content\": \"hi\"}], \"presence_penalty\": 12345}"
+  },
+  "response": {
+    "status": 400,
+    "content_type": "application/json",
+    "body": "{\n  \"error\": {\n    \"message\": \"Invalid 'presence_penalty': decimal above maximum value. Expected a value <= 2, but got 12345 instead.\",\n    \"type\": \"invalid_request_error\",\n    \"param\": \"presence_penalty\",\n    \"code\": \"decimal_above_max_value\"\n  }\n}"
+  }
+}

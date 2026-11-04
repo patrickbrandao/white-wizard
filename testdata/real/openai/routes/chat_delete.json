@@ -1,0 +1,22 @@
+{
+  "name": "chat_delete",
+  "note": "outro método no chat: 404 Invalid URL",
+  "provider": "openai",
+  "recorded_at": "2026-10-31",
+  "request": {
+    "body": null,
+    "headers": {
+      "authorization": "Bearer <key>"
+    },
+    "method": "DELETE",
+    "path": "/v1/chat/completions"
+  },
+  "response": {
+    "body": "{\n    \"error\": {\n        \"message\": \"Invalid URL (DELETE /v1/chat/completions)\",\n        \"type\": \"invalid_request_error\",\n        \"param\": null,\n        \"code\": null\n    }\n}\n",
+    "headers": {
+      "content-type": "application/json; charset=utf-8",
+      "x-request-id": "<request_id>"
+    },
+    "status": 404
+  }
+}

@@ -1,0 +1,11 @@
+HTTP 200
+Cf-Placement: remote-IAD
+Cf-Ray: a533e950ef56440d-EWR
+Connection: keep-alive
+Content-Type: application/json
+Date: Sat, 31 Oct 2026 16:07:14 GMT
+Server: cloudflare
+X-Opencode-Log-Id: 01a192b7-0e9e-7c64-8fba-ea68b5d55bda
+X-Zen-Model: deepseek-v4.1-flash
+
+{"id":"resp_53afd115f68f4cf6855feef02c869070","object":"response","created_at":1793462832,"status":"completed","error":null,"incomplete_details":null,"instructions":null,"metadata":{},"model":"deepseek-v4.1-flash","output":[{"id":"rs_a37a7c76b8234be9a507db892e9b3fa2","type":"reasoning","summary":[{"type":"summary_text","text":"We need answer only \"ok\". Need respond just ok."}]},{"id":"msg_33d6c7079a804e428139df397d0fed59","type":"message","role":"assistant","status":"completed","content":[{"type":"output_text","text":"ok","annotations":[],"logprobs":[]}]}],"parallel_tool_calls":true,"temperature":null,"tool_choice":"auto","tools":[],"top_p":null,"max_output_tokens":256,"usage":{"input_tokens":35,"input_tokens_details":{"cached_tokens":0},"output_tokens":14,"output_tokens_details":{"reasoning_tokens":0},"total_tokens":49,"cost":0,"opencode":{"billing_source":"go","list_cost":0.00001365,"allowance":0.00000819,"tokens":{"input":35,"output":14,"reasoning":0,"cache_read":0,"cache_write_5m":0,"cache_write_1h":0}}}}

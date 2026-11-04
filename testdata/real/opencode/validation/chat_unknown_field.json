@@ -1,0 +1,19 @@
+{
+  "provider": "opencode",
+  "name": "chat_unknown_field",
+  "recorded_at": "2026-10-31",
+  "request": {
+    "method": "POST",
+    "path": "/inference/go/openai/v1/chat/completions",
+    "headers": {
+      "authorization": "Bearer <key>",
+      "x-opencode-session": "<session>"
+    },
+    "body": "{\"model\": \"glm-5.3-flash\", \"messages\": [{\"role\": \"user\", \"content\": \"hi\"}], \"foo\": 1, \"max_tokens\": 16}"
+  },
+  "response": {
+    "status": 200,
+    "content_type": "application/json",
+    "body": null
+  }
+}

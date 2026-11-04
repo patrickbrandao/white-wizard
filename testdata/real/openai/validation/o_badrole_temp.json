@@ -1,0 +1,18 @@
+{
+  "provider": "openai",
+  "name": "o_badrole_temp",
+  "recorded_at": "2026-10-31",
+  "request": {
+    "method": "POST",
+    "path": "/v1/chat/completions",
+    "headers": {
+      "authorization": "Bearer <key>"
+    },
+    "body": "{\"model\": \"gpt-4o-mini\", \"messages\": [{\"role\": \"robot\", \"content\": \"hi\"}], \"temperature\": \"x\"}"
+  },
+  "response": {
+    "status": 400,
+    "content_type": "application/json",
+    "body": "{\n  \"error\": {\n    \"message\": \"Invalid value: 'robot'. Supported values are: 'system', 'assistant', 'user', 'function', 'tool', and 'developer'.\",\n    \"type\": \"invalid_request_error\",\n    \"param\": \"messages[0].role\",\n    \"code\": \"invalid_value\"\n  }\n}"
+  }
+}

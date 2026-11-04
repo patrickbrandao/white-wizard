@@ -1,0 +1,26 @@
+{
+  "provider": "gemini",
+  "name": "cached_list",
+  "recorded_at": "2026-10-31",
+  "note": "GET cachedContents vazio",
+  "request": {
+    "method": "GET",
+    "path": "/v1beta/cachedContents",
+    "headers": {
+      "x-goog-api-key": "<key>"
+    },
+    "body": ""
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "content-type": "application/json; charset=UTF-8",
+      "server": "scaffolding on HTTPServer2",
+      "server-timing": "gfet4t7; dur=<ms>",
+      "x-content-type-options": "nosniff",
+      "x-frame-options": "SAMEORIGIN",
+      "x-xss-protection": "0"
+    },
+    "body": "{}\n"
+  }
+}

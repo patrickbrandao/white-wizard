@@ -1,0 +1,22 @@
+{
+  "name": "embeddings_get",
+  "note": "GET em rota só POST: 405 method_not_supported, 4 espaços",
+  "provider": "openai",
+  "recorded_at": "2026-10-31",
+  "request": {
+    "body": null,
+    "headers": {
+      "authorization": "Bearer <key>"
+    },
+    "method": "GET",
+    "path": "/v1/embeddings"
+  },
+  "response": {
+    "body": "{\n    \"error\": {\n        \"message\": \"Only POST requests are accepted.\",\n        \"type\": \"invalid_request_error\",\n        \"param\": null,\n        \"code\": \"method_not_supported\"\n    }\n}\n",
+    "headers": {
+      "content-type": "application/json; charset=utf-8",
+      "x-request-id": "<request_id>"
+    },
+    "status": 405
+  }
+}

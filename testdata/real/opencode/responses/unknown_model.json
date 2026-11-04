@@ -1,0 +1,22 @@
+{
+  "provider": "opencode",
+  "name": "unknown_model",
+  "recorded_at": "2026-10-31",
+  "request": {
+    "method": "POST",
+    "path": "/inference/go/openai/v1/responses",
+    "headers": {
+      "authorization": "Bearer <key>",
+      "x-opencode-session": "<session>"
+    },
+    "body": "{\"model\": \"wwz-drift-modelo-inexistente\", \"input\": \"hi\", \"max_output_tokens\": 16}"
+  },
+  "response": {
+    "status": 400,
+    "headers": {
+      "content-type": "application/json",
+      "x-opencode-log-id": "<log_id>"
+    },
+    "body": "{\"error\":{\"type\":\"server_error\",\"message\":\"Upstream request failed: Model is unavailable.\"}}"
+  }
+}

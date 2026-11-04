@@ -1,0 +1,238 @@
+delete member accepted_prediction_tokens
+delete member access_programs
+delete member additionalProperties
+delete member audio_tokens
+delete member background
+delete member billing
+delete member cache_write_tokens
+delete member city
+delete member completed_at
+delete member content_index
+delete member context
+delete member created_at
+delete member description
+delete member effort
+delete member format
+delete member frequency_penalty
+delete member image_gen
+delete member image_tokens
+delete member instructions
+delete member item
+delete member logprobs
+delete member max_output_tokens
+delete member max_tool_calls
+delete member metadata
+delete member moderation
+delete member num_requests
+delete member output_index
+delete member output_schema
+delete member parallel_tool_calls
+delete member parameters
+delete member part
+delete member payer
+delete member presence_penalty
+delete member previous_response_id
+delete member prompt_cache_key
+delete member prompt_cache_retention
+delete member properties
+delete member reasoning
+delete member rejected_prediction_tokens
+delete member required
+delete member safety_identifier
+delete member shutdown_date
+delete member store
+delete member strict
+delete member summary
+delete member system_fingerprint
+delete member temperature
+delete member text_tokens
+delete member tool_choice
+delete member tool_usage
+delete member tools
+delete member top_logprobs
+delete member top_p
+delete member truncation
+delete member user
+delete member verbosity
+delete member web_search
+replace value "4b0D"
+replace value "7jMKf"
+replace value "7ytdhho71h"
+replace value "9s9D"
+replace value "AGsOei0Ykt"
+replace value "AcC2MmTV"
+replace value "B5el8ET4iHc"
+replace value "BpaMyt"
+replace value "CVflW"
+replace value "CYUyibv"
+replace value "Country, region, or territory not supported"
+replace value "EWQ9Tktgth"
+replace value "Gateway timeout"
+replace value "Ilbd6o3LpG"
+replace value "Invalid URL"
+replace value "JuKHNYhk"
+replace value "Lcyq"
+replace value "Missing required parameter: 'input'."
+replace value "NiiSwQ"
+replace value "Not found"
+replace value "Overloaded"
+replace value "S1r8x"
+replace value "Vnn0s"
+replace value "XrLqXyM1nb"
+replace value "YINpFj"
+replace value "YRS8gMA"
+replace value "ZUxZ1P9f0N"
+replace value "Zus9hy"
+replace value "[] is too short - 'messages'"
+replace value "account_deactivated"
+replace value "account_suspended"
+replace value "auto"
+replace value "bad input"
+replace value "big"
+replace value "blocked by wwz"
+replace value "boom"
+replace value "cURo1D"
+replace value "cap"
+replace value "city"
+replace value "content_filter"
+replace value "dbLlxcgkfY"
+replace value "disabled"
+replace value "gDLCH"
+replace value "iB0pRjg8EL6"
+replace value "in_memory"
+replace value "input"
+replace value "invalid_json"
+replace value "jgl6Nsq"
+replace value "medium"
+replace value "messages[0].role"
+replace value "missing_required_parameter"
+replace value "no"
+replace value "object"
+replace value "openai"
+replace value "partial"
+replace value "permission_denied"
+replace value "qIZkY"
+replace value "rLSPorX9mgc"
+replace value "ramp"
+replace value "reasoning"
+replace value "request_too_large"
+replace value "slow down"
+replace value "slow"
+replace value "string"
+replace value "teapot"
+replace value "text"
+replace value "too long"
+replace value "tool_choice"
+replace value "x"
+replace value "you must provide a model parameter"
+replace value 0.0
+replace value 1.0
+replace value false
+replace value true
+drop header cache-control
+drop header connection
+drop header x-accel-buffering
+drop header x-request-id
+status 405 becomes 406
+zero request field System
+zero request field N
+zero request field ResponseFormat
+zero request field ResponseSchema
+zero request field Temperature
+zero request field Seed
+zero request field Metadata
+zero request field Headers
+zero request field ClientIP
+zero request field Received
+zero request field RequestID
+zero policy field ExcludeCacheRead
+drop route 3
+no model namer
+add header x-request-id 0
+add header x-request-id wwz-other
+add header request-id 0
+add header request-id wwz-other
+add header x-ratelimit-limit-requests 0
+add header x-ratelimit-limit-requests wwz-other
+add header x-ratelimit-reset-requests 0
+add header x-ratelimit-reset-requests wwz-other
+add header x-gemini-service-tier 0
+add header x-gemini-service-tier wwz-other
+add header x-wwz-unknown 0
+add header x-wwz-unknown wwz-other
+header cache-control becomes "wwz-other"
+header cache-control becomes "0"
+header cache-control becomes "text/html"
+header connection becomes "wwz-other"
+header connection becomes "0"
+header connection becomes "text/html"
+header openai-organization becomes "wwz-other"
+header openai-organization becomes "0"
+header openai-organization becomes "text/html"
+header openai-processing-ms becomes "wwz-other"
+header openai-processing-ms becomes "0"
+header openai-processing-ms becomes "text/html"
+header openai-project becomes "wwz-other"
+header openai-project becomes "0"
+header openai-project becomes "text/html"
+header openai-version becomes "wwz-other"
+header openai-version becomes "0"
+header openai-version becomes "text/html"
+header x-accel-buffering becomes "wwz-other"
+header x-accel-buffering becomes "0"
+header x-accel-buffering becomes "text/html"
+header x-request-id becomes "wwz-other"
+header x-request-id becomes "0"
+header x-request-id becomes "text/html"
+rename reasoning_content
+rename reasoning
+two data lines
+status 529 becomes 200
+status 529 becomes 302
+perturb request field N
+perturb request field ResponseFormat
+perturb request field ResponseSchema
+perturb request field Temperature
+perturb request field Seed
+perturb request field Metadata
+perturb request field Headers
+perturb request field ClientIP
+perturb request field Received
+perturb request field RequestID
+model name changes
+unprefix changes
+unprefix always
+unprefix never
+thinking becomes signature
+far reset
+body after Extra
+broken array body
+no last frame
+wrong generation epoch
+method GET on route 0
+method GET on route 3
+method GET on route 4
+method GET on route 5
+perturb request leaf 6
+perturb request leaf 7
+perturb request leaf 8
+perturb request leaf 9
+perturb request leaf 17
+perturb request leaf 22
+perturb request leaf 24
+perturb request leaf 28
+perturb request leaf 29
+perturb request leaf 30
+perturb request leaf 33
+perturb request leaf 34
+perturb request leaf 35
+perturb request leaf 36
+perturb request leaf 41
+perturb request leaf 42
+perturb request leaf 51
+perturb request leaf 52
+perturb request leaf 53
+perturb request leaf 54
+perturb request leaf 55
+perturb request leaf 56
+perturb request leaf 58

@@ -1,0 +1,257 @@
+{
+  "anthropic": {
+    "Dialects": [
+      "anthropic"
+    ],
+    "AllRoutes": false,
+    "LegacyProtocol": false,
+    "ToolMisbehavior": true,
+    "DefaultMount": 2,
+    "Options": [
+      {
+        "Name": "require_version",
+        "Default": "true",
+        "Values": [
+          "true"
+        ]
+      },
+      {
+        "Name": "oauth_key",
+        "Default": "",
+        "Values": null
+      },
+      {
+        "Name": "oauth_plan",
+        "Default": "max_5x",
+        "Values": [
+          "max_5x",
+          "max_20x",
+          "pro",
+          "team",
+          "enterprise"
+        ]
+      },
+      {
+        "Name": "client_verification",
+        "Default": "off",
+        "Values": [
+          "off",
+          "claude-code"
+        ]
+      }
+    ],
+    "ModelExtra": [
+      "type",
+      "id",
+      "display_name",
+      "created_at",
+      "line",
+      "max_input_tokens",
+      "max_tokens",
+      "capabilities",
+      "lifecycle",
+      "deprecated_at",
+      "retires_at"
+    ]
+  },
+  "azure": {
+    "Dialects": [
+      "openai"
+    ],
+    "AllRoutes": false,
+    "LegacyProtocol": false,
+    "ToolMisbehavior": false,
+    "DefaultMount": 0,
+    "Options": [
+      {
+        "Name": "reasoning_field",
+        "Default": "hidden",
+        "Values": [
+          "hidden"
+        ]
+      }
+    ],
+    "ModelExtra": [
+      "status",
+      "capabilities",
+      "lifecycle_status",
+      "deprecation",
+      "id",
+      "created_at",
+      "object"
+    ]
+  },
+  "gemini": {
+    "Dialects": [
+      "gemini"
+    ],
+    "AllRoutes": false,
+    "LegacyProtocol": false,
+    "ToolMisbehavior": false,
+    "DefaultMount": 0,
+    "Options": null,
+    "ModelExtra": [
+      "name",
+      "version",
+      "displayName",
+      "description",
+      "inputTokenLimit",
+      "outputTokenLimit",
+      "supportedGenerationMethods",
+      "temperature",
+      "topP",
+      "topK",
+      "maxTemperature",
+      "thinking"
+    ]
+  },
+  "openai": {
+    "Dialects": [
+      "openai"
+    ],
+    "AllRoutes": false,
+    "LegacyProtocol": false,
+    "ToolMisbehavior": true,
+    "DefaultMount": 1,
+    "Options": [
+      {
+        "Name": "reasoning_field",
+        "Default": "hidden",
+        "Values": [
+          "hidden"
+        ]
+      }
+    ],
+    "ModelExtra": [
+      "id",
+      "object",
+      "created",
+      "owned_by",
+      "shutdown_date"
+    ]
+  },
+  "opencode": {
+    "Dialects": [
+      "openai",
+      "anthropic",
+      "gemini"
+    ],
+    "AllRoutes": true,
+    "LegacyProtocol": true,
+    "ToolMisbehavior": true,
+    "DefaultMount": 4,
+    "Options": [
+      {
+        "Name": "reasoning_field",
+        "Default": "reasoning_content",
+        "Values": [
+          "reasoning_content",
+          "reasoning",
+          "hidden",
+          "inline_tag"
+        ]
+      },
+      {
+        "Name": "require_session",
+        "Default": "true",
+        "Values": [
+          "true"
+        ]
+      },
+      {
+        "Name": "free_requests_per_day",
+        "Default": "200",
+        "Values": null
+      },
+      {
+        "Name": "console_key",
+        "Default": "",
+        "Values": null
+      }
+    ],
+    "ModelExtra": [
+      "id",
+      "object",
+      "created",
+      "owned_by",
+      "name",
+      "canonical_id",
+      "type",
+      "description",
+      "family",
+      "open_weights",
+      "knowledge",
+      "release_date",
+      "last_updated",
+      "modalities",
+      "capabilities",
+      "limit",
+      "cost",
+      "api"
+    ],
+    "Catalogs": [
+      {
+        "Name": "opencode",
+        "Allowance": false
+      },
+      {
+        "Name": "opencode-go",
+        "Allowance": true
+      }
+    ],
+    "Plans": [
+      "go",
+      "go-plus",
+      "go-teams",
+      "none"
+    ],
+    "ReservedKeys": [
+      "public"
+    ]
+  },
+  "openrouter": {
+    "Dialects": [
+      "openai",
+      "anthropic"
+    ],
+    "AllRoutes": true,
+    "LegacyProtocol": true,
+    "ToolMisbehavior": true,
+    "DefaultMount": 3,
+    "Options": [
+      {
+        "Name": "reasoning_field",
+        "Default": "reasoning",
+        "Values": [
+          "reasoning_content",
+          "reasoning",
+          "hidden",
+          "inline_tag"
+        ]
+      }
+    ],
+    "ModelExtra": [
+      "id",
+      "canonical_slug",
+      "alias_target",
+      "hugging_face_id",
+      "name",
+      "created",
+      "description",
+      "context_length",
+      "architecture",
+      "pricing",
+      "top_provider",
+      "per_request_limits",
+      "supported_parameters",
+      "default_parameters",
+      "supported_voices",
+      "knowledge_cutoff",
+      "expiration_date",
+      "links",
+      "endpoints",
+      "benchmarks",
+      "reasoning"
+    ]
+  }
+}

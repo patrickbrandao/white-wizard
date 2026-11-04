@@ -1,0 +1,27 @@
+{
+  "provider": "gemini",
+  "name": "tool_use_stream",
+  "recorded_at": "2026-10-31",
+  "note": "functionCall com mode ANY, stream",
+  "request": {
+    "method": "POST",
+    "path": "/v1beta/models/gemini-3.5-flash-lite:streamGenerateContent?alt=sse",
+    "headers": {
+      "x-goog-api-key": "<key>"
+    },
+    "body": "{\"contents\":[{\"role\":\"user\",\"parts\":[{\"text\":\"Qual o clima em Recife?\"}]}],\"tools\":[{\"functionDeclarations\":[{\"name\":\"get_weather\",\"description\":\"Clima atual de uma cidade\",\"parameters\":{\"type\":\"object\",\"properties\":{\"city\":{\"type\":\"string\"}},\"required\":[\"city\"]}}]}],\"toolConfig\":{\"functionCallingConfig\":{\"mode\":\"ANY\"}},\"generationConfig\":{\"maxOutputTokens\":64}}"
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "content-disposition": "attachment",
+      "content-type": "text/event-stream",
+      "server": "scaffolding on HTTPServer2",
+      "server-timing": "gfet4t7; dur=<ms>",
+      "x-content-type-options": "nosniff",
+      "x-frame-options": "SAMEORIGIN",
+      "x-xss-protection": "0"
+    },
+    "body": "data: {\"candidates\": [{\"content\": {\"parts\": [{\"functionCall\": {\"name\": \"get_weather\",\"args\": {\"city\": \"Recife\"},\"id\": \"<call_id>\"},\"thoughtSignature\": \"<signature>\"}],\"role\": \"model\"},\"index\": 0}],\"usageMetadata\": {\"promptTokenCount\": 50,\"candidatesTokenCount\": 17,\"totalTokenCount\": 67,\"promptTokensDetails\": [{\"modality\": \"TEXT\",\"tokenCount\": 50}],\"serviceTier\": \"standard\"},\"modelVersion\": \"gemini-3.5-flash-lite\",\"responseId\": \"<response_id>\"}\r\n\r\ndata: {\"candidates\": [{\"content\": {\"parts\": [{\"text\": \"\"}],\"role\": \"model\"},\"finishReason\": \"STOP\",\"index\": 0}],\"usageMetadata\": {\"promptTokenCount\": 50,\"candidatesTokenCount\": 17,\"totalTokenCount\": 67,\"promptTokensDetails\": [{\"modality\": \"TEXT\",\"tokenCount\": 50}],\"serviceTier\": \"standard\"},\"modelVersion\": \"gemini-3.5-flash-lite\",\"responseId\": \"<response_id>\"}\r\n\r\n"
+  }
+}

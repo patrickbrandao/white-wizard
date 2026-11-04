@@ -1,0 +1,24 @@
+{
+  "provider": "anthropic",
+  "name": "x_multiline_auto",
+  "recorded_at": "2026-10-31",
+  "note": "claude-fable-5, task 264",
+  "compare": {
+    "base": "base_x",
+    "probe": "probe_multiline"
+  },
+  "request": {
+    "method": "POST",
+    "path": "/v1/messages/count_tokens",
+    "headers": {
+      "x-api-key": "<key>",
+      "anthropic-version": "2023-06-01"
+    },
+    "body": "{\"model\": \"claude-fable-5\", \"messages\": [{\"role\": \"user\", \"content\": \"x\"}], \"tools\": [{\"name\": \"a\", \"description\": \"linha 1\\nlinha 2\", \"input_schema\": {\"type\": \"object\", \"properties\": {}}}]}"
+  },
+  "response": {
+    "status": 200,
+    "content_type": "application/json",
+    "body": "{\"input_tokens\":348}"
+  }
+}

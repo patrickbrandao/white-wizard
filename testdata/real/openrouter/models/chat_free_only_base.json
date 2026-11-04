@@ -1,0 +1,18 @@
+{
+  "provider": "openrouter",
+  "name": "chat_free_only_base",
+  "recorded_at": "2026-10-31",
+  "request": {
+    "method": "POST",
+    "path": "/api/v1/chat/completions",
+    "headers": {
+      "authorization": "Bearer <key>"
+    },
+    "body": "{\"model\": \"recursive/flint-v1.0\", \"messages\": [{\"role\": \"user\", \"content\": \"hi\"}], \"max_tokens\": 1}"
+  },
+  "response": {
+    "status": 404,
+    "content_type": "application/json",
+    "body": "{\"error\":{\"message\":\"No endpoints found for recursive/flint-v1.0.\",\"code\":404},\"user_id\":\"<user_id>\"}"
+  }
+}

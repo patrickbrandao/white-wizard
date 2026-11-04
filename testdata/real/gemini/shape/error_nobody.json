@@ -1,0 +1,26 @@
+{
+  "provider": "gemini",
+  "name": "error_nobody",
+  "recorded_at": "2026-10-31",
+  "note": "erro ou ordem de checagem",
+  "request": {
+    "method": "POST",
+    "path": "/v1beta/models/gemini-3.5-flash-lite:generateContent",
+    "headers": {
+      "x-goog-api-key": "<key>"
+    },
+    "body": "{}"
+  },
+  "response": {
+    "status": 400,
+    "headers": {
+      "content-type": "application/json; charset=UTF-8",
+      "server": "scaffolding on HTTPServer2",
+      "server-timing": "gfet4t7; dur=<ms>",
+      "x-content-type-options": "nosniff",
+      "x-frame-options": "SAMEORIGIN",
+      "x-xss-protection": "0"
+    },
+    "body": "{\n  \"error\": {\n    \"code\": 400,\n    \"message\": \"* GenerateContentRequest.contents: contents is not specified\\n\",\n    \"status\": \"INVALID_ARGUMENT\"\n  }\n}\n"
+  }
+}

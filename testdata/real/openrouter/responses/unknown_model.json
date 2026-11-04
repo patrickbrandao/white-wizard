@@ -1,0 +1,23 @@
+{
+  "provider": "openrouter",
+  "name": "unknown_model",
+  "recorded_at": "2026-10-31",
+  "request": {
+    "method": "POST",
+    "path": "/api/v1/responses",
+    "headers": {
+      "authorization": "Bearer <key>"
+    },
+    "body": "{\"model\": \"wwz-drift-modelo-inexistente\", \"input\": \"hi\", \"max_output_tokens\": 16}"
+  },
+  "response": {
+    "status": 400,
+    "headers": {
+      "access-control-allow-origin": "*",
+      "access-control-expose-headers": "X-Generation-Id,X-Provider-Name,request-id,cf-ray",
+      "content-type": "application/json",
+      "x-generation-id": "<generation_id>"
+    },
+    "body": "{\"error\":{\"message\":\"wwz-drift-modelo-inexistente is not a valid model ID\",\"code\":400},\"user_id\":\"<user_id>\"}"
+  }
+}

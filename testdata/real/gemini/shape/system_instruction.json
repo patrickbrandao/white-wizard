@@ -1,0 +1,27 @@
+{
+  "provider": "gemini",
+  "name": "system_instruction",
+  "recorded_at": "2026-10-31",
+  "note": "systemInstruction",
+  "request": {
+    "method": "POST",
+    "path": "/v1beta/models/gemini-3.5-flash-lite:generateContent",
+    "headers": {
+      "x-goog-api-key": "<key>"
+    },
+    "body": "{\"systemInstruction\":{\"parts\":[{\"text\":\"Responda em uma palavra.\"}]},\"contents\":[{\"role\":\"user\",\"parts\":[{\"text\":\"Cor do céu?\"}]}],\"generationConfig\":{\"maxOutputTokens\":16,\"candidateCount\":1}}"
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "content-type": "application/json; charset=UTF-8",
+      "server": "scaffolding on HTTPServer2",
+      "server-timing": "gfet4t7; dur=<ms>",
+      "x-content-type-options": "nosniff",
+      "x-frame-options": "SAMEORIGIN",
+      "x-gemini-service-tier": "standard",
+      "x-xss-protection": "0"
+    },
+    "body": "{\n  \"candidates\": [\n    {\n      \"content\": {\n        \"parts\": [\n          {\n            \"text\": \"Azul.\",\n            \"thoughtSignature\": \"<signature>\"\n          }\n        ],\n        \"role\": \"model\"\n      },\n      \"finishReason\": \"STOP\",\n      \"index\": 0\n    }\n  ],\n  \"usageMetadata\": {\n    \"promptTokenCount\": 12,\n    \"candidatesTokenCount\": 3,\n    \"totalTokenCount\": 15,\n    \"promptTokensDetails\": [\n      {\n        \"modality\": \"TEXT\",\n        \"tokenCount\": 12\n      }\n    ],\n    \"serviceTier\": \"standard\"\n  },\n  \"modelVersion\": \"gemini-3.5-flash-lite\",\n  \"responseId\": \"<response_id>\"\n}\n"
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "provider": "anthropic",
+  "name": "error_model_html",
+  "recorded_at": "2026-10-31",
+  "note": "<, > e & sem escape",
+  "request": {
+    "method": "POST",
+    "path": "/v1/messages",
+    "headers": {
+      "x-api-key": "<key>",
+      "anthropic-version": "2023-06-01"
+    },
+    "body": "{\"model\": \"a<b>&c\", \"max_tokens\": 16, \"messages\": [{\"role\": \"user\", \"content\": \"Responda só: ok\"}]}"
+  },
+  "response": {
+    "status": 404,
+    "headers": {
+      "anthropic-organization-id": "<organization_id>",
+      "anthropic-workspace-id": "<workspace_id>",
+      "content-type": "application/json",
+      "request-id": "<request_id>",
+      "x-should-retry": "false"
+    },
+    "body": "{\"type\":\"error\",\"error\":{\"type\":\"not_found_error\",\"message\":\"model: a<b>&c\"},\"request_id\":\"<request_id>\"}"
+  }
+}

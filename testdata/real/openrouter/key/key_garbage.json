@@ -1,0 +1,25 @@
+{
+  "provider": "openrouter",
+  "name": "key_garbage",
+  "recorded_at": "2026-10-31",
+  "note": "Malformed key",
+  "request": {
+    "method": "GET",
+    "path": "/api/v1/key",
+    "headers": {
+      "authorization": "Bearer abc"
+    },
+    "body": ""
+  },
+  "response": {
+    "status": 401,
+    "content_type": "application/json",
+    "headers": {
+      "content-type": "application/json",
+      "access-control-allow-origin": "*",
+      "cache-control": "private, no-store",
+      "access-control-expose-headers": "X-Generation-Id,X-Provider-Name,request-id,cf-ray"
+    },
+    "body": "{\"error\":{\"message\":\"Missing Authentication header\",\"code\":401}}"
+  }
+}

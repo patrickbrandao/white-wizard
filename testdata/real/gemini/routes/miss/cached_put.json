@@ -1,0 +1,27 @@
+{
+  "provider": "gemini",
+  "name": "cached_put",
+  "recorded_at": "2026-10-31",
+  "note": "",
+  "request": {
+    "method": "PUT",
+    "path": "/v1beta/cachedContents",
+    "headers": {
+      "x-goog-api-key": "<key>",
+      "content-type": "application/json"
+    },
+    "body": "{}"
+  },
+  "response": {
+    "status": 404,
+    "headers": {
+      "content-type": "text/html",
+      "server": "scaffolding on HTTPServer2",
+      "x-xss-protection": "0",
+      "x-frame-options": "SAMEORIGIN",
+      "x-content-type-options": "nosniff",
+      "server-timing": "gfet4t7; dur=<ms>"
+    },
+    "body": ""
+  }
+}

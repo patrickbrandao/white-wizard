@@ -1,0 +1,18 @@
+{
+  "provider": "openai",
+  "name": "nested_content_type",
+  "recorded_at": "2026-10-31",
+  "request": {
+    "method": "POST",
+    "path": "/v1/chat/completions",
+    "headers": {
+      "authorization": "Bearer <key>"
+    },
+    "body": "{\"model\": \"gpt-4o-mini\", \"messages\": [{\"role\": \"user\", \"content\": 5}]}"
+  },
+  "response": {
+    "status": 400,
+    "content_type": "application/json",
+    "body": "{\n  \"error\": {\n    \"message\": \"Invalid type for 'messages[0].content': expected one of a string or array of objects, but got an integer instead.\",\n    \"type\": \"invalid_request_error\",\n    \"param\": \"messages[0].content\",\n    \"code\": \"invalid_type\"\n  }\n}"
+  }
+}

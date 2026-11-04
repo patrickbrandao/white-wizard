@@ -1,0 +1,13 @@
+# About 2000 reasoning tokens before a tool call, then the answer.
+name: long-reasoning
+description: long reasoning -> tool call -> final answer
+steps:
+  - id: think
+    expect: { tool_results: 0 }
+    reasoning: { tokens: "1800..2200" }
+    tool_calls:
+      - { name: any, args: schema }
+  - id: answer
+    expect: { tool_results_gte: 1 }
+    content: { tokens: "80..300" }
+    finish_reason: stop

@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "pb-vibe-coder": {
+      "type": "http",
+      "url": "https://skills-mcp.langwizard.net/virtual/pb-vibe-coder/mcp"
+    }
+  }
+}

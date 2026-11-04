@@ -1,0 +1,18 @@
+{
+  "provider": "openai",
+  "name": "order_strict_and_type",
+  "recorded_at": "2026-10-31",
+  "request": {
+    "method": "POST",
+    "path": "/v1/chat/completions",
+    "headers": {
+      "authorization": "Bearer <key>"
+    },
+    "body": "{\"model\": \"gpt-4o-mini\", \"messages\": [{\"role\": \"user\", \"content\": \"hi\"}], \"temperature\": \"x\", \"tools\": [{\"type\": \"function\", \"function\": {\"name\": \"g\", \"strict\": true, \"parameters\": {\"type\": \"object\", \"properties\": {}}}}]}"
+  },
+  "response": {
+    "status": 400,
+    "content_type": "application/json",
+    "body": "{\n  \"error\": {\n    \"message\": \"Invalid schema for function 'g': In context=(), 'additionalProperties' is required to be supplied and to be false.\",\n    \"type\": \"invalid_request_error\",\n    \"param\": \"tools[0].function.parameters\",\n    \"code\": \"invalid_function_parameters\"\n  }\n}"
+  }
+}

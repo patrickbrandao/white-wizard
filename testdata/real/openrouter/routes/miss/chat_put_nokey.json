@@ -1,0 +1,21 @@
+{
+  "provider": "openrouter",
+  "name": "chat_put_nokey",
+  "recorded_at": "2026-10-31",
+  "note": "",
+  "request": {
+    "method": "PUT",
+    "path": "/api/v1/chat/completions",
+    "headers": {},
+    "body": null
+  },
+  "response": {
+    "status": 404,
+    "headers": {
+      "content-type": "application/json",
+      "access-control-allow-origin": "*",
+      "access-control-expose-headers": "X-Generation-Id,X-Provider-Name,request-id,cf-ray"
+    },
+    "body": "{\"error\":{\"message\":\"Not Found\",\"code\":404}}"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "provider": "opencode",
+  "name": "inference_go_responses_put",
+  "recorded_at": "2026-10-31",
+  "note": "",
+  "request": {
+    "method": "PUT",
+    "path": "/inference/go/v1/responses",
+    "headers": {
+      "authorization": "Bearer <key>"
+    },
+    "body": null
+  },
+  "response": {
+    "status": 404,
+    "headers": {
+      "x-opencode-log-id": "<log_id>"
+    },
+    "body": ""
+  }
+}

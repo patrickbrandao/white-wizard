@@ -1,0 +1,46 @@
+# golangci-lint v2 (ADR 0008, specs/018).
+# O verify quick roda o lint só sobre o que mudou desde `git merge-base HEAD main`
+# (--new-from-rev), para não falhar por dívida antiga; o verify full roda tudo.
+version: "2"
+
+run:
+  go: "1.27"
+  timeout: 5m
+  tests: true
+
+linters:
+  default: none
+  enable:
+    - govet
+    - staticcheck
+    - errcheck
+    - ineffassign
+    - revive
+    - gosec
+  settings:
+    revive:
+      rules:
+        - name: exported
+          disabled: true
+        - name: package-comments
+          disabled: true
+    gosec:
+      excludes:
+        - G404 # math/rand é intencional: respostas inventadas, não criptografia
+  exclusions:
+    generated: lax
+    presets:
+      - std-error-handling
+    rules:
+      - path: _test\.go
+        linters:
+          - gosec
+          - errcheck
+
+formatters:
+  enable:
+    - gofumpt
+
+issues:
+  max-issues-per-linter: 0
+  max-same-issues: 0

@@ -1,0 +1,25 @@
+{
+  "provider": "openrouter",
+  "name": "tool_zzz",
+  "recorded_at": "2026-10-31",
+  "note": "tool inexistente: recusa da Anthropic repassada com metadata (raw, provider_name, is_byok, previous_errors) (task 342)",
+  "request": {
+    "method": "POST",
+    "path": "/api/v1/messages",
+    "headers": {
+      "authorization": "Bearer <key>"
+    },
+    "body": "{\"model\": \"anthropic/claude-haiku-4.5\", \"max_tokens\": 1, \"messages\": [{\"role\": \"user\", \"content\": \"x\"}], \"tools\": [{\"name\": \"a\", \"input_schema\": {\"type\": \"object\", \"properties\": {}}}], \"tool_choice\": {\"type\": \"tool\", \"name\": \"zzz\"}}"
+  },
+  "response": {
+    "status": 400,
+    "headers": {
+      "access-control-allow-origin": "*",
+      "access-control-expose-headers": "X-Generation-Id,X-Provider-Name,request-id,cf-ray",
+      "content-type": "application/json",
+      "request-id": "<generation_id>",
+      "x-generation-id": "<generation_id>"
+    },
+    "body": "{\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Tool 'zzz' not found in provided tools\",\"error_type\":\"invalid_request\"},\"request_id\":\"<generation_id>\",\"metadata\":{\"raw\":\"{\\\"type\\\":\\\"error\\\",\\\"error\\\":{\\\"type\\\":\\\"invalid_request_error\\\",\\\"message\\\":\\\"Tool 'zzz' not found in provided tools\\\"},\\\"request_id\\\":\\\"<request_id>\\\"}\",\"provider_name\":\"Azure\",\"is_byok\":false,\"previous_errors\":[{\"code\":400,\"message\":\"Provider returned error\",\"provider_name\":\"Amazon Bedrock\",\"raw\":\"{\\\"message\\\":\\\"Tool 'zzz' not found in provided tools\\\"}\"},{\"code\":400,\"message\":\"Provider returned error\",\"provider_name\":\"Anthropic\",\"raw\":\"{\\\"type\\\":\\\"error\\\",\\\"error\\\":{\\\"type\\\":\\\"invalid_request_error\\\",\\\"message\\\":\\\"Tool 'zzz' not found in provided tools\\\"},\\\"request_id\\\":\\\"<request_id>\\\"}\"},{\"code\":400,\"message\":\"Provider returned error\",\"provider_name\":\"Google\",\"raw\":\"{\\\"type\\\":\\\"error\\\",\\\"error\\\":{\\\"type\\\":\\\"invalid_request_error\\\",\\\"message\\\":\\\"Tool 'zzz' not found in provided tools\\\"},\\\"request_id\\\":\\\"<request_id>\\\"}\"}]}}"
+  }
+}

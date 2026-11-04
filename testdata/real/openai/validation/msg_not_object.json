@@ -1,0 +1,18 @@
+{
+  "provider": "openai",
+  "name": "msg_not_object",
+  "recorded_at": "2026-10-31",
+  "request": {
+    "method": "POST",
+    "path": "/v1/chat/completions",
+    "headers": {
+      "authorization": "Bearer <key>"
+    },
+    "body": "{\"model\": \"gpt-4o-mini\", \"messages\": [\"hi\"]}"
+  },
+  "response": {
+    "status": 400,
+    "content_type": "application/json",
+    "body": "{\n  \"error\": {\n    \"message\": \"Invalid type for 'messages[0]': expected an object, but got a string instead.\",\n    \"type\": \"invalid_request_error\",\n    \"param\": \"messages[0]\",\n    \"code\": \"invalid_type\"\n  }\n}"
+  }
+}

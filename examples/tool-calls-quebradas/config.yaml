@@ -1,0 +1,42 @@
+# tool-calls-quebradas: 40% das tool calls saem com `arguments` que não são
+# JSON (spec 009/017 I1, errors.tool_misbehavior). O resto sai normal.
+# `server.seed` fixo faz o sorteio depender do primeiro prompt do usuário:
+# quem testa deve variar o prompt (o smoke faz isso).
+server:
+  listen: ":8000"
+  auth: keys
+  seed: 4242
+
+admin:
+  listen: ":9000"
+
+keys:
+  - { key: wwz-key-demo, label: demo }
+
+drivers:
+  - name: openai
+  - name: anthropic
+
+profiles:
+  latency:
+    rapida: { ttft: 5ms, itl: 1ms }
+  errors:
+    tools-quebradas:
+      tool_misbehavior:
+        rate: 40
+        kinds: [truncated, trailing_comma, single_quotes]
+
+models:
+  - id: gpt-4o-mini
+    protocols: [openai]
+    latency: rapida
+    errors: tools-quebradas
+    capabilities: { tools: true }
+  - id: claude-sonnet-4
+    protocols: [anthropic]
+    latency: rapida
+    errors: tools-quebradas
+    capabilities: { tools: true }
+
+logging:
+  level: warn

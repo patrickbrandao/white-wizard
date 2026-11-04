@@ -1,0 +1,22 @@
+{
+  "provider": "opencode",
+  "name": "previous_response_id",
+  "recorded_at": "2026-10-31",
+  "request": {
+    "method": "POST",
+    "path": "/inference/go/openai/v1/responses",
+    "headers": {
+      "authorization": "Bearer <key>",
+      "x-opencode-session": "<session>"
+    },
+    "body": "{\"model\": \"deepseek-v4.1-flash\", \"input\": \"And in French?\", \"max_output_tokens\": 64, \"previous_response_id\": \"resp_642a2d89818647d99fd9074aa30c749f\"}"
+  },
+  "response": {
+    "status": 400,
+    "headers": {
+      "content-type": "application/json",
+      "x-opencode-log-id": "<log_id>"
+    },
+    "body": "{\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"previous_response_id: requires a native Responses target; portable routing requires the full conversation in input\"}}"
+  }
+}

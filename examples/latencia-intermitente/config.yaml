@@ -1,0 +1,40 @@
+# latencia-intermitente: picos de latência periódicos.
+#
+# O perfil de latência (spec 008) não tem modulação no tempo; o gatilho
+# periódico do wwz é o `burst` do perfil de erros (spec 009), que troca a taxa
+# de falha por `rate` durante os primeiros `duration` de cada `every` (a fase
+# conta desde a subida do processo). Aqui o burst sorteia `gateway_timeout`, que
+# espera `timeout_delay` (1 s) antes de responder 504: nas janelas, cada chamada
+# fica 1 s pendurada e falha; fora delas o TTFT é ~30 ms e a resposta é 200.
+# Resultado: 3 s lentos a cada 10 s, ciclo previsível para testar timeout,
+# hedging e circuit breaker do roteador. (`slow_headers` também é periódico via
+# burst, mas o atraso dele é fixo em 15 s e não vem do YAML.)
+server:
+  listen: ":8000"
+  auth: keys
+  seed: 20241
+
+admin:
+  listen: ":9000"
+
+store:
+  kind: memory
+
+keys:
+  - { key: wwz-key-demo, label: demo }
+
+profiles:
+  latency:
+    realista: { ttft: {dist: normal, mean: 30ms, stddev: 9ms}, itl: 1ms }
+  errors:
+    picos-periodicos:
+      rate: 0
+      types: [gateway_timeout]
+      timeout_delay: 1s
+      burst: { every: 10s, duration: 3s, rate: 100 }
+
+models:
+  - id: gpt-4o-mini
+    protocols: [openai]
+    latency: realista
+    errors: picos-periodicos

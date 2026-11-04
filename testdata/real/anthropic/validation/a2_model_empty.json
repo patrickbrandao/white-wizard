@@ -1,0 +1,19 @@
+{
+  "provider": "anthropic",
+  "name": "a2_model_empty",
+  "recorded_at": "2026-10-31",
+  "request": {
+    "method": "POST",
+    "path": "/v1/messages",
+    "headers": {
+      "x-api-key": "<key>",
+      "anthropic-version": "2023-06-01"
+    },
+    "body": "{\"model\": \"\", \"max_tokens\": 5, \"messages\": [{\"role\": \"user\", \"content\": \"hi\"}]}"
+  },
+  "response": {
+    "status": 400,
+    "content_type": "application/json",
+    "body": "{\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"model: String should have at least 1 character\"},\"request_id\":\"<request_id>\"}"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "provider": "openrouter",
+  "name": "get_model_free_variant_upper",
+  "recorded_at": "2026-10-31",
+  "request": {
+    "method": "GET",
+    "path": "/api/v1/model/nvidia/nemotron-3.5-lightning:FREE",
+    "headers": {
+      "authorization": "Bearer <key>"
+    }
+  },
+  "response": {
+    "status": 200,
+    "content_type": "application/json",
+    "body": null,
+    "model": "nvidia/nemotron-3.5-lightning:free"
+  }
+}

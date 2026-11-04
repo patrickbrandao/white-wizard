@@ -1,0 +1,83 @@
+{
+  "version": 1,
+  "kind": "top",
+  "sampled_at": "2026-10-31T12:00:01Z",
+  "interval_ms": 1000,
+  "instances": [
+    {
+      "admin": "http://admin-a",
+      "pod": "wwz-1",
+      "ok": true,
+      "error": ""
+    },
+    {
+      "admin": "http://admin-b",
+      "pod": "wwz-2",
+      "ok": true,
+      "error": ""
+    }
+  ],
+  "totals": {
+    "requests": 200,
+    "rps": 60,
+    "in_flight": 4,
+    "streams_open": 3,
+    "errors_per_s": 2,
+    "rate_limited_per_s": 6,
+    "blocked_per_s": 0,
+    "errors_by_kind": {
+      "overloaded": {
+        "count": 6,
+        "per_s": 2
+      },
+      "timeout": {
+        "count": 2,
+        "per_s": 0
+      }
+    },
+    "by_status": {
+      "200": 187,
+      "500": 13
+    }
+  },
+  "by_model": [
+    {
+      "driver": "openai",
+      "model": "wwz-fast",
+      "requests": 200,
+      "rps": 60,
+      "error_pct": 5,
+      "ttft_p50_ms": 20,
+      "ttft_p99_ms": 50,
+      "e2e_p50_ms": 150,
+      "e2e_p99_ms": 400
+    },
+    {
+      "driver": "anthropic",
+      "model": "wwz-slow",
+      "requests": 80,
+      "rps": 30,
+      "error_pct": 0,
+      "ttft_p50_ms": 30,
+      "ttft_p99_ms": 90,
+      "e2e_p50_ms": 300,
+      "e2e_p99_ms": 900
+    }
+  ],
+  "by_key": [
+    {
+      "key": "wwz-key-01",
+      "status": "active",
+      "requests": 200,
+      "rps": 60,
+      "spend_usd": 0.75
+    },
+    {
+      "key": "wwz-key-02",
+      "status": "blocked",
+      "requests": 1,
+      "rps": 0,
+      "spend_usd": 0
+    }
+  ]
+}

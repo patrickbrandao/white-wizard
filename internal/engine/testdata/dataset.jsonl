@@ -1,0 +1,6 @@
+{"prompt": "What is the capital of France?", "response": "Paris is the capital of France."}
+
+{"prompt": [{"role": "user", "content": "hi"}, {"role": "assistant", "content": "Hello! How can I help?"}, {"role": "user", "content": "tell me a story"}], "response": "Once upon a time, in a quiet village by the sea, an old fisherman found a bottle with a map inside. He followed it across the hills, through the forest and over the river, until he reached a cave full of light."}
+{"prompt": "Name a color.", "response": "Blue."}
+{"prompt": "Name a fruit.", "response": "An apple."}
+{"prompt": "Name an animal.", "response": "A fox."}

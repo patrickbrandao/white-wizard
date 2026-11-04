@@ -1,0 +1,19 @@
+{
+  "provider": "openai",
+  "name": "chat_t1_named",
+  "recorded_at": "2026-10-31",
+  "request": {
+    "method": "POST",
+    "path": "/v1/chat/completions",
+    "headers": {
+      "authorization": "Bearer <key>",
+      "content-type": "application/json"
+    },
+    "body": "{\"model\": \"gpt-4o-mini\", \"messages\": [{\"role\": \"user\", \"content\": \"x\"}], \"max_tokens\": 64, \"tools\": [{\"type\": \"function\", \"function\": {\"name\": \"f\", \"parameters\": {\"type\": \"object\", \"properties\": {\"a\": {\"type\": \"string\"}}, \"required\": [\"a\"]}}}], \"tool_choice\": {\"type\": \"function\", \"function\": {\"name\": \"f\"}}}"
+  },
+  "response": {
+    "status": 200,
+    "content_type": "application/json",
+    "body": "{\n  \"id\": \"chatcmpl-Ef4aQF5WyKd6L0O0ocqKIT22GFLwq\",\n  \"object\": \"chat.completion\",\n  \"created\": 1793457786,\n  \"model\": \"gpt-4o-mini-2024-07-18\",\n  \"choices\": [\n    {\n      \"index\": 0,\n      \"message\": {\n        \"role\": \"assistant\",\n        \"content\": null,\n        \"tool_calls\": [\n          {\n            \"id\": \"call_GzPSRhgS3yjduB1ztj7Uu81r\",\n            \"type\": \"function\",\n            \"function\": {\n              \"name\": \"f\",\n              \"arguments\": \"{\\\"a\\\":\\\"x\\\"}\"\n            }\n          }\n        ],\n        \"refusal\": null,\n        \"annotations\": []\n      },\n      \"logprobs\": null,\n      \"finish_reason\": \"stop\"\n    }\n  ],\n  \"usage\": {\n    \"prompt_tokens\": 45,\n    \"completion_tokens\": 5,\n    \"total_tokens\": 50,\n    \"prompt_tokens_details\": {\n      \"cached_tokens\": 0,\n      \"audio_tokens\": 0\n    },\n    \"completion_tokens_details\": {\n      \"reasoning_tokens\": 0,\n      \"audio_tokens\": 0,\n      \"accepted_prediction_tokens\": 0,\n      \"rejected_prediction_tokens\": 0\n    }\n  },\n  \"service_tier\": \"default\",\n  \"system_fingerprint\": \"fp_2851888338\"\n}\n"
+  }
+}

@@ -1,0 +1,68 @@
+HTTP 200
+Cache-Control: no-cache
+Cf-Placement: remote-IAD
+Cf-Ray: a533e9599c54440d-EWR
+Connection: keep-alive
+Content-Type: text/event-stream
+Date: Sat, 31 Oct 2026 16:07:15 GMT
+Server: cloudflare
+X-Opencode-Log-Id: 01a192b7-140f-733c-a2af-c1913860be0a
+X-Zen-Model: deepseek-v4.1-flash
+
+event: response.created
+data: {"response":{"id":"resp_accfd360e8b44fd8a513f88269baf3ce","object":"response","created_at":1793462834,"status":"in_progress","error":null,"incomplete_details":null,"instructions":null,"metadata":{},"model":"deepseek-v4.1-flash","output":[],"parallel_tool_calls":true,"temperature":null,"tool_choice":"auto","tools":[],"top_p":null,"max_output_tokens":256,"usage":null},"type":"response.created","sequence_number":0}
+
+event: response.in_progress
+data: {"response":{"id":"resp_accfd360e8b44fd8a513f88269baf3ce","object":"response","created_at":1793462834,"status":"in_progress","error":null,"incomplete_details":null,"instructions":null,"metadata":{},"model":"deepseek-v4.1-flash","output":[],"parallel_tool_calls":true,"temperature":null,"tool_choice":"auto","tools":[],"top_p":null,"max_output_tokens":256,"usage":null},"type":"response.in_progress","sequence_number":1}
+
+event: response.output_item.added
+data: {"output_index":0,"item":{"id":"rs_7ddc34092cd04d858912df5c1dc00a6e","type":"reasoning","summary":[]},"type":"response.output_item.added","sequence_number":2}
+
+event: response.reasoning_summary_part.added
+data: {"item_id":"rs_7ddc34092cd04d858912df5c1dc00a6e","output_index":0,"summary_index":0,"part":{"type":"summary_text","text":""},"type":"response.reasoning_summary_part.added","sequence_number":3}
+
+event: response.reasoning_summary_text.delta
+data: {"item_id":"rs_7ddc34092cd04d858912df5c1dc00a6e","output_index":0,"summary_index":0,"delta":"We","type":"response.reasoning_summary_text.delta","sequence_number":4}
+
+event: response.reasoning_summary_text.delta
+data: {"item_id":"rs_7ddc34092cd04d858912df5c1dc00a6e","output_index":0,"summary_index":0,"delta":" need answer only","type":"response.reasoning_summary_text.delta","sequence_number":5}
+
+event: response.reasoning_summary_text.delta
+data: {"item_id":"rs_7ddc34092cd04d858912df5c1dc00a6e","output_index":0,"summary_index":0,"delta":" \"ok\" likely","type":"response.reasoning_summary_text.delta","sequence_number":6}
+
+event: response.reasoning_summary_text.delta
+data: {"item_id":"rs_7ddc34092cd04d858912df5c1dc00a6e","output_index":0,"summary_index":0,"delta":". Need comply","type":"response.reasoning_summary_text.delta","sequence_number":7}
+
+event: response.reasoning_summary_text.delta
+data: {"item_id":"rs_7ddc34092cd04d858912df5c1dc00a6e","output_index":0,"summary_index":0,"delta":".","type":"response.reasoning_summary_text.delta","sequence_number":8}
+
+event: response.output_item.added
+data: {"output_index":1,"item":{"id":"msg_09f6059f8f9146b2a859ca0150fad592","type":"message","role":"assistant","status":"in_progress","content":[]},"type":"response.output_item.added","sequence_number":9}
+
+event: response.content_part.added
+data: {"item_id":"msg_09f6059f8f9146b2a859ca0150fad592","output_index":1,"content_index":0,"part":{"type":"output_text","text":"","annotations":[],"logprobs":[]},"type":"response.content_part.added","sequence_number":10}
+
+event: response.output_text.delta
+data: {"item_id":"msg_09f6059f8f9146b2a859ca0150fad592","output_index":1,"content_index":0,"delta":"ok","logprobs":[],"type":"response.output_text.delta","sequence_number":11}
+
+event: response.reasoning_summary_text.done
+data: {"item_id":"rs_7ddc34092cd04d858912df5c1dc00a6e","output_index":0,"summary_index":0,"text":"We need answer only \"ok\" likely. Need comply.","type":"response.reasoning_summary_text.done","sequence_number":12}
+
+event: response.reasoning_summary_part.done
+data: {"item_id":"rs_7ddc34092cd04d858912df5c1dc00a6e","output_index":0,"summary_index":0,"part":{"type":"summary_text","text":"We need answer only \"ok\" likely. Need comply."},"type":"response.reasoning_summary_part.done","sequence_number":13}
+
+event: response.output_item.done
+data: {"output_index":0,"item":{"id":"rs_7ddc34092cd04d858912df5c1dc00a6e","type":"reasoning","summary":[{"type":"summary_text","text":"We need answer only \"ok\" likely. Need comply."}]},"type":"response.output_item.done","sequence_number":14}
+
+event: response.output_text.done
+data: {"item_id":"msg_09f6059f8f9146b2a859ca0150fad592","output_index":1,"content_index":0,"text":"ok","logprobs":[],"type":"response.output_text.done","sequence_number":15}
+
+event: response.content_part.done
+data: {"item_id":"msg_09f6059f8f9146b2a859ca0150fad592","output_index":1,"content_index":0,"part":{"type":"output_text","text":"ok","annotations":[],"logprobs":[]},"type":"response.content_part.done","sequence_number":16}
+
+event: response.output_item.done
+data: {"output_index":1,"item":{"id":"msg_09f6059f8f9146b2a859ca0150fad592","type":"message","role":"assistant","status":"completed","content":[{"type":"output_text","text":"ok","annotations":[],"logprobs":[]}]},"type":"response.output_item.done","sequence_number":17}
+
+event: response.completed
+data: {"response":{"id":"resp_accfd360e8b44fd8a513f88269baf3ce","object":"response","created_at":1793462834,"status":"completed","error":null,"incomplete_details":null,"instructions":null,"metadata":{},"model":"deepseek-v4.1-flash","output":[{"id":"rs_7ddc34092cd04d858912df5c1dc00a6e","type":"reasoning","summary":[{"type":"summary_text","text":"We need answer only \"ok\" likely. Need comply."}]},{"id":"msg_09f6059f8f9146b2a859ca0150fad592","type":"message","role":"assistant","status":"completed","content":[{"type":"output_text","text":"ok","annotations":[],"logprobs":[]}]}],"parallel_tool_calls":true,"temperature":null,"tool_choice":"auto","tools":[],"top_p":null,"max_output_tokens":256,"usage":{"input_tokens":35,"input_tokens_details":{"cached_tokens":0},"output_tokens":14,"output_tokens_details":{"reasoning_tokens":0},"total_tokens":49,"cost":0,"opencode":{"billing_source":"go","list_cost":0.00001365,"allowance":0.00000819,"tokens":{"input":35,"output":14,"reasoning":0,"cache_read":0,"cache_write_5m":0,"cache_write_1h":0}}}},"type":"response.completed","sequence_number":18}
+

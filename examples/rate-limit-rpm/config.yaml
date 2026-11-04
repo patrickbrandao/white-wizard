@@ -1,0 +1,45 @@
+# rate-limit-rpm: limite de requisições por minuto, com os headers x-ratelimit-*
+# do driver OpenAI e o 429 rate_limit_exceeded quando estoura (specs 010 e 006).
+#
+# Como no provedor real, o limite é da CONTA (organização), nunca da chave
+# (ADR 0051): a conta "acme" tem rpm 30 e as duas chaves dela dividem esse
+# limite; a conta "globex" tem rpm 100 e não é afetada pela acme.
+server:
+  listen: ":8000"
+  auth: keys
+
+admin:
+  listen: ":9000"
+
+keys:
+  - { key: wwz-key-acme-a, label: acme-a, account: acme }
+  - { key: wwz-key-acme-b, label: acme-b, account: acme }
+  - { key: wwz-key-globex, label: globex, account: globex }
+
+accounts:
+  - id: acme
+    limits:
+      rpm: 30 # token bucket contínuo (padrão): repõe 0,5 token/s
+  - id: globex
+    limits:
+      rpm: 100
+
+drivers:
+  - name: openai
+
+models:
+  - id: gpt-4o-mini
+    protocols: [openai]
+    latency: rapida
+    generation: curta
+
+profiles:
+  latency:
+    rapida: { ttft: 5ms, itl: 1ms }
+  generation:
+    curta:
+      mode: random
+      output_tokens: { dist: uniform, min: 5, max: 15 }
+
+logging:
+  level: warn

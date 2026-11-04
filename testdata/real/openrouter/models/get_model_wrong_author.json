@@ -1,0 +1,18 @@
+{
+  "provider": "openrouter",
+  "name": "get_model_wrong_author",
+  "recorded_at": "2026-10-31",
+  "request": {
+    "method": "GET",
+    "path": "/api/v1/model/x/gpt-4o-mini",
+    "headers": {
+      "authorization": "Bearer <key>"
+    },
+    "body": ""
+  },
+  "response": {
+    "status": 404,
+    "content_type": "application/json",
+    "body": "{\"error\":{\"message\":\"Model not found: x/gpt-4o-mini\",\"code\":404}}"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "provider": "openai",
+  "name": "type_int_top_p",
+  "recorded_at": "2026-10-31",
+  "request": {
+    "method": "POST",
+    "path": "/v1/chat/completions",
+    "headers": {
+      "authorization": "Bearer <key>"
+    },
+    "body": "{\"model\": \"gpt-4o-mini\", \"messages\": [{\"role\": \"user\", \"content\": \"hi\"}], \"top_p\": 12345}"
+  },
+  "response": {
+    "status": 400,
+    "content_type": "application/json",
+    "body": "{\n  \"error\": {\n    \"message\": \"Invalid 'top_p': decimal above maximum value. Expected a value <= 1, but got 12345 instead.\",\n    \"type\": \"invalid_request_error\",\n    \"param\": \"top_p\",\n    \"code\": \"decimal_above_max_value\"\n  }\n}"
+  }
+}

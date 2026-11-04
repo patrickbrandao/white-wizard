@@ -1,0 +1,20 @@
+{
+  "provider": "anthropic",
+  "name": "cc_context_management_beta",
+  "recorded_at": "2026-11-03",
+  "request": {
+    "method": "POST",
+    "path": "/v1/messages",
+    "headers": {
+      "x-api-key": "<key>",
+      "anthropic-version": "2023-06-01",
+      "anthropic-beta": "context-management-2025-06-27"
+    },
+    "body": "{\"model\": \"claude-haiku-5-5\", \"max_tokens\": 1, \"messages\": [{\"role\": \"user\", \"content\": \"x\"}], \"thinking\": {\"type\": \"adaptive\", \"display\": \"omitted\"}, \"context_management\": {\"edits\": [{\"type\": \"clear_thinking_20251015\", \"keep\": \"all\"}]}}"
+  },
+  "response": {
+    "status": 200,
+    "content_type": "application/json",
+    "body": null
+  }
+}

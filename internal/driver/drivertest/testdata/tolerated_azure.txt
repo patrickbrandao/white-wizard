@@ -1,0 +1,213 @@
+delete member accepted_prediction_tokens
+delete member access_programs
+delete member additionalProperties
+delete member annotations
+delete member audio_tokens
+delete member background
+delete member billing
+delete member blocked
+delete member cache_write_tokens
+delete member city
+delete member completed_at
+delete member completion
+delete member content_filters
+delete member content_index
+delete member context
+delete member description
+delete member effort
+delete member embeddings
+delete member fine_tune
+delete member format
+delete member frequency_penalty
+delete member image_gen
+delete member image_tokens
+delete member inference
+delete member instructions
+delete member item
+delete member logprobs
+delete member max_output_tokens
+delete member max_tool_calls
+delete member metadata
+delete member moderation
+delete member num_requests
+delete member output_index
+delete member output_schema
+delete member parallel_tool_calls
+delete member parameters
+delete member part
+delete member payer
+delete member presence_penalty
+delete member previous_response_id
+delete member prompt_cache_key
+delete member prompt_cache_retention
+delete member properties
+delete member reasoning
+delete member rejected_prediction_tokens
+delete member required
+delete member safety_identifier
+delete member service_tier
+delete member source_type
+delete member store
+delete member strict
+delete member summary
+delete member system_fingerprint
+delete member temperature
+delete member text_tokens
+delete member tool_choice
+delete member tool_usage
+delete member tools
+delete member top_logprobs
+delete member top_p
+delete member truncation
+delete member user
+delete member verbosity
+delete member web_search
+replace value "405"
+replace value "Bad gateway."
+replace value "BadGateway"
+replace value "Method not allowed"
+replace value "Missing required parameter: 'input'."
+replace value "Overloaded"
+replace value "Request entity too large"
+replace value "The operation was timeout."
+replace value "[] is too short - 'messages'"
+replace value "auto"
+replace value "bad input"
+replace value "blocked by wwz"
+replace value "boom"
+replace value "city"
+replace value "completion"
+replace value "default"
+replace value "disabled"
+replace value "fp_b705f0c291"
+replace value "generally-available"
+replace value "in_memory"
+replace value "input"
+replace value "invalid_json"
+replace value "medium"
+replace value "messages"
+replace value "messages[0].role"
+replace value "missing_required_parameter"
+replace value "object"
+replace value "openai"
+replace value "partial"
+replace value "reasoning"
+replace value "request_too_large"
+replace value "server_is_overloaded"
+replace value "service_unavailable_error"
+replace value "string"
+replace value "teapot"
+replace value "text"
+replace value "too long"
+replace value "tool_choice"
+replace value "x"
+replace value "you must provide a model parameter"
+replace value 0.0
+replace value 1.0
+drop header cache-control
+drop header connection
+drop header x-accel-buffering
+status 405 becomes 406
+status 413 becomes 414
+status 502 becomes 503
+zero request field System
+zero request field N
+zero request field ResponseFormat
+zero request field ResponseSchema
+zero request field Temperature
+zero request field Seed
+zero request field Metadata
+zero request field Headers
+zero request field ClientIP
+zero request field Received
+zero request field RequestID
+zero policy field ExcludeCacheRead
+no model namer
+add header x-request-id 0
+add header x-request-id wwz-other
+add header request-id 0
+add header request-id wwz-other
+add header x-gemini-service-tier 0
+add header x-gemini-service-tier wwz-other
+add header x-wwz-unknown 0
+add header x-wwz-unknown wwz-other
+header apim-request-id becomes "wwz-other"
+header apim-request-id becomes "0"
+header apim-request-id becomes "text/html"
+header cache-control becomes "wwz-other"
+header cache-control becomes "0"
+header cache-control becomes "text/html"
+header connection becomes "wwz-other"
+header connection becomes "0"
+header connection becomes "text/html"
+header x-accel-buffering becomes "wwz-other"
+header x-accel-buffering becomes "0"
+header x-accel-buffering becomes "text/html"
+add root member annotations="wwz-other"
+add root member annotations={}
+add root member metadata="wwz-other"
+add root member metadata={}
+add root member request_id="wwz-other"
+add root member request_id={}
+add root member reasoning="wwz-other"
+add root member reasoning={}
+add root member reasoning_content="wwz-other"
+add root member reasoning_content={}
+add root member signature="wwz-other"
+add root member signature={}
+add root member refusal="wwz-other"
+add root member refusal={}
+add root member citations="wwz-other"
+add root member citations={}
+rename reasoning_content
+rename reasoning
+two data lines
+status 529 becomes 200
+status 529 becomes 302
+perturb request field N
+perturb request field ResponseFormat
+perturb request field ResponseSchema
+perturb request field Temperature
+perturb request field Seed
+perturb request field Metadata
+perturb request field Headers
+perturb request field ClientIP
+perturb request field Received
+perturb request field RequestID
+model name changes
+unprefix changes
+unprefix always
+unprefix never
+thinking becomes signature
+far reset
+body after Extra
+broken array body
+no last frame
+wrong generation epoch
+method GET on route 3
+method GET on route 4
+method GET on route 5
+method GET on route 6
+perturb request leaf 6
+perturb request leaf 7
+perturb request leaf 8
+perturb request leaf 9
+perturb request leaf 17
+perturb request leaf 22
+perturb request leaf 24
+perturb request leaf 28
+perturb request leaf 29
+perturb request leaf 30
+perturb request leaf 33
+perturb request leaf 34
+perturb request leaf 35
+perturb request leaf 36
+perturb request leaf 41
+perturb request leaf 42
+perturb request leaf 51
+perturb request leaf 52
+perturb request leaf 53
+perturb request leaf 54
+perturb request leaf 55
+perturb request leaf 56
+perturb request leaf 58

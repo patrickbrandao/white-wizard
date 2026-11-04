@@ -1,0 +1,23 @@
+{
+  "provider": "openrouter",
+  "name": "text",
+  "recorded_at": "2026-10-31",
+  "request": {
+    "method": "POST",
+    "path": "/api/v1/responses",
+    "headers": {
+      "authorization": "Bearer <key>"
+    },
+    "body": "{\"model\": \"openai/gpt-4o-mini\", \"input\": \"Say hi in two words.\", \"max_output_tokens\": 16}"
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "access-control-allow-origin": "*",
+      "access-control-expose-headers": "X-Generation-Id,X-Provider-Name,request-id,cf-ray",
+      "content-type": "application/json",
+      "x-generation-id": "<generation_id>"
+    },
+    "body": "\n         \n\n         \n{\"id\":\"gen-1793458702-uKQRPfr8vQt9ezdwNagO\",\"object\":\"response\",\"created_at\":1793458702,\"model\":\"openai/gpt-4o-mini\",\"status\":\"completed\",\"completed_at\":1793458703,\"output\":[{\"id\":\"msg_tmp_hg7debf5vt\",\"type\":\"message\",\"role\":\"assistant\",\"status\":\"completed\",\"content\":[{\"type\":\"output_text\",\"text\":\"Hello there!\",\"annotations\":[],\"logprobs\":[]}]}],\"error\":null,\"incomplete_details\":null,\"access_programs\":null,\"tools\":[],\"tool_choice\":\"auto\",\"parallel_tool_calls\":true,\"max_output_tokens\":16,\"temperature\":1,\"top_p\":1,\"presence_penalty\":0,\"frequency_penalty\":0,\"top_logprobs\":0,\"max_tool_calls\":null,\"metadata\":{},\"background\":false,\"previous_response_id\":null,\"service_tier\":\"default\",\"truncation\":\"disabled\",\"store\":false,\"instructions\":null,\"text\":{\"format\":{\"type\":\"text\"}},\"reasoning\":null,\"safety_identifier\":null,\"prompt_cache_key\":null,\"prompt_cache_options\":null,\"usage\":{\"input_tokens\":13,\"input_tokens_details\":{\"cached_tokens\":0},\"output_tokens\":3,\"output_tokens_details\":{\"reasoning_tokens\":0},\"total_tokens\":16,\"cost\":0.00000375,\"is_byok\":false,\"cost_details\":{\"upstream_inference_cost\":0.00000375,\"upstream_inference_input_cost\":0.00000195,\"upstream_inference_output_cost\":0.0000018}}}"
+  }
+}

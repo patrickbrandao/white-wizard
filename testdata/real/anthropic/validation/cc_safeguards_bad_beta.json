@@ -1,0 +1,20 @@
+{
+  "provider": "anthropic",
+  "name": "cc_safeguards_bad_beta",
+  "recorded_at": "2026-11-03",
+  "request": {
+    "method": "POST",
+    "path": "/v1/messages",
+    "headers": {
+      "x-api-key": "<key>",
+      "anthropic-version": "2023-06-01",
+      "anthropic-beta": "dangerous-tool-use-2026-09-03"
+    },
+    "body": "{\"model\": \"claude-haiku-5-5\", \"max_tokens\": 1, \"messages\": [{\"role\": \"user\", \"content\": \"x\"}], \"safeguards\": [{\"type\": \"zzz\"}]}"
+  },
+  "response": {
+    "status": 400,
+    "content_type": "application/json",
+    "body": "{\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"safeguards.0: Input tag 'zzz' found using 'type' does not match any of the expected tags: 'dangerous_tool_use'\"},\"request_id\":\"<request_id>\"}"
+  }
+}

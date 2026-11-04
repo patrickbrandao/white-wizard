@@ -1,0 +1,29 @@
+HTTP 200
+Anthropic-Organization-Id: 00000000-0000-4000-8000-000000000000
+Anthropic-Ratelimit-Input-Tokens-Limit: 10000000
+Anthropic-Ratelimit-Input-Tokens-Remaining: 10000000
+Anthropic-Ratelimit-Input-Tokens-Reset: 2026-10-31T12:32:52Z
+Anthropic-Ratelimit-Output-Tokens-Limit: 2000000
+Anthropic-Ratelimit-Output-Tokens-Remaining: 2000000
+Anthropic-Ratelimit-Output-Tokens-Reset: 2026-10-31T12:32:52Z
+Anthropic-Ratelimit-Requests-Limit: 10000
+Anthropic-Ratelimit-Requests-Remaining: 9999
+Anthropic-Ratelimit-Requests-Reset: 2026-10-31T12:32:51Z
+Anthropic-Ratelimit-Tokens-Limit: 12000000
+Anthropic-Ratelimit-Tokens-Remaining: 12000000
+Anthropic-Ratelimit-Tokens-Reset: 2026-10-31T12:32:52Z
+Anthropic-Workspace-Id: wrkspc_01RedactedWorkspaceIDx
+Cf-Cache-Status: DYNAMIC
+Cf-Ray: a532af5249d1f214-GRU
+Content-Security-Policy: default-src 'none'; frame-ancestors 'none'
+Content-Type: application/json
+Date: Sat, 31 Oct 2026 12:32:52 GMT
+Request-Id: req_011CgaKZPqe8NyGQH113LUv8
+Server: cloudflare
+Server-Timing: x-originResponse;dur=506
+Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
+Traceresponse: 00-0b3de2ae296295bdca225bea03abad98-7ff010478d3a5ed3-01
+Vary: Accept-Encoding
+X-Robots-Tag: none
+
+{"model":"claude-haiku-4-5-20251001","id":"msg_011CgaKZQLevm7WKG4Dgh5wr","type":"message","role":"assistant","content":[{"type":"text","text":"ok"}],"container":null,"stop_reason":"end_turn","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":13,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":4,"service_tier":"standard","inference_geo":"not_available","speed":"standard"},"diagnostics":null}

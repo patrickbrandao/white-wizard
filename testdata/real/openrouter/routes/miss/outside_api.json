@@ -1,0 +1,23 @@
+{
+  "provider": "openrouter",
+  "name": "outside_api",
+  "recorded_at": "2026-10-31",
+  "note": "fora de /api: página HTML 404 do site (corpo não reproduzido na fixture)",
+  "request": {
+    "method": "GET",
+    "path": "/v1/chat/completions",
+    "headers": {
+      "authorization": "Bearer <key>"
+    },
+    "body": null
+  },
+  "response": {
+    "status": 404,
+    "headers": {
+      "content-type": "text/html; charset=utf-8",
+      "access-control-allow-origin": "*",
+      "cache-control": "public, max-age=0, must-revalidate"
+    },
+    "body": "<html>"
+  }
+}

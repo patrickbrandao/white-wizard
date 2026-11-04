@@ -1,0 +1,23 @@
+{
+  "provider": "openrouter",
+  "name": "strict_true_no_additional",
+  "recorded_at": "2026-10-31",
+  "request": {
+    "method": "POST",
+    "path": "/api/v1/responses",
+    "headers": {
+      "authorization": "Bearer <key>"
+    },
+    "body": "{\"model\": \"openai/gpt-4o-mini\", \"input\": \"Weather in Paris?\", \"max_output_tokens\": 32, \"tool_choice\": \"required\", \"tools\": [{\"type\": \"function\", \"name\": \"get_weather\", \"strict\": true, \"parameters\": {\"type\": \"object\", \"properties\": {\"city\": {\"type\": \"string\"}}, \"required\": [\"city\"]}}]}"
+  },
+  "response": {
+    "status": 400,
+    "headers": {
+      "access-control-allow-origin": "*",
+      "access-control-expose-headers": "X-Generation-Id,X-Provider-Name,request-id,cf-ray",
+      "content-type": "application/json",
+      "x-generation-id": "<generation_id>"
+    },
+    "body": "{\"error\":{\"message\":\"Provider returned error\",\"code\":400,\"metadata\":{\"raw\":\"{\\n  \\\"error\\\": {\\n    \\\"message\\\": \\\"Invalid schema for function 'get_weather': In context=(), 'additionalProperties' is required to be supplied and to be false.\\\",\\n    \\\"type\\\": \\\"invalid_request_error\\\",\\n    \\\"param\\\": \\\"tools[0].function.parameters\\\",\\n    \\\"code\\\": \\\"invalid_function_parameters\\\"\\n  }\\n}\",\"provider_name\":\"OpenAI\",\"is_byok\":false,\"provider_error_code\":\"invalid_function_parameters\"}},\"user_id\":\"<user_id>\"}"
+  }
+}

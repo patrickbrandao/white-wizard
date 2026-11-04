@@ -1,0 +1,22 @@
+{
+  "provider": "openrouter",
+  "name": "empty_body",
+  "recorded_at": "2026-10-31",
+  "request": {
+    "method": "POST",
+    "path": "/api/v1/responses",
+    "headers": {
+      "authorization": "Bearer <key>"
+    },
+    "body": ""
+  },
+  "response": {
+    "status": 400,
+    "headers": {
+      "access-control-allow-origin": "*",
+      "access-control-expose-headers": "X-Generation-Id,X-Provider-Name,request-id,cf-ray",
+      "content-type": "application/json"
+    },
+    "body": "{\"error\":{\"message\":\"JSON parsing failed\",\"code\":400}}"
+  }
+}

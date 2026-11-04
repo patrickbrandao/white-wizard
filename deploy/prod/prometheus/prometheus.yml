@@ -1,0 +1,28 @@
+# Prometheus de produção (rede wwz-internal, sem porta publicada).
+# O job `wwz` cobre todas as instâncias (alertas de deploy/prometheus/alerts.yml
+# usam job="wwz"); o rótulo `role` distingue o papel. /metrics do wwz e do
+# painel é público dentro da rede, sem token.
+global:
+  scrape_interval: 5s
+  evaluation_interval: 15s
+
+rule_files:
+  - /etc/prometheus/alerts.yml
+
+scrape_configs:
+  - job_name: wwz
+    metrics_path: /metrics
+    static_configs:
+      - { targets: ["wwz-admin:9000"], labels: { role: principal } }
+      - { targets: ["wwz-openai-perfeito:9000"], labels: { role: openai-perfeito } }
+      - { targets: ["wwz-falhas-20pct:9000"], labels: { role: falhas-20pct } }
+      - { targets: ["wwz-latencia-intermitente:9000"], labels: { role: latencia-intermitente } }
+      - { targets: ["wwz-indisponibilidade:9000"], labels: { role: indisponibilidade } }
+      - { targets: ["wwz-anthropic:9000"], labels: { role: anthropic } }
+      - { targets: ["wwz-openrouter:9000"], labels: { role: openrouter } }
+      - { targets: ["wwz-opencode:9000"], labels: { role: opencode } }
+
+  - job_name: wwz-panel
+    metrics_path: /metrics
+    static_configs:
+      - targets: ["wwz-panel:8100"]

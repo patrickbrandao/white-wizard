@@ -1,0 +1,18 @@
+{
+  "provider": "openrouter",
+  "name": "completions_model_unknown",
+  "recorded_at": "2026-10-31",
+  "request": {
+    "method": "POST",
+    "path": "/api/v1/completions",
+    "headers": {
+      "authorization": "Bearer <key>"
+    },
+    "body": "{\"model\": \"nonexistent-wwz\", \"max_tokens\": 1, \"prompt\": \"hi\"}"
+  },
+  "response": {
+    "status": 400,
+    "content_type": "application/json",
+    "body": "{\"error\":{\"message\":\"nonexistent-wwz is not a valid model ID\",\"code\":400},\"user_id\":\"<user_id>\"}"
+  }
+}

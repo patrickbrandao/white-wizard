@@ -1,0 +1,22 @@
+services:
+  valkey:
+    image: valkey/valkey:${VALKEY_VERSION:-8.1}-alpine
+    command: ["valkey-server", "--save", "", "--appendonly", "no", "--maxmemory", "${VALKEY_MAXMEMORY:-256mb}"]
+    ports:
+      - "${VALKEY_PORT:-16379}:6379"
+    read_only: true
+    tmpfs:
+      - /run
+      - /data
+    ulimits:
+      nofile: { soft: 65536, hard: 65536 }
+    deploy:
+      resources:
+        limits:
+          cpus: "${VALKEY_CPUS:-1}"
+          memory: "${VALKEY_MEMORY:-384m}"
+    healthcheck:
+      test: ["CMD", "valkey-cli", "ping"]
+      interval: 5s
+      timeout: 2s
+      retries: 10

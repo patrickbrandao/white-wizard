@@ -1,0 +1,37 @@
+# Prometheus local (ADR 0007). Incluído pelo docker-compose.yml raiz.
+services:
+  prometheus:
+    image: prom/prometheus:${PROMETHEUS_VERSION:-v3.7.0}
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+      - --storage.tsdb.path=/prometheus
+      - --storage.tsdb.retention.time=${PROMETHEUS_RETENTION:-2d}
+      - --web.listen-address=:9090
+    ports:
+      - "${PROMETHEUS_PORT:-19090}:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - ./alerts.yml:/etc/prometheus/alerts.yml:ro
+      - prometheus-data:/prometheus
+    read_only: true
+    tmpfs:
+      - /run
+      - /tmp
+    security_opt:
+      - no-new-privileges:true
+    cap_drop: [ALL]
+    ulimits:
+      nofile: { soft: 65536, hard: 65536 }
+    deploy:
+      resources:
+        limits:
+          cpus: "${PROMETHEUS_CPUS:-1}"
+          memory: "${PROMETHEUS_MEMORY:-512m}"
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://127.0.0.1:9090/-/ready"]
+      interval: 5s
+      timeout: 2s
+      retries: 10
+
+volumes:
+  prometheus-data:

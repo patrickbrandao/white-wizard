@@ -1,0 +1,18 @@
+{
+  "provider": "openrouter",
+  "name": "get_model_free_variant",
+  "recorded_at": "2026-10-31",
+  "request": {
+    "method": "GET",
+    "path": "/api/v1/model/google/gemma-4-31b-it:free",
+    "headers": {
+      "authorization": "Bearer <key>"
+    }
+  },
+  "response": {
+    "status": 200,
+    "content_type": "application/json",
+    "body": null,
+    "model": "google/gemma-4-31b-it:free"
+  }
+}

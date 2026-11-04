@@ -1,0 +1,27 @@
+{
+  "provider": "gemini",
+  "name": "candidates_part_empty",
+  "recorded_at": "2026-10-31",
+  "note": "candidateCount: ordem das checagens (task 265)",
+  "request": {
+    "method": "POST",
+    "path": "/v1beta/models/gemini-3.5-flash-lite:generateContent",
+    "headers": {
+      "x-goog-api-key": "<key>"
+    },
+    "body": "{\"contents\":[{\"role\":\"user\",\"parts\":[]}],\"generationConfig\":{\"candidateCount\":2}}"
+  },
+  "response": {
+    "status": 400,
+    "headers": {
+      "content-type": "application/json; charset=UTF-8",
+      "server": "scaffolding on HTTPServer2",
+      "server-timing": "gfet4t7; dur=<ms>",
+      "x-content-type-options": "nosniff",
+      "x-frame-options": "SAMEORIGIN",
+      "x-gemini-service-tier": "standard",
+      "x-xss-protection": "0"
+    },
+    "body": "{\n  \"error\": {\n    \"code\": 400,\n    \"message\": \"Request has empty input.\",\n    \"status\": \"INVALID_ARGUMENT\"\n  }\n}\n"
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "provider": "openrouter",
+  "name": "multiple_issues",
+  "recorded_at": "2026-10-31",
+  "request": {
+    "method": "POST",
+    "path": "/api/v1/responses",
+    "headers": {
+      "authorization": "Bearer <key>"
+    },
+    "body": "{\"model\": \"openai/gpt-4o-mini\", \"input\": \"hi\", \"temperature\": 3, \"top_p\": \"x\", \"store\": true}"
+  },
+  "response": {
+    "status": 400,
+    "headers": {
+      "access-control-allow-origin": "*",
+      "access-control-expose-headers": "X-Generation-Id,X-Provider-Name,request-id,cf-ray",
+      "content-type": "application/json"
+    },
+    "body": "{\"error\":{\"code\":\"invalid_prompt\",\"message\":\"store: true is not supported on this proxy. Each response request is independent.\"},\"metadata\":{\"raw\":\"[\\n  {\\n    \\\"origin\\\": \\\"number\\\",\\n    \\\"code\\\": \\\"too_big\\\",\\n    \\\"maximum\\\": 2,\\n    \\\"inclusive\\\": true,\\n    \\\"path\\\": [\\n      \\\"temperature\\\"\\n    ],\\n    \\\"message\\\": \\\"Too big: expected number to be <=2\\\"\\n  },\\n  {\\n    \\\"expected\\\": \\\"number\\\",\\n    \\\"code\\\": \\\"invalid_type\\\",\\n    \\\"path\\\": [\\n      \\\"top_p\\\"\\n    ],\\n    \\\"message\\\": \\\"Invalid input: expected number, received string\\\"\\n  },\\n  {\\n    \\\"code\\\": \\\"invalid_value\\\",\\n    \\\"values\\\": [\\n      false\\n    ],\\n    \\\"path\\\": [\\n      \\\"store\\\"\\n    ],\\n    \\\"message\\\": \\\"store: true is not supported on this proxy. Each response request is independent.\\\"\\n  }\\n]\"}}"
+  }
+}

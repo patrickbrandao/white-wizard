@@ -1,0 +1,24 @@
+{
+  "name": "oauth_profile_badkey",
+  "note": "GET /api/oauth/profile com um token OAuth falso (literal, não é segredo): o 401 de token inválido, igual ao de /v1/messages; curl em 2026-11-03 (real-probes h2/b2, task 443)",
+  "provider": "anthropic",
+  "recorded_at": "2026-11-03",
+  "request": {
+    "body": null,
+    "headers": {
+      "authorization": "Bearer sk-ant-oat01-invalid"
+    },
+    "method": "GET",
+    "path": "/api/oauth/profile"
+  },
+  "response": {
+    "body": "{\"type\":\"error\",\"error\":{\"type\":\"authentication_error\",\"message\":\"OAuth access token is invalid.\"},\"request_id\":\"<request_id>\"}",
+    "headers": {
+      "cache-control": "no-store",
+      "content-type": "application/json",
+      "request-id": "<request_id>",
+      "x-should-retry": "false"
+    },
+    "status": 401
+  }
+}

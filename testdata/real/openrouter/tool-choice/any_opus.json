@@ -1,0 +1,25 @@
+{
+  "provider": "openrouter",
+  "name": "any_opus",
+  "recorded_at": "2026-10-31",
+  "note": "any no claude-opus-5.5: recusa do modelo repassada com metadata (task 342)",
+  "request": {
+    "method": "POST",
+    "path": "/api/v1/messages",
+    "headers": {
+      "authorization": "Bearer <key>"
+    },
+    "body": "{\"model\": \"anthropic/claude-opus-5.5\", \"max_tokens\": 1, \"messages\": [{\"role\": \"user\", \"content\": \"x\"}], \"tools\": [{\"name\": \"a\", \"input_schema\": {\"type\": \"object\", \"properties\": {}}}], \"tool_choice\": {\"type\": \"any\"}}"
+  },
+  "response": {
+    "status": 400,
+    "headers": {
+      "access-control-allow-origin": "*",
+      "access-control-expose-headers": "X-Generation-Id,X-Provider-Name,request-id,cf-ray",
+      "content-type": "application/json",
+      "request-id": "<generation_id>",
+      "x-generation-id": "<generation_id>"
+    },
+    "body": "{\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"tool_choice: type \\\"tool\\\" and \\\"any\\\" are not supported for this model.\",\"error_type\":\"invalid_request\"},\"request_id\":\"<generation_id>\",\"metadata\":{\"raw\":\"{\\\"type\\\":\\\"error\\\",\\\"error\\\":{\\\"type\\\":\\\"invalid_request_error\\\",\\\"message\\\":\\\"tool_choice: type \\\\\\\"tool\\\\\\\" and \\\\\\\"any\\\\\\\" are not supported for this model.\\\"},\\\"request_id\\\":\\\"<request_id>\\\"}\",\"provider_name\":\"Azure\",\"is_byok\":false,\"previous_errors\":[{\"code\":400,\"message\":\"Provider returned error\",\"provider_name\":\"Claude Platform on AWS\",\"raw\":\"{\\\"type\\\":\\\"error\\\",\\\"error\\\":{\\\"type\\\":\\\"invalid_request_error\\\",\\\"message\\\":\\\"tool_choice: type \\\\\\\"tool\\\\\\\" and \\\\\\\"any\\\\\\\" are not supported for this model.\\\"},\\\"request_id\\\":\\\"<request_id>\\\"}\"},{\"code\":400,\"message\":\"Provider returned error\",\"provider_name\":\"Amazon Bedrock\",\"raw\":\"{\\\"message\\\":\\\"tool_choice: type \\\\\\\"tool\\\\\\\" and \\\\\\\"any\\\\\\\" are not supported for this model.\\\"}\"},{\"code\":400,\"message\":\"Provider returned error\",\"provider_name\":\"Anthropic\",\"raw\":\"{\\\"type\\\":\\\"error\\\",\\\"error\\\":{\\\"type\\\":\\\"invalid_request_error\\\",\\\"message\\\":\\\"tool_choice: type \\\\\\\"tool\\\\\\\" and \\\\\\\"any\\\\\\\" are not supported for this model.\\\"},\\\"request_id\\\":\\\"<request_id>\\\"}\"},{\"code\":400,\"message\":\"Provider returned error\",\"provider_name\":\"Google\",\"raw\":\"{\\\"type\\\":\\\"error\\\",\\\"error\\\":{\\\"type\\\":\\\"invalid_request_error\\\",\\\"message\\\":\\\"tool_choice: type \\\\\\\"tool\\\\\\\" and \\\\\\\"any\\\\\\\" are not supported for this model.\\\"},\\\"request_id\\\":\\\"<request_id>\\\"}\"}]}}"
+  }
+}

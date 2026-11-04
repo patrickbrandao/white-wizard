@@ -1,0 +1,11 @@
+HTTP 200
+Cf-Placement: remote-IAD
+Cf-Ray: a532af6b18ffdcd7-MIA
+Connection: keep-alive
+Content-Type: application/json
+Date: Sat, 31 Oct 2026 12:32:56 GMT
+Server: cloudflare
+X-Opencode-Log-Id: 01a191f2-defe-76f2-b394-a33edb827040
+X-Zen-Model: deepseek-v4.1-flash
+
+{"id":"gw-77ba9f9f2ec1-371613","object":"chat.completion","created":1793449976,"model":"deepseek-v4.1-flash","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","content":"ok","reasoning_content":"We need answer only: ok. Need comply."}}],"usage":{"prompt_tokens":35,"completion_tokens":13,"total_tokens":48,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":10},"cost":0,"opencode":{"billing_source":"go","list_cost":0.00001305,"allowance":0.00000783,"tokens":{"input":35,"output":13,"reasoning":10,"cache_read":0,"cache_write_5m":0,"cache_write_1h":0}}}}

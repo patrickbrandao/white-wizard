@@ -1,0 +1,8 @@
+{
+  "minimal": {"model": "claude-test", "max_tokens": 64, "messages": [{"role": "user", "content": "hi"}]},
+  "assistant_first": {"model": "claude-test", "max_tokens": 64, "messages": [{"role": "assistant", "content": "hi"}, {"role": "user", "content": "ok"}]},
+  "same_role_twice": {"model": "claude-test", "max_tokens": 64, "messages": [{"role": "user", "content": "a"}, {"role": "user", "content": "b"}]},
+  "tool_choice_any": {"model": "claude-test", "max_tokens": 64, "messages": [{"role": "user", "content": "hi"}], "tools": [{"name": "get_time", "input_schema": {"type": "object"}}], "tool_choice": {"type": "any"}},
+  "tool_choice_none": {"model": "claude-test", "max_tokens": 64, "messages": [{"role": "user", "content": "hi"}], "tools": [{"name": "get_time", "input_schema": {"type": "object"}}], "tool_choice": {"type": "none"}},
+  "count_tokens": {"model": "claude-test", "messages": [{"role": "user", "content": "count me"}]}
+}

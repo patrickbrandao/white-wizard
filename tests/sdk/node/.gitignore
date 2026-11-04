@@ -1,0 +1,2 @@
+# node_modules instalado ou symlink para o checkout principal (worktrees).
+node_modules

@@ -1,0 +1,52 @@
+{{define "content"}}{{$f := .Data.Filter}}
+<form class="filters" method="get" action="/blocks">
+<label>Status <select name="status">{{$s := $f.Get "status"}}
+<option value=""{{if eq $s ""}} selected{{end}}>bloqueados e banidos</option>
+<option value="suspended"{{if eq $s "suspended"}} selected{{end}}>bloqueados</option>
+<option value="banned"{{if eq $s "banned"}} selected{{end}}>banidos</option>
+<option value="limited"{{if eq $s "limited"}} selected{{end}}>limitados</option>
+<option value="active"{{if eq $s "active"}} selected{{end}}>ativos</option>
+<option value="all"{{if eq $s "all"}} selected{{end}}>todos</option>
+</select></label>
+<label>Tipo <select name="kind">{{$k := $f.Get "kind"}}
+<option value=""{{if eq $k ""}} selected{{end}}>todos</option>
+{{range .Data.Kinds}}<option value="{{.}}"{{if eq $k .}} selected{{end}}>{{.}}</option>{{end}}
+</select></label>
+<button type="submit">Filtrar</button>
+</form>
+{{if .CanAct}}
+<form class="act" method="post" action="{{.Data.ActURL}}" hx-post="{{.Data.ActURL}}" hx-target="#live" hx-swap="outerHTML" hx-confirm="Aplicar a ação à entidade informada?">
+<input type="hidden" name="csrf" value="{{.CSRF}}">
+<label>Tipo <select name="kind">{{range .Data.Kinds}}<option value="{{.}}">{{.}}</option>{{end}}</select></label>
+<label>Id <input name="id" required></label>
+<label>Ação <select name="action">{{range .Data.Actions}}<option value="{{.}}">{{.}}</option>{{end}}</select></label>
+<label>Motivo <input name="reason"></label>
+<label>Duração (block) <input name="duration" placeholder="10m"></label>
+<button type="submit">Aplicar</button>
+</form>
+{{end}}
+{{template "live" .}}
+{{end}}
+
+{{define "live"}}<section id="live" hx-get="{{.Live}}" hx-trigger="every 2s" hx-swap="outerHTML">
+{{template "messages" .}}
+{{with .Data}}{{if .Source}}<p class="muted">Fonte {{.Source}}</p>{{end}}
+<table>
+<thead><tr><th>Entidade</th><th>Status</th><th>Motivo</th><th>Desde</th><th>Até</th><th>Strikes</th><th>Quem aplicou</th><th>Tier</th>{{if $.CanAct}}<th>Ações</th>{{end}}</tr></thead>
+<tbody>
+{{range .Entities}}{{$e := printf "%s/%s" .Entity.Kind .Entity.ID}}<tr>
+<td>{{$e}}</td><td><span class="st st-{{.Status}}">{{.Status}}</span></td><td>{{or .Reason "—"}}</td><td>{{when .Since}}</td><td>{{when .Until}}</td><td>{{.Strikes}}</td><td>{{or .By "—"}}</td><td>{{or .Tier "—"}}</td>
+{{if $.CanAct}}<td class="actions">
+{{if eq .Status "suspended"}}<form method="post" action="{{$.Data.ActURL}}" hx-post="{{$.Data.ActURL}}" hx-target="#live" hx-swap="outerHTML" hx-confirm="Desbloquear {{$e}}?"><input type="hidden" name="csrf" value="{{$.CSRF}}"><input type="hidden" name="kind" value="{{.Entity.Kind}}"><input type="hidden" name="id" value="{{.Entity.ID}}"><input type="hidden" name="action" value="unblock"><button type="submit">Desbloquear</button></form>
+{{else if ne .Status "banned"}}<form method="post" action="{{$.Data.ActURL}}" hx-post="{{$.Data.ActURL}}" hx-target="#live" hx-swap="outerHTML" hx-confirm="Bloquear {{$e}}?"><input type="hidden" name="csrf" value="{{$.CSRF}}"><input type="hidden" name="kind" value="{{.Entity.Kind}}"><input type="hidden" name="id" value="{{.Entity.ID}}"><input type="hidden" name="action" value="block"><button type="submit">Bloquear</button></form>{{end}}
+{{if eq .Status "banned"}}<form method="post" action="{{$.Data.ActURL}}" hx-post="{{$.Data.ActURL}}" hx-target="#live" hx-swap="outerHTML" hx-confirm="Remover o banimento de {{$e}}?"><input type="hidden" name="csrf" value="{{$.CSRF}}"><input type="hidden" name="kind" value="{{.Entity.Kind}}"><input type="hidden" name="id" value="{{.Entity.ID}}"><input type="hidden" name="action" value="unban"><button type="submit">Desbanir</button></form>
+{{else}}<form method="post" action="{{$.Data.ActURL}}" hx-post="{{$.Data.ActURL}}" hx-target="#live" hx-swap="outerHTML" hx-confirm="Banir {{$e}}?"><input type="hidden" name="csrf" value="{{$.CSRF}}"><input type="hidden" name="kind" value="{{.Entity.Kind}}"><input type="hidden" name="id" value="{{.Entity.ID}}"><input type="hidden" name="action" value="ban"><button type="submit" class="danger">Banir</button></form>{{end}}
+{{if .Strikes}}<form method="post" action="{{$.Data.ActURL}}" hx-post="{{$.Data.ActURL}}" hx-target="#live" hx-swap="outerHTML" hx-confirm="Perdoar os strikes de {{$e}}?"><input type="hidden" name="csrf" value="{{$.CSRF}}"><input type="hidden" name="kind" value="{{.Entity.Kind}}"><input type="hidden" name="id" value="{{.Entity.ID}}"><input type="hidden" name="action" value="forgive"><button type="submit">Perdoar strikes</button></form>{{end}}
+{{if eq (printf "%s" .Entity.Kind) "key"}}<form method="post" action="{{$.Data.ActURL}}" hx-post="{{$.Data.ActURL}}" hx-target="#live" hx-swap="outerHTML" hx-confirm="Marcar a chave {{.Entity.ID}} como vazada?"><input type="hidden" name="csrf" value="{{$.CSRF}}"><input type="hidden" name="kind" value="key"><input type="hidden" name="id" value="{{.Entity.ID}}"><input type="hidden" name="action" value="leak"><button type="submit" class="danger">Marcar vazada</button></form>{{end}}
+</td>{{end}}
+</tr>
+{{else}}<tr><td colspan="9" class="muted">Nenhuma entidade com este filtro.</td></tr>{{end}}
+</tbody>
+</table>
+{{end}}
+</section>{{end}}

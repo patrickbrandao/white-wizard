@@ -1,0 +1,19 @@
+{
+  "provider": "openai",
+  "name": "deprecated_model",
+  "recorded_at": "2026-10-31",
+  "request": {
+    "method": "POST",
+    "path": "/v1/responses",
+    "headers": {
+      "authorization": "Bearer <key>",
+      "content-type": "application/json"
+    },
+    "body": "{\"model\": \"gpt-4.1-nano\", \"input\": \"Say hi in two words.\", \"max_output_tokens\": 16}"
+  },
+  "response": {
+    "status": 404,
+    "content_type": "application/json",
+    "body": "{\n  \"error\": {\n    \"message\": \"The model `gpt-4.1-nano` has been deprecated, learn more here: https://platform.openai.com/docs/deprecations\",\n    \"type\": \"invalid_request_error\",\n    \"param\": null,\n    \"code\": \"model_not_found\"\n  }\n}"
+  }
+}

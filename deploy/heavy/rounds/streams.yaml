@@ -1,0 +1,18 @@
+# Rodada streams do verify-heavy (spec 018, 5c; meta da spec 014): streams
+# simultâneos com ITL fixo de 20 ms. O wwz-load manda max_tokens 100 com o
+# modelo padrão wwz-fast; o perfil "fast" ganha ITL fixo de 20 ms,
+# um token por chunk, para o ITL medido ser comparado com 20 ms + overhead.
+profiles:
+  latency:
+    fast:
+      itl: { dist: fixed, value: 20ms }
+      chunk_tokens: 1
+
+server:
+  max_rps: 0
+  # Uma conexão por stream: 20 000 streams (streams-max, ADR 0067) cabem
+  # com folga no padrão (256 Ki conexões), mas o ping de SSE fica fora da janela de 20 ms.
+  ping_interval: 60s
+
+metrics:
+  enabled: true

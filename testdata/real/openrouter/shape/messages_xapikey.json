@@ -1,0 +1,25 @@
+{
+  "provider": "openrouter",
+  "name": "messages_xapikey",
+  "recorded_at": "2026-10-31",
+  "note": "x-api-key válida é aceita (o 400 é do modelo)",
+  "request": {
+    "method": "POST",
+    "path": "/api/v1/messages",
+    "headers": {
+      "x-api-key": "<key>"
+    },
+    "body": "{\"model\": \"wwz-nao-existe\", \"max_tokens\": 5, \"messages\": [{\"role\": \"user\", \"content\": \"oi\"}]}"
+  },
+  "response": {
+    "status": 400,
+    "headers": {
+      "access-control-allow-origin": "*",
+      "access-control-expose-headers": "X-Generation-Id,X-Provider-Name,request-id,cf-ray",
+      "content-type": "application/json",
+      "request-id": "<generation_id>",
+      "x-generation-id": "<generation_id>"
+    },
+    "body": "{\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"wwz-nao-existe is not a valid model ID\",\"error_type\":\"invalid_request\"},\"request_id\":\"<generation_id>\"}"
+  }
+}

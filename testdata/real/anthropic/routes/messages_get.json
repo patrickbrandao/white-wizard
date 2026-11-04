@@ -1,0 +1,26 @@
+{
+  "name": "messages_get",
+  "note": "GET na Messages: 405 da borda, indentado, antes da chave",
+  "provider": "anthropic",
+  "recorded_at": "2026-10-31",
+  "request": {
+    "body": null,
+    "headers": {
+      "anthropic-version": "2023-06-01",
+      "x-api-key": "<key>"
+    },
+    "method": "GET",
+    "path": "/v1/messages"
+  },
+  "response": {
+    "body": "{\n  \"type\": \"error\",\n  \"error\": {\n    \"type\": \"invalid_request_error\",\n    \"message\": \"Method Not Allowed\"\n  }\n}",
+    "headers": {
+      "cache-control": "private, max-age=0, no-store, no-cache, must-revalidate, post-check=0, pre-check=0",
+      "content-type": "application/json",
+      "expires": "Thu, 01 Jan 1970 00:00:01 GMT",
+      "referrer-policy": "same-origin",
+      "x-frame-options": "SAMEORIGIN"
+    },
+    "status": 405
+  }
+}

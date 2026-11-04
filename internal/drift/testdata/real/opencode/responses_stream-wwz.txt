@@ -1,0 +1,77 @@
+HTTP 200
+Cache-Control: no-cache
+Content-Type: text/event-stream
+Date: Sat, 31 Oct 2026 16:07:15 GMT
+X-Opencode-Log-Id: 01a192b7-19e5-74ca-8917-82345e367798
+X-Wwz-Seed: 1
+X-Zen-Model: deepseek-v4.1-flash
+
+event: response.created
+data: {"response":{"id":"resp_e5d2dd2a84e52c545fcb1ca240410162","object":"response","created_at":1793462835,"status":"in_progress","error":null,"incomplete_details":null,"instructions":null,"metadata":{},"model":"deepseek-v4.1-flash","output":[],"parallel_tool_calls":true,"temperature":null,"tool_choice":"auto","tools":[],"top_p":null,"max_output_tokens":256,"usage":null},"type":"response.created","sequence_number":0}
+
+event: response.in_progress
+data: {"response":{"id":"resp_e5d2dd2a84e52c545fcb1ca240410162","object":"response","created_at":1793462835,"status":"in_progress","error":null,"incomplete_details":null,"instructions":null,"metadata":{},"model":"deepseek-v4.1-flash","output":[],"parallel_tool_calls":true,"temperature":null,"tool_choice":"auto","tools":[],"top_p":null,"max_output_tokens":256,"usage":null},"type":"response.in_progress","sequence_number":1}
+
+event: response.output_item.added
+data: {"output_index":0,"item":{"id":"rs_5a9c599b0b9796135c127c0a7d37c7ff","type":"reasoning","summary":[]},"type":"response.output_item.added","sequence_number":2}
+
+event: response.reasoning_summary_part.added
+data: {"item_id":"rs_5a9c599b0b9796135c127c0a7d37c7ff","output_index":0,"summary_index":0,"part":{"type":"summary_text","text":""},"type":"response.reasoning_summary_part.added","sequence_number":3}
+
+event: response.reasoning_summary_text.delta
+data: {"item_id":"rs_5a9c599b0b9796135c127c0a7d37c7ff","output_index":0,"summary_index":0,"delta":"There","type":"response.reasoning_summary_text.delta","sequence_number":4}
+
+event: response.reasoning_summary_text.delta
+data: {"item_id":"rs_5a9c599b0b9796135c127c0a7d37c7ff","output_index":0,"summary_index":0,"delta":" are","type":"response.reasoning_summary_text.delta","sequence_number":5}
+
+event: response.reasoning_summary_text.delta
+data: {"item_id":"rs_5a9c599b0b9796135c127c0a7d37c7ff","output_index":0,"summary_index":0,"delta":" a","type":"response.reasoning_summary_text.delta","sequence_number":6}
+
+event: response.reasoning_summary_text.delta
+data: {"item_id":"rs_5a9c599b0b9796135c127c0a7d37c7ff","output_index":0,"summary_index":0,"delta":" few","type":"response.reasoning_summary_text.delta","sequence_number":7}
+
+event: response.reasoning_summary_text.delta
+data: {"item_id":"rs_5a9c599b0b9796135c127c0a7d37c7ff","output_index":0,"summary_index":0,"delta":" possib","type":"response.reasoning_summary_text.delta","sequence_number":8}
+
+event: response.reasoning_summary_text.delta
+data: {"item_id":"rs_5a9c599b0b9796135c127c0a7d37c7ff","output_index":0,"summary_index":0,"delta":"le","type":"response.reasoning_summary_text.delta","sequence_number":9}
+
+event: response.reasoning_summary_text.delta
+data: {"item_id":"rs_5a9c599b0b9796135c127c0a7d37c7ff","output_index":0,"summary_index":0,"delta":" interp","type":"response.reasoning_summary_text.delta","sequence_number":10}
+
+event: response.reasoning_summary_text.delta
+data: {"item_id":"rs_5a9c599b0b9796135c127c0a7d37c7ff","output_index":0,"summary_index":0,"delta":"retati","type":"response.reasoning_summary_text.delta","sequence_number":11}
+
+event: response.reasoning_summary_text.delta
+data: {"item_id":"rs_5a9c599b0b9796135c127c0a7d37c7ff","output_index":0,"summary_index":0,"delta":"ons","type":"response.reasoning_summary_text.delta","sequence_number":12}
+
+event: response.output_item.added
+data: {"output_index":1,"item":{"id":"msg_11ac30bd7fa03da385f0b61c313783a1","type":"message","role":"assistant","status":"in_progress","content":[]},"type":"response.output_item.added","sequence_number":13}
+
+event: response.content_part.added
+data: {"item_id":"msg_11ac30bd7fa03da385f0b61c313783a1","output_index":1,"content_index":0,"part":{"type":"output_text","text":"","annotations":[],"logprobs":[]},"type":"response.content_part.added","sequence_number":14}
+
+event: response.output_text.delta
+data: {"item_id":"msg_11ac30bd7fa03da385f0b61c313783a1","output_index":1,"content_index":0,"delta":"Cachin","logprobs":[],"type":"response.output_text.delta","sequence_number":15}
+
+event: response.reasoning_summary_text.done
+data: {"item_id":"rs_5a9c599b0b9796135c127c0a7d37c7ff","output_index":0,"summary_index":0,"text":"There are a few possible interpretations","type":"response.reasoning_summary_text.done","sequence_number":16}
+
+event: response.reasoning_summary_part.done
+data: {"item_id":"rs_5a9c599b0b9796135c127c0a7d37c7ff","output_index":0,"summary_index":0,"part":{"type":"summary_text","text":"There are a few possible interpretations"},"type":"response.reasoning_summary_part.done","sequence_number":17}
+
+event: response.output_item.done
+data: {"output_index":0,"item":{"id":"rs_5a9c599b0b9796135c127c0a7d37c7ff","type":"reasoning","summary":[{"type":"summary_text","text":"There are a few possible interpretations"}]},"type":"response.output_item.done","sequence_number":18}
+
+event: response.output_text.done
+data: {"item_id":"msg_11ac30bd7fa03da385f0b61c313783a1","output_index":1,"content_index":0,"text":"Cachin","logprobs":[],"type":"response.output_text.done","sequence_number":19}
+
+event: response.content_part.done
+data: {"item_id":"msg_11ac30bd7fa03da385f0b61c313783a1","output_index":1,"content_index":0,"part":{"type":"output_text","text":"Cachin","annotations":[],"logprobs":[]},"type":"response.content_part.done","sequence_number":20}
+
+event: response.output_item.done
+data: {"output_index":1,"item":{"id":"msg_11ac30bd7fa03da385f0b61c313783a1","type":"message","role":"assistant","status":"completed","content":[{"type":"output_text","text":"Cachin","annotations":[],"logprobs":[]}]},"type":"response.output_item.done","sequence_number":21}
+
+event: response.completed
+data: {"response":{"id":"resp_e5d2dd2a84e52c545fcb1ca240410162","object":"response","created_at":1793462835,"status":"completed","error":null,"incomplete_details":null,"instructions":null,"metadata":{},"model":"deepseek-v4.1-flash","output":[{"id":"rs_5a9c599b0b9796135c127c0a7d37c7ff","type":"reasoning","summary":[{"type":"summary_text","text":"There are a few possible interpretations"}]},{"id":"msg_11ac30bd7fa03da385f0b61c313783a1","type":"message","role":"assistant","status":"completed","content":[{"type":"output_text","text":"Cachin","annotations":[],"logprobs":[]}]}],"parallel_tool_calls":true,"temperature":null,"tool_choice":"auto","tools":[],"top_p":null,"max_output_tokens":256,"usage":{"input_tokens":12,"input_tokens_details":{"cached_tokens":0},"output_tokens":10,"output_tokens_details":{"reasoning_tokens":0},"total_tokens":22,"cost":0,"opencode":{"billing_source":"go","list_cost":0.0000078,"allowance":0.00000468,"tokens":{"input":12,"output":10,"reasoning":0,"cache_read":0,"cache_write_5m":0,"cache_write_1h":0}}}},"type":"response.completed","sequence_number":22}
+

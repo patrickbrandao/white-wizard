@@ -1,0 +1,22 @@
+{
+  "name": "oauth_hello_head",
+  "note": "HEAD /v1/oauth/hello em platform.claude.com, sem credencial: 405 com allow GET (POST e OPTIONS dão o mesmo 405 com o corpo Method Not Allowed de 132 bytes); curl em 2026-11-03 (task 443)",
+  "provider": "anthropic",
+  "recorded_at": "2026-11-03",
+  "request": {
+    "body": null,
+    "headers": {},
+    "method": "HEAD",
+    "path": "/v1/oauth/hello"
+  },
+  "response": {
+    "body": "",
+    "headers": {
+      "allow": "GET",
+      "content-type": "application/json",
+      "request-id": "<request_id>",
+      "x-should-retry": "false"
+    },
+    "status": 405
+  }
+}

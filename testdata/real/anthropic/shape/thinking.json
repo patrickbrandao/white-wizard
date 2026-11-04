@@ -1,0 +1,37 @@
+{
+  "provider": "anthropic",
+  "name": "thinking",
+  "recorded_at": "2026-10-31",
+  "note": "usage.output_tokens_details.thinking_tokens",
+  "request": {
+    "method": "POST",
+    "path": "/v1/messages",
+    "headers": {
+      "x-api-key": "<key>",
+      "anthropic-version": "2023-06-01"
+    },
+    "body": "{\"model\": \"claude-haiku-4-5-20251001\", \"max_tokens\": 1100, \"messages\": [{\"role\": \"user\", \"content\": \"Quanto é 2+2? Responda só o número.\"}], \"thinking\": {\"type\": \"enabled\", \"budget_tokens\": 1024}}"
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "anthropic-organization-id": "<organization_id>",
+      "anthropic-ratelimit-input-tokens-limit": "10000000",
+      "anthropic-ratelimit-input-tokens-remaining": "10000000",
+      "anthropic-ratelimit-input-tokens-reset": "<rfc3339>",
+      "anthropic-ratelimit-output-tokens-limit": "2000000",
+      "anthropic-ratelimit-output-tokens-remaining": "2000000",
+      "anthropic-ratelimit-output-tokens-reset": "<rfc3339>",
+      "anthropic-ratelimit-requests-limit": "10000",
+      "anthropic-ratelimit-requests-remaining": "9999",
+      "anthropic-ratelimit-requests-reset": "<rfc3339>",
+      "anthropic-ratelimit-tokens-limit": "12000000",
+      "anthropic-ratelimit-tokens-remaining": "12000000",
+      "anthropic-ratelimit-tokens-reset": "<rfc3339>",
+      "anthropic-workspace-id": "<workspace_id>",
+      "content-type": "application/json",
+      "request-id": "<request_id>"
+    },
+    "body": "{\"model\":\"claude-haiku-4-5-20251001\",\"id\":\"<msg_id>\",\"type\":\"message\",\"role\":\"assistant\",\"content\":[{\"type\":\"thinking\",\"thinking\":\"A pergunta é simples: 2+2 = 4. O usuário pediu para responder só o número.\",\"signature\":\"<signature>\"},{\"type\":\"text\",\"text\":\"4\"}],\"container\":null,\"stop_reason\":\"end_turn\",\"stop_sequence\":null,\"stop_details\":null,\"usage\":{\"input_tokens\":51,\"cache_creation_input_tokens\":0,\"cache_read_input_tokens\":0,\"cache_creation\":{\"ephemeral_5m_input_tokens\":0,\"ephemeral_1h_input_tokens\":0},\"output_tokens\":40,\"output_tokens_details\":{\"thinking_tokens\":33},\"service_tier\":\"standard\",\"inference_geo\":\"not_available\",\"speed\":\"standard\"},\"diagnostics\":null}"
+  }
+}

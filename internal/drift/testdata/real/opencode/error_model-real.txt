@@ -1,0 +1,11 @@
+HTTP 400
+Cf-Placement: remote-IAD
+Cf-Ray: a532ae346ff0573f-MIA
+Connection: keep-alive
+Content-Length: 92
+Content-Type: application/json
+Date: Sat, 31 Oct 2026 12:32:05 GMT
+Server: cloudflare
+X-Opencode-Log-Id: 01a191f2-1cd8-7ebd-ac28-20dff9cbc038
+
+{"error":{"type":"server_error","message":"Upstream request failed: Model is unavailable."}}

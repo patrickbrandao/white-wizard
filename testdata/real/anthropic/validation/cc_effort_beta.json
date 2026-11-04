@@ -1,0 +1,20 @@
+{
+  "provider": "anthropic",
+  "name": "cc_effort_beta",
+  "recorded_at": "2026-11-03",
+  "request": {
+    "method": "POST",
+    "path": "/v1/messages",
+    "headers": {
+      "x-api-key": "<key>",
+      "anthropic-version": "2023-06-01",
+      "anthropic-beta": "effort-2025-11-24"
+    },
+    "body": "{\"model\": \"claude-haiku-5-5\", \"max_tokens\": 1, \"messages\": [{\"role\": \"user\", \"content\": \"x\"}], \"output_config\": {\"effort\": \"medium\"}}"
+  },
+  "response": {
+    "status": 200,
+    "content_type": "application/json",
+    "body": null
+  }
+}

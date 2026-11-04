@@ -1,0 +1,20 @@
+{
+  "provider": "openrouter",
+  "name": "error_nokey",
+  "recorded_at": "2026-10-31",
+  "request": {
+    "method": "POST",
+    "path": "/api/v1/responses",
+    "headers": {},
+    "body": "{\"model\": \"openai/gpt-4o-mini\", \"input\": \"hi\", \"max_output_tokens\": 16}"
+  },
+  "response": {
+    "status": 401,
+    "headers": {
+      "access-control-allow-origin": "*",
+      "access-control-expose-headers": "X-Generation-Id,X-Provider-Name,request-id,cf-ray",
+      "content-type": "application/json"
+    },
+    "body": "{\"error\":{\"message\":\"No cookie auth credentials found\",\"code\":401}}"
+  }
+}

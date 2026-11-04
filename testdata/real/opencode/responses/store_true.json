@@ -1,0 +1,22 @@
+{
+  "provider": "opencode",
+  "name": "store_true",
+  "recorded_at": "2026-10-31",
+  "request": {
+    "method": "POST",
+    "path": "/inference/go/openai/v1/responses",
+    "headers": {
+      "authorization": "Bearer <key>",
+      "x-opencode-session": "<session>"
+    },
+    "body": "{\"model\": \"deepseek-v4.1-flash\", \"input\": \"Say hi in two words.\", \"max_output_tokens\": 64, \"store\": true}"
+  },
+  "response": {
+    "status": 400,
+    "headers": {
+      "content-type": "application/json",
+      "x-opencode-log-id": "<log_id>"
+    },
+    "body": "{\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"store: stored responses require a native Responses target; use store=false and send prior output items in input\"}}"
+  }
+}

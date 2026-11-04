@@ -1,0 +1,18 @@
+{
+  "provider": "openai",
+  "name": "type_int_modalities",
+  "recorded_at": "2026-10-31",
+  "request": {
+    "method": "POST",
+    "path": "/v1/chat/completions",
+    "headers": {
+      "authorization": "Bearer <key>"
+    },
+    "body": "{\"model\": \"gpt-4o-mini\", \"messages\": [{\"role\": \"user\", \"content\": \"hi\"}], \"modalities\": 12345}"
+  },
+  "response": {
+    "status": 400,
+    "content_type": "application/json",
+    "body": "{\n  \"error\": {\n    \"message\": \"Invalid type for 'modalities': expected an array of one of 'text' or 'audio', but got an integer instead.\",\n    \"type\": \"invalid_request_error\",\n    \"param\": \"modalities\",\n    \"code\": \"invalid_type\"\n  }\n}"
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "provider": "gemini",
+  "name": "chat_cached_sys",
+  "recorded_at": "2026-10-31",
+  "note": "cachedContent com systemInstruction",
+  "request": {
+    "method": "POST",
+    "path": "/v1beta/models/gemini-3.5-flash-lite:generateContent",
+    "headers": {
+      "x-goog-api-key": "<key>"
+    },
+    "body": "{\"contents\": [{\"role\": \"user\", \"parts\": [{\"text\": \"oi\"}]}], \"cachedContent\": \"cachedContents/<cache_id>\", \"systemInstruction\": {\"parts\": [{\"text\": \"x\"}]}}"
+  },
+  "response": {
+    "status": 400,
+    "headers": {
+      "content-type": "application/json; charset=UTF-8",
+      "server": "scaffolding on HTTPServer2",
+      "server-timing": "gfet4t7; dur=<ms>",
+      "x-content-type-options": "nosniff",
+      "x-frame-options": "SAMEORIGIN",
+      "x-gemini-service-tier": "standard",
+      "x-xss-protection": "0"
+    },
+    "body": "{\n  \"error\": {\n    \"code\": 400,\n    \"message\": \"CachedContent can not be used with GenerateContent request setting system_instruction, tools or tool_config.\\n\\nProposed fix: move those values to CachedContent from GenerateContent request.\",\n    \"status\": \"INVALID_ARGUMENT\"\n  }\n}\n"
+  }
+}

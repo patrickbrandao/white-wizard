@@ -1,0 +1,24 @@
+{
+  "provider": "opencode",
+  "name": "responses",
+  "recorded_at": "2026-10-31",
+  "note": "sonda responses do wwz-drift (wwz-drift record)",
+  "request": {
+    "method": "POST",
+    "path": "/inference/go/openai/v1/responses",
+    "headers": {
+      "authorization": "Bearer <key>",
+      "x-opencode-session": "<session>"
+    },
+    "body": "{\"model\":\"deepseek-v4.1-flash\",\"input\":\"Responda só: ok\",\"max_output_tokens\":256}"
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "content-type": "application/json",
+      "x-opencode-log-id": "<log_id>",
+      "x-zen-model": "deepseek-v4.1-flash"
+    },
+    "body": "{\"id\":\"<id>\",\"object\":\"response\",\"created_at\":1793465705,\"status\":\"completed\",\"error\":null,\"incomplete_details\":null,\"instructions\":null,\"metadata\":{},\"model\":\"deepseek-v4.1-flash\",\"output\":[{\"id\":\"<item_id>\",\"type\":\"reasoning\",\"summary\":[{\"type\":\"summary_text\",\"text\":\"We need answer only \\\"ok\\\". Must comply.\"}]},{\"id\":\"<item_id>\",\"type\":\"message\",\"role\":\"assistant\",\"status\":\"completed\",\"content\":[{\"type\":\"output_text\",\"text\":\"ok\",\"annotations\":[],\"logprobs\":[]}]}],\"parallel_tool_calls\":true,\"temperature\":null,\"tool_choice\":\"auto\",\"tools\":[],\"top_p\":null,\"max_output_tokens\":256,\"usage\":{\"input_tokens\":35,\"input_tokens_details\":{\"cached_tokens\":0},\"output_tokens\":13,\"output_tokens_details\":{\"reasoning_tokens\":10},\"total_tokens\":48,\"cost\":0,\"opencode\":{\"billing_source\":\"go\",\"list_cost\":0.00001305,\"allowance\":0.00000783,\"tokens\":{\"input\":35,\"output\":13,\"reasoning\":10,\"cache_read\":0,\"cache_write_5m\":0,\"cache_write_1h\":0}}}}"
+  }
+}

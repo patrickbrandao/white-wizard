@@ -1,0 +1,21 @@
+# Search, fetch, answer: two tool rounds then a final text reply.
+name: search-then-answer
+description: web_search -> fetch -> final answer
+match:
+  tools_include: [web_search]
+steps:
+  - id: search
+    expect: { tool_results: 0 }
+    reasoning: { tokens: "30..80" }
+    tool_calls:
+      - { name: web_search, args: schema+, overlay: { query: "{{last_user_message}}" } }
+  # tool_results: 1 makes fetch run once: any_read may pick web_search again,
+  # and last_tool alone would then match fetch forever.
+  - id: fetch
+    expect: { last_tool: web_search, tool_results: 1 }
+    tool_calls:
+      - { name: any_read, args: schema }
+  - id: answer
+    expect: { tool_results_gte: 2 }
+    content: { tokens: "80..300" }
+    finish_reason: stop

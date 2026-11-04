@@ -1,0 +1,7 @@
+HTTP 401
+Content-Length: 97
+Content-Type: application/json
+Date: Sat, 31 Oct 2026 17:00:54 GMT
+X-Opencode-Log-Id: 01a192e8-3960-7c6d-bbfe-bad57047f8d1
+
+{"error":{"code":401,"status":"UNKNOWN","message":"Upstream request failed: Invalid credential"}}

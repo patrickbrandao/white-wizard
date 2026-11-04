@@ -1,0 +1,26 @@
+{
+  "provider": "gemini",
+  "name": "model_one_prefixed",
+  "recorded_at": "2026-10-31",
+  "note": "erro ou ordem de checagem",
+  "request": {
+    "method": "GET",
+    "path": "/v1beta/models/models/gemini-3.5-flash-lite",
+    "headers": {
+      "x-goog-api-key": "<key>"
+    },
+    "body": ""
+  },
+  "response": {
+    "status": 404,
+    "headers": {
+      "content-type": "text/html",
+      "server": "scaffolding on HTTPServer2",
+      "server-timing": "gfet4t7; dur=<ms>",
+      "x-content-type-options": "nosniff",
+      "x-frame-options": "SAMEORIGIN",
+      "x-xss-protection": "0"
+    },
+    "body": ""
+  }
+}

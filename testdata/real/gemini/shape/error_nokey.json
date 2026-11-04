@@ -1,0 +1,24 @@
+{
+  "provider": "gemini",
+  "name": "error_nokey",
+  "recorded_at": "2026-10-31",
+  "note": "erro ou ordem de checagem",
+  "request": {
+    "method": "POST",
+    "path": "/v1beta/models/gemini-2.5-flash-lite:generateContent",
+    "headers": {},
+    "body": "{\"contents\":[{\"role\":\"user\",\"parts\":[{\"text\":\"Responda só: ok\"}]}],\"generationConfig\":{\"maxOutputTokens\":16}}"
+  },
+  "response": {
+    "status": 403,
+    "headers": {
+      "content-type": "application/json; charset=UTF-8",
+      "server": "scaffolding on HTTPServer2",
+      "server-timing": "gfet4t7; dur=<ms>",
+      "x-content-type-options": "nosniff",
+      "x-frame-options": "SAMEORIGIN",
+      "x-xss-protection": "0"
+    },
+    "body": "{\n  \"error\": {\n    \"code\": 403,\n    \"message\": \"Method doesn't allow unregistered callers (callers without established identity). Please use API Key or other form of API consumer identity to call this API.\",\n    \"status\": \"PERMISSION_DENIED\"\n  }\n}\n"
+  }
+}

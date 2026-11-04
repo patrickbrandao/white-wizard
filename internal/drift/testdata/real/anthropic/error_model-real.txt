@@ -1,0 +1,18 @@
+HTTP 404
+Anthropic-Organization-Id: 00000000-0000-4000-8000-000000000000
+Anthropic-Workspace-Id: wrkspc_01RedactedWorkspaceIDx
+Cf-Cache-Status: DYNAMIC
+Cf-Ray: a532ae24eb17c76a-GRU
+Content-Security-Policy: default-src 'none'; frame-ancestors 'none'
+Content-Type: application/json
+Date: Sat, 31 Oct 2026 12:32:03 GMT
+Request-Id: req_011CgaKVqc56dAqt22Tb4f2y
+Server: cloudflare
+Server-Timing: x-originResponse;dur=215
+Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
+Traceresponse: 00-c5e54bdc687f5455af9a720b8a1d30e8-aa82be72b357e67c-01
+Vary: Accept-Encoding
+X-Robots-Tag: none
+X-Should-Retry: false
+
+{"type":"error","error":{"type":"not_found_error","message":"model: wwz-drift-modelo-inexistente"},"request_id":"req_011CgaKVqc56dAqt22Tb4f2y"}

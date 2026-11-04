@@ -1,0 +1,22 @@
+{
+  "provider": "opencode",
+  "name": "order_unknown_model_vs_unknown_field",
+  "recorded_at": "2026-10-31",
+  "request": {
+    "method": "POST",
+    "path": "/inference/go/openai/v1/responses",
+    "headers": {
+      "authorization": "Bearer <key>",
+      "x-opencode-session": "<session>"
+    },
+    "body": "{\"model\": \"wwz-nao-existe\", \"input\": \"hi\", \"zzz\": 1}"
+  },
+  "response": {
+    "status": 400,
+    "headers": {
+      "content-type": "application/json",
+      "x-opencode-log-id": "<log_id>"
+    },
+    "body": "{\"error\":{\"type\":\"server_error\",\"message\":\"Upstream request failed: Model is unavailable.\"}}"
+  }
+}

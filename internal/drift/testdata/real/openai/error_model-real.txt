@@ -1,0 +1,22 @@
+HTTP 404
+Access-Control-Expose-Headers: CF-Ray, CF-Ray
+Alt-Svc: h3=":443"; ma=86400
+Cf-Cache-Status: DYNAMIC
+Cf-Ray: a532ae206ae60683-CNF
+Content-Type: application/json; charset=utf-8
+Date: Sat, 31 Oct 2026 12:32:02 GMT
+Server: cloudflare
+Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
+Vary: Origin
+X-Content-Type-Options: nosniff
+X-Openai-Proxy-Wasm: v0.1
+X-Request-Id: req_c4bb9a4d484a46e898d4e85b168973e3
+
+{
+    "error": {
+        "message": "The model `wwz-drift-modelo-inexistente` does not exist or you do not have access to it.",
+        "type": "invalid_request_error",
+        "param": null,
+        "code": "model_not_found"
+    }
+}

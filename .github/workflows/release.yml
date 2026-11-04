@@ -1,0 +1,199 @@
+# Imagens e release (specs/018, ADR 0010, ADR 0034).
+#   push na main  -> imagens :latest e :sha-<7> (linux/amd64 + linux/arm64)
+#   tag vX.Y.Z    -> imagens :X.Y.Z e :X.Y; 20 binários (5 x linux/darwin x amd64/arm64)
+#                    em white-wizard_<versão>_<os>_<arch>.tar.gz + SHA256SUMS no GitHub
+#                    Releases, com o corpo tirado da seção da versão no CHANGELOG.md.
+# Imagens em docker.io/tmsoftbrasil (ADR 0075); ensaio local: make release-dryrun.
+# DOCKERHUB_USERNAME/DOCKERHUB_TOKEN são secrets configurados pelo humano
+# (conta tmsoftbrasil e um token de acesso pessoal dela).
+name: release
+
+on:
+  push:
+    branches: [main]
+    tags: ["v*"]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  REGISTRY: docker.io
+  NAMESPACE: tmsoftbrasil
+  PLATFORMS: linux/amd64,linux/arm64
+
+jobs:
+  images:
+    name: imagem ${{ matrix.image }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - image: white-wizard
+            target: wwz
+          - image: white-wizard-load # leva também o wwz-tools (ADR 0034)
+            target: wwz-load
+          - image: white-wizard-panel
+            target: wwz-panel
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Versão e tags
+        id: meta
+        env:
+          IMAGE: ${{ env.REGISTRY }}/${{ env.NAMESPACE }}/${{ matrix.image }}
+        run: |
+          short="${GITHUB_SHA::7}"
+          case "$GITHUB_REF" in
+            refs/heads/main)
+              version="main-${short}"
+              tags="${IMAGE}:latest,${IMAGE}:sha-${short}"
+              ;;
+            refs/tags/v*)
+              version="${GITHUB_REF_NAME}"
+              semver="${version#v}"
+              if [[ "$semver" =~ ^([0-9]+)\.([0-9]+)\.([0-9]+)$ ]]; then
+                tags="${IMAGE}:${semver},${IMAGE}:${BASH_REMATCH[1]}.${BASH_REMATCH[2]}"
+              elif [[ "$semver" =~ ^[0-9]+\.[0-9]+\.[0-9]+-[0-9A-Za-z.-]+$ ]]; then
+                # Pré-release: só a tag completa; X.Y continua na última estável.
+                tags="${IMAGE}:${semver}"
+              else
+                echo "::error::tag ${GITHUB_REF_NAME} fora do SemVer vX.Y.Z"
+                exit 1
+              fi
+              ;;
+            *)
+              echo "::error::ref inesperada: ${GITHUB_REF}"
+              exit 1
+              ;;
+          esac
+          {
+            echo "version=${version}"
+            echo "tags=${tags}"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login no Docker Hub
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build e push
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          target: ${{ matrix.target }}
+          platforms: ${{ env.PLATFORMS }}
+          build-args: |
+            VERSION=${{ steps.meta.outputs.version }}
+            COMMIT=${{ github.sha }}
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: |
+            org.opencontainers.image.source=${{ github.server_url }}/${{ github.repository }}
+            org.opencontainers.image.revision=${{ github.sha }}
+            org.opencontainers.image.version=${{ steps.meta.outputs.version }}
+          push: true
+          cache-from: type=gha,scope=${{ matrix.target }}
+          cache-to: type=gha,mode=max,scope=${{ matrix.target }}
+
+  binaries:
+    if: startsWith(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Go
+        uses: actions/setup-go@v6
+        with:
+          go-version-file: go.mod
+          cache: true
+
+      - name: Compila e empacota
+        run: |
+          set -euo pipefail
+          version="${GITHUB_REF_NAME}"
+          semver="${version#v}"
+          mkdir -p dist
+          for os in linux darwin; do
+            for arch in amd64 arm64; do
+              name="white-wizard_${semver}_${os}_${arch}"
+              stage="build/${name}"
+              mkdir -p "$stage"
+              for cmd in wwz wwz-load wwz-panel wwz-tools wwz-drift; do
+                CGO_ENABLED=0 GOOS="$os" GOARCH="$arch" go build -trimpath \
+                  -ldflags "-s -w -X main.version=${version} -X main.commit=${GITHUB_SHA}" \
+                  -o "${stage}/${cmd}" "./cmd/${cmd}"
+              done
+              for f in LICENSE THIRD_PARTY_NOTICES; do
+                test -f "$f"
+                cp "$f" "$stage/"
+              done
+              for f in README.md CHANGELOG.md; do
+                if [ -f "$f" ]; then cp "$f" "$stage/"; fi
+              done
+              tar -C build -czf "dist/${name}.tar.gz" "$name"
+            done
+          done
+          test "$(find build -type f -name 'wwz*' | wc -l)" -eq 20
+          (cd dist && sha256sum -- *.tar.gz > SHA256SUMS)
+          cat dist/SHA256SUMS
+
+      - name: Artefato
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist/
+          if-no-files-found: error
+
+  release:
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: [images, binaries]
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Binários
+        uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist/
+
+      - name: Corpo da release (CHANGELOG.md)
+        run: |
+          semver="${GITHUB_REF_NAME#v}"
+          awk -v v="$semver" '
+            index($0, "## [" v "]") == 1 { on = 1; next }
+            on && /^## \[/ { exit }
+            on { print }
+          ' CHANGELOG.md > notes.md
+          if ! grep -q '[^[:space:]]' notes.md; then
+            echo "::error::CHANGELOG.md sem a seção ## [${semver}] (mova [Não lançado] antes da tag)"
+            exit 1
+          fi
+
+      - name: GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          flags=(--title "${GITHUB_REF_NAME}" --notes-file notes.md --verify-tag)
+          case "${GITHUB_REF_NAME}" in *-*) flags+=(--prerelease) ;; esac
+          gh release create "${GITHUB_REF_NAME}" "${flags[@]}" dist/*.tar.gz dist/SHA256SUMS

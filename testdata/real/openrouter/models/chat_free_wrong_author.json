@@ -1,0 +1,18 @@
+{
+  "provider": "openrouter",
+  "name": "chat_free_wrong_author",
+  "recorded_at": "2026-10-31",
+  "request": {
+    "method": "POST",
+    "path": "/api/v1/chat/completions",
+    "headers": {
+      "authorization": "Bearer <key>"
+    },
+    "body": "{\"model\": \"x/gpt-4o-mini:free\", \"messages\": [{\"role\": \"user\", \"content\": \"hi\"}], \"max_tokens\": 1}"
+  },
+  "response": {
+    "status": 400,
+    "content_type": "application/json",
+    "body": "{\"error\":{\"message\":\"x/gpt-4o-mini:free is not a valid model ID\",\"code\":400},\"user_id\":\"<user_id>\"}"
+  }
+}

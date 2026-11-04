@@ -1,0 +1,11 @@
+HTTP 401
+Cf-Placement: remote-IAD
+Cf-Ray: a533d2fa088a4399-EWR
+Connection: keep-alive
+Content-Length: 97
+Content-Type: application/json
+Date: Sat, 31 Oct 2026 15:51:57 GMT
+Server: cloudflare
+X-Opencode-Log-Id: 01a192a9-1857-77f9-9d50-63ab9679ebd9
+
+{"error":{"code":401,"status":"UNKNOWN","message":"Upstream request failed: Invalid credential"}}

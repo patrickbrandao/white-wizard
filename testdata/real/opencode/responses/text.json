@@ -1,0 +1,23 @@
+{
+  "provider": "opencode",
+  "name": "text",
+  "recorded_at": "2026-10-31",
+  "request": {
+    "method": "POST",
+    "path": "/inference/go/openai/v1/responses",
+    "headers": {
+      "authorization": "Bearer <key>",
+      "x-opencode-session": "<session>"
+    },
+    "body": "{\"model\": \"deepseek-v4.1-flash\", \"input\": \"Say hi in two words.\", \"max_output_tokens\": 64}"
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "content-type": "application/json",
+      "x-opencode-log-id": "<log_id>",
+      "x-zen-model": "deepseek-v4.1-flash"
+    },
+    "body": "{\"id\":\"resp_642a2d89818647d99fd9074aa30c749f\",\"object\":\"response\",\"created_at\":1793458816,\"status\":\"completed\",\"error\":null,\"incomplete_details\":null,\"instructions\":null,\"metadata\":{},\"model\":\"deepseek-v4.1-flash\",\"output\":[{\"id\":\"rs_f076b63abd114ebcbc6426addddc5b39\",\"type\":\"reasoning\",\"summary\":[{\"type\":\"summary_text\",\"text\":\"We need answer. User asks \\\"Say hi in two words.\\\" Need exactly two words? Probably \\\"Hi there\\\" is two words. Need comply. Final only.\"}]},{\"id\":\"msg_27de4ff7a3a44217970058d0f281590d\",\"type\":\"message\",\"role\":\"assistant\",\"status\":\"completed\",\"content\":[{\"type\":\"output_text\",\"text\":\"Hi there.\",\"annotations\":[],\"logprobs\":[]}]}],\"parallel_tool_calls\":true,\"temperature\":null,\"tool_choice\":\"auto\",\"tools\":[],\"top_p\":null,\"max_output_tokens\":64,\"usage\":{\"input_tokens\":36,\"input_tokens_details\":{\"cached_tokens\":0},\"output_tokens\":37,\"output_tokens_details\":{\"reasoning_tokens\":0},\"total_tokens\":73,\"cost\":0,\"opencode\":{\"billing_source\":\"go\",\"list_cost\":0.0000276,\"allowance\":0.00001656,\"tokens\":{\"input\":36,\"output\":37,\"reasoning\":0,\"cache_read\":0,\"cache_write_5m\":0,\"cache_write_1h\":0}}}}"
+  }
+}

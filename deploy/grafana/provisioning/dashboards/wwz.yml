@@ -1,0 +1,15 @@
+# Provider de dashboards: lê os JSON montados (read-only) em /var/lib/grafana-dashboards.
+# Edições pela UI não persistem; a fonte é deploy/grafana/dashboards/*.json.
+apiVersion: 1
+
+providers:
+  - name: wwz
+    orgId: 1
+    folder: White Wizard
+    type: file
+    disableDeletion: true
+    allowUiUpdates: false
+    updateIntervalSeconds: 30
+    options:
+      path: /var/lib/grafana-dashboards
+      foldersFromFilesStructure: false

@@ -1,0 +1,19 @@
+{
+  "name": "outside_v1",
+  "note": "",
+  "provider": "openai",
+  "recorded_at": "2026-10-31",
+  "request": {
+    "body": null,
+    "headers": {
+      "authorization": "Bearer <key>"
+    },
+    "method": "GET",
+    "path": "/nope"
+  },
+  "response": {
+    "body": "",
+    "headers": {},
+    "status": 404
+  }
+}

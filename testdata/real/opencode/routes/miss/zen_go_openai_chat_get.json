@@ -1,0 +1,21 @@
+{
+  "provider": "opencode",
+  "name": "zen_go_openai_chat_get",
+  "recorded_at": "2026-10-31",
+  "note": "",
+  "request": {
+    "method": "GET",
+    "path": "/zen/go/openai/v1/chat/completions",
+    "headers": {
+      "authorization": "Bearer <key>"
+    },
+    "body": null
+  },
+  "response": {
+    "status": 404,
+    "headers": {
+      "content-type": "text/html"
+    },
+    "body": "<html>"
+  }
+}

@@ -1,0 +1,37 @@
+# falhas-20pct: 20% das requisições falham, com tipos de erro variados.
+# Spec 009: errors.rate sorteia por requisição; `types` escolhe o tipo (com pesos).
+# `server.seed` fixo faz a mesma sequência de requisições dar os mesmos erros.
+server:
+  listen: ":8000"
+  auth: keys
+  seed: 20240
+
+admin:
+  listen: ":9000"
+
+store:
+  kind: memory
+
+keys:
+  - { key: wwz-key-demo, label: demo }
+
+profiles:
+  latency:
+    rapida: { ttft: 5ms, itl: 1ms }
+  errors:
+    falhas-20pct:
+      rate: 20
+      # OpenAI: rate_limit=429, server_error=500, bad_gateway=502 (corpo HTML),
+      # overloaded=503. Anthropic: overloaded=529, api_error=500.
+      types: [rate_limit, server_error, bad_gateway, overloaded]
+      weights: { rate_limit: 3, server_error: 3, bad_gateway: 2, overloaded: 2 }
+
+models:
+  - id: gpt-4o-mini
+    protocols: [openai]
+    latency: rapida
+    errors: falhas-20pct
+  - id: claude-sonnet-4
+    protocols: [anthropic]
+    latency: rapida
+    errors: falhas-20pct

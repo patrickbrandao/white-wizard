@@ -1,0 +1,27 @@
+{
+  "provider": "gemini",
+  "name": "thoughts_hidden",
+  "recorded_at": "2026-10-31",
+  "note": "thinkingLevel HIGH sem includeThoughts: só thoughtsTokenCount",
+  "request": {
+    "method": "POST",
+    "path": "/v1beta/models/gemini-3.5-flash-lite:generateContent",
+    "headers": {
+      "x-goog-api-key": "<key>"
+    },
+    "body": "{\"contents\":[{\"role\":\"user\",\"parts\":[{\"text\":\"Um trem sai às 9h a 60 km/h e outro às 10h a 90 km/h no mesmo sentido. Quando o segundo alcança o primeiro? Responda só o horário.\"}]}],\"generationConfig\":{\"maxOutputTokens\":600,\"thinkingConfig\":{\"thinkingLevel\":\"HIGH\"}}}"
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "content-type": "application/json; charset=UTF-8",
+      "server": "scaffolding on HTTPServer2",
+      "server-timing": "gfet4t7; dur=<ms>",
+      "x-content-type-options": "nosniff",
+      "x-frame-options": "SAMEORIGIN",
+      "x-gemini-service-tier": "standard",
+      "x-xss-protection": "0"
+    },
+    "body": "{\n  \"candidates\": [\n    {\n      \"content\": {\n        \"parts\": [\n          {\n            \"text\": \"12h\",\n            \"thoughtSignature\": \"<signature>\"\n          }\n        ],\n        \"role\": \"model\"\n      },\n      \"finishReason\": \"STOP\",\n      \"index\": 0\n    }\n  ],\n  \"usageMetadata\": {\n    \"promptTokenCount\": 48,\n    \"candidatesTokenCount\": 3,\n    \"totalTokenCount\": 545,\n    \"promptTokensDetails\": [\n      {\n        \"modality\": \"TEXT\",\n        \"tokenCount\": 48\n      }\n    ],\n    \"thoughtsTokenCount\": 494,\n    \"serviceTier\": \"standard\"\n  },\n  \"modelVersion\": \"gemini-3.5-flash-lite\",\n  \"responseId\": \"<response_id>\"\n}\n"
+  }
+}

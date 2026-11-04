@@ -1,0 +1,72 @@
+# Drift de forma contra os provedores reais (specs/017, specs/018, ADR 0035).
+# Chaves reais só em secrets do repositório, configurados pelo humano (ADR 0018).
+name: drift
+
+on:
+  schedule:
+    - cron: "0 6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: drift
+  cancel-in-progress: false
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Go
+        uses: actions/setup-go@v6
+        with:
+          go-version-file: go.mod
+          cache: true
+
+      - name: Build do wwz-drift
+        run: |
+          mkdir -p bin tmp
+          CGO_ENABLED=0 go build -trimpath \
+            -ldflags "-X main.version=drift-${GITHUB_SHA::7} -X main.commit=${GITHUB_SHA}" \
+            -o bin/wwz-drift ./cmd/wwz-drift
+
+      - name: wwz-drift check
+        id: check
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+          OPENCODE_API_KEY: ${{ secrets.OPENCODE_API_KEY }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: |
+          set +e
+          bin/wwz-drift check --real --output json --out tmp/drift.json
+          rc=$?
+          set -e
+          echo "rc=$rc" >> "$GITHUB_OUTPUT"
+          echo "wwz-drift check saiu com código $rc"
+
+      - name: Relatório
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: drift-${{ github.run_id }}
+          path: tmp/drift.json
+          if-no-files-found: warn
+          retention-days: 30
+
+      - name: Resultado
+        if: always()
+        env:
+          RC: ${{ steps.check.outputs.rc }}
+        run: |
+          case "$RC" in
+            0) echo "Sem divergência." ;;
+            3) echo "::error::Divergência de forma em relação aos provedores reais (ver artefato)."; exit 3 ;;
+            *) echo "::error::wwz-drift check falhou (código ${RC:-desconhecido})."; exit 1 ;;
+          esac

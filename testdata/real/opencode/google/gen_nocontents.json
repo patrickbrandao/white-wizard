@@ -1,0 +1,24 @@
+{
+  "provider": "opencode",
+  "name": "gen_nocontents",
+  "recorded_at": "2026-10-31",
+  "note": "rota Gemini do gateway (task 241)",
+  "request": {
+    "method": "POST",
+    "path": "/inference/go/google/v1beta/models/gemini-4-argon:generateContent",
+    "headers": {
+      "x-goog-api-key": "<key>",
+      "x-opencode-session": "<session>"
+    },
+    "body": "{}"
+  },
+  "response": {
+    "status": 400,
+    "headers": {
+      "content-type": "application/json",
+      "x-opencode-log-id": "<log_id>",
+      "x-zen-model": "gemini-4-argon"
+    },
+    "body": "{\"error\":{\"code\":400,\"status\":\"INVALID_ARGUMENT\",\"message\":\"Upstream request failed: [400] Unable to submit request because at least one contents field is required. Learn more: https://cloud.google.com/vertex-ai/generative-ai/docs/model-reference/gemini\"}}"
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "provider": "opencode",
+  "name": "count",
+  "recorded_at": "2026-10-31",
+  "note": "rota Gemini do gateway (task 241)",
+  "request": {
+    "method": "POST",
+    "path": "/inference/go/google/v1beta/models/gemini-4-argon:countTokens",
+    "headers": {
+      "x-goog-api-key": "<key>",
+      "x-opencode-session": "<session>"
+    },
+    "body": "{\"contents\":[{\"role\":\"user\",\"parts\":[{\"text\":\"Responda só: ok\"}]}],\"generationConfig\":{\"maxOutputTokens\":16}}"
+  },
+  "response": {
+    "status": 400,
+    "headers": {
+      "content-length": "0",
+      "x-opencode-log-id": "<log_id>"
+    },
+    "body": ""
+  }
+}

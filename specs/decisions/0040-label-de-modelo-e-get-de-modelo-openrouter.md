@@ -1,0 +1,29 @@
+# 0040 — Label de modelo na observabilidade e GET de modelo do OpenRouter
+
+Status: provisória; rota de compatibilidade `GET /api/v1/models/{slug}` retirada pela [0046](0046-cache-de-prompt-real-e-detalhes-dos-drivers.md) (revisar se um usuário precisar separar métricas por alias, ou quando as fixtures reais do OpenRouter da fase 5, ADR 0014, mostrarem outra forma de `GET /api/v1/model/{author}/{slug}`)
+Data: 2026-10-31
+
+## Contexto
+A ADR 0038 e a spec 013 dizem que labels de métricas, eventos do `ev:stream`, limites e cenários usam `models[].id`. A revisão da task 133 trouxe fatos novos.
+
+1. **Label do modelo.** O engine (`internal/engine`, `resolveModel`) põe em `req.Model` o nome pedido sem o prefixo do slug, ou seja, o `id` **ou o alias**. Métricas (`wwz_requests_total`, `wwz_ttft_seconds`, `wwz_itl_seconds`, `wwz_e2e_seconds`, `wwz_tokens_total`), o `model` dos eventos `request`/`error`, o log e o recorder leem `req.Model`. Por isso um modelo com dois aliases vira três séries e três linhas no agrupamento por `model` do painel (`internal/panel/store/usage.go`, `source/prom.go`, que soma `/admin/stats` por `driver`/`model`). Em 404 `model_not_found` o label recebe o texto cru do cliente, e a cardinalidade fica por conta de quem chama (limitada só por `metrics.max_series`).
+2. **Sufixo de cenário.** A seleção `model_suffix` (spec 011, I10) procura `-scenario-<nome>` em `req.Model` (`internal/scenario/engine.go`). O `match.model` dos cenários e o hash da semente também leem `req.Model`. Mas `config.FindModel` só compara `id` e aliases por igualdade, então `gpt-5-sim-scenario-x` dá 404 antes de chegar à seleção. Hoje `model_suffix` só funciona se o alias contém o sufixo literal. Normalizar `req.Model` para `models[].id` mataria de vez a seleção por sufixo e o `match.model` por alias.
+3. **GET de um modelo no OpenRouter.** O wwz responde `GET /openrouter/api/v1/models/{slug}` com `{"data": {...}}`, e `client.models.retrieve` do SDK OpenAI não lê isso como modelo. A referência pública do OpenRouter (conferida em 31/10/2026) tem `GET /api/v1/model/{author}/{slug}`, com `model` no **singular**, que devolve `{"data": Model}` (`ModelResponse`, com `id`, `canonical_slug`, `name`, `created`, `pricing`, `context_length`, `architecture`, `top_provider`, `per_request_limits`, `supported_parameters`, `default_parameters`, `supported_voices`, `links`, `endpoints`; erros 403/404/500). Também tem `GET /api/v1/models/{author}/{slug}/endpoints`, que devolve `{"data": {id, name, created, description, architecture, endpoints}}`. Ela não tem `GET /api/v1/models/{id}` no estilo OpenAI. O envelope `data` é o real.
+
+## Decisão
+- **Opção (a): observabilidade normalizada para `models[].id`.** Os labels `model` das métricas, o `model` dos eventos `request`/`error` do `ev:stream`, o campo `model` do log, o `Record` do recorder e o `/admin/stats` usam `models[].id` do modelo resolvido, nunca o alias, o slug nem o sufixo. A cardinalidade fica limitada pelo número de modelos do YAML, e o painel agrega um modelo numa linha só.
+- **Nome pedido preservado só para escolher o cenário.** O engine guarda o nome pedido (sem o prefixo de slug da ADR 0038) num campo à parte, e os cenários continuam a recebê-lo: `model_suffix`, `match.model` e semente.
+- **Resolução com sufixo.** Quando o nome pedido não acha modelo por igualdade e contém `-scenario-`, o engine resolve o modelo pela parte anterior ao **último** `-scenario-` (id ou alias, depois o slug sem prefixo). O nome completo continua indo para a seleção do cenário. Cenário inexistente continua com o erro de hoje (`unknown scenario`).
+- **Modelo não resolvido** (404 `model_not_found`): label `model=""` nas métricas, para que o texto do cliente não crie séries. O evento `error` leva o nome pedido em `model`, porque o stream não tem limite de cardinalidade e o nome ajuda a depurar. O painel agrega esse caso como o texto cru, e ele só aparece entre os erros.
+- **`model` na resposta:** sem mudança. Os drivers `openai`, `anthropic` e `opencode` devolvem o nome pedido (id ou alias, com o sufixo, se houver). O `openrouter` devolve o slug (ADR 0038).
+- **GET de modelo no OpenRouter:** o envelope `{"data": Model}` fica, porque é o real. A rota real `GET /api/v1/model/{author}/{slug}` (singular) passa a existir no driver com o mesmo corpo. `GET /api/v1/models/{slug}` continua como desvio de compatibilidade, com o mesmo envelope `data`. O SDK OpenAI (`models.retrieve`) **não** é o cliente-alvo desses endpoints. Os clientes-alvo são o SDK do OpenRouter (`models.get(author, slug)`) e HTTP direto. A forma exata é conferida com fixture real na fase 5 (ADR 0014).
+
+## Alternativas consideradas
+- **(b) Mudar ADR e spec para "id ou alias pedido".** Mantém o código, mas multiplica séries por alias, quebra o agrupamento do painel, deixa o 404 criar séries com texto do cliente e não conserta o `model_suffix` quebrado.
+- **Normalizar `req.Model` direto.** É mais simples, mas perde o sufixo e o `match.model` por alias dos cenários.
+- **Trocar o envelope para um objeto nu, compatível com `models.retrieve`.** Seria menos fiel ao OpenRouter real, e é a fidelidade que importa para um roteador que fala com ele.
+
+## Consequências
+- Spec 013: o label `model` é `models[].id`, e fica vazio quando o modelo não resolve. Spec 011: o modelo é resolvido pelo prefixo antes do sufixo. Spec 006 (16.4): rota singular, envelope e conferência na fase 5. AsyncAPI 0.4.1: descrição de `model` (compatível).
+- A ADR 0038 continua valendo. Esta ADR torna verdadeira a linha "Observabilidade" dela, que o código ainda não seguia.
+- Tarefas de implementador: label e evento por `models[].id`, com o nome pedido à parte e a resolução por sufixo (engine), e a rota `GET /api/v1/model/{author}/{slug}` no driver `openrouter`, com testes.

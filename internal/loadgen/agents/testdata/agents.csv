@@ -1,0 +1,4 @@
+agent,profile,sessions_started,sessions_completed,sessions_failed,turns,requests,retries,tool_calls,tool_errors,errors,ttft_p50_ms,ttft_p99_ms,e2e_p50_ms,e2e_p99_ms,error_types
+0,coder,1,1,0,2,5,1,3,2,0,10,10,40,40,
+1,pesquisa,2,0,1,1,5,2,1,0,2,20,20,80,80,http_429/rate_limit_error=1;timeout=1
+total,mixed,3,1,1,3,10,3,4,2,2,10.015,20,40.063,80,http_429/rate_limit_error=1;timeout=1

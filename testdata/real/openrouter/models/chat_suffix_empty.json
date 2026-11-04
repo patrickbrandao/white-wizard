@@ -1,0 +1,19 @@
+{
+  "provider": "openrouter",
+  "name": "chat_suffix_empty",
+  "recorded_at": "2026-10-31",
+  "request": {
+    "method": "POST",
+    "path": "/api/v1/chat/completions",
+    "headers": {
+      "authorization": "Bearer <key>"
+    },
+    "body": "{\"model\": \"openai/gpt-4o-mini:\", \"messages\": [{\"role\": \"user\", \"content\": \"hi\"}], \"max_tokens\": 1}"
+  },
+  "response": {
+    "status": 200,
+    "content_type": "application/json",
+    "body": null,
+    "model": "openai/gpt-4o-mini"
+  }
+}

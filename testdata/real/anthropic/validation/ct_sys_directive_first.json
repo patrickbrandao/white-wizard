@@ -1,0 +1,21 @@
+{
+  "provider": "anthropic",
+  "name": "ct_sys_directive_first",
+  "recorded_at": "2026-11-03",
+  "note": "claude-haiku-5-5, task 453",
+  "request": {
+    "method": "POST",
+    "path": "/v1/messages/count_tokens",
+    "headers": {
+      "x-api-key": "<key>",
+      "anthropic-version": "2023-06-01",
+      "anthropic-beta": "per-turn-control-2026-07-01"
+    },
+    "body": "{\"model\": \"claude-haiku-5-5\", \"messages\": [{\"role\": \"system\", \"content\": [], \"output_config\": {\"effort\": \"low\"}}, {\"role\": \"user\", \"content\": \"x\"}]}"
+  },
+  "response": {
+    "status": 200,
+    "content_type": "application/json",
+    "body": null
+  }
+}

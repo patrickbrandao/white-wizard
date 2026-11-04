@@ -1,0 +1,22 @@
+{
+  "provider": "openrouter",
+  "name": "previous_response_id",
+  "recorded_at": "2026-10-31",
+  "request": {
+    "method": "POST",
+    "path": "/api/v1/responses",
+    "headers": {
+      "authorization": "Bearer <key>"
+    },
+    "body": "{\"model\": \"openai/gpt-4o-mini\", \"input\": \"And in French?\", \"max_output_tokens\": 16, \"previous_response_id\": \"{{stored}}\"}"
+  },
+  "response": {
+    "status": 400,
+    "headers": {
+      "access-control-allow-origin": "*",
+      "access-control-expose-headers": "X-Generation-Id,X-Provider-Name,request-id,cf-ray",
+      "content-type": "application/json"
+    },
+    "body": "{\"error\":{\"code\":\"invalid_prompt\",\"message\":\"previous_response_id is not supported on this proxy. Each response request is independent.\"},\"metadata\":{\"raw\":\"[\\n  {\\n    \\\"expected\\\": \\\"null\\\",\\n    \\\"code\\\": \\\"invalid_type\\\",\\n    \\\"path\\\": [\\n      \\\"previous_response_id\\\"\\n    ],\\n    \\\"message\\\": \\\"previous_response_id is not supported on this proxy. Each response request is independent.\\\"\\n  }\\n]\"}}"
+  }
+}

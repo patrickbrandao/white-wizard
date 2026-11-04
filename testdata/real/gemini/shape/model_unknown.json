@@ -1,0 +1,26 @@
+{
+  "provider": "gemini",
+  "name": "model_unknown",
+  "recorded_at": "2026-10-31",
+  "note": "GET models/{id} inexistente",
+  "request": {
+    "method": "GET",
+    "path": "/v1beta/models/wwz-drift-modelo-inexistente",
+    "headers": {
+      "x-goog-api-key": "<key>"
+    },
+    "body": ""
+  },
+  "response": {
+    "status": 404,
+    "headers": {
+      "content-type": "application/json; charset=UTF-8",
+      "server": "scaffolding on HTTPServer2",
+      "server-timing": "gfet4t7; dur=<ms>",
+      "x-content-type-options": "nosniff",
+      "x-frame-options": "SAMEORIGIN",
+      "x-xss-protection": "0"
+    },
+    "body": "{\n  \"error\": {\n    \"code\": 404,\n    \"message\": \"Model is not found: models/wwz-drift-modelo-inexistente for api version v1beta\",\n    \"status\": \"NOT_FOUND\"\n  }\n}\n"
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "provider": "opencode",
+  "name": "incomplete",
+  "recorded_at": "2026-10-31",
+  "request": {
+    "method": "POST",
+    "path": "/inference/go/openai/v1/responses",
+    "headers": {
+      "authorization": "Bearer <key>",
+      "x-opencode-session": "<session>"
+    },
+    "body": "{\"model\": \"deepseek-v4.1-flash\", \"input\": \"Count from 1 to 40 separated by commas.\", \"max_output_tokens\": 16}"
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "content-type": "application/json",
+      "x-opencode-log-id": "<log_id>",
+      "x-zen-model": "deepseek-v4.1-flash"
+    },
+    "body": "{\"id\":\"resp_80bde5482917491ea608f0555154256e\",\"object\":\"response\",\"created_at\":1793458831,\"status\":\"incomplete\",\"error\":null,\"incomplete_details\":{\"reason\":\"max_output_tokens\"},\"instructions\":null,\"metadata\":{},\"model\":\"deepseek-v4.1-flash\",\"output\":[{\"id\":\"rs_ef845003013549339c1c9497b11638d7\",\"type\":\"reasoning\",\"summary\":[{\"type\":\"summary_text\",\"text\":\"We need answer simple. Need count 1 to 40 separated by commas.\"}]}],\"parallel_tool_calls\":true,\"temperature\":null,\"tool_choice\":\"auto\",\"tools\":[],\"top_p\":null,\"max_output_tokens\":16,\"usage\":{\"input_tokens\":41,\"input_tokens_details\":{\"cached_tokens\":0},\"output_tokens\":16,\"output_tokens_details\":{\"reasoning_tokens\":0},\"total_tokens\":57,\"cost\":0,\"opencode\":{\"billing_source\":\"go\",\"list_cost\":0.00001575,\"allowance\":0.00000945,\"tokens\":{\"input\":41,\"output\":16,\"reasoning\":0,\"cache_read\":0,\"cache_write_5m\":0,\"cache_write_1h\":0}}}}"
+  }
+}

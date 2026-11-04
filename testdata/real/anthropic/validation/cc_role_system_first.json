@@ -1,0 +1,19 @@
+{
+  "provider": "anthropic",
+  "name": "cc_role_system_first",
+  "recorded_at": "2026-11-03",
+  "request": {
+    "method": "POST",
+    "path": "/v1/messages",
+    "headers": {
+      "x-api-key": "<key>",
+      "anthropic-version": "2023-06-01"
+    },
+    "body": "{\"model\": \"claude-haiku-4-5\", \"max_tokens\": 1, \"messages\": [{\"role\": \"system\", \"content\": \"s\"}, {\"role\": \"user\", \"content\": \"x\"}]}"
+  },
+  "response": {
+    "status": 400,
+    "content_type": "application/json",
+    "body": "{\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"messages.0: use the top-level 'system' parameter for the initial system prompt; the directive-only form (content: [] with output_config) is accepted at any position\"},\"request_id\":\"<request_id>\"}"
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "systemInstruction": {"parts": [{"text": "You are terse."}]},
+  "contents": [
+    {"role": "user", "parts": [{"text": "What is the weather in Paris?"}]},
+    {"role": "model", "parts": [{"functionCall": {"id": "call_000001", "name": "get_weather", "args": {"city": "Paris"}}, "thoughtSignature": "EmAK"}]},
+    {"role": "user", "parts": [{"functionResponse": {"id": "call_000001", "name": "get_weather", "response": {"temp": 21}}}]},
+    {"role": "user", "parts": [{"text": "And "}, {"text": "in Rome?"}, {"inlineData": {"mimeType": "image/png", "data": "iVBORw0KGgo="}}]}
+  ],
+  "tools": [{"functionDeclarations": [
+    {"name": "get_weather", "description": "Weather of a city", "parameters": {"type": "object", "properties": {"city": {"type": "string"}}, "required": ["city"]}},
+    {"name": "get_time", "description": "Time of a city", "parametersJsonSchema": {"type": "object"}}
+  ]}],
+  "toolConfig": {"functionCallingConfig": {"mode": "ANY", "allowedFunctionNames": ["get_weather"]}},
+  "safetySettings": [{"category": "HARM_CATEGORY_HARASSMENT", "threshold": "BLOCK_NONE"}],
+  "generationConfig": {
+    "maxOutputTokens": 256,
+    "temperature": 0.5,
+    "seed": 7,
+    "responseMimeType": "application/json",
+    "responseSchema": {"type": "OBJECT"},
+    "thinkingConfig": {"includeThoughts": true, "thinkingBudget": 128}
+  }
+}

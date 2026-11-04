@@ -1,0 +1,13 @@
+# Rodada throughput do verify-heavy (spec 018, 5b; meta da spec 014): req/s
+# não-streaming com latência zero. Store memory e porta 8000 vêm do env do
+# compose. Chaves e modelos ficam nos padrões embutidos (wwz-key-01, wwz-fast);
+# o perfil "fast" é zerado de propósito: o que se mede é o overhead do wwz.
+profiles:
+  latency:
+    fast: {}
+
+server:
+  max_rps: 0
+
+metrics:
+  enabled: true

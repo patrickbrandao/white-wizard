@@ -1,0 +1,20 @@
+{
+  "provider": "anthropic",
+  "name": "c01",
+  "recorded_at": "2026-10-31",
+  "note": "claude-haiku-4-5, task 301",
+  "request": {
+    "method": "POST",
+    "path": "/v1/messages/count_tokens",
+    "headers": {
+      "x-api-key": "<key>",
+      "anthropic-version": "2023-06-01"
+    },
+    "body": "{\"model\": \"claude-haiku-4-5\", \"messages\": [{\"role\": \"user\", \"content\": \"The quick brown fox jumps over the lazy dog. Engineers often use this sentence to test fonts and keyboards because it contains every letter of the English alphabet. In software, however, we rarely need such tricks: a good test suite exercises the edge cases directly, records the behaviour of the real system and compares the simulator against those recordings byte for byte. When the two disagree, the recording wins and the simulator is fixed.\"}]}"
+  },
+  "response": {
+    "status": 200,
+    "content_type": "application/json",
+    "body": "{\"input_tokens\":93}"
+  }
+}

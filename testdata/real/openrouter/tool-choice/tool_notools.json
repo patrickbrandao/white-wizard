@@ -1,0 +1,25 @@
+{
+  "provider": "openrouter",
+  "name": "tool_notools",
+  "recorded_at": "2026-10-31",
+  "note": "sem tools, tool nomeada é descartada: 200 mesmo no claude-opus-5.5, que recusa any/tool (task 342)",
+  "request": {
+    "method": "POST",
+    "path": "/api/v1/messages",
+    "headers": {
+      "authorization": "Bearer <key>"
+    },
+    "body": "{\"model\": \"anthropic/claude-opus-5.5\", \"max_tokens\": 1, \"messages\": [{\"role\": \"user\", \"content\": \"x\"}], \"tool_choice\": {\"type\": \"tool\", \"name\": \"zzz\"}}"
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "access-control-allow-origin": "*",
+      "access-control-expose-headers": "X-Generation-Id,X-Provider-Name,request-id,cf-ray",
+      "content-type": "application/json",
+      "request-id": "<generation_id>",
+      "x-generation-id": "<generation_id>"
+    },
+    "body": "{\"id\":\"<msg_id>\",\"type\":\"message\",\"role\":\"assistant\",\"container\":null,\"content\":[],\"model\":\"anthropic/claude-opus-5.5\",\"stop_reason\":\"max_tokens\",\"stop_details\":null,\"stop_sequence\":null,\"usage\":{\"input_tokens\":9,\"output_tokens\":1,\"output_tokens_details\":{\"thinking_tokens\":0},\"cache_creation_input_tokens\":0,\"cache_read_input_tokens\":0,\"cache_creation\":{\"ephemeral_5m_input_tokens\":0,\"ephemeral_1h_input_tokens\":0},\"inference_geo\":\"global\",\"server_tool_use\":null,\"service_tier\":\"standard\",\"speed\":\"standard\",\"cost\":0.000056,\"is_byok\":false,\"cost_details\":{\"upstream_inference_cost\":0.000056,\"upstream_inference_prompt_cost\":0.000036,\"upstream_inference_completions_cost\":0.00002}},\"context_management\":null,\"provider\":\"Claude Platform on AWS\"}"
+  }
+}

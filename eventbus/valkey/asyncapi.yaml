@@ -1,0 +1,293 @@
+asyncapi: 3.0.0
+info:
+  title: White Wizard — eventos no Valkey
+  version: 0.5.0
+  description: |
+    Eventos publicados pelo wwz e consumidos pelo wwz-panel e por GET /admin (Store.Events).
+    Spec dona: specs/012-estado-valkey.md. Decisões: ADR 0019 (formato), ADR 0020 (nomes de
+    configuração), ADR 0021 (chaves), ADR 0025 (políticas), ADR 0032 (campos de uso), ADR 0072 (origem da cobrança e
+    entidades do OpenCode). Schema de chaves: cache/valkey/README.md.
+
+    Os endereços levam o prefixo `store.prefix` (padrão `wwz`): `wwz:ev:stream` e `wwz:cfg:changed`.
+
+    Codificação do ev:stream: cada entrada tem um único campo `d` com o JSON da mensagem Event:
+    `XADD wwz:ev:stream MAXLEN ~ <store.event_max_len> * d <json>`. `store.event_max_len` tem
+    padrão 1000000. `store.event_sample` (0 < s <= 1, padrão 1) amostra só os tipos `request` e
+    `error`; os eventos amostrados com s < 1 levam `sample`. `block`, `unblock`, `ban`, `unban` e
+    `strike` nunca são amostrados. Com `store.event_stream: false` nada é publicado.
+
+    Consumo pelo painel: grupo de consumidores `panel`, criado com
+    `XGROUP CREATE wwz:ev:stream panel $ MKSTREAM`; cada réplica do painel lê com
+    `XREADGROUP GROUP panel <hostname> COUNT 500 BLOCK 1000 STREAMS wwz:ev:stream >` e confirma
+    com `XACK` depois de gravar no SQLite. Pendentes há mais de 60 s são retomados com `XAUTOCLAIM`.
+servers:
+  valkey:
+    host: valkey:6379
+    protocol: redis
+    description: Valkey standalone ou Cluster (store.addr).
+channels:
+  evStream:
+    address: wwz:ev:stream
+    title: Stream de eventos
+    description: Stream (XADD, MAXLEN ~ store.event_max_len) com eventos de requisição, erro, bloqueio, banimento e strike.
+    messages:
+      event:
+        $ref: '#/components/messages/Event'
+  cfgChanged:
+    address: wwz:cfg:changed
+    title: Políticas alteradas
+    description: |
+      Pub/sub. Quem altera wwz:cfg:policies publica em seguida o novo `version`: o painel
+      (`PUT /api/v1/policies`, só campos `tier:<nome>`) e o wwz (`POST /admin/entities/{tipo}/{id}/tier`,
+      campo `ent:<tipo>:<id>`). Toda alteração faz `HINCRBY version 1` no mesmo MULTI dos campos
+      (cache/valkey/README.md §2.3). Cada instância, ao receber, relê o hash inteiro (`HGETALL`) e
+      aplica só se `version` for maior que a última aplicada; ao (re)assinar, relê o hash, porque
+      mensagens de pub/sub perdidas durante a desconexão não são reentregues. A mensagem é só um
+      aviso: a fonte da verdade é o hash.
+    messages:
+      changed:
+        $ref: '#/components/messages/PoliciesChanged'
+operations:
+  publishEvent:
+    action: send
+    summary: wwz grava um evento (Finish, Block, Unblock, Ban, Unban, Strike).
+    channel:
+      $ref: '#/channels/evStream'
+    messages:
+      - $ref: '#/channels/evStream/messages/event'
+  consumeEvent:
+    action: receive
+    summary: wwz-panel consome pelo grupo `panel`; Store.Events lê com XREVRANGE.
+    channel:
+      $ref: '#/channels/evStream'
+    messages:
+      - $ref: '#/channels/evStream/messages/event'
+  publishPolicies:
+    action: send
+    summary: wwz-panel (tiers) ou wwz (tier por entidade) avisa que wwz:cfg:policies mudou.
+    channel:
+      $ref: '#/channels/cfgChanged'
+    messages:
+      - $ref: '#/channels/cfgChanged/messages/changed'
+  receivePolicies:
+    action: receive
+    summary: Cada instância wwz assina e recarrega as políticas (ADR 0025).
+    channel:
+      $ref: '#/channels/cfgChanged'
+    messages:
+      - $ref: '#/channels/cfgChanged/messages/changed'
+components:
+  messages:
+    Event:
+      name: Event
+      title: Evento do store
+      summary: JSON de limits.Event com instance, request_id e test_id; vai no campo `d` da entrada do stream.
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/Event'
+      examples:
+        - name: request
+          payload:
+            t: '2026-10-30T12:00:00.123456789Z'
+            type: request
+            instance: wwz-7f9c-1
+            request_id: req_01JB2K3M4N5P6Q7R8S9T
+            test_id: carga-noturna
+            driver: openai
+            model: gpt-5-sim
+            entity: { kind: key, id: provedor-rapido }
+            key: provedor-rapido
+            account: org-carga
+            ip: 203.0.113.7
+            status: 200
+            fields:
+              duration_ms: 812
+              prompt_tokens: 120
+              output_tokens: 340
+              reasoning_tokens: 128
+              cached_tokens: 64
+              cost_usd: 0.004215
+              tool_calls: [read_file, read_file, run_tests]
+              input_breakdown: { system: 40, tool_schemas: 30, user: 20, assistant: 10, tool_calls: 8, tool_results: 12, images: 0, cached: 64, total: 120 }
+        - name: denied
+          payload:
+            t: '2026-10-30T12:00:00.5Z'
+            type: error
+            instance: wwz-7f9c-1
+            request_id: req_01JB2K3M4N5P6Q7R8S9V
+            driver: openai
+            model: gpt-5-sim
+            entity: { kind: account, id: org-carga }
+            key: provedor-rapido
+            account: org-carga
+            ip: 203.0.113.7
+            status: 429
+            error: rate_limit
+            fields: { duration_ms: 0, prompt_tokens: 0, output_tokens: 0, limit: tpm, denied: true }
+        - name: block
+          payload:
+            t: '2026-10-30T12:00:01Z'
+            type: block
+            instance: wwz-7f9c-1
+            entity: { kind: key, id: provedor-com-cota }
+            fields: { reason: repeated rate limiting, until: '2026-10-30T12:01:01Z', by: abuse-ladder }
+    PoliciesChanged:
+      name: PoliciesChanged
+      contentType: application/json
+      payload:
+        type: object
+        required: [version]
+        properties:
+          version:
+            type: integer
+            minimum: 1
+            description: Valor do campo `version` de wwz:cfg:policies depois da alteração.
+  schemas:
+    Entity:
+      type: object
+      required: [kind, id]
+      properties:
+        kind:
+          type: string
+          enum: [ip, key, user, project, account, deployment, free_models, model_quota, model_spend]
+        id:
+          type: string
+          description: Id cru (sem o escape usado nas chaves).
+    InputBreakdown:
+      type: object
+      description: |
+        Tokens de entrada por origem (I16, ADR 0027), o mesmo JSON do header
+        `x-wwz-input-breakdown`. `total` é a contagem de entrada que alimenta `usage` e os limites,
+        antes de descontar o cache; `cached` é a parte lida do cache (igual a `cached_tokens`).
+      required: [system, tool_schemas, user, assistant, tool_calls, tool_results, images, cached, total]
+      additionalProperties: false
+      properties:
+        system: { type: integer, minimum: 0 }
+        tool_schemas: { type: integer, minimum: 0 }
+        user: { type: integer, minimum: 0 }
+        assistant: { type: integer, minimum: 0 }
+        tool_calls: { type: integer, minimum: 0 }
+        tool_results: { type: integer, minimum: 0 }
+        images: { type: integer, minimum: 0 }
+        cached: { type: integer, minimum: 0 }
+        total: { type: integer, minimum: 0 }
+    Event:
+      type: object
+      required: [t, type, instance]
+      additionalProperties: false
+      properties:
+        t:
+          type: string
+          format: date-time
+          description: Momento do evento (RFC 3339 com nanossegundos, time.Time do Go).
+        type:
+          type: string
+          enum: [request, error, block, unblock, ban, unban, strike]
+        instance:
+          type: string
+          description: POD_NAME, ou o hostname da instância.
+        request_id:
+          type: string
+          description: Presente em request e error.
+        test_id:
+          type: string
+          description: Valor do header de escopo de teste (`chaos.scope_header`, padrão x-test-id), quando houver.
+        driver:
+          type: string
+          description: Driver que atendeu (request e error).
+        endpoint:
+          type: string
+          description: >-
+            Endpoint lógico da requisição (`chat`, `messages`, `responses`, `generate_content`,
+            ...), o mesmo rótulo `endpoint` das métricas; ausente quando o evento não vem de uma
+            requisição (block, unblock, ban, unban, strike) e em eventos antigos. Campo aditivo
+            (ADR 0063): quem lê ignora o que não conhece.
+        model:
+          type: string
+          description: >-
+            `models[].id` do modelo resolvido (nunca alias, slug do OpenRouter nem sufixo
+            `-scenario-<nome>`; ADR 0040). No `error` de modelo não resolvido, o nome pedido.
+        entity:
+          allOf:
+            - $ref: '#/components/schemas/Entity'
+          description: |
+            Em request e error, a entidade mais específica da requisição: a chave quando houver,
+            senão o IP. Em error de negação (fields.denied), a entidade que negou (chave, conta,
+            IP, ...). Nos demais tipos, a entidade afetada.
+        key:
+          type: string
+          description: Id cru da chave da requisição (request e error), quando houver. No modo gratuito sem conta do OpenCode (credencial `public`, ADR 0072) vale `public` e não há `account`.
+        account:
+          type: string
+          description: |
+            Id cru da conta (`keys[].account`) da chave da requisição (request e error). Toda chave
+            tem conta: sem `account` no YAML, a configuração usa `acct-<label>`, que vai ao evento
+            como qualquer outra (ADR 0032). Ausente sem chave. Base do agrupamento "por conta" do
+            painel (spec 016).
+        ip:
+          type: string
+          description: IP do cliente (request e error), quando conhecido.
+        status:
+          type: integer
+          description: Status HTTP devolvido ao cliente (request e error).
+        error:
+          type: string
+          description: >-
+            core.ErrorKind (rate_limit, quota, account_banned, ...); só em error. `forged_request` é a
+            recusa da verificação estrita do cliente (driver `anthropic` com `client_verification:
+            claude-code`, spec 020, ADR 0074): status 403, com `fields.reason`.
+        sample:
+          type: number
+          exclusiveMinimum: 0
+          maximum: 1
+          description: Taxa de amostragem aplicada; ausente quando 1.
+        fields:
+          type: object
+          description: |
+            Detalhes livres por tipo. Chaves conhecidas:
+            - request/error: `duration_ms`, `prompt_tokens`, `output_tokens` (sempre).
+            - request e error que não é negação (ADR 0032): `reasoning_tokens`, `cached_tokens`
+              (tokens de entrada servidos do cache) e `cost_usd` (gasto simulado da requisição,
+              número em dólares; 0 para modelo gratuito ou sem preço) sempre presentes, inclusive 0;
+              `tool_calls` (lista com o nome de cada tool call emitida, repetido por chamada) só
+              quando houve alguma; `input_breakdown` (decomposição da entrada, I16) só com
+              `usage.extended: true` e a entrada contada, com os mesmos valores do header
+              `x-wwz-input-breakdown` (spec 013).
+            - request e error que não é negação, só quando o driver informa a origem da cobrança
+              (`opencode`, ADR 0072): `billing_source` (`free`, `balance`, `go` ou `go-plus`) e,
+              quando a requisição debitou a cota Go, `allowance_usd` (dólares contados na cota;
+              `cost_usd` é 0 nesse caso). Opcionais: consumidores antigos os ignoram.
+            - negação (Check recusou: 429/403 de limite, cota, bloqueio, banimento): `limit` e
+              `denied: true` (cache/valkey/README.md §3.5); nenhum de `reasoning_tokens`,
+              `cached_tokens`, `cost_usd`, `tool_calls` e `input_breakdown`.
+              Consumidos pela tela "Uso da inferência falsa" (spec 016); campo ausente em todos
+              os eventos de um grupo = "—" no painel.
+            - block: `reason`, `until` (date-time; zero = indefinido), `by`.
+            - ban: `reason`, `by`.
+            - strike: `reason`, `strikes`.
+            - error com `error: forged_request` (ADR 0074): `reason` = código da spec 020
+              (`header_order`, `fingerprint`, ...), além de `duration_ms`, `prompt_tokens` e
+              `output_tokens` em 0; sem `denied`. Aditivo: consumidores antigos o ignoram.
+          additionalProperties: true
+          properties:
+            duration_ms: { type: integer, minimum: 0 }
+            prompt_tokens: { type: integer, minimum: 0 }
+            output_tokens: { type: integer, minimum: 0 }
+            reasoning_tokens: { type: integer, minimum: 0 }
+            cached_tokens: { type: integer, minimum: 0 }
+            cost_usd: { type: number, minimum: 0 }
+            billing_source:
+              type: string
+              enum: [free, balance, go, go-plus]
+            allowance_usd: { type: number, minimum: 0 }
+            tool_calls:
+              type: array
+              items: { type: string }
+            input_breakdown:
+              $ref: '#/components/schemas/InputBreakdown'
+            limit: { type: string }
+            denied: { type: boolean }
+            reason: { type: string }
+            until: { type: string, format: date-time }
+            by: { type: string }
+            strikes: { type: integer, minimum: 0 }

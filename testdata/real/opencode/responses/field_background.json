@@ -1,0 +1,23 @@
+{
+  "provider": "opencode",
+  "name": "field_background",
+  "recorded_at": "2026-10-31",
+  "request": {
+    "method": "POST",
+    "path": "/inference/go/openai/v1/responses",
+    "headers": {
+      "authorization": "Bearer <key>",
+      "x-opencode-session": "<session>"
+    },
+    "body": "{\"model\": \"deepseek-v4.1-flash\", \"input\": \"hi\", \"max_output_tokens\": 16, \"background\": false}"
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "content-type": "application/json",
+      "x-opencode-log-id": "<log_id>",
+      "x-zen-model": "deepseek-v4.1-flash"
+    },
+    "body": "{\"id\":\"resp_19db0b53d97a4bb8b64321ef2bfa3067\",\"object\":\"response\",\"created_at\":1793459025,\"status\":\"completed\",\"error\":null,\"incomplete_details\":null,\"instructions\":null,\"metadata\":{},\"model\":\"deepseek-v4.1-flash\",\"output\":[{\"id\":\"msg_a8991fb3a44d404494d8ea4644fa5516\",\"type\":\"message\",\"role\":\"assistant\",\"status\":\"completed\",\"content\":[{\"type\":\"output_text\",\"text\":\"Hi! How can\\n can I help you today?\",\"annotations\":[],\"logprobs\":[]}]}],\"parallel_tool_calls\":true,\"temperature\":null,\"tool_choice\":\"auto\",\"tools\":[],\"top_p\":null,\"max_output_tokens\":16,\"usage\":{\"input_tokens\":31,\"input_tokens_details\":{\"cached_tokens\":0},\"output_tokens\":12,\"output_tokens_details\":{\"reasoning_tokens\":0},\"total_tokens\":43,\"cost\":0,\"opencode\":{\"billing_source\":\"go\",\"list_cost\":0.00001185,\"allowance\":0.00000711,\"tokens\":{\"input\":31,\"output\":12,\"reasoning\":0,\"cache_read\":0,\"cache_write_5m\":0,\"cache_write_1h\":0}}}}"
+  }
+}

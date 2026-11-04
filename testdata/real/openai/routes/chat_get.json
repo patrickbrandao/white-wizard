@@ -1,0 +1,26 @@
+{
+  "name": "chat_get",
+  "note": "GET no chat: lista as completions guardadas (vazia sem nenhuma), 200 compacto sem newline final; sem x-ratelimit-*",
+  "provider": "openai",
+  "recorded_at": "2026-10-31",
+  "request": {
+    "body": null,
+    "headers": {
+      "authorization": "Bearer <key>"
+    },
+    "method": "GET",
+    "path": "/v1/chat/completions"
+  },
+  "response": {
+    "body": "{\"object\":\"list\",\"data\":[],\"first_id\":null,\"last_id\":null,\"has_more\":false}",
+    "headers": {
+      "content-type": "application/json",
+      "openai-organization": "<organization_id>",
+      "openai-processing-ms": "<ms>",
+      "openai-project": "<project_id>",
+      "openai-version": "2020-10-01",
+      "x-request-id": "<request_id>"
+    },
+    "status": 200
+  }
+}

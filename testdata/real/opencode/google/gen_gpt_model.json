@@ -1,0 +1,24 @@
+{
+  "provider": "opencode",
+  "name": "gen_gpt_model",
+  "recorded_at": "2026-10-31",
+  "note": "rota Gemini do gateway (task 241)",
+  "request": {
+    "method": "POST",
+    "path": "/inference/go/google/v1beta/models/deepseek-v4.1-flash:generateContent",
+    "headers": {
+      "x-goog-api-key": "<key>",
+      "x-opencode-session": "<session>"
+    },
+    "body": "{\"contents\":[{\"role\":\"user\",\"parts\":[{\"text\":\"Responda só: ok\"}]}],\"generationConfig\":{\"maxOutputTokens\":16}}"
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "content-type": "application/json",
+      "x-opencode-log-id": "<log_id>",
+      "x-zen-model": "deepseek-v4.1-flash"
+    },
+    "body": "{\"candidates\":[{\"content\":{\"role\":\"model\",\"parts\":[{\"text\":\"We need answer only: ok. Need comply.\",\"thought\":true},{\"text\":\"ok\"}]},\"finishReason\":\"STOP\",\"index\":0}],\"usageMetadata\":{\"promptTokenCount\":35,\"candidatesTokenCount\":12,\"totalTokenCount\":47,\"cost\":0,\"opencode\":{\"billing_source\":\"go\",\"list_cost\":0.00001245,\"allowance\":0.00000747,\"tokens\":{\"input\":35,\"output\":12,\"reasoning\":0,\"cache_read\":0,\"cache_write_5m\":0,\"cache_write_1h\":0}}},\"modelVersion\":\"deepseek-v4.1-flash\"}"
+  }
+}

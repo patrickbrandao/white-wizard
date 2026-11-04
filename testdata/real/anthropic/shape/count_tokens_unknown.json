@@ -1,0 +1,26 @@
+{
+  "provider": "anthropic",
+  "name": "count_tokens_unknown",
+  "recorded_at": "2026-10-31",
+  "note": "",
+  "request": {
+    "method": "POST",
+    "path": "/v1/messages/count_tokens",
+    "headers": {
+      "x-api-key": "<key>",
+      "anthropic-version": "2023-06-01"
+    },
+    "body": "{\"model\": \"wwz-nao-existe\", \"messages\": [{\"role\": \"user\", \"content\": \"oi\"}]}"
+  },
+  "response": {
+    "status": 404,
+    "headers": {
+      "anthropic-organization-id": "<organization_id>",
+      "anthropic-workspace-id": "<workspace_id>",
+      "content-type": "application/json",
+      "request-id": "<request_id>",
+      "x-should-retry": "false"
+    },
+    "body": "{\"type\":\"error\",\"error\":{\"type\":\"not_found_error\",\"message\":\"model: wwz-nao-existe\"},\"request_id\":\"<request_id>\"}"
+  }
+}

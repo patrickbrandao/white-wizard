@@ -1,0 +1,46 @@
+{{define "content"}}{{$f := .Data.Filter}}
+<form class="filters" method="get" action="/usage">
+<label>Agrupar por <select name="group">{{$g := $f.Get "group"}}
+<option value="driver"{{if eq $g "driver"}} selected{{end}}>driver</option>
+<option value="model"{{if eq $g "model"}} selected{{end}}>modelo</option>
+<option value="key"{{if eq $g "key"}} selected{{end}}>chave</option>
+<option value="account"{{if eq $g "account"}} selected{{end}}>conta</option>
+<option value="ip"{{if eq $g "ip"}} selected{{end}}>IP</option>
+</select></label>
+<label>Janela <select name="window">{{$w := $f.Get "window"}}
+<option value="1m"{{if eq $w "1m"}} selected{{end}}>1 min</option>
+<option value="5m"{{if eq $w "5m"}} selected{{end}}>5 min</option>
+<option value="1h"{{if or (eq $w "1h") (eq $w "")}} selected{{end}}>1 h</option>
+<option value="24h"{{if eq $w "24h"}} selected{{end}}>24 h</option>
+<option value="7d"{{if eq $w "7d"}} selected{{end}}>7 dias</option>
+</select></label>
+<label>Driver <input name="driver" value="{{$f.Get "driver"}}"></label>
+<label>Modelo <input name="model" value="{{$f.Get "model"}}"></label>
+<button type="submit">Filtrar</button>
+<a class="button" href="{{.Data.CSV}}" download>Exportar CSV</a>
+</form>
+{{template "live" .}}
+{{end}}
+
+{{define "live"}}<section id="live" hx-get="{{.Live}}" hx-trigger="every 2s" hx-swap="outerHTML">
+{{template "messages" .}}
+{{with .Data.Usage}}{{if .Group}}
+<p class="muted">Agrupado por {{.Group}} · janela {{.Window}} · “—” = sem dado na fonte</p>
+<table>
+<thead><tr><th>{{.Group}}</th><th>Fonte</th><th>Requisições</th><th>Tokens entrada</th><th>Tokens saída</th><th>Tokens raciocínio</th><th>Tokens em cache</th><th>Cache hit</th><th>Gasto simulado</th><th>Tool calls</th></tr></thead>
+<tbody>
+{{range .Rows}}<tr><td>{{or .Value "—"}}</td><td>{{.Source}}</td><td>{{num .Requests}}</td><td>{{opt .PromptTokens}}</td><td>{{opt .OutputTokens}}</td><td>{{opt .ReasoningTokens}}</td><td>{{opt .CachedTokens}}</td><td>{{pct .CacheHitRate}}</td><td>{{usd .CostUSD}}</td><td>{{if .ToolCalls}}{{range $n, $c := .ToolCalls}}<span class="tag">{{$n}}: {{num $c}}</span> {{end}}{{else if known .ToolCalls}}0{{else}}—{{end}}</td></tr>
+{{else}}<tr><td colspan="10" class="muted">Sem uso na janela.</td></tr>{{end}}
+</tbody>
+</table>
+<h2>Composição da entrada</h2>
+<p class="muted">Tokens de entrada por origem, somados só sobre as requisições com decomposição; % do total.</p>
+<table class="breakdown">
+<thead><tr><th>{{.Group}}</th><th>Requisições com decomposição</th><th>Composição</th><th>Sistema</th><th>Esquemas de tools</th><th>Usuário</th><th>Assistente</th><th>Tool calls</th><th>Resultados de tools</th><th>Imagens</th><th>Cache</th><th>Total</th></tr></thead>
+<tbody>
+{{range .Rows}}<tr><td>{{or .Value "—"}}</td>{{if .InputBreakdownRequests}}<td>{{num .InputBreakdownRequests}}</td>{{$cells := ib .InputBreakdown}}<td><svg class="stack" viewBox="0 0 100 10" preserveAspectRatio="none" width="160" height="12" role="img" aria-label="composição da entrada">{{range $cells}}{{if .W}}<rect class="{{.Class}}" x="{{.X}}" y="0" width="{{.W}}" height="10"><title>{{.Label}}: {{pct .Share}}</title></rect>{{end}}{{end}}</svg></td>{{range $cells}}<td>{{opt .Value}}{{if .Share}} <span class="muted">({{pct .Share}})</span>{{end}}</td>{{end}}{{else}}<td colspan="12">— <span class="muted">sem decomposição: ligue <code>usage.extended</code> no wwz</span></td>{{end}}</tr>
+{{else}}<tr><td colspan="13" class="muted">Sem uso na janela.</td></tr>{{end}}
+</tbody>
+</table>
+{{end}}{{end}}
+</section>{{end}}

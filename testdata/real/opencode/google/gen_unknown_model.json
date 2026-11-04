@@ -1,0 +1,23 @@
+{
+  "provider": "opencode",
+  "name": "gen_unknown_model",
+  "recorded_at": "2026-10-31",
+  "note": "rota Gemini do gateway (task 241)",
+  "request": {
+    "method": "POST",
+    "path": "/inference/go/google/v1beta/models/nope-1:generateContent",
+    "headers": {
+      "x-goog-api-key": "<key>",
+      "x-opencode-session": "<session>"
+    },
+    "body": "{\"contents\":[{\"role\":\"user\",\"parts\":[{\"text\":\"Responda só: ok\"}]}],\"generationConfig\":{\"maxOutputTokens\":16}}"
+  },
+  "response": {
+    "status": 400,
+    "headers": {
+      "content-type": "application/json",
+      "x-opencode-log-id": "<log_id>"
+    },
+    "body": "{\"error\":{\"code\":400,\"status\":\"UNKNOWN\",\"message\":\"Upstream request failed: Model is unavailable.\"}}"
+  }
+}

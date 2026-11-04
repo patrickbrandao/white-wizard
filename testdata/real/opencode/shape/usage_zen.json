@@ -1,0 +1,26 @@
+{
+  "provider": "opencode",
+  "name": "usage_zen",
+  "recorded_at": "2026-10-31",
+  "note": "uso legado",
+  "request": {
+    "method": "GET",
+    "path": "/zen/go/v1/usage",
+    "headers": {
+      "authorization": "Bearer <key>",
+      "x-opencode-session": "<session>"
+    }
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "access-control-allow-headers": "Content-Type, Authorization, X-Api-Key, X-Opencode-Org-Id",
+      "access-control-allow-methods": "GET, OPTIONS",
+      "access-control-allow-origin": "*",
+      "cache-control": "no-store",
+      "content-type": "application/json",
+      "x-opencode-log-id": "<log_id>"
+    },
+    "body": "{\"usage\":{\"rolling\":{\"status\":\"ok\",\"percent\":0,\"resetsAt\":\"2026-10-31T16:57:04.000Z\"},\"weekly\":{\"status\":\"ok\",\"percent\":0,\"resetsAt\":\"2026-11-02T00:00:00.000Z\"},\"monthly\":{\"status\":\"ok\",\"percent\":2,\"resetsAt\":\"2026-11-20T15:32:43.000Z\"}}}"
+  }
+}

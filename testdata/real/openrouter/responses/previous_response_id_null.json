@@ -1,0 +1,23 @@
+{
+  "provider": "openrouter",
+  "name": "previous_response_id_null",
+  "recorded_at": "2026-10-31",
+  "request": {
+    "method": "POST",
+    "path": "/api/v1/responses",
+    "headers": {
+      "authorization": "Bearer <key>"
+    },
+    "body": "{\"model\": \"wwz-nao-existe\", \"input\": \"hi\", \"previous_response_id\": null, \"store\": false}"
+  },
+  "response": {
+    "status": 400,
+    "headers": {
+      "access-control-allow-origin": "*",
+      "access-control-expose-headers": "X-Generation-Id,X-Provider-Name,request-id,cf-ray",
+      "content-type": "application/json",
+      "x-generation-id": "<generation_id>"
+    },
+    "body": "{\"error\":{\"message\":\"wwz-nao-existe is not a valid model ID\",\"code\":400},\"user_id\":\"<user_id>\"}"
+  }
+}

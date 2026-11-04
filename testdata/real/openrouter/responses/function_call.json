@@ -1,0 +1,23 @@
+{
+  "provider": "openrouter",
+  "name": "function_call",
+  "recorded_at": "2026-10-31",
+  "request": {
+    "method": "POST",
+    "path": "/api/v1/responses",
+    "headers": {
+      "authorization": "Bearer <key>"
+    },
+    "body": "{\"model\": \"openai/gpt-4o-mini\", \"input\": \"Weather in Paris?\", \"max_output_tokens\": 64, \"tools\": [{\"type\": \"function\", \"name\": \"get_weather\", \"description\": \"Weather of a city\", \"parameters\": {\"type\": \"object\", \"properties\": {\"city\": {\"type\": \"string\"}}, \"required\": [\"city\"]}}], \"tool_choice\": \"required\"}"
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "access-control-allow-origin": "*",
+      "access-control-expose-headers": "X-Generation-Id,X-Provider-Name,request-id,cf-ray",
+      "content-type": "application/json",
+      "x-generation-id": "<generation_id>"
+    },
+    "body": "\n         \n{\"id\":\"gen-1793458711-Bt1LjhodfdwKamlTJshh\",\"object\":\"response\",\"created_at\":1793458711,\"model\":\"openai/gpt-4o-mini\",\"status\":\"completed\",\"completed_at\":1793458712,\"output\":[{\"id\":\"fc_tmp_q4uhoyg9gla\",\"type\":\"function_call\",\"status\":\"completed\",\"call_id\":\"call_maPz8pJGtFhDrO93POF75tF4\",\"name\":\"get_weather\",\"arguments\":\"{\\\"city\\\":\\\"Paris\\\"}\"}],\"error\":null,\"incomplete_details\":null,\"access_programs\":null,\"tools\":[{\"type\":\"function\",\"name\":\"get_weather\",\"description\":\"Weather of a city\",\"parameters\":{\"type\":\"object\",\"properties\":{\"city\":{\"type\":\"string\"}},\"required\":[\"city\"]},\"strict\":null}],\"tool_choice\":\"required\",\"parallel_tool_calls\":true,\"max_output_tokens\":64,\"temperature\":1,\"top_p\":1,\"presence_penalty\":0,\"frequency_penalty\":0,\"top_logprobs\":0,\"max_tool_calls\":null,\"metadata\":{},\"background\":false,\"previous_response_id\":null,\"service_tier\":\"default\",\"truncation\":\"disabled\",\"store\":false,\"instructions\":null,\"text\":{\"format\":{\"type\":\"text\"}},\"reasoning\":null,\"safety_identifier\":null,\"prompt_cache_key\":null,\"prompt_cache_options\":null,\"usage\":{\"input_tokens\":46,\"input_tokens_details\":{\"cached_tokens\":0},\"output_tokens\":14,\"output_tokens_details\":{\"reasoning_tokens\":0},\"total_tokens\":60,\"cost\":0.0000153,\"is_byok\":false,\"cost_details\":{\"upstream_inference_cost\":0.0000153,\"upstream_inference_input_cost\":0.0000069,\"upstream_inference_output_cost\":0.0000084}}}"
+  }
+}

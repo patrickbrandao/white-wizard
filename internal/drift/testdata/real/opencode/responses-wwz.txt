@@ -1,0 +1,9 @@
+HTTP 200
+Content-Length: 1020
+Content-Type: application/json
+Date: Sat, 31 Oct 2026 16:07:13 GMT
+X-Opencode-Log-Id: 01a192b7-13c5-7bf7-a322-e325defa12e7
+X-Wwz-Seed: 1
+X-Zen-Model: deepseek-v4.1-flash
+
+{"id":"resp_e5d2dd2a84e52c545fcb1ca240410162","object":"response","created_at":1793462834,"status":"completed","error":null,"incomplete_details":null,"instructions":null,"metadata":{},"model":"deepseek-v4.1-flash","output":[{"id":"rs_5a9c599b0b9796135c127c0a7d37c7ff","type":"reasoning","summary":[{"type":"summary_text","text":"There are a few possible interpretations"}]},{"id":"msg_11ac30bd7fa03da385f0b61c313783a1","type":"message","role":"assistant","status":"completed","content":[{"type":"output_text","text":"Cachin","annotations":[],"logprobs":[]}]}],"parallel_tool_calls":true,"temperature":null,"tool_choice":"auto","tools":[],"top_p":null,"max_output_tokens":256,"usage":{"input_tokens":12,"input_tokens_details":{"cached_tokens":0},"output_tokens":10,"output_tokens_details":{"reasoning_tokens":0},"total_tokens":22,"cost":0,"opencode":{"billing_source":"go","list_cost":0.0000078,"allowance":0.00000468,"tokens":{"input":12,"output":10,"reasoning":0,"cache_read":0,"cache_write_5m":0,"cache_write_1h":0}}}}

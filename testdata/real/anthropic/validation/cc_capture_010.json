@@ -1,0 +1,21 @@
+{
+  "provider": "anthropic",
+  "name": "cc_capture_010",
+  "recorded_at": "2026-11-03",
+  "note": "captura 010 do Claude Code 2.1.308 (sonda de cota), com x-api-key, modelo claude-haiku-5-5",
+  "request": {
+    "method": "POST",
+    "path": "/v1/messages?beta=true",
+    "headers": {
+      "x-api-key": "<key>",
+      "anthropic-version": "2023-06-01",
+      "anthropic-beta": "claude-code-20250219,oauth-2025-04-20,interleaved-thinking-2025-05-14,redact-thinking-2026-02-12,thinking-token-count-2026-05-13,context-management-2025-06-27"
+    },
+    "body": "{\"model\":\"claude-haiku-5-5\",\"max_tokens\":1,\"messages\":[{\"role\":\"user\",\"content\":\"quota\"}],\"metadata\":{\"user_id\":\"{\\\"device_id\\\":\\\"b5e0d8d89402035d1ac7a4087d321edf0479e8e8c015ea5c7c3ae85f1611fb6c\\\",\\\"account_uuid\\\":\\\"\\\",\\\"session_id\\\":\\\"d559555d-99d8-4d64-92ca-d81b6c0f2022\\\"}\"}}"
+  },
+  "response": {
+    "status": 200,
+    "content_type": "application/json",
+    "body": null
+  }
+}

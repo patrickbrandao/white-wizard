@@ -1,0 +1,47 @@
+# openai-perfeito: driver OpenAI sem nenhum erro e com latência realista (spec 019).
+# O que o roteador sob teste deve ver: 100 % de respostas 200, TTFT na casa de
+# 350 ms e ITL de ~12 ms, no formato exato da Chat Completions real.
+server:
+  listen: ":8000"
+  auth: keys
+  seed: 20260101 # reproduz as latências sorteadas
+
+admin:
+  listen: ":9000"
+
+keys:
+  - key: wwz-key-01
+    label: roteador-sob-teste
+
+drivers:
+  - name: openai # na raiz: /v1/chat/completions, /v1/models, ...
+
+models:
+  - id: gpt-4o-mini
+    version: gpt-4o-mini-2024-07-18
+    protocols: [openai]
+    owned_by: system
+    context_window: 128000
+    capabilities: { tools: true, vision: true, json_schema: true }
+    latency: realistic
+    errors: none
+    generation: curta
+    tokenizer: tiktoken:o200k_base
+
+profiles:
+  latency:
+    # Parecido com um modelo hospedado de porte médio: fila curta, TTFT normal
+    # em torno de 350 ms, ITL de 12 ms por token.
+    realistic:
+      queue: { dist: lognormal, median: 20ms, p99: 200ms }
+      ttft: { dist: normal, mean: 350ms, stddev: 80ms }
+      itl: { dist: normal, mean: 12ms, stddev: 3ms }
+  errors:
+    none: { rate: 0 } # nenhum erro, nem de rede nem de stream
+  generation:
+    curta:
+      mode: random
+      output_tokens: { dist: uniform, min: 20, max: 60 }
+
+logging:
+  level: warn

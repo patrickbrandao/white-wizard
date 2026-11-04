@@ -1,0 +1,185 @@
+{
+  "version": 1,
+  "kind": "agents",
+  "tool_version": "v0.1.0",
+  "started": "2026-10-31T12:00:00Z",
+  "finished": "2026-10-31T12:00:02Z",
+  "interrupted": false,
+  "config": {
+    "target": "http://127.0.0.1:8000",
+    "protocol": "openai",
+    "path": "/v1/chat/completions",
+    "model": "wwz-fast",
+    "stream": true,
+    "agents": 2,
+    "profile": "mixed",
+    "turns": 2,
+    "max_tool_rounds": 8,
+    "sessions": 1,
+    "duration_ms": 0,
+    "retries": 2,
+    "seed": 42,
+    "tools": "in-process",
+    "headers": [
+      "x-test-id"
+    ]
+  },
+  "agents": [
+    {
+      "agent": 0,
+      "profile": "coder",
+      "sessions_started": 1,
+      "sessions_completed": 1,
+      "sessions_failed": 0,
+      "turns": 2,
+      "requests": 5,
+      "retries": 1,
+      "tool_calls": 3,
+      "tool_errors": 2,
+      "errors": 0,
+      "errors_by_type": {},
+      "ttft_ms": {
+        "count": 4,
+        "mean": 10,
+        "p50": 10,
+        "p90": 10,
+        "p99": 10,
+        "max": 10
+      },
+      "e2e_ms": {
+        "count": 4,
+        "mean": 40,
+        "p50": 40,
+        "p90": 40,
+        "p99": 40,
+        "max": 40
+      }
+    },
+    {
+      "agent": 1,
+      "profile": "pesquisa",
+      "sessions_started": 2,
+      "sessions_completed": 0,
+      "sessions_failed": 1,
+      "turns": 1,
+      "requests": 5,
+      "retries": 2,
+      "tool_calls": 1,
+      "tool_errors": 0,
+      "errors": 2,
+      "errors_by_type": {
+        "http_429/rate_limit_error": 1,
+        "timeout": 1
+      },
+      "ttft_ms": {
+        "count": 1,
+        "mean": 20,
+        "p50": 20,
+        "p90": 20,
+        "p99": 20,
+        "max": 20
+      },
+      "e2e_ms": {
+        "count": 1,
+        "mean": 80,
+        "p50": 80,
+        "p90": 80,
+        "p99": 80,
+        "max": 80
+      }
+    }
+  ],
+  "total": {
+    "sessions": {
+      "started": 3,
+      "completed": 1,
+      "failed": 1,
+      "interrupted": 1,
+      "failed_by_reason": {
+        "http_429/rate_limit_error": 1
+      }
+    },
+    "turns": 3,
+    "requests": 10,
+    "ok": 5,
+    "errors": 2,
+    "retries": 3,
+    "retries_by_type": {
+      "http_429/rate_limit_error": 2,
+      "timeout": 1
+    },
+    "errors_by_type": {
+      "http_429/rate_limit_error": 1,
+      "timeout": 1
+    },
+    "retry_wait_ms": {
+      "count": 3,
+      "mean": 1166.667,
+      "p50": 1001.471,
+      "p90": 2000,
+      "p99": 2000,
+      "max": 2000
+    },
+    "rps": 5,
+    "input_tokens": 500,
+    "output_tokens": 100,
+    "reasoning_tokens": 20,
+    "tokens_estimated": false,
+    "ttft_ms": {
+      "count": 5,
+      "mean": 12,
+      "p50": 10.015,
+      "p90": 20,
+      "p99": 20,
+      "max": 20
+    },
+    "itl_ms": {
+      "count": 10,
+      "mean": 2,
+      "p50": 1.001,
+      "p90": 2.999,
+      "p99": 2.999,
+      "max": 3
+    },
+    "e2e_ms": {
+      "count": 5,
+      "mean": 48,
+      "p50": 40.063,
+      "p90": 80,
+      "p99": 80,
+      "max": 80
+    },
+    "turn_e2e_ms": {
+      "count": 3,
+      "mean": 366.667,
+      "p50": 300.031,
+      "p90": 600,
+      "p99": 600,
+      "max": 600
+    },
+    "session_e2e_ms": {
+      "count": 1,
+      "mean": 900,
+      "p50": 900,
+      "p90": 900,
+      "p99": 900,
+      "max": 900
+    },
+    "tool_calls": 4,
+    "tools": {
+      "calls_by_name": {
+        "read_file": 2,
+        "run_command": 1,
+        "web_search": 1
+      },
+      "outcomes": {
+        "error": 1,
+        "natural_error": 1,
+        "success": 2
+      }
+    }
+  },
+  "admin_stats": {
+    "requests": 7
+  }
+}

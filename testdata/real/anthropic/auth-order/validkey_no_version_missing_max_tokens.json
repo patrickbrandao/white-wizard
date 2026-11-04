@@ -1,0 +1,18 @@
+{
+  "provider": "anthropic",
+  "name": "validkey_no_version_missing_max_tokens",
+  "recorded_at": "2026-10-31",
+  "request": {
+    "method": "POST",
+    "path": "/v1/messages",
+    "headers": {
+      "x-api-key": "<key>"
+    },
+    "body": "{\"model\": \"claude-haiku-4-5\", \"messages\": [{\"role\": \"user\", \"content\": \"oi\"}]}"
+  },
+  "response": {
+    "status": 400,
+    "content_type": "application/json",
+    "body": "{\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"anthropic-version: header is required\"},\"request_id\":\"<request_id>\"}"
+  }
+}

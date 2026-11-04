@@ -1,0 +1,21 @@
+{
+  "provider": "opencode",
+  "name": "outside_base",
+  "recorded_at": "2026-10-31",
+  "note": "fora das bases: página HTML 404 do site",
+  "request": {
+    "method": "GET",
+    "path": "/v1/chat/completions",
+    "headers": {
+      "authorization": "Bearer <key>"
+    },
+    "body": null
+  },
+  "response": {
+    "status": 404,
+    "headers": {
+      "content-type": "text/html"
+    },
+    "body": "<html>"
+  }
+}

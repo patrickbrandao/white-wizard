@@ -1,0 +1,24 @@
+{
+  "provider": "openrouter",
+  "name": "chat_xapikey",
+  "recorded_at": "2026-10-31",
+  "note": "x-api-key válida é aceita também no chat",
+  "request": {
+    "method": "POST",
+    "path": "/api/v1/chat/completions",
+    "headers": {
+      "x-api-key": "<key>"
+    },
+    "body": "{\"model\": \"wwz-nao-existe\", \"max_tokens\": 5, \"messages\": [{\"role\": \"user\", \"content\": \"oi\"}]}"
+  },
+  "response": {
+    "status": 400,
+    "headers": {
+      "access-control-allow-origin": "*",
+      "access-control-expose-headers": "X-Generation-Id,X-Provider-Name,request-id,cf-ray",
+      "content-type": "application/json",
+      "x-generation-id": "<generation_id>"
+    },
+    "body": "{\"error\":{\"message\":\"wwz-nao-existe is not a valid model ID\",\"code\":400},\"user_id\":\"<user_id>\"}"
+  }
+}

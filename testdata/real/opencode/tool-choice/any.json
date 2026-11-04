@@ -1,0 +1,25 @@
+{
+  "provider": "opencode",
+  "name": "any",
+  "recorded_at": "2026-10-31",
+  "note": "any com tools no claude-haiku-5-5: 200 (task 342)",
+  "request": {
+    "method": "POST",
+    "path": "/zen/go/v1/messages",
+    "headers": {
+      "anthropic-version": "2023-06-01",
+      "x-api-key": "<key>",
+      "x-opencode-session": "<session>"
+    },
+    "body": "{\"model\": \"claude-haiku-5-5\", \"max_tokens\": 1, \"messages\": [{\"role\": \"user\", \"content\": \"x\"}], \"tools\": [{\"name\": \"a\", \"input_schema\": {\"type\": \"object\", \"properties\": {}}}], \"tool_choice\": {\"type\": \"any\"}}"
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "content-type": "application/json",
+      "x-opencode-log-id": "<log_id>",
+      "x-zen-model": "claude-haiku-5-5"
+    },
+    "body": "{\"id\":\"<msg_id>\",\"type\":\"message\",\"role\":\"assistant\",\"stop_reason\":\"max_tokens\",\"stop_sequence\":null,\"stop_details\":null,\"model\":\"claude-haiku-5-5\",\"content\":[],\"usage\":{\"input_tokens\":450,\"output_tokens\":1,\"cache_creation_input_tokens\":0,\"cache_read_input_tokens\":0,\"output_tokens_details\":{\"thinking_tokens\":0},\"cache_creation\":{\"ephemeral_1h_input_tokens\":0,\"ephemeral_5m_input_tokens\":0},\"cost\":0,\"opencode\":{\"billing_source\":\"go\",\"list_cost\":0.0000455,\"allowance\":0.000182,\"tokens\":{\"input\":450,\"output\":1,\"reasoning\":0,\"cache_read\":0,\"cache_write_5m\":0,\"cache_write_1h\":0}}}}"
+  }
+}

@@ -1,0 +1,20 @@
+# Configuração do wwz no compose local (spec 003), montada em /etc/wwz/wwz.yaml
+# e lida por WWZ_CONFIG. Só o que o ambiente não define: portas, token admin,
+# store.kind e store.addr continuam vindo do env do compose (WWZ_PORT,
+# WWZ_ADMIN_TOKEN, WWZ_STORE, WWZ_VALKEY_ADDR), que vence o arquivo. Chaves e
+# modelos ficam nos padrões embutidos (wwz-key-01.., test-01..).
+#
+# Fontes de eventos do painel (spec 016):
+# - store valkey: event_stream grava request/error/block/... no ev:stream,
+#   consumido pelo grupo panel.
+# - store memory: não há ev:stream (event_stream não tem efeito); o painel lê
+#   GET /admin/requests a cada 5 s, que exige admin.debug. Eventos de bloqueio
+#   só chegam ao painel no modo valkey.
+store:
+  event_stream: true
+
+admin:
+  debug: true
+
+usage:
+  extended: true # header x-wwz-input-breakdown e input_breakdown no uso do painel

@@ -1,0 +1,18 @@
+{
+  "provider": "openrouter",
+  "name": "badkey_wellformed_unknown_model",
+  "recorded_at": "2026-10-31",
+  "request": {
+    "method": "POST",
+    "path": "/api/v1/chat/completions",
+    "headers": {
+      "authorization": "Bearer sk-or-v1-0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    "body": "{\"model\": \"wwz-nao-existe\", \"messages\": [{\"role\": \"user\", \"content\": \"oi\"}]}"
+  },
+  "response": {
+    "status": 401,
+    "content_type": "application/json",
+    "body": "{\"error\":{\"message\":\"User not found.\",\"code\":401}}"
+  }
+}

@@ -1,0 +1,65 @@
+{{define "content"}}{{$f := .Data.Filter}}
+<form class="filters" method="get" action="/errors">
+<label>Janela <select name="window">{{$w := $f.Get "window"}}
+<option value="1m"{{if eq $w "1m"}} selected{{end}}>1 min</option>
+<option value="5m"{{if or (eq $w "5m") (eq $w "")}} selected{{end}}>5 min</option>
+<option value="1h"{{if eq $w "1h"}} selected{{end}}>1 h</option>
+</select></label>
+<label>Driver <input name="driver" value="{{$f.Get "driver"}}"></label>
+<label>Modelo <input name="model" value="{{$f.Get "model"}}"></label>
+<button type="submit">Filtrar</button>
+</form>
+{{if .CanAct}}
+<form class="act" method="post" action="{{.Data.ActURL}}" hx-post="{{.Data.ActURL}}" hx-target="#live" hx-swap="outerHTML" hx-confirm="Alterar a injeção de erros do alvo informado?">
+<input type="hidden" name="csrf" value="{{.CSRF}}">
+<label>Alvo <select name="target"><option value="model">modelo</option><option value="profile">perfil de erros</option></select></label>
+<label>Nome <input name="name" required></label>
+<label>Taxa (%) <input name="rate" placeholder="30"></label>
+<label>Tipos <input name="types" placeholder="overloaded, rate_limit"></label>
+<button type="submit" name="action" value="injection_on">Ligar injeção</button>
+<button type="submit" name="action" value="injection_off" class="danger">Desligar injeção</button>
+</form>
+<form class="act" method="post" action="{{.Data.ActURL}}" hx-post="{{.Data.ActURL}}" hx-target="#live" hx-swap="outerHTML" hx-confirm="Disparar o evento de caos?">
+<input type="hidden" name="csrf" value="{{.CSRF}}"><input type="hidden" name="action" value="chaos_start">
+<label>Tipo <input name="type" placeholder="overloaded" required></label>
+<label>Duração <input name="duration" placeholder="30s" required></label>
+<label>Modelos <input name="models" placeholder="*"></label>
+<label>Taxa (%) <input name="rate" placeholder="100"></label>
+<label>X-Test-Id <input name="test_id"></label>
+<button type="submit" class="danger">Disparar caos</button>
+</form>
+{{end}}
+{{template "live" .}}
+{{end}}
+
+{{define "live"}}<section id="live" hx-get="{{.Live}}" hx-trigger="every 2s" hx-swap="outerHTML">
+{{template "messages" .}}
+{{with .Data.View}}{{if .Window}}
+<p class="muted">Janela {{.Window}} · fonte {{.Source}}{{if eq .Source "admin_stats"}} (totais desde o início da instância){{end}}</p>
+<div class="cards">
+<div class="card"><h2>Injetados por tipo</h2>{{range $k, $v := .InjectedByType}}<p>{{$k}}: <b>{{num $v}}</b></p>{{else}}<p class="big">—</p>{{end}}</div>
+<div class="card"><h2>Por fase</h2>{{range $k, $v := .InjectedByPhase}}<p>{{$k}}: <b>{{num $v}}</b></p>{{else}}<p class="big">—</p>{{end}}</div>
+<div class="card"><h2>Por driver</h2>{{range $k, $v := .InjectedByDriver}}<p>{{$k}}: <b>{{num $v}}</b></p>{{else}}<p class="big">—</p>{{end}}</div>
+<div class="card"><h2>Erros do simulador</h2>{{range $k, $v := .Simulator}}<p>{{$k}}: <b>{{opt $v}}</b></p>{{end}}</div>
+</div>
+{{end}}{{end}}
+<h2>Eventos de caos ativos</h2>
+<table>
+<thead><tr><th>Id</th><th>Evento</th>{{if .CanAct}}<th>Ações</th>{{end}}</tr></thead>
+<tbody>
+{{range .Data.Chaos}}<tr><td>{{or .ID "—"}}</td><td><pre>{{.JSON}}</pre></td>
+{{if $.CanAct}}<td class="actions"><form method="post" action="{{$.Data.ActURL}}" hx-post="{{$.Data.ActURL}}" hx-target="#live" hx-swap="outerHTML" hx-confirm="Encerrar o evento {{.ID}}?"><input type="hidden" name="csrf" value="{{$.CSRF}}"><input type="hidden" name="action" value="chaos_stop"><input type="hidden" name="id" value="{{.ID}}"><button type="submit">Encerrar</button></form></td>{{end}}</tr>
+{{else}}<tr><td colspan="3" class="muted">Nenhum evento de caos ativo.</td></tr>{{end}}
+</tbody>
+</table>
+{{range .Data.Pending}}<p class="muted">One-shot pendente: <code>{{.}}</code></p>{{end}}
+{{if and .CanAct .Data.Chaos}}<form method="post" action="{{.Data.ActURL}}" hx-post="{{.Data.ActURL}}" hx-target="#live" hx-swap="outerHTML" hx-confirm="Encerrar todos os eventos de caos?"><input type="hidden" name="csrf" value="{{.CSRF}}"><input type="hidden" name="action" value="chaos_stop"><button type="submit" class="danger">Encerrar todos</button></form>{{end}}
+<h2>Últimas requisições com erro</h2>
+<table>
+<thead><tr><th>Quando</th><th>Driver</th><th>Modelo</th><th>Status</th><th>Motivo</th><th>Requisição</th></tr></thead>
+<tbody>
+{{range .Data.View.Samples}}<tr><td>{{when .T}}</td><td>{{or .Driver "—"}}</td><td>{{or .Model "—"}}</td><td>{{.Status}}</td><td>{{or .Error "—"}}</td><td>{{or .RequestID "—"}}</td></tr>
+{{else}}<tr><td colspan="6" class="muted">Nenhum erro registrado.</td></tr>{{end}}
+</tbody>
+</table>
+</section>{{end}}

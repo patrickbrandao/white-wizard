@@ -1,0 +1,13 @@
+# The first attempt of the tool step fails with 429 + retry-after; the retry
+# succeeds. Tests the router's retry/backoff path per step.
+name: retry-on-error
+description: 429 on first attempt, success on retry
+steps:
+  - id: call
+    expect: { tool_results: 0 }
+    fail_first: { times: 1, error: rate_limit, retry_after_ms: 500 }
+    tool_calls:
+      - { name: any, args: schema }
+  - id: answer
+    expect: { tool_results_gte: 1 }
+    content: { tokens: "40..120" }

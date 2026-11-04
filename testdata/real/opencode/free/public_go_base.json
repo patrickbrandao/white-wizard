@@ -1,0 +1,23 @@
+{
+  "provider": "opencode",
+  "name": "public_go_base",
+  "recorded_at": "2026-11-03",
+  "note": "Gravada sem custo (US$ 0) e sem chave real, com curl/8.7.1 (User-Agent padrão do curl; nenhum User-Agent opencode/... nem x-opencode-client foi enviado). Bearer public na base Go, gratuito do catálogo Go (beam-free), max_tokens 16 (ADR 0072 item 4). Desmente o texto do item 4 (\"Invalid credential\"): o real responde 401 {error:{type:server_error,message:\"Upstream request failed: Go requires a credential\"}}, o mesmo de shape/error_nokey.json (sem chave). Confirma que a base Go não aceita public, nem com modelo gratuito do próprio catálogo Go.",
+  "request": {
+    "method": "POST",
+    "path": "/inference/go/openai/v1/chat/completions",
+    "headers": {
+      "authorization": "Bearer public",
+      "x-opencode-session": "<session>"
+    },
+    "body": "{\"model\": \"beam-free\", \"messages\": [{\"role\": \"user\", \"content\": \"Responda só: ok\"}], \"max_tokens\": 16}"
+  },
+  "response": {
+    "status": 401,
+    "headers": {
+      "content-type": "application/json",
+      "x-opencode-log-id": "<log_id>"
+    },
+    "body": "{\"error\":{\"type\":\"server_error\",\"message\":\"Upstream request failed: Go requires a credential\"}}"
+  }
+}

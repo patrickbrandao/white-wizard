@@ -1,0 +1,20 @@
+{
+  "provider": "anthropic",
+  "name": "haiku45_tool_a_notools",
+  "recorded_at": "2026-10-31",
+  "note": "claude-haiku-4-5, task 301",
+  "request": {
+    "method": "POST",
+    "path": "/v1/messages",
+    "headers": {
+      "x-api-key": "<key>",
+      "anthropic-version": "2023-06-01"
+    },
+    "body": "{\"model\": \"claude-haiku-4-5\", \"max_tokens\": 1, \"messages\": [{\"role\": \"user\", \"content\": \"x\"}], \"tool_choice\": {\"type\": \"tool\", \"name\": \"a\"}}"
+  },
+  "response": {
+    "status": 400,
+    "content_type": "application/json",
+    "body": "{\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Tool 'a' not found in provided tools\"},\"request_id\":\"<request_id>\"}"
+  }
+}

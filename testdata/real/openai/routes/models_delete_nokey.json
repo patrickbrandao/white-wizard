@@ -1,0 +1,22 @@
+{
+  "name": "models_delete_nokey",
+  "note": "",
+  "provider": "openai",
+  "recorded_at": "2026-10-31",
+  "request": {
+    "body": null,
+    "headers": {},
+    "method": "DELETE",
+    "path": "/v1/models"
+  },
+  "response": {
+    "body": "{\n  \"error\": {\n    \"message\": \"Invalid method for URL (DELETE /v1/models)\",\n    \"type\": \"invalid_request_error\",\n    \"param\": null,\n    \"code\": null\n  }\n}",
+    "headers": {
+      "content-type": "application/json",
+      "openai-processing-ms": "<ms>",
+      "openai-version": "2020-10-01",
+      "x-request-id": "<uuid>"
+    },
+    "status": 405
+  }
+}

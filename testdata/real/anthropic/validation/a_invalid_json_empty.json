@@ -1,0 +1,19 @@
+{
+  "provider": "anthropic",
+  "name": "a_invalid_json_empty",
+  "recorded_at": "2026-10-31",
+  "request": {
+    "method": "POST",
+    "path": "/v1/messages",
+    "headers": {
+      "x-api-key": "<key>",
+      "anthropic-version": "2023-06-01"
+    },
+    "body": ""
+  },
+  "response": {
+    "status": 400,
+    "content_type": "application/json",
+    "body": "{\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"The request body is not valid JSON: EOF while parsing a value at line 1 column 0\"},\"request_id\":\"<request_id>\"}"
+  }
+}

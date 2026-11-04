@@ -1,0 +1,20 @@
+{
+  "provider": "anthropic",
+  "name": "probe_agent",
+  "recorded_at": "2026-10-31",
+  "note": "claude-haiku-5-5, task 264",
+  "request": {
+    "method": "POST",
+    "path": "/v1/messages/count_tokens",
+    "headers": {
+      "x-api-key": "<key>",
+      "anthropic-version": "2023-06-01"
+    },
+    "body": "{\"model\": \"claude-haiku-5-5\", \"messages\": [{\"role\": \"user\", \"content\": \"<functions>\\n<function>{\\\"description\\\": \\\"Read a file from the workspace and return its contents.\\\", \\\"name\\\": \\\"read_file\\\", \\\"parameters\\\": {\\\"properties\\\": {\\\"limit\\\": {\\\"default\\\": 2000, \\\"type\\\": \\\"integer\\\"}, \\\"offset\\\": {\\\"minimum\\\": 0, \\\"type\\\": \\\"integer\\\"}, \\\"path\\\": {\\\"description\\\": \\\"Path relative to the workspace root\\\", \\\"type\\\": \\\"string\\\"}}, \\\"required\\\": [\\\"path\\\"], \\\"type\\\": \\\"object\\\"}}</function>\\n<function>{\\\"description\\\": \\\"Create or overwrite a file.\\\", \\\"name\\\": \\\"write_file\\\", \\\"parameters\\\": {\\\"properties\\\": {\\\"content\\\": {\\\"type\\\": \\\"string\\\"}, \\\"path\\\": {\\\"type\\\": \\\"string\\\"}}, \\\"required\\\": [\\\"path\\\", \\\"content\\\"], \\\"type\\\": \\\"object\\\"}}</function>\\n<function>{\\\"description\\\": \\\"Run a shell command and return stdout, stderr and the exit code.\\\", \\\"name\\\": \\\"run_command\\\", \\\"parameters\\\": {\\\"properties\\\": {\\\"command\\\": {\\\"type\\\": \\\"string\\\"}, \\\"env\\\": {\\\"additionalProperties\\\": {\\\"type\\\": \\\"string\\\"}, \\\"type\\\": \\\"object\\\"}, \\\"timeout_ms\\\": {\\\"maximum\\\": 600000, \\\"type\\\": \\\"integer\\\"}}, \\\"required\\\": [\\\"command\\\"], \\\"type\\\": \\\"object\\\"}}</function>\\n</functions>\"}]}"
+  },
+  "response": {
+    "status": 200,
+    "content_type": "application/json",
+    "body": "{\"input_tokens\":375}"
+  }
+}

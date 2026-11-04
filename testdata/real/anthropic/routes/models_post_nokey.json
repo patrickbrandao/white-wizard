@@ -1,0 +1,24 @@
+{
+  "name": "models_post_nokey",
+  "note": "",
+  "provider": "anthropic",
+  "recorded_at": "2026-10-31",
+  "request": {
+    "body": null,
+    "headers": {
+      "anthropic-version": "2023-06-01"
+    },
+    "method": "POST",
+    "path": "/v1/models"
+  },
+  "response": {
+    "body": "{\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Method Not Allowed\"},\"request_id\":\"<request_id>\"}",
+    "headers": {
+      "allow": "GET,HEAD",
+      "content-type": "application/json",
+      "request-id": "<request_id>",
+      "x-should-retry": "false"
+    },
+    "status": 405
+  }
+}

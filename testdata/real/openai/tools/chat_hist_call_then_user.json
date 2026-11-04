@@ -1,0 +1,19 @@
+{
+  "provider": "openai",
+  "name": "chat_hist_call_then_user",
+  "recorded_at": "2026-10-31",
+  "request": {
+    "method": "POST",
+    "path": "/v1/chat/completions",
+    "headers": {
+      "authorization": "Bearer <key>",
+      "content-type": "application/json"
+    },
+    "body": "{\"model\": \"gpt-4o-mini\", \"messages\": [{\"role\": \"user\", \"content\": \"x\"}, {\"role\": \"assistant\", \"content\": null, \"tool_calls\": [{\"id\": \"call_abc\", \"type\": \"function\", \"function\": {\"name\": \"f\", \"arguments\": \"{\\\"a\\\":\\\"b\\\"}\"}}]}, {\"role\": \"tool\", \"tool_call_id\": \"call_abc\", \"content\": \"sunny\"}, {\"role\": \"assistant\", \"content\": \"ok\"}, {\"role\": \"user\", \"content\": \"x\"}], \"max_tokens\": 64, \"tools\": [{\"type\": \"function\", \"function\": {\"name\": \"f\", \"parameters\": {\"type\": \"object\", \"properties\": {\"a\": {\"type\": \"string\"}}, \"required\": [\"a\"]}}}]}"
+  },
+  "response": {
+    "status": 200,
+    "content_type": "application/json",
+    "body": "{\n  \"id\": \"chatcmpl-Ef4h44iXgi77nJ9slnWFK7I2qa7OC\",\n  \"object\": \"chat.completion\",\n  \"created\": 1793458198,\n  \"model\": \"gpt-4o-mini-2024-07-18\",\n  \"choices\": [\n    {\n      \"index\": 0,\n      \"message\": {\n        \"role\": \"assistant\",\n        \"content\": null,\n        \"tool_calls\": [\n          {\n            \"id\": \"call_Aw48uz3VXALZKawU2memLHIh\",\n            \"type\": \"function\",\n            \"function\": {\n              \"name\": \"f\",\n              \"arguments\": \"{\\\"a\\\":\\\"b\\\"}\"\n            }\n          }\n        ],\n        \"refusal\": null,\n        \"annotations\": []\n      },\n      \"logprobs\": null,\n      \"finish_reason\": \"tool_calls\"\n    }\n  ],\n  \"usage\": {\n    \"prompt_tokens\": 69,\n    \"completion_tokens\": 13,\n    \"total_tokens\": 82,\n    \"prompt_tokens_details\": {\n      \"cached_tokens\": 0,\n      \"audio_tokens\": 0\n    },\n    \"completion_tokens_details\": {\n      \"reasoning_tokens\": 0,\n      \"audio_tokens\": 0,\n      \"accepted_prediction_tokens\": 0,\n      \"rejected_prediction_tokens\": 0\n    }\n  },\n  \"service_tier\": \"default\",\n  \"system_fingerprint\": \"fp_2851888338\"\n}\n"
+  }
+}

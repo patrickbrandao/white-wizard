@@ -1,0 +1,24 @@
+{
+  "name": "responses_put",
+  "note": "",
+  "provider": "openai",
+  "recorded_at": "2026-10-31",
+  "request": {
+    "body": null,
+    "headers": {
+      "authorization": "Bearer <key>"
+    },
+    "method": "PUT",
+    "path": "/v1/responses"
+  },
+  "response": {
+    "body": "{\n  \"error\": {\n    \"message\": \"Invalid method for URL (PUT /v1/responses)\",\n    \"type\": \"invalid_request_error\",\n    \"param\": null,\n    \"code\": null\n  }\n}",
+    "headers": {
+      "content-type": "application/json",
+      "openai-processing-ms": "<ms>",
+      "openai-version": "2020-10-01",
+      "x-request-id": "<request_id>"
+    },
+    "status": 405
+  }
+}

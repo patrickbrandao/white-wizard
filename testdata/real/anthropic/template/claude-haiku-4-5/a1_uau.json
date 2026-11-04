@@ -1,0 +1,20 @@
+{
+  "provider": "anthropic",
+  "name": "a1_uau",
+  "recorded_at": "2026-10-31",
+  "note": "claude-haiku-4-5, task 301",
+  "request": {
+    "method": "POST",
+    "path": "/v1/messages/count_tokens",
+    "headers": {
+      "x-api-key": "<key>",
+      "anthropic-version": "2023-06-01"
+    },
+    "body": "{\"model\": \"claude-haiku-4-5\", \"messages\": [{\"role\": \"assistant\", \"content\": \"x\"}, {\"role\": \"user\", \"content\": \"x\"}, {\"role\": \"assistant\", \"content\": \"x\"}, {\"role\": \"user\", \"content\": \"x\"}]}"
+  },
+  "response": {
+    "status": 200,
+    "content_type": "application/json",
+    "body": "{\"input_tokens\":32}"
+  }
+}

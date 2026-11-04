@@ -1,0 +1,23 @@
+{
+  "provider": "opencode",
+  "name": "public_paid_model",
+  "recorded_at": "2026-11-03",
+  "note": "Gravada sem custo (US$ 0) e sem chave real, com curl/8.7.1 (User-Agent padrão do curl; nenhum User-Agent opencode/... nem x-opencode-client foi enviado). Bearer public, modelo pago do catálogo pay-as-you-go (deepseek-v4.1-flash), max_tokens 16 (ADR 0072 item 4). Desmente o item 4 (\"modelo pago responde o 401 de credencial inválida\"): o real responde 401 AuthError \"Missing API key.\" no envelope {type:error,error:{...}}, isto é, public com modelo pago conta como chave ausente, não como chave inválida.",
+  "request": {
+    "method": "POST",
+    "path": "/inference/openai/v1/chat/completions",
+    "headers": {
+      "authorization": "Bearer public",
+      "x-opencode-session": "<session>"
+    },
+    "body": "{\"model\": \"deepseek-v4.1-flash\", \"messages\": [{\"role\": \"user\", \"content\": \"Responda só: ok\"}], \"max_tokens\": 16}"
+  },
+  "response": {
+    "status": 401,
+    "headers": {
+      "content-type": "application/json",
+      "x-opencode-log-id": "<log_id>"
+    },
+    "body": "{\"type\":\"error\",\"error\":{\"type\":\"AuthError\",\"message\":\"Missing API key.\"}}"
+  }
+}

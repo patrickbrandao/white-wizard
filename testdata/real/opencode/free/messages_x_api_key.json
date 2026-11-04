@@ -1,0 +1,23 @@
+{
+  "provider": "opencode",
+  "name": "messages_x_api_key",
+  "recorded_at": "2026-11-03",
+  "note": "Gravada sem custo (US$ 0) e sem chave real, com curl/8.7.1 (User-Agent padrão do curl; nenhum User-Agent opencode/... nem x-opencode-client foi enviado). Só x-api-key inválida (sem Authorization) na rota Messages Go, deepseek-v4.1-flash (ADR 0072 item 4, segundo parágrafo). Confirma que o real lê x-api-key na rota Messages: 401 {type:error,error:{type:api_error,message:\"Upstream request failed: Invalid credential\"}}, igual a shape/messages_auth.json (bearer inválido), e não o texto de credencial ausente (\"Go requires a credential\").",
+  "request": {
+    "method": "POST",
+    "path": "/inference/go/anthropic/v1/messages",
+    "headers": {
+      "x-api-key": "sk-invalid-wwz-drift",
+      "x-opencode-session": "<session>"
+    },
+    "body": "{\"model\": \"deepseek-v4.1-flash\", \"messages\": [{\"role\": \"user\", \"content\": \"Responda só: ok\"}], \"max_tokens\": 16}"
+  },
+  "response": {
+    "status": 401,
+    "headers": {
+      "content-type": "application/json",
+      "x-opencode-log-id": "<log_id>"
+    },
+    "body": "{\"type\":\"error\",\"error\":{\"type\":\"api_error\",\"message\":\"Upstream request failed: Invalid credential\"}}"
+  }
+}

@@ -1,0 +1,50 @@
+{{define "content"}}{{$f := .Data.Filter}}
+<form class="filters" method="get" action="/limits">
+<label>Tipo <select name="kind">{{$k := $f.Get "kind"}}
+{{range .Data.Kinds}}<option value="{{.}}"{{if eq $k .}} selected{{end}}>{{.}}</option>{{end}}
+</select></label>
+<label>Id <input name="id" value="{{$f.Get "id"}}" required></label>
+<button type="submit">Ver limites</button>
+</form>
+{{if and .CanAct .Data.Detail}}{{$e := .Data.Detail.State.Entity}}{{$a := .Data.Account}}
+{{if $a}}<form class="act" method="post" action="{{.Data.ActURL}}" hx-post="{{.Data.ActURL}}" hx-target="#live" hx-swap="outerHTML" hx-confirm="Alterar o tier da conta {{$a}}?">
+<input type="hidden" name="csrf" value="{{.CSRF}}"><input type="hidden" name="kind" value="account"><input type="hidden" name="id" value="{{$a}}"><input type="hidden" name="action" value="tier">
+<label>Tier da conta {{$a}} (vazio remove a sobreposição) <input name="tier" value="{{.Data.Detail.EffectiveTier}}"></label>
+<button type="submit">Alterar tier</button>
+</form>
+<form class="act" method="post" action="{{.Data.ActURL}}" hx-post="{{.Data.ActURL}}" hx-target="#live" hx-swap="outerHTML" hx-confirm="Comprar créditos para a conta {{$a}}?">
+<input type="hidden" name="csrf" value="{{.CSRF}}"><input type="hidden" name="kind" value="account"><input type="hidden" name="id" value="{{$a}}"><input type="hidden" name="action" value="credits">
+<label>Comprar créditos (US$) <input name="add_usd" type="number" min="0.000001" step="any" required></label>
+<button type="submit">Comprar</button>
+</form>{{end}}
+<form class="act" method="post" action="{{.Data.ActURL}}" hx-post="{{.Data.ActURL}}" hx-target="#live" hx-swap="outerHTML" hx-confirm="Zerar os contadores de {{$e.Kind}}/{{$e.ID}}?">
+<input type="hidden" name="csrf" value="{{.CSRF}}"><input type="hidden" name="kind" value="{{$e.Kind}}"><input type="hidden" name="id" value="{{$e.ID}}"><input type="hidden" name="action" value="reset">
+<button type="submit" class="danger">Zerar contadores</button>
+</form>
+<p class="muted">Os limites e o tier valem na conta (ADR 0051); a chave só tem teto próprio. Editar o limite: edite (ou crie) um tier em <a href="/config">Configuração</a> e atribua-o à conta aqui (ADR 0025).</p>
+{{end}}
+{{template "live" .}}
+{{if .Data.Entities}}<h2>Entidades conhecidas</h2>
+<p>{{range .Data.Entities}}<a class="tag" href="{{.URL}}">{{.Label}}</a> {{end}}</p>{{end}}
+{{end}}
+
+{{define "live"}}<section id="live" hx-get="{{.Live}}" hx-trigger="every 2s" hx-swap="outerHTML">
+{{template "messages" .}}
+{{with .Data.Detail}}
+<div class="cards">
+<div class="card"><h2>Entidade</h2><p class="big">{{.State.Entity.Kind}}/{{.State.Entity.ID}}</p></div>
+<div class="card"><h2>Status</h2><p><span class="st st-{{.State.Status}}">{{.State.Status}}</span></p></div>
+<div class="card"><h2>{{if .AccountID}}Tier da conta {{.AccountID}}{{else}}Tier atual{{end}}</h2><p class="big">{{or .EffectiveTier "—"}}</p><p class="muted">sobreposição: {{or .State.Tier "—"}}</p></div>
+{{if eq .State.Entity.Kind "account"}}<div class="card"><h2>Comprado</h2><p class="big">US$ {{num .State.PurchasedUSD}}</p>{{if .State.Credits}}<p class="muted">saldo: {{usd .State.Credits}}</p>{{end}}</div>{{end}}
+<div class="card"><h2>Fonte</h2><p>{{.Source}}</p></div>
+</div>
+<h2>Limites ao vivo</h2>
+<table>
+<thead><tr><th>Limite</th><th>Janela</th><th>Limite</th><th>Restante</th><th>Consumo</th><th>Volta em</th></tr></thead>
+<tbody>
+{{range $.Data.Rows}}<tr><td>{{.Name}}</td><td>{{.WindowLabel}}</td><td>{{num .Limit}}</td><td>{{num .Remaining}}</td><td><progress value="{{num .Used}}" max="{{num .Limit}}">{{num .Used}}</progress></td><td>{{whenp .Reset}}</td></tr>
+{{else}}<tr><td colspan="6" class="muted">{{if eq .Source "admin"}}Limites ao vivo só com Valkey (store: memory mostra só o estado).{{else if .AccountID}}Esta chave não declara teto próprio; os limites da conta {{.AccountID}} aparecem na tela da conta.{{else}}Nenhum limite configurado para o tier efetivo.{{end}}</td></tr>{{end}}
+</tbody>
+</table>
+{{else}}<p class="muted">Escolha uma entidade para ver os limites.</p>{{end}}
+</section>{{end}}

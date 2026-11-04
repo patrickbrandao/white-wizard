@@ -1,0 +1,14 @@
+{{define "content"}}{{with .Data}}
+<section class="login">
+{{with .Error}}<div class="error" role="alert"><p>{{.}}</p></div>{{end}}
+<form method="post" action="/api/v1/login">
+<input type="hidden" name="next" value="{{.Next}}">
+<label>Usuário <input name="username" autocomplete="username" required autofocus></label>
+<label>Senha <input name="password" type="password" autocomplete="current-password" required></label>
+<button type="submit">Entrar</button>
+</form>
+{{if .OIDC}}<p class="oidc"><a class="button" href="/auth/oidc/login?next={{.Next}}">Entrar com OIDC</a></p>{{end}}
+</section>
+{{end}}{{end}}
+
+{{define "live"}}{{end}}

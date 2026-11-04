@@ -1,0 +1,51 @@
+# cluster-3-instancias-valkey: três instâncias wwz com a MESMA configuração e o
+# mesmo Valkey. Com `store.kind: valkey` os limites valem para o cluster
+# inteiro (spec 010/012: scripts Lua atômicos, hash tag por entidade): a conta
+# "acme" tem rpm 60 no total, não 60 por instância, e as duas chaves dela
+# dividem esse teto, qualquer que seja a instância que atende. A conta "globex"
+# (rpm 600) não é afetada.
+# Sem balanceador: as três instâncias ficam em portas diferentes do host
+# (EX_PORT, +1000 e +2000); um roteador de verdade colocaria um LB na frente.
+server:
+  listen: ":8000"
+  auth: keys
+
+admin:
+  listen: ":9000"
+
+store:
+  kind: valkey
+  addr: [valkey:6379]
+
+keys:
+  - { key: wwz-key-acme-a, label: acme-a, account: acme }
+  - { key: wwz-key-acme-b, label: acme-b, account: acme }
+  - { key: wwz-key-globex, label: globex, account: globex }
+
+accounts:
+  - id: acme
+    limits:
+      rpm: 60 # token bucket contínuo: repõe 1 ficha por segundo
+  - id: globex
+    limits:
+      rpm: 600
+
+drivers:
+  - name: openai
+
+models:
+  - id: gpt-4o-mini
+    protocols: [openai]
+    latency: rapida
+    generation: curta
+
+profiles:
+  latency:
+    rapida: { ttft: 5ms, itl: 1ms }
+  generation:
+    curta:
+      mode: random
+      output_tokens: { dist: uniform, min: 5, max: 15 }
+
+logging:
+  level: warn

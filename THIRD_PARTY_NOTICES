@@ -1,0 +1,44 @@
+White Wizard - third-party notices
+==================================
+
+White Wizard is licensed under the Apache License 2.0 (see LICENSE). It
+includes material from the projects below, under their own licenses.
+
+-------------------------------------------------------------------------------
+tiktoken
+https://github.com/openai/tiktoken
+-------------------------------------------------------------------------------
+
+Used in: internal/tokenize (ADR 0053).
+
+- internal/tokenize/data/o200k_base.bin.gz and cl100k_base.bin.gz are the
+  o200k_base and cl100k_base rank files published by OpenAI
+  (https://openaipublic.blob.core.windows.net/encodings/), checked against the
+  sha256 tiktoken publishes and stored in a compact, gzip-compressed form.
+- The pre-tokenizer of internal/tokenize reproduces the o200k_base and
+  cl100k_base split patterns of tiktoken_ext/openai_public.py, and the merge
+  follows tiktoken's byte-pair merge (src/lib.rs). No tiktoken code is
+  copied verbatim.
+- internal/tokenize/testdata/golden.json was generated with tiktoken.
+
+MIT License
+
+Copyright (c) 2022 OpenAI, Shantanu Jain
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.

@@ -1,0 +1,26 @@
+{
+  "provider": "gemini",
+  "name": "count_cached",
+  "recorded_at": "2026-10-31",
+  "note": "countTokens com cachedContent",
+  "request": {
+    "method": "POST",
+    "path": "/v1beta/models/gemini-3.5-flash-lite:countTokens",
+    "headers": {
+      "x-goog-api-key": "<key>"
+    },
+    "body": "{\"generateContentRequest\": {\"model\": \"models/gemini-3.5-flash-lite\", \"contents\": [{\"role\": \"user\", \"parts\": [{\"text\": \"Responda só: ok\"}]}], \"cachedContent\": \"cachedContents/<cache_id>\"}}"
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "content-type": "application/json; charset=UTF-8",
+      "server": "scaffolding on HTTPServer2",
+      "server-timing": "gfet4t7; dur=<ms>",
+      "x-content-type-options": "nosniff",
+      "x-frame-options": "SAMEORIGIN",
+      "x-xss-protection": "0"
+    },
+    "body": "{\n  \"totalTokens\": 3288,\n  \"cachedContentTokenCount\": 3281,\n  \"promptTokensDetails\": [\n    {\n      \"modality\": \"TEXT\",\n      \"tokenCount\": 3288\n    }\n  ],\n  \"cacheTokensDetails\": [\n    {\n      \"modality\": \"TEXT\",\n      \"tokenCount\": 3281\n    }\n  ]\n}\n"
+  }
+}

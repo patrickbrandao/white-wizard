@@ -1,0 +1,24 @@
+{
+  "provider": "opencode",
+  "name": "gen_thinking_level",
+  "recorded_at": "2026-10-31",
+  "note": "rota Gemini do gateway (task 241)",
+  "request": {
+    "method": "POST",
+    "path": "/inference/go/google/v1beta/models/gemini-4-argon:generateContent",
+    "headers": {
+      "x-goog-api-key": "<key>",
+      "x-opencode-session": "<session>"
+    },
+    "body": "{\"contents\":[{\"role\":\"user\",\"parts\":[{\"text\":\"Quanto é 17*3? Responda só o número.\"}]}],\"generationConfig\":{\"maxOutputTokens\":256,\"thinkingConfig\":{\"thinkingLevel\":\"LOW\",\"includeThoughts\":true}}}"
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "content-type": "application/json",
+      "x-opencode-log-id": "<log_id>",
+      "x-zen-model": "gemini-4-argon"
+    },
+    "body": "{\"createTime\":\"2026-10-31T15:33:37.365106Z\",\"responseId\":\"UQrmarKkFor2xrAPv9zwiQ8\",\"modelVersion\":\"gemini-4-argon\",\"candidates\":[{\"finishReason\":\"STOP\",\"content\":{\"role\":\"model\",\"parts\":[{\"text\":\"51\",\"thoughtSignature\":\"AY89a1+itIvRP2M4ZyKhV8HJi0IQfxM5iLMCjYrd4qW+ccOXlt8OP2DMjFHPIi9uhINbGfT+xxhghwBWIxOl12T54BnGJmyrlhle+vH3kHWCaEXkRA==\"}]}}],\"usageMetadata\":{\"candidatesTokensDetails\":[{\"modality\":\"TEXT\",\"tokenCount\":6}],\"promptTokensDetails\":[{\"modality\":\"TEXT\",\"tokenCount\":45}],\"candidatesTokenCount\":6,\"promptTokenCount\":45,\"totalTokenCount\":51,\"cost\":0,\"opencode\":{\"billing_source\":\"go\",\"list_cost\":0.00015,\"allowance\":0.0003,\"tokens\":{\"input\":45,\"output\":6,\"reasoning\":0,\"cache_read\":0,\"cache_write_5m\":0,\"cache_write_1h\":0}}}}"
+  }
+}

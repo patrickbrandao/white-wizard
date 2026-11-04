@@ -1,0 +1,18 @@
+{
+  "provider": "openrouter",
+  "name": "chat_model_unknown_short",
+  "recorded_at": "2026-10-31",
+  "request": {
+    "method": "POST",
+    "path": "/api/v1/chat/completions",
+    "headers": {
+      "authorization": "Bearer <key>"
+    },
+    "body": "{\"model\": \"nonexistent-wwz\", \"messages\": [{\"role\": \"user\", \"content\": \"hi\"}], \"max_tokens\": 1}"
+  },
+  "response": {
+    "status": 400,
+    "content_type": "application/json",
+    "body": "{\"error\":{\"message\":\"nonexistent-wwz is not a valid model ID\",\"code\":400},\"user_id\":\"<user_id>\"}"
+  }
+}

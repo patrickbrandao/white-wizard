@@ -1,0 +1,24 @@
+{
+  "provider": "opencode",
+  "name": "public_generic_client",
+  "recorded_at": "2026-11-03",
+  "note": "Gravada sem custo (US$ 0) e sem chave real, com curl/8.7.1 (User-Agent padrão do curl; nenhum User-Agent opencode/... nem x-opencode-client foi enviado). Bearer public, cliente genérico, primeiro gratuito do catálogo pay-as-you-go (big-pickle), max_tokens 16 (ADR 0072 itens 4, 5 e 6). Desmente o 403 ForbiddenError \"Free models are only available in OpenCode\" do item 5: o real responde 429 FreeUsageLimitError no envelope {type:error,error:{type,message}} (também na rota Chat Completions), com o texto \"Free usage limit reached. Free models work in OpenCode (https://opencode.ai); subscribe to OpenCode Go to keep going: https://opencode.ai/go\" (não o \"Daily free usage limit exceeded.\" do item 6) e retry-after 34369 s às 14:27:11Z = 00:00 UTC (confirma o reset diário em 00:00 UTC). Foi a primeira chamada a um gratuito deste IP nesta gravação: não dá para saber se é uma cota zero para cliente genérico ou a cota do IP já esgotada; a chamada não foi repetida. Confirma que public é aceito como modo gratuito na base pay-as-you-go (não houve 401).",
+  "request": {
+    "method": "POST",
+    "path": "/inference/openai/v1/chat/completions",
+    "headers": {
+      "authorization": "Bearer public",
+      "x-opencode-session": "<session>"
+    },
+    "body": "{\"model\": \"big-pickle\", \"messages\": [{\"role\": \"user\", \"content\": \"Responda só: ok\"}], \"max_tokens\": 16}"
+  },
+  "response": {
+    "status": 429,
+    "headers": {
+      "content-type": "application/json",
+      "retry-after": "34369",
+      "x-opencode-log-id": "<log_id>"
+    },
+    "body": "{\"type\":\"error\",\"error\":{\"type\":\"FreeUsageLimitError\",\"message\":\"Free usage limit reached. Free models work in OpenCode (https://opencode.ai); subscribe to OpenCode Go to keep going: https://opencode.ai/go\"}}"
+  }
+}

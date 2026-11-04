@@ -1,0 +1,23 @@
+{
+  "provider": "openai",
+  "name": "error_model",
+  "recorded_at": "2026-10-31",
+  "note": "sonda error_model do wwz-drift (wwz-drift record)",
+  "request": {
+    "method": "POST",
+    "path": "/v1/chat/completions",
+    "headers": {
+      "authorization": "Bearer <key>"
+    },
+    "body": "{\"model\":\"wwz-drift-modelo-inexistente\",\"messages\":[{\"role\":\"user\",\"content\":\"Responda só: ok\"}],\"max_tokens\":16}"
+  },
+  "response": {
+    "status": 404,
+    "headers": {
+      "access-control-expose-headers": "CF-Ray, CF-Ray",
+      "content-type": "application/json; charset=utf-8",
+      "x-request-id": "<request_id>"
+    },
+    "body": "{\n    \"error\": {\n        \"message\": \"The model `wwz-drift-modelo-inexistente` does not exist or you do not have access to it.\",\n        \"type\": \"invalid_request_error\",\n        \"param\": null,\n        \"code\": \"model_not_found\"\n    }\n}\n"
+  }
+}

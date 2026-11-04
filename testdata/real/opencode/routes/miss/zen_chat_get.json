@@ -1,0 +1,19 @@
+{
+  "provider": "opencode",
+  "name": "zen_chat_get",
+  "recorded_at": "2026-10-31",
+  "note": "método errado: 404 (nunca 405) sem corpo",
+  "request": {
+    "method": "GET",
+    "path": "/zen/v1/chat/completions",
+    "headers": {
+      "authorization": "Bearer <key>"
+    },
+    "body": null
+  },
+  "response": {
+    "status": 404,
+    "headers": {},
+    "body": ""
+  }
+}

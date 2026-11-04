@@ -1,0 +1,47 @@
+HTTP 200
+Cache-Control: no-cache
+Connection: keep-alive
+Content-Type: text/event-stream; charset=utf-8
+Date: Sat, 31 Oct 2026 12:32:54 GMT
+X-Accel-Buffering: no
+X-Request-Id: req_ec489d198e86e050906821622cfce4ac
+X-Wwz-Seed: 1
+
+: OPENROUTER PROCESSING
+
+data: {"choices":[{"delta":{"content":"","refusal":null,"role":"assistant"},"finish_reason":null,"index":0,"logprobs":null}],"created":1793449974,"id":"gen-1793449974-h408cmIXexkgVYQW5DQJ","model":"openai/gpt-4.1-nano","object":"chat.completion.chunk","provider":"WhiteWizard"}
+
+data: {"choices":[{"delta":{"content":"A"},"finish_reason":null,"index":0,"logprobs":null}],"created":1793449974,"id":"gen-1793449974-h408cmIXexkgVYQW5DQJ","model":"openai/gpt-4.1-nano","object":"chat.completion.chunk","provider":"WhiteWizard"}
+
+data: {"choices":[{"delta":{"content":" simple"},"finish_reason":null,"index":0,"logprobs":null}],"created":1793449974,"id":"gen-1793449974-h408cmIXexkgVYQW5DQJ","model":"openai/gpt-4.1-nano","object":"chat.completion.chunk","provider":"WhiteWizard"}
+
+data: {"choices":[{"delta":{"content":" baseli"},"finish_reason":null,"index":0,"logprobs":null}],"created":1793449974,"id":"gen-1793449974-h408cmIXexkgVYQW5DQJ","model":"openai/gpt-4.1-nano","object":"chat.completion.chunk","provider":"WhiteWizard"}
+
+data: {"choices":[{"delta":{"content":"ne"},"finish_reason":null,"index":0,"logprobs":null}],"created":1793449974,"id":"gen-1793449974-h408cmIXexkgVYQW5DQJ","model":"openai/gpt-4.1-nano","object":"chat.completion.chunk","provider":"WhiteWizard"}
+
+data: {"choices":[{"delta":{"content":" is"},"finish_reason":null,"index":0,"logprobs":null}],"created":1793449974,"id":"gen-1793449974-h408cmIXexkgVYQW5DQJ","model":"openai/gpt-4.1-nano","object":"chat.completion.chunk","provider":"WhiteWizard"}
+
+data: {"choices":[{"delta":{"content":" often"},"finish_reason":null,"index":0,"logprobs":null}],"created":1793449974,"id":"gen-1793449974-h408cmIXexkgVYQW5DQJ","model":"openai/gpt-4.1-nano","object":"chat.completion.chunk","provider":"WhiteWizard"}
+
+data: {"choices":[{"delta":{"content":" the"},"finish_reason":null,"index":0,"logprobs":null}],"created":1793449974,"id":"gen-1793449974-h408cmIXexkgVYQW5DQJ","model":"openai/gpt-4.1-nano","object":"chat.completion.chunk","provider":"WhiteWizard"}
+
+data: {"choices":[{"delta":{"content":" best"},"finish_reason":null,"index":0,"logprobs":null}],"created":1793449974,"id":"gen-1793449974-h408cmIXexkgVYQW5DQJ","model":"openai/gpt-4.1-nano","object":"chat.completion.chunk","provider":"WhiteWizard"}
+
+data: {"choices":[{"delta":{"content":" starti"},"finish_reason":null,"index":0,"logprobs":null}],"created":1793449974,"id":"gen-1793449974-h408cmIXexkgVYQW5DQJ","model":"openai/gpt-4.1-nano","object":"chat.completion.chunk","provider":"WhiteWizard"}
+
+data: {"choices":[{"delta":{"content":"ng"},"finish_reason":null,"index":0,"logprobs":null}],"created":1793449974,"id":"gen-1793449974-h408cmIXexkgVYQW5DQJ","model":"openai/gpt-4.1-nano","object":"chat.completion.chunk","provider":"WhiteWizard"}
+
+data: {"choices":[{"delta":{"content":" point"},"finish_reason":null,"index":0,"logprobs":null}],"created":1793449974,"id":"gen-1793449974-h408cmIXexkgVYQW5DQJ","model":"openai/gpt-4.1-nano","object":"chat.completion.chunk","provider":"WhiteWizard"}
+
+data: {"choices":[{"delta":{"content":" for"},"finish_reason":null,"index":0,"logprobs":null}],"created":1793449974,"id":"gen-1793449974-h408cmIXexkgVYQW5DQJ","model":"openai/gpt-4.1-nano","object":"chat.completion.chunk","provider":"WhiteWizard"}
+
+data: {"choices":[{"delta":{"content":" compar"},"finish_reason":null,"index":0,"logprobs":null}],"created":1793449974,"id":"gen-1793449974-h408cmIXexkgVYQW5DQJ","model":"openai/gpt-4.1-nano","object":"chat.completion.chunk","provider":"WhiteWizard"}
+
+data: {"choices":[{"delta":{"content":"ison"},"finish_reason":null,"index":0,"logprobs":null}],"created":1793449974,"id":"gen-1793449974-h408cmIXexkgVYQW5DQJ","model":"openai/gpt-4.1-nano","object":"chat.completion.chunk","provider":"WhiteWizard"}
+
+data: {"choices":[{"delta":{"content":"."},"finish_reason":null,"index":0,"logprobs":null}],"created":1793449974,"id":"gen-1793449974-h408cmIXexkgVYQW5DQJ","model":"openai/gpt-4.1-nano","object":"chat.completion.chunk","provider":"WhiteWizard"}
+
+data: {"choices":[{"delta":{},"finish_reason":"stop","index":0,"logprobs":null,"native_finish_reason":"stop"}],"created":1793449974,"id":"gen-1793449974-h408cmIXexkgVYQW5DQJ","model":"openai/gpt-4.1-nano","object":"chat.completion.chunk","provider":"WhiteWizard"}
+
+data: [DONE]
+

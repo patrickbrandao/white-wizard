@@ -1,0 +1,20 @@
+{
+  "provider": "anthropic",
+  "name": "c08",
+  "recorded_at": "2026-10-31",
+  "note": "claude-opus-4-8, task 301",
+  "request": {
+    "method": "POST",
+    "path": "/v1/messages/count_tokens",
+    "headers": {
+      "x-api-key": "<key>",
+      "anthropic-version": "2023-06-01"
+    },
+    "body": "{\"model\": \"claude-opus-4-8\", \"messages\": [{\"role\": \"user\", \"content\": \"El simulador responde con textos inventados, pero respeta el formato de cada proveedor: encabezados, errores, límites de velocidad y la cuenta de tokens. Así los equipos pueden probar sus enrutadores sin gastar dinero.\"}]}"
+  },
+  "response": {
+    "status": 200,
+    "content_type": "application/json",
+    "body": "{\"input_tokens\":88}"
+  }
+}

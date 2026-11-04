@@ -1,0 +1,116 @@
+--- turn 1/3 status=429 retry-after=1 attempt=1 scenario=retry-on-error step=call
+{
+  "error": {
+    "message": "scenario \"retry-on-error\" step \"call\": injected failure (attempt 1 of 1)",
+    "code": 429,
+    "metadata": {
+      "error_type": "rate_limit_exceeded"
+    }
+  },
+  "user_id": "user_wwz"
+}
+--- turn 2/3 status=200 attempt=2 scenario=retry-on-error seed=42 step=call
+{
+  "id": "gen-0-tHqt50HKHn8sUnUfQ51r",
+  "object": "chat.completion",
+  "created": 0,
+  "model": "white-wizard/wwz-fast",
+  "provider": "WhiteWizard",
+  "system_fingerprint": null,
+  "service_tier": "default",
+  "choices": [
+    {
+      "index": 0,
+      "logprobs": null,
+      "finish_reason": "tool_calls",
+      "native_finish_reason": "tool_calls",
+      "message": {
+        "role": "assistant",
+        "content": null,
+        "refusal": null,
+        "reasoning": null,
+        "tool_calls": [
+          {
+            "type": "function",
+            "index": 0,
+            "id": "call_retry-on-error_call_0_146bc4h",
+            "function": {
+              "name": "read_file",
+              "arguments": "{\"path\":\"xray papa\"}"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 70,
+    "completion_tokens": 14,
+    "total_tokens": 84,
+    "cost": 0.000056,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.000056,
+      "upstream_inference_prompt_cost": 0.000035,
+      "upstream_inference_completions_cost": 0.000021
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  }
+}
+--- turn 3/3 status=200 attempt=1 scenario=retry-on-error seed=42 step=answer
+{
+  "id": "gen-0-2ugPCA8upoceMCr8AasE",
+  "object": "chat.completion",
+  "created": 0,
+  "model": "white-wizard/wwz-fast",
+  "provider": "WhiteWizard",
+  "system_fingerprint": null,
+  "service_tier": "default",
+  "choices": [
+    {
+      "index": 0,
+      "logprobs": null,
+      "finish_reason": "stop",
+      "native_finish_reason": "stop",
+      "message": {
+        "role": "assistant",
+        "content": "The data suggests a steady trend with occasional short-lived spikes. A simple baseline is often the best starting point for comparison. The configuration appears valid, although a few parameters",
+        "refusal": null,
+        "reasoning": null
+      }
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 124,
+    "completion_tokens": 44,
+    "total_tokens": 168,
+    "cost": 0.000128,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.000128,
+      "upstream_inference_prompt_cost": 0.000062,
+      "upstream_inference_completions_cost": 0.000066
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  }
+}

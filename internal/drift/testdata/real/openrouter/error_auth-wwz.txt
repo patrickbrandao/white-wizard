@@ -1,0 +1,7 @@
+HTTP 401
+Content-Length: 114
+Content-Type: application/json
+Date: Sat, 31 Oct 2026 12:32:04 GMT
+X-Request-Id: req_c4807173f8969008a731eb5a0620a99b
+
+{"error":{"code":401,"message":"User not found.","metadata":{"error_type":"authentication"}},"user_id":"user_wwz"}

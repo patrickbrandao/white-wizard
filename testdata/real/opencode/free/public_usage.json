@@ -1,0 +1,27 @@
+{
+  "provider": "opencode",
+  "name": "public_usage",
+  "recorded_at": "2026-11-03",
+  "note": "Gravada sem custo (US$ 0) e sem chave real, com curl/8.7.1 (User-Agent padrão do curl; nenhum User-Agent opencode/... nem x-opencode-client foi enviado). Bearer public em GET /zen/go/v1/usage (ADR 0072 item 4). O real responde 401 {type:error,error:{type:AuthError,message:Unauthorized}}, igual a shape/usage_zen_badkey.json (chave inválida); public não tem uso sem conta.",
+  "request": {
+    "method": "GET",
+    "path": "/zen/go/v1/usage",
+    "headers": {
+      "authorization": "Bearer public",
+      "x-opencode-session": "<session>"
+    },
+    "body": null
+  },
+  "response": {
+    "status": 401,
+    "headers": {
+      "access-control-allow-headers": "Content-Type, Authorization, X-Api-Key, X-Opencode-Org-Id",
+      "access-control-allow-methods": "GET, OPTIONS",
+      "access-control-allow-origin": "*",
+      "cache-control": "no-store",
+      "content-type": "application/json",
+      "x-opencode-log-id": "<log_id>"
+    },
+    "body": "{\"type\":\"error\",\"error\":{\"type\":\"AuthError\",\"message\":\"Unauthorized\"}}"
+  }
+}

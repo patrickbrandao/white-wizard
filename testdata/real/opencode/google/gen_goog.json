@@ -1,0 +1,24 @@
+{
+  "provider": "opencode",
+  "name": "gen_goog",
+  "recorded_at": "2026-10-31",
+  "note": "rota Gemini do gateway (task 241)",
+  "request": {
+    "method": "POST",
+    "path": "/inference/go/google/v1beta/models/gemini-4-argon:generateContent",
+    "headers": {
+      "x-goog-api-key": "<key>",
+      "x-opencode-session": "<session>"
+    },
+    "body": "{\"contents\":[{\"role\":\"user\",\"parts\":[{\"text\":\"Responda só: ok\"}]}],\"generationConfig\":{\"maxOutputTokens\":16}}"
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "content-type": "application/json",
+      "x-opencode-log-id": "<log_id>",
+      "x-zen-model": "gemini-4-argon"
+    },
+    "body": "{\"createTime\":\"2026-10-31T15:31:51.637069Z\",\"responseId\":\"5wnmao3xJou8w-UPutDWyA4\",\"modelVersion\":\"gemini-4-argon\",\"candidates\":[{\"finishReason\":\"STOP\",\"content\":{\"role\":\"model\",\"parts\":[{\"text\":\"ok\",\"thoughtSignature\":\"AY89a1/bm0Ci9zh/wDlqGrnb+8j+xTdzrAcA2mN9VFcMcA5dO6nsqkFkASXTOsc21doQoytFflXUMsi8m5+i6EUlw9yy05e4iQ82Dym2wD69v7cYhg==\"}]}}],\"usageMetadata\":{\"candidatesTokensDetails\":[{\"modality\":\"TEXT\",\"tokenCount\":5}],\"promptTokensDetails\":[{\"modality\":\"TEXT\",\"tokenCount\":36}],\"candidatesTokenCount\":5,\"promptTokenCount\":36,\"totalTokenCount\":41,\"cost\":0,\"opencode\":{\"billing_source\":\"go\",\"list_cost\":0.000122,\"allowance\":0.000244,\"tokens\":{\"input\":36,\"output\":5,\"reasoning\":0,\"cache_read\":0,\"cache_write_5m\":0,\"cache_write_1h\":0}}}}"
+  }
+}

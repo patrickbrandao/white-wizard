@@ -1,0 +1,25 @@
+{
+  "provider": "openrouter",
+  "name": "none_serial",
+  "recorded_at": "2026-10-31",
+  "note": "chave que o type none não aceita: ignorada (200) (task 342)",
+  "request": {
+    "method": "POST",
+    "path": "/api/v1/messages",
+    "headers": {
+      "authorization": "Bearer <key>"
+    },
+    "body": "{\"model\": \"anthropic/claude-haiku-4.5\", \"max_tokens\": 1, \"messages\": [{\"role\": \"user\", \"content\": \"x\"}], \"tools\": [{\"name\": \"a\", \"input_schema\": {\"type\": \"object\", \"properties\": {}}}], \"tool_choice\": {\"type\": \"none\", \"disable_parallel_tool_use\": true}}"
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "access-control-allow-origin": "*",
+      "access-control-expose-headers": "X-Generation-Id,X-Provider-Name,request-id,cf-ray",
+      "content-type": "application/json",
+      "request-id": "<generation_id>",
+      "x-generation-id": "<generation_id>"
+    },
+    "body": "{\"id\":\"<msg_id>\",\"type\":\"message\",\"role\":\"assistant\",\"container\":null,\"content\":[{\"type\":\"text\",\"text\":\"I\",\"citations\":[]}],\"model\":\"anthropic/claude-haiku-4.5\",\"stop_reason\":\"max_tokens\",\"stop_details\":null,\"stop_sequence\":null,\"usage\":{\"input_tokens\":531,\"output_tokens\":1,\"output_tokens_details\":{\"thinking_tokens\":0},\"cache_creation_input_tokens\":0,\"cache_read_input_tokens\":0,\"cache_creation\":{\"ephemeral_5m_input_tokens\":0,\"ephemeral_1h_input_tokens\":0},\"inference_geo\":null,\"server_tool_use\":null,\"service_tier\":\"standard\",\"speed\":\"standard\",\"cost\":0.000536,\"is_byok\":false,\"cost_details\":{\"upstream_inference_cost\":0.000536,\"upstream_inference_prompt_cost\":0.000531,\"upstream_inference_completions_cost\":0.000005}},\"context_management\":null,\"provider\":\"Amazon Bedrock\"}"
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "provider": "gemini",
+  "name": "v1_unknown",
+  "recorded_at": "2026-10-31",
+  "note": "",
+  "request": {
+    "method": "GET",
+    "path": "/v1/nope",
+    "headers": {
+      "x-goog-api-key": "<key>"
+    },
+    "body": null
+  },
+  "response": {
+    "status": 404,
+    "headers": {
+      "content-type": "text/html",
+      "server": "scaffolding on HTTPServer2",
+      "x-xss-protection": "0",
+      "x-frame-options": "SAMEORIGIN",
+      "x-content-type-options": "nosniff",
+      "server-timing": "gfet4t7; dur=<ms>"
+    },
+    "body": ""
+  }
+}

@@ -1,0 +1,296 @@
+delete member access_programs
+delete member allowed_data_regions
+delete member annotations
+delete member architecture
+delete member audio_tokens
+delete member background
+delete member budgets
+delete member byok_usage
+delete member byok_usage_daily
+delete member byok_usage_monthly
+delete member byok_usage_weekly
+delete member cache_creation
+delete member cache_write_tokens
+delete member citations
+delete member completed_at
+delete member container
+delete member content_index
+delete member context_management
+delete member cost_details
+delete member created_at
+delete member creator_user_id
+delete member default_effort
+delete member default_enabled
+delete member default_parameters
+delete member description
+delete member details
+delete member effective_budget
+delete member endpoints
+delete member ephemeral_1h_input_tokens
+delete member ephemeral_5m_input_tokens
+delete member expiration_date
+delete member expires_at
+delete member flagged_input
+delete member frequency_penalty
+delete member hugging_face_id
+delete member image_tokens
+delete member include_byok_in_limit
+delete member inference_geo
+delete member input_cache_read
+delete member input_cache_write
+delete member input_modalities
+delete member instruct_type
+delete member instructions
+delete member interval
+delete member is_byok
+delete member is_management_key
+delete member is_provisioning_key
+delete member item
+delete member knowledge_cutoff
+delete member limit_reset
+delete member links
+delete member logprobs
+delete member mandatory
+delete member max_output_tokens
+delete member max_tool_calls
+delete member modality
+delete member next
+delete member note
+delete member organization_id
+delete member output_index
+delete member output_modalities
+delete member parallel_tool_calls
+delete member parameters
+delete member part
+delete member presence_penalty
+delete member previous_response_id
+delete member prompt_cache_key
+delete member prompt_cache_options
+delete member properties
+delete member provider
+delete member provider_name
+delete member rate_limit
+delete member raw
+delete member reasons
+delete member remaining
+delete member remedy_hint
+delete member requests
+delete member safety_identifier
+delete member scope
+delete member server_tool_use
+delete member service_tier
+delete member speed
+delete member stop_details
+delete member store
+delete member strict
+delete member summary
+delete member supported_efforts
+delete member supported_voices
+delete member temperature
+delete member thinking_tokens
+delete member tokenizer
+delete member tool_choice
+delete member tools
+delete member top_logprobs
+delete member top_p
+delete member total_count
+delete member truncation
+delete member upstream_inference_completions_cost
+delete member upstream_inference_cost
+delete member upstream_inference_input_cost
+delete member upstream_inference_output_cost
+delete member upstream_inference_prompt_cost
+delete member usage_daily
+delete member usage_monthly
+delete member usage_weekly
+delete member used
+delete member video_tokens
+delete member workspace_id
+replace value "..."
+replace value "/api/v1/chat/completions"
+replace value "/api/v1/completions"
+replace value "/api/v1/messages"
+replace value "/api/v1/models/author/model-c/endpoints"
+replace value "/api/v1/models/white-wizard/model-a/endpoints"
+replace value "/api/v1/models/white-wizard/model-b/endpoints"
+replace value "0.000001"
+replace value "0.000002"
+replace value "10s"
+replace value "Insufficient credits"
+replace value "Internal Server Error"
+replace value "Internal server error"
+replace value "Invalid JSON: unexpected end of JSON input"
+replace value "Invalid Responses API request"
+replace value "Invalid request parameters"
+replace value "Invalid request"
+replace value "Key limit exceeded"
+replace value "Method Not Allowed"
+replace value "No endpoints found for gpt-x."
+replace value "No input provided"
+replace value "Not found"
+replace value "Other"
+replace value "Output blocked by content filtering policy"
+replace value "Overloaded"
+replace value "Payload Too Large"
+replace value "Provider returned error"
+replace value "Rate limit exceeded"
+replace value "Rate limit exceeded: free-models-per-min."
+replace value "Request not allowed"
+replace value "Request timed out"
+replace value "Simulated model served by White Wizard (wwz)."
+replace value "This field is deprecated and safe to ignore."
+replace value "This model is not available in your region."
+replace value "This organization has been disabled."
+replace value "White Wizard: Model A"
+replace value "White Wizard: Model B"
+replace value "White Wizard: Model C"
+replace value "WhiteWizard"
+replace value "Your account has been suspended."
+replace value "[] is too short - 'messages'"
+replace value "api_error"
+replace value "auto"
+replace value "bad input"
+replace value "blocked by wwz"
+replace value "boom"
+replace value "content_policy"
+replace value "default"
+replace value "disabled"
+replace value "frequency_penalty"
+replace value "global"
+replace value "high"
+replace value "include_reasoning"
+replace value "insufficient_credits"
+replace value "invalid_prompt"
+replace value "long"
+replace value "low"
+replace value "medium"
+replace value "messages: at least one message is required"
+replace value "model: Field required"
+replace value "model: gpt-x"
+replace value "no"
+replace value "not_found_error"
+replace value "object"
+replace value "partial"
+replace value "permission_error"
+replace value "presence_penalty"
+replace value "reasoning"
+replace value "request_too_large"
+replace value "response.content_part.added"
+replace value "response.content_part.done"
+replace value "response.function_call_arguments.done"
+replace value "response.in_progress"
+replace value "response.output_item.added"
+replace value "response.output_item.done"
+replace value "response.output_text.done"
+replace value "response_format"
+replace value "seed"
+replace value "slow down"
+replace value "standard"
+replace value "string"
+replace value "summary_text"
+replace value "teapot"
+replace value "temperature"
+replace value "text->text"
+replace value "timeout_error"
+replace value "tool_choice"
+replace value "tools"
+replace value "top_p"
+replace value "unknown"
+replace value "unmapped"
+replace value "upstream returned an invalid response"
+replace value "workspace"
+replace value "x"
+replace value "you must provide a model parameter"
+replace value -1
+replace value 0.0005
+replace value 0.001
+replace value 0.0015
+replace value 0.0025
+replace value 418
+replace value 50
+replace value false
+replace value true
+drop header access-control-allow-origin
+drop header access-control-expose-headers
+drop header cache-control
+drop header connection
+drop header x-accel-buffering
+status 504 becomes 505
+zero request field N
+zero request field ResponseFormat
+zero request field ResponseSchema
+zero request field Temperature
+zero request field Seed
+zero request field Headers
+zero request field ClientIP
+zero request field Received
+zero request field RequestID
+zero policy field ExcludeCacheRead
+drop route 3
+add header x-request-id 0
+add header x-request-id wwz-other
+add header x-gemini-service-tier 0
+add header x-gemini-service-tier wwz-other
+add header x-wwz-unknown 0
+add header x-wwz-unknown wwz-other
+header access-control-allow-origin becomes "wwz-other"
+header access-control-allow-origin becomes "0"
+header access-control-allow-origin becomes "text/html"
+header access-control-expose-headers becomes "wwz-other"
+header access-control-expose-headers becomes "0"
+header access-control-expose-headers becomes "text/html"
+header cache-control becomes "wwz-other"
+header cache-control becomes "0"
+header cache-control becomes "text/html"
+header connection becomes "wwz-other"
+header connection becomes "0"
+header connection becomes "text/html"
+header x-accel-buffering becomes "wwz-other"
+header x-accel-buffering becomes "0"
+header x-accel-buffering becomes "text/html"
+header x-generation-id becomes "wwz-other"
+header x-generation-id becomes "0"
+header x-generation-id becomes "text/html"
+header x-ratelimit-reset becomes "wwz-other"
+header x-ratelimit-reset becomes "0"
+header x-ratelimit-reset becomes "text/html"
+rename reasoning_content
+two data lines
+perturb request field N
+perturb request field ResponseFormat
+perturb request field ResponseSchema
+perturb request field Temperature
+perturb request field Seed
+perturb request field Headers
+perturb request field ClientIP
+perturb request field Received
+perturb request field RequestID
+forced model namer
+usage chunk with a choice
+far reset
+broken array body
+no last frame
+kind messages on route 2
+kind messages on route 3
+method GET on route 3
+method GET on route 4
+method GET on route 5
+method GET on route 6
+method GET on route 7
+method GET on route 8
+method GET on route 9
+method GET on route 10
+perturb request leaf 6
+perturb request leaf 7
+perturb request leaf 9
+perturb request leaf 24
+perturb request leaf 30
+perturb request leaf 33
+perturb request leaf 41
+perturb request leaf 51
+perturb request leaf 52
+perturb request leaf 53
+perturb request leaf 54
+perturb request leaf 55
+perturb request leaf 56
+perturb request leaf 58

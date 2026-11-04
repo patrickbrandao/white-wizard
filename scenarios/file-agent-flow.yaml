@@ -1,0 +1,51 @@
+# White Wizard scenario: an agent with file tools that reads, writes, edits
+# and deletes a file in sequence. The step is chosen from the conversation
+# state (tool results seen, last tool called), so any instance can serve any
+# turn without shared state.
+name: file-agent-flow
+description: read -> write -> edit -> delete -> final answer
+match:
+  tools_include: [read_file, write_file, edit_file, delete_file]
+vars:
+  path: "/tmp/{{rand_word}}-{{rand_int 1000 9999}}.txt"
+step_limit: 12
+on_no_match: fallback
+on_exhausted: error
+steps:
+  - id: read
+    expect: { tool_results: 0 }
+    reasoning: { tokens: "40..120" }
+    tool_calls:
+      - { name: read_file, args: { path: "{{.vars.path}}" } }
+
+  - id: write
+    expect: { last_tool: read_file }
+    tool_calls:
+      - { name: write_file, args: { path: "{{.vars.path}}", content: "{{lorem 300}}" } }
+
+  - id: edit
+    expect: { last_tool: write_file, last_tool_result_matches: "(?i)ok|written|success|saved|done" }
+    tool_calls:
+      - { name: edit_file, args: schema }
+
+  - id: edit-failed
+    expect: { last_tool: write_file }
+    content: "The write failed with: {{.state.LastToolResult}}. Retrying once."
+    tool_calls:
+      - { name: write_file, args: { path: "{{.vars.path}}", content: "{{lorem 100}}" } }
+
+  - id: delete
+    expect: { last_tool: edit_file }
+    latency: { ttft: 2s }
+    tool_calls:
+      - { name: delete_file, args: { path: "{{.vars.path}}" } }
+
+  - id: done
+    expect: { last_tool: delete_file }
+    content: { tokens: "50..200" }
+    finish_reason: stop
+
+  - id: give-up
+    expect: { turn_gte: 12 }
+    content: "I could not complete the task."
+    finish_reason: stop

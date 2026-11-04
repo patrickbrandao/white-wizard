@@ -1,0 +1,192 @@
+{
+  "version": 1,
+  "kind": "drift",
+  "tool_version": "v0.0.0-test",
+  "started": "2026-10-31T06:00:00Z",
+  "finished": "2026-10-31T06:00:00Z",
+  "wwz": {
+    "url": "in-process",
+    "version": "v0.0.0-test"
+  },
+  "providers": [
+    {
+      "provider": "openai",
+      "status": "ok",
+      "reason": "",
+      "base": "http://fake-openai",
+      "model": "gpt-4o-mini",
+      "spend_usd": 0.000022649999999999998,
+      "probes": [
+        {
+          "probe": "models",
+          "status": "ok",
+          "real_status": 200,
+          "wwz_status": 200,
+          "divergences": []
+        },
+        {
+          "probe": "chat",
+          "status": "ok",
+          "real_status": 200,
+          "wwz_status": 200,
+          "divergences": []
+        },
+        {
+          "probe": "chat_stream",
+          "status": "ok",
+          "real_status": 200,
+          "wwz_status": 200,
+          "divergences": []
+        },
+        {
+          "probe": "error_auth",
+          "status": "ok",
+          "real_status": 401,
+          "wwz_status": 401,
+          "divergences": []
+        },
+        {
+          "probe": "error_model",
+          "status": "ok",
+          "real_status": 404,
+          "wwz_status": 404,
+          "divergences": []
+        },
+        {
+          "probe": "responses",
+          "status": "ok",
+          "real_status": 200,
+          "wwz_status": 200,
+          "divergences": []
+        },
+        {
+          "probe": "responses_stream",
+          "status": "ok",
+          "real_status": 200,
+          "wwz_status": 200,
+          "divergences": []
+        }
+      ]
+    },
+    {
+      "provider": "anthropic",
+      "status": "drift",
+      "reason": "",
+      "base": "http://fake-anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "spend_usd": 0.000184,
+      "probes": [
+        {
+          "probe": "models",
+          "status": "ok",
+          "real_status": 200,
+          "wwz_status": 200,
+          "divergences": []
+        },
+        {
+          "probe": "chat",
+          "status": "drift",
+          "real_status": 200,
+          "wwz_status": 200,
+          "divergences": [
+            {
+              "kind": "missing_field",
+              "path": "real_only",
+              "real": "string",
+              "wwz": "",
+              "ignored": false
+            }
+          ]
+        },
+        {
+          "probe": "chat_stream",
+          "status": "ok",
+          "real_status": 200,
+          "wwz_status": 200,
+          "divergences": []
+        },
+        {
+          "probe": "error_auth",
+          "status": "ok",
+          "real_status": 401,
+          "wwz_status": 401,
+          "divergences": []
+        },
+        {
+          "probe": "error_model",
+          "status": "ok",
+          "real_status": 404,
+          "wwz_status": 404,
+          "divergences": []
+        },
+        {
+          "probe": "responses",
+          "status": "skipped",
+          "reason": "not_supported",
+          "real_status": 0,
+          "wwz_status": 0,
+          "divergences": []
+        },
+        {
+          "probe": "responses_stream",
+          "status": "skipped",
+          "reason": "not_supported",
+          "real_status": 0,
+          "wwz_status": 0,
+          "divergences": []
+        }
+      ]
+    },
+    {
+      "provider": "openrouter",
+      "status": "skipped",
+      "reason": "not_selected",
+      "base": "",
+      "model": "",
+      "spend_usd": 0,
+      "probes": []
+    },
+    {
+      "provider": "opencode",
+      "status": "skipped",
+      "reason": "no_key",
+      "base": "https://opencode.ai/inference/go",
+      "model": "",
+      "spend_usd": 0,
+      "probes": []
+    },
+    {
+      "provider": "gemini",
+      "status": "skipped",
+      "reason": "not_selected",
+      "base": "",
+      "model": "",
+      "spend_usd": 0,
+      "probes": []
+    },
+    {
+      "provider": "opencode-google",
+      "status": "skipped",
+      "reason": "not_selected",
+      "base": "",
+      "model": "",
+      "spend_usd": 0,
+      "probes": []
+    },
+    {
+      "provider": "azure",
+      "status": "skipped",
+      "reason": "not_selected",
+      "base": "",
+      "model": "",
+      "spend_usd": 0,
+      "probes": []
+    }
+  ],
+  "summary": {
+    "ok": 1,
+    "drift": 1,
+    "skipped": 5,
+    "error": 0
+  }
+}

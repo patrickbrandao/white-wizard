@@ -1,0 +1,8 @@
+{
+  "minimal": {"model": "gpt-test", "messages": [{"role": "user", "content": "hi"}]},
+  "tool_choice_required": {"model": "gpt-test", "messages": [{"role": "user", "content": "hi"}], "tools": [{"type": "function", "function": {"name": "get_time", "parameters": {"type": "object"}}}], "tool_choice": "required", "max_tokens": 64},
+  "tool_choice_none": {"model": "gpt-test", "messages": [{"role": "user", "content": "hi"}], "tools": [{"type": "function", "function": {"name": "get_time", "parameters": {"type": "object"}}}], "tool_choice": "none"},
+  "reasoning_object": {"model": "gpt-test", "messages": [{"role": "user", "content": "hi"}], "reasoning": {"effort": "low", "max_tokens": 900}},
+  "reasoning_exclude": {"model": "gpt-test", "messages": [{"role": "user", "content": "hi"}], "reasoning": {"effort": "high", "exclude": true}},
+  "completions": {"model": "gpt-test-instruct", "prompt": "Say hi", "max_tokens": 16, "stream": true, "stream_options": {"include_usage": true}}
+}

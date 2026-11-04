@@ -1,0 +1,23 @@
+{
+  "provider": "opencode",
+  "name": "plain_path",
+  "recorded_at": "2026-10-31",
+  "request": {
+    "method": "POST",
+    "path": "/inference/go/v1/responses",
+    "headers": {
+      "authorization": "Bearer <key>",
+      "x-opencode-session": "<session>"
+    },
+    "body": "{\"model\": \"deepseek-v4.1-flash\", \"input\": \"Say hi in two words.\", \"max_output_tokens\": 64}"
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "content-type": "application/json",
+      "x-opencode-log-id": "<log_id>",
+      "x-zen-model": "deepseek-v4.1-flash"
+    },
+    "body": "{\"id\":\"resp_32450993808f490082bef800e00b77b6\",\"object\":\"response\",\"created_at\":1793458845,\"status\":\"completed\",\"error\":null,\"incomplete_details\":null,\"instructions\":null,\"metadata\":{},\"model\":\"deepseek-v4.1-flash\",\"output\":[{\"id\":\"rs_26f83062f73845db84fd5f6ffefaa874\",\"type\":\"reasoning\",\"summary\":[{\"type\":\"summary_text\",\"text\":\"We need answer \\\"Say hi in two words.\\\" Need comply: two words. Maybe \\\"Hello there\\\" is two words, but \\\"hi\\\" in two words? Need say hi using exactly two words. \\\"Hi there\\\" = two words. Answer only.\"}]},{\"id\":\"msg_9a14a2f8e73b47c99627245e6cc7b610\",\"type\":\"message\",\"role\":\"assistant\",\"status\":\"completed\",\"content\":[{\"type\":\"output_text\",\"text\":\"Hi there.\",\"annotations\":[],\"logprobs\":[]}]}],\"parallel_tool_calls\":true,\"temperature\":null,\"tool_choice\":\"auto\",\"tools\":[],\"top_p\":null,\"max_output_tokens\":64,\"usage\":{\"input_tokens\":36,\"input_tokens_details\":{\"cached_tokens\":0},\"output_tokens\":56,\"output_tokens_details\":{\"reasoning_tokens\":0},\"total_tokens\":92,\"cost\":0,\"opencode\":{\"billing_source\":\"go\",\"list_cost\":0.000039,\"allowance\":0.0000234,\"tokens\":{\"input\":36,\"output\":56,\"reasoning\":0,\"cache_read\":0,\"cache_write_5m\":0,\"cache_write_1h\":0}}}}"
+  }
+}

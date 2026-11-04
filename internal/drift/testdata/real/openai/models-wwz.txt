@@ -1,0 +1,6 @@
+HTTP 200
+Content-Length: 106
+Content-Type: application/json
+Date: Sat, 31 Oct 2026 12:32:02 GMT
+
+{"data":[{"created":1735689600,"id":"gpt-4.1-nano","object":"model","owned_by":"system"}],"object":"list"}

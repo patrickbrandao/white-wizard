@@ -1,0 +1,8 @@
+HTTP 404
+Content-Length: 143
+Content-Type: application/json
+Date: Sat, 31 Oct 2026 12:32:03 GMT
+Request-Id: req_01iav7v04c2ZMg2fr1Cdq2Fp
+X-Request-Id: req_01iav7v04c2ZMg2fr1Cdq2Fp
+
+{"error":{"message":"model: wwz-drift-modelo-inexistente","type":"not_found_error"},"request_id":"req_01iav7v04c2ZMg2fr1Cdq2Fp","type":"error"}

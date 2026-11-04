@@ -1,0 +1,18 @@
+{
+  "provider": "openai",
+  "name": "chat_strict_tool_missing_required",
+  "recorded_at": "2026-10-31",
+  "request": {
+    "method": "POST",
+    "path": "/v1/chat/completions",
+    "headers": {
+      "authorization": "Bearer <key>"
+    },
+    "body": "{\"model\": \"gpt-4o-mini\", \"messages\": [{\"role\": \"user\", \"content\": \"hi\"}], \"tools\": [{\"type\": \"function\", \"function\": {\"name\": \"get_weather\", \"strict\": true, \"parameters\": {\"type\": \"object\", \"properties\": {\"city\": {\"type\": \"string\"}, \"unit\": {\"type\": \"string\"}}, \"required\": [\"city\"], \"additionalProperties\": false}}}]}"
+  },
+  "response": {
+    "status": 400,
+    "content_type": "application/json",
+    "body": "{\n  \"error\": {\n    \"message\": \"Invalid schema for function 'get_weather': In context=(), 'required' is required to be supplied and to be an array including every key in properties. Missing 'unit'.\",\n    \"type\": \"invalid_request_error\",\n    \"param\": \"tools[0].function.parameters\",\n    \"code\": \"invalid_function_parameters\"\n  }\n}"
+  }
+}

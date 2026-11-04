@@ -1,0 +1,1412 @@
+openapi: 3.1.0
+info:
+  title: White Wizard (wwz) — control plane
+  version: 0.1.0
+  summary: API administrativa, saúde e métricas do simulador wwz.
+  description: |
+    Contrato do control plane do binário `wwz` (net/http, `admin.listen`, padrão `:9000`).
+    Fonte: specs/013-observabilidade-admin.md; rotas citadas também em 004, 009, 011, 012 e 017.
+
+    Regras gerais:
+    - `/admin/*` exige `Authorization: Bearer <WWZ_ADMIN_TOKEN>` (ADR 0004); comparação em tempo
+      constante; token ausente ou inválido devolve 401. Sem token configurado o control plane só
+      escuta em 127.0.0.1.
+    - `/health`, `/health/ready`, `/metrics` e `/dashboard` são abertos (o `/dashboard` é HTML
+      estático e chama `/admin/stats` com o token informado pelo operador na página).
+    - Corpos JSON usam `snake_case`, os mesmos nomes do YAML de configuração (spec 003).
+    - Durações são strings no formato Go (`500ms`, `30s`, `5m`, `1h`).
+    - Erros do control plane usam o schema `Problem` (não o dialeto de nenhum provedor).
+    - `x-wwz-planned-paths` (extensão na raiz) guarda Path Items já contratados cujo código ainda
+      não existe. Têm o mesmo valor normativo de `paths`; ficam fora dele só para que o teste
+      contrato-vs-mux (`internal/admin`, TestOpenAPIRoutesRegistered) continue exigindo que todo
+      `paths` esteja roteado. A tarefa que implementa a rota move o Path Item, sem alterá-lo,
+      para `paths`. Hoje: nenhum.
+servers:
+  - url: http://127.0.0.1:9000
+    description: 'Control plane local (padrão `admin.listen: ":9000"`).'
+tags:
+  - name: saude
+    description: Liveness, readiness e métricas (abertos).
+  - name: config
+    description: Configuração efetiva e recarga (spec 003, 013; I23).
+  - name: operacao
+    description: Estatísticas, reset e últimas requisições (spec 013).
+  - name: cenarios
+    description: Cenários carregados em runtime (spec 011).
+  - name: caos
+    description: Eventos de caos pontuais e one-shot por teste (spec 009; I2).
+  - name: entidades
+    description: Bloqueio, banimento e créditos de ip/key/user/account/project (spec 012).
+  - name: resiliencia
+    description: Relatório de comportamento de retry do cliente (I15) e conversas (I11).
+
+security:
+  - bearerAuth: []
+
+paths:
+  /health:
+    get:
+      tags: [saude]
+      operationId: getHealth
+      summary: Liveness
+      description: 200 sempre que o processo está vivo.
+      security: []
+      responses:
+        '200':
+          description: Processo vivo.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Health'
+              example: { status: ok }
+
+  /health/ready:
+    get:
+      tags: [saude]
+      operationId: getReady
+      summary: Readiness
+      description: |
+        503 durante `server.startup_duration` (simula carregamento de modelo), depois 200.
+        Usado pelo health check do balanceador (spec 014).
+      security: []
+      responses:
+        '200':
+          description: Pronto para receber tráfego.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Health'
+              example: { status: ready }
+        '503':
+          description: Ainda em `startup_duration`.
+          headers:
+            Retry-After:
+              description: Segundos restantes até ficar pronto.
+              schema: { type: integer, minimum: 0 }
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Health'
+              example: { status: starting }
+
+  /metrics:
+    get:
+      tags: [saude]
+      operationId: getMetrics
+      summary: Métricas Prometheus
+      description: Exposição em formato texto do Prometheus (`wwz_*` e, com `metrics.vllm_mirror`, `vllm:*`).
+      security: []
+      responses:
+        '200':
+          description: Métricas.
+          content:
+            text/plain; version=0.0.4:
+              schema:
+                type: string
+
+  /dashboard:
+    get:
+      tags: [saude]
+      operationId: getDashboard
+      summary: Dashboard HTML embutido
+      description: |
+        Página estática que lê `/admin/stats` a cada 2 s. Não contém dados; o token é digitado
+        pelo operador e enviado pela página no header `Authorization`.
+      security: []
+      responses:
+        '200':
+          description: Página HTML.
+          content:
+            text/html:
+              schema:
+                type: string
+
+  /admin/config:
+    get:
+      tags: [config]
+      operationId: getConfig
+      summary: Configuração efetiva
+      description: |
+        Documento de configuração efetivo, já com sobrescritas de env, flags e patches anteriores,
+        nas mesmas chaves do YAML (spec 003). Segredos (`admin.token`, `keys[].key`, senhas do store)
+        são devolvidos mascarados (`"***"`).
+      responses:
+        '200':
+          description: Configuração efetiva.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConfigDocument'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      tags: [config]
+      operationId: patchConfig
+      summary: Patch parcial ou recarga da configuração
+      description: |
+        Aplica um patch parcial na hora, sem reiniciar e sem derrubar conexões; requisições em
+        andamento terminam com a configuração antiga (troca atômica).
+
+        - Corpo JSON: merge patch (RFC 7396) sobre o documento efetivo. Listas de itens nomeados
+          são endereçadas por nome como mapa: `models` por `id`, `keys` por `label`,
+          `drivers` por `mount`. Ex.: `{"models": {"gpt-5-sim": {"errors": {"rate": 30}}}}`.
+          `null` remove a chave.
+        - Corpo vazio: recarrega o arquivo de configuração do disco (mesmo efeito do SIGHUP).
+
+        Se o resultado não valida, nada é aplicado e a configuração anterior continua valendo (I23).
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConfigPatch'
+            example:
+              models:
+                gpt-5-sim:
+                  errors:
+                    rate: 30
+          application/merge-patch+json:
+            schema:
+              $ref: '#/components/schemas/ConfigPatch'
+      responses:
+        '200':
+          description: Patch aplicado; devolve a configuração efetiva resultante.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConfigApplied'
+        '400':
+          $ref: '#/components/responses/Invalid'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '415':
+          $ref: '#/components/responses/UnsupportedMediaType'
+
+  /admin/stats:
+    get:
+      tags: [operacao]
+      operationId: getStats
+      summary: Estatísticas por chave e modelo
+      description: |
+        JSON com os mesmos números de `/metrics` (contadores desde o boot ou o último reset),
+        agregados por driver/modelo, mais uso por chave vindo do store. Base do `/dashboard`
+        e do `wwz-load top` (spec 015).
+      responses:
+        '200':
+          description: Estatísticas.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Stats'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /admin/reset:
+    post:
+      tags: [operacao]
+      operationId: reset
+      summary: Zera contadores
+      description: |
+        Zera contadores de rate limit e métricas. Bloqueios, banimentos, strikes e créditos são
+        preservados (desfazer pelos endpoints de entidades). `scope` permite escolher o que zerar.
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ResetRequest'
+      responses:
+        '200':
+          description: Reset feito.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResetResult'
+        '400':
+          $ref: '#/components/responses/Invalid'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '503':
+          $ref: '#/components/responses/StoreUnavailable'
+
+  /admin/requests:
+    get:
+      tags: [operacao]
+      operationId: listRequests
+      summary: Últimas N requisições com decisões tomadas
+      description: |
+        Lê o buffer circular em memória (só existe com `admin.debug: true`; sem ele devolve
+        `enabled: false` e lista vazia). Mais recentes primeiro.
+      parameters:
+        - name: last
+          in: query
+          description: Quantidade máxima de registros.
+          schema: { type: integer, minimum: 1, maximum: 10000, default: 100 }
+        - $ref: '#/components/parameters/TestIdQuery'
+        - name: key
+          in: query
+          description: Filtra pelo label da chave.
+          schema: { type: string }
+        - name: scenario
+          in: query
+          description: Filtra pelo nome do cenário.
+          schema: { type: string }
+      responses:
+        '200':
+          description: Registros.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RequestList'
+        '400':
+          $ref: '#/components/responses/Invalid'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /admin/scenarios:
+    get:
+      tags: [cenarios]
+      operationId: listScenarios
+      summary: Lista cenários carregados
+      responses:
+        '200':
+          description: Cenários na ordem de avaliação.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScenarioList'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      tags: [cenarios]
+      operationId: loadScenarios
+      summary: Carrega ou substitui cenários (corpo YAML)
+      description: |
+        Corpo YAML com um ou mais documentos de cenário (separados por `---`), no formato da
+        spec 011. Cenário com nome já existente é substituído. Se qualquer documento for
+        inválido, nada é aplicado e os cenários anteriores continuam valendo (I23).
+        O registro não guarda a origem do cenário (ADR 0059): um cenário enviado aqui com o
+        nome de um dos seis embutidos é removido numa recarga com `scenarios.builtin: false`,
+        como os próprios embutidos (spec 011).
+      requestBody:
+        required: true
+        content:
+          application/yaml:
+            schema:
+              type: string
+          application/x-yaml:
+            schema:
+              type: string
+      responses:
+        '200':
+          description: Cenários carregados.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScenarioLoaded'
+        '400':
+          $ref: '#/components/responses/Invalid'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '415':
+          $ref: '#/components/responses/UnsupportedMediaType'
+    delete:
+      tags: [cenarios]
+      operationId: deleteScenario
+      summary: Remove um cenário
+      parameters:
+        - name: name
+          in: query
+          required: true
+          description: Nome do cenário.
+          schema: { type: string, minLength: 1 }
+      responses:
+        '204':
+          description: Removido.
+        '400':
+          $ref: '#/components/responses/Invalid'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /admin/chaos:
+    post:
+      tags: [caos]
+      operationId: startChaos
+      summary: Liga um evento de caos pontual
+      description: |
+        Liga um evento por `duration`: todas as requisições dos `models` (padrão `["*"]`) recebem
+        o erro `type` com probabilidade `rate`. Com `test_id`, o evento vale só para requisições
+        com aquele `X-Test-Id` (header configurável em `chaos.scope_header`) e tem precedência
+        sobre perfil, cenário e headers `x-wwz-chaos-*` (I2). Em vez de `type` pode-se enviar um
+        `profile` completo de erros (mesmo schema de `profiles.errors`).
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChaosRequest'
+            example: { type: overloaded, duration: 30s, models: ['*'] }
+      responses:
+        '201':
+          description: Evento ativo.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChaosEvent'
+        '400':
+          $ref: '#/components/responses/Invalid'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    get:
+      tags: [caos]
+      operationId: listChaos
+      summary: Lista eventos de caos ativos
+      responses:
+        '200':
+          description: Eventos ativos e erros one-shot pendentes.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChaosList'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    delete:
+      tags: [caos]
+      operationId: stopChaos
+      summary: Encerra eventos de caos antes do fim
+      description: Sem parâmetros encerra todos os eventos e one-shots pendentes.
+      parameters:
+        - name: id
+          in: query
+          description: Id devolvido por `POST /admin/chaos`.
+          schema: { type: string }
+        - $ref: '#/components/parameters/TestIdQuery'
+      responses:
+        '200':
+          description: Eventos encerrados.
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [stopped]
+                properties:
+                  stopped: { type: integer, minimum: 0 }
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /admin/chaos/next:
+    post:
+      tags: [caos]
+      operationId: chaosNext
+      summary: Erro one-shot para a próxima requisição de um teste
+      description: |
+        Agenda um erro para a próxima requisição que chegar com o `X-Test-Id` informado (I2).
+        É consumido por essa requisição; agendar de novo substitui o pendente.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChaosNextRequest'
+            example: { test_id: t-42, status: 529, type: overloaded }
+      responses:
+        '201':
+          description: Erro agendado.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChaosNextRequest'
+        '400':
+          $ref: '#/components/responses/Invalid'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /admin/entities:
+    get:
+      tags: [entidades]
+      operationId: listEntities
+      summary: Lista entidades por status
+      description: Entidades com estado no store (bloqueadas, banidas, limitadas ou com uso).
+      parameters:
+        - name: status
+          in: query
+          schema:
+            $ref: '#/components/schemas/EntityStatus'
+        - name: limit
+          in: query
+          schema: { type: integer, minimum: 1, maximum: 10000, default: 100 }
+      responses:
+        '200':
+          description: Entidades.
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [entities]
+                properties:
+                  entities:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/EntityState'
+        '400':
+          $ref: '#/components/responses/Invalid'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '503':
+          $ref: '#/components/responses/StoreUnavailable'
+
+  /admin/entities/{tipo}/{id}:
+    parameters:
+      - $ref: '#/components/parameters/EntityKindPath'
+      - $ref: '#/components/parameters/EntityIdPath'
+    get:
+      tags: [entidades]
+      operationId: getEntity
+      summary: Estado de uma entidade
+      description: 'Entidade sem estado no store devolve `status: active` e contadores zerados.'
+      responses:
+        '200':
+          $ref: '#/components/responses/EntityState'
+        '400':
+          $ref: '#/components/responses/Invalid'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '503':
+          $ref: '#/components/responses/StoreUnavailable'
+
+  /admin/entities/{tipo}/{id}/block:
+    parameters:
+      - $ref: '#/components/parameters/EntityKindPath'
+      - $ref: '#/components/parameters/EntityIdPath'
+    post:
+      tags: [entidades]
+      operationId: blockEntity
+      summary: Bloqueio temporário
+      description: |
+        Bloqueia (suspende) a entidade. Enquanto o bloqueio vale, as requisições recebem 403 de
+        conta suspensa no dialeto do driver (`account_suspended`, spec 006), **sem** `retry-after`:
+        os provedores reais não mandam esse header em 403 e os SDKs não retentam 403. O fim do
+        bloqueio aparece em `until` (resposta e `GET /admin/entities/{tipo}/{id}`).
+        `duration` ausente ou `0s` bloqueia até `unblock`.
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BlockRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/EntityState'
+        '400':
+          $ref: '#/components/responses/Invalid'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '503':
+          $ref: '#/components/responses/StoreUnavailable'
+
+  /admin/entities/{tipo}/{id}/unblock:
+    parameters:
+      - $ref: '#/components/parameters/EntityKindPath'
+      - $ref: '#/components/parameters/EntityIdPath'
+    post:
+      tags: [entidades]
+      operationId: unblockEntity
+      summary: Remove o bloqueio temporário
+      responses:
+        '200':
+          $ref: '#/components/responses/EntityState'
+        '400':
+          $ref: '#/components/responses/Invalid'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '503':
+          $ref: '#/components/responses/StoreUnavailable'
+
+  /admin/entities/{tipo}/{id}/ban:
+    parameters:
+      - $ref: '#/components/parameters/EntityKindPath'
+      - $ref: '#/components/parameters/EntityIdPath'
+    post:
+      tags: [entidades]
+      operationId: banEntity
+      summary: Banimento
+      description: Requisições recebem 401/403 de conta desativada no dialeto do driver (spec 006).
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BanRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/EntityState'
+        '400':
+          $ref: '#/components/responses/Invalid'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '503':
+          $ref: '#/components/responses/StoreUnavailable'
+
+  /admin/entities/{tipo}/{id}/unban:
+    parameters:
+      - $ref: '#/components/parameters/EntityKindPath'
+      - $ref: '#/components/parameters/EntityIdPath'
+    post:
+      tags: [entidades]
+      operationId: unbanEntity
+      summary: Remove o banimento
+      responses:
+        '200':
+          $ref: '#/components/responses/EntityState'
+        '400':
+          $ref: '#/components/responses/Invalid'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '503':
+          $ref: '#/components/responses/StoreUnavailable'
+
+  /admin/entities/{tipo}/{id}/credits:
+    parameters:
+      - $ref: '#/components/parameters/EntityKindPath'
+      - $ref: '#/components/parameters/EntityIdPath'
+    post:
+      tags: [entidades]
+      operationId: setCredits
+      summary: Define o saldo de créditos ou registra uma compra (USD)
+      description: |
+        `{"usd": n}` substitui o saldo (não soma). `{"add_usd": n}` (n > 0) soma ao saldo e ao
+        acumulado `purchased` da entidade, simulando uma compra de créditos, e dispara a avaliação
+        de `promote_when` da conta (ADR 0051). Exatamente um dos dois; os dois ou nenhum → 400.
+        Saldo positivo tira a entidade de `limited` por saldo negativo.
+
+        Compra é da conta, como no real (ADR 0058): com `tipo = key`, `add_usd` é creditado à conta
+        da chave na configuração vigente (chave desconhecida ou sem conta → 400) e a resposta é o
+        `EntityState` da conta, como em `.../tier`; `usd` age sempre na entidade nomeada. Outros
+        tipos recebem `add_usd` na própria entidade (`account`, `project`, `ip`, `user`) e só
+        `account` dispara `promote_when`.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreditsRequest'
+            examples:
+              definir: { value: { usd: 25.0 } }
+              comprar: { value: { add_usd: 50.0 } }
+      responses:
+        '200':
+          $ref: '#/components/responses/EntityState'
+        '400':
+          $ref: '#/components/responses/Invalid'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '503':
+          $ref: '#/components/responses/StoreUnavailable'
+
+  /admin/leak:
+    post:
+      tags: [entidades]
+      operationId: markLeaked
+      summary: Marca uma chave como vazada
+      description: |
+        Simula a desativação imediata de chave exposta (spec 006, 012): `ban` da chave e `block`
+        da conta dona até a rotação (`unblock` manual ou troca da chave na configuração).
+        A chave é identificada pelo `label` ou pelo segredo (`key`); pelo menos um é obrigatório.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LeakRequest'
+            example: { label: ci-key-1, reason: found in public repository }
+      responses:
+        '200':
+          description: Chave banida e conta bloqueada.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LeakResult'
+        '400':
+          $ref: '#/components/responses/Invalid'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '503':
+          $ref: '#/components/responses/StoreUnavailable'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /admin/resilience:
+    get:
+      tags: [resiliencia]
+      operationId: getResilience
+      summary: Relatório de resiliência do cliente
+      description: |
+        Com `test_id`, devolve o relatório daquele teste (404 se desconhecido). Sem `test_id`,
+        lista os relatórios, mais recentes primeiro. Requer `resilience.track: true` (I15).
+      parameters:
+        - $ref: '#/components/parameters/TestIdQuery'
+        - name: limit
+          in: query
+          description: Máximo de relatórios na listagem.
+          schema: { type: integer, minimum: 1, maximum: 10000, default: 100 }
+      responses:
+        '200':
+          description: Relatório (com `test_id`) ou lista.
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/ResilienceReport'
+                  - $ref: '#/components/schemas/ResilienceList'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /admin/conversations/reset:
+    post:
+      tags: [resiliencia]
+      operationId: resetConversations
+      summary: Zera o estado de conversas de cenário
+      description: |
+        Zera contadores de passo e de tentativas (`fail_first`) de uma conversa
+        (`x-wwz-conversation-id` ou hash da 1.ª mensagem, I11). Sem `conversation_id` zera todas.
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              properties:
+                conversation_id:
+                  type: string
+                  minLength: 1
+      responses:
+        '200':
+          description: Conversas zeradas.
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [reset]
+                properties:
+                  reset:
+                    type: integer
+                    minimum: 0
+                    description: Quantidade de conversas zeradas (pode ser estimada no store Valkey).
+        '400':
+          $ref: '#/components/responses/Invalid'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '503':
+          $ref: '#/components/responses/StoreUnavailable'
+
+  /admin/entities/{tipo}/{id}/tier:
+    parameters:
+      - $ref: '#/components/parameters/EntityKindPath'
+      - $ref: '#/components/parameters/EntityIdPath'
+    post:
+      tags: [entidades]
+      operationId: setEntityTier
+      summary: Atribui um tier à entidade (ADR 0025)
+      description: |
+        Sobrepõe o tier da conta em todas as instâncias (ADR 0051, que substitui a regra "só
+        `key`" da 0025). `tipo = account`; `tipo = key` é resolvido para a conta da chave na
+        configuração vigente (chave desconhecida → 400) e a resposta é o `EntityState` da conta;
+        outros tipos → 400. `tier` precisa existir nos tiers efetivos (YAML + `tier:<nome>` de
+        `cfg:policies`); senão 400. `""` ou `null` remove a sobreposição.
+
+        Efeito: grava (ou apaga) o campo `ent:account:<id>` de `P:cfg:policies` com
+        `HINCRBY version 1` no mesmo script, faz `PUBLISH P:cfg:changed {"version": n}` e grava o
+        campo `tier` de `P:ent:E` da conta (só exibição). Todas as instâncias passam a usar o tier
+        ao aplicar a versão `n` (cache/valkey/README.md §2.3). Precedência dos limites da conta:
+        `accounts[].limits` > tier da entidade > `accounts[].tier`/`keys[].tier` > `default`; os
+        limites do tier valem para todas as chaves da conta.
+        Com `store: memory`, vale só na instância que recebeu a chamada.
+
+        Bloqueio, banimento, créditos e contadores não mudam.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TierRequest'
+            example: { tier: tier-4 }
+      responses:
+        '200':
+          $ref: '#/components/responses/EntityState'
+        '400':
+          $ref: '#/components/responses/Invalid'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '503':
+          $ref: '#/components/responses/StoreUnavailable'
+
+  /admin/entities/{tipo}/{id}/reset:
+    parameters:
+      - $ref: '#/components/parameters/EntityKindPath'
+      - $ref: '#/components/parameters/EntityIdPath'
+    post:
+      tags: [entidades]
+      operationId: resetEntity
+      summary: Zera contadores e/ou strikes de uma entidade (ADR 0025)
+      description: |
+        `scope` (padrão `["counters"]`, também com corpo vazio):
+        - `counters`: token buckets, janelas (`rpm`/`tpm`/`rpd`/`tpd`, gasto e cota mensais),
+          `q5h`, `qwk`, `ramp`, `conc`, `count` e `requests` da entidade (`reset_entity`,
+          cache/valkey/README.md §3.9);
+        - `strikes`: perdoa os strikes (apaga o zset e zera o campo `strikes`).
+
+        Preserva bloqueio, banimento, créditos e tier; não toca outras entidades. Store sem
+        suporte ou circuito aberto → 503. Entidade sem estado no store → 200 com o estado vazio.
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EntityResetRequest'
+            example: { scope: [strikes] }
+      responses:
+        '200':
+          $ref: '#/components/responses/EntityState'
+        '400':
+          $ref: '#/components/responses/Invalid'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '503':
+          $ref: '#/components/responses/StoreUnavailable'
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Valor de `WWZ_ADMIN_TOKEN` (ADR 0004).
+
+  parameters:
+    EntityKindPath:
+      name: tipo
+      in: path
+      required: true
+      description: Nível da entidade.
+      schema:
+        $ref: '#/components/schemas/EntityKind'
+    EntityIdPath:
+      name: id
+      in: path
+      required: true
+      description: |
+        Id da entidade: IP do cliente (`ip`), label da chave (`key`), `account`/`project` da chave
+        na configuração, ou `metadata.user`/sessão (`user`). URL-encoded.
+      schema: { type: string, minLength: 1 }
+    TestIdQuery:
+      name: test_id
+      in: query
+      description: Valor do header de escopo de teste (`X-Test-Id`).
+      schema: { type: string, minLength: 1 }
+
+  responses:
+    Unauthorized:
+      description: Token ausente ou inválido.
+      headers:
+        WWW-Authenticate:
+          schema: { type: string }
+          example: Bearer
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+          example: { error: unauthorized, message: missing or invalid bearer token }
+    Invalid:
+      description: Corpo ou parâmetro inválido; nada foi aplicado.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+    NotFound:
+      description: Recurso não encontrado.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+    UnsupportedMediaType:
+      description: Content-Type não aceito.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+    StoreUnavailable:
+      description: |
+        Store Valkey fora do ar (circuito `store.on_down` aberto); nada foi aplicado. Tente de novo
+        após `Retry-After` (cache/valkey/README.md §6).
+      headers:
+        Retry-After:
+          schema: { type: integer }
+          example: 1
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+          example: { error: store_unavailable, message: 'limits: valkey store unavailable' }
+    EntityState:
+      description: Estado da entidade após a operação.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/EntityState'
+
+  schemas:
+    Problem:
+      type: object
+      required: [error, message]
+      properties:
+        error:
+          type: string
+          description: Código curto (`unauthorized`, `invalid`, `not_found`, `unsupported_media_type`, `store_unavailable`, `internal`).
+        message:
+          type: string
+        details:
+          type: array
+          description: Erros de validação, um por item.
+          items: { type: string }
+
+    Health:
+      type: object
+      required: [status]
+      properties:
+        status:
+          type: string
+          enum: [ok, ready, starting]
+
+    Duration:
+      type: string
+      description: Duração no formato Go (`time.ParseDuration`).
+      pattern: '^(0|([0-9]+(\.[0-9]+)?(ns|us|µs|ms|s|m|h))+)$'
+      examples: ['30s', '1m30s', '500ms']
+
+    Percent:
+      type: number
+      minimum: 0
+      maximum: 100
+
+    ConfigDocument:
+      type: object
+      description: |
+        Documento de configuração (spec 003) em JSON. Chaves de topo conhecidas: `server`, `admin`,
+        `store`, `drivers`, `keys`, `models`, `profiles`, `tiers`, `abuse`, `scenarios`,
+        `metrics`, `logging`, `chaos`, `geo`, `vars`, `resilience`.
+      additionalProperties: true
+
+    ConfigPatch:
+      type: object
+      description: Merge patch (RFC 7396) com listas nomeadas endereçadas como mapa (ver `POST /admin/config`).
+      additionalProperties: true
+
+    ConfigApplied:
+      type: object
+      required: [applied, config]
+      properties:
+        applied:
+          type: boolean
+          const: true
+        source:
+          type: string
+          enum: [patch, file]
+          description: '`file` quando o corpo veio vazio e o arquivo foi relido.'
+        config:
+          $ref: '#/components/schemas/ConfigDocument'
+
+    Stats:
+      type: object
+      required: [started, uptime_s, store, totals, by_model]
+      properties:
+        started:
+          type: string
+          format: date-time
+        uptime_s:
+          type: number
+        reset_at:
+          type: string
+          format: date-time
+          description: Último `POST /admin/reset`, se houve.
+        pod:
+          type: string
+          description: Nome da instância (`POD_NAME`/hostname).
+        store:
+          type: string
+          enum: [memory, valkey]
+        totals:
+          $ref: '#/components/schemas/StatsTotals'
+        by_model:
+          type: array
+          items:
+            $ref: '#/components/schemas/ModelStats'
+        by_key:
+          type: array
+          description: Uso por chave vindo do store (requisições e gasto).
+          items:
+            $ref: '#/components/schemas/KeyStats'
+
+    StatsTotals:
+      type: object
+      required: [requests, in_flight, streams_open, errors_injected, rate_limited, blocked]
+      properties:
+        requests: { type: integer, minimum: 0, description: 'Soma de `wwz_requests_total`.' }
+        in_flight: { type: integer, minimum: 0 }
+        streams_open: { type: integer, minimum: 0 }
+        errors_injected: { type: integer, minimum: 0 }
+        rate_limited: { type: integer, minimum: 0 }
+        blocked: { type: integer, minimum: 0, description: 'Soma de `wwz_blocked_total`.' }
+        by_status:
+          type: object
+          description: Requisições por status HTTP (chave é o status como string).
+          additionalProperties: { type: integer, minimum: 0 }
+        errors_by_kind:
+          type: object
+          description: Erros injetados por `kind` (`core.ErrorKind`, falhas de transporte e de meio de stream).
+          additionalProperties: { type: integer, minimum: 0 }
+        errors_by_phase:
+          type: object
+          description: Erros injetados por fase (`pre`, `mid_stream`).
+          additionalProperties: { type: integer, minimum: 0 }
+        rate_limited_by_limit:
+          type: object
+          description: Rejeições por limite (`rps`, `rpm`, `tpm`, `concurrency`, ...).
+          additionalProperties: { type: integer, minimum: 0 }
+
+    ModelStats:
+      type: object
+      required: [driver, model, requests]
+      properties:
+        driver: { type: string }
+        model: { type: string }
+        requests: { type: integer, minimum: 0 }
+        errors: { type: integer, minimum: 0, description: Respostas com status >= 400. }
+        ttft_p50_ms: { type: number }
+        ttft_p99_ms: { type: number }
+        itl_p50_ms: { type: number }
+        itl_p99_ms: { type: number }
+        e2e_p50_ms: { type: number }
+        e2e_p99_ms: { type: number }
+        tokens:
+          type: object
+          description: Tokens por `kind` (`prompt`, `completion`, `reasoning`, `tool_args`).
+          additionalProperties: { type: integer, minimum: 0 }
+
+    KeyStats:
+      type: object
+      required: [key, requests]
+      properties:
+        key: { type: string, description: Label da chave. }
+        status:
+          $ref: '#/components/schemas/EntityStatus'
+        requests: { type: integer, minimum: 0 }
+        spend_usd: { type: number }
+
+    ResetRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        scope:
+          type: array
+          description: O que zerar; padrão `[limits, metrics]`.
+          uniqueItems: true
+          items:
+            type: string
+            enum: [limits, metrics, requests, resilience, conversations, chaos]
+
+    ResetResult:
+      type: object
+      required: [reset, reset_at]
+      properties:
+        reset:
+          type: array
+          items: { type: string }
+        reset_at:
+          type: string
+          format: date-time
+
+    RequestList:
+      type: object
+      required: [enabled, requests]
+      properties:
+        enabled:
+          type: boolean
+          description: '`admin.debug` ligado.'
+        requests:
+          type: array
+          items:
+            $ref: '#/components/schemas/RequestRecord'
+
+    RequestRecord:
+      type: object
+      description: Espelha `engine.Record` (internal/engine/recorder.go).
+      required: [time, request_id, driver, model, endpoint, status, duration_ms, stream]
+      properties:
+        time: { type: string, format: date-time }
+        request_id: { type: string }
+        driver: { type: string }
+        model: { type: string }
+        endpoint: { type: string }
+        status: { type: integer }
+        duration_ms: { type: integer }
+        ttft_ms: { type: integer }
+        itl_ms: { type: number }
+        ip: { type: string }
+        key: { type: string, description: Label da chave (nunca o segredo). }
+        stream: { type: boolean }
+        test_id: { type: string }
+        scenario: { type: string }
+        step: { type: string }
+        attempt: { type: integer }
+        error: { type: string, description: Kind do erro devolvido. }
+        mid_stream: { type: string, description: Falha de meio de stream aplicada. }
+        tool_break: { type: string, description: Defeito de tool call aplicado. }
+        prompt_tokens: { type: integer }
+        completion_tokens: { type: integer }
+        reasoning_tokens: { type: integer }
+        tool_calls:
+          type: array
+          items: { type: string }
+        finish_reason: { type: string }
+        seed: { type: integer, format: int64 }
+
+    ScenarioList:
+      type: object
+      required: [scenarios]
+      properties:
+        scenarios:
+          type: array
+          items:
+            $ref: '#/components/schemas/ScenarioSummary'
+
+    ScenarioSummary:
+      type: object
+      required: [name, steps]
+      properties:
+        name: { type: string }
+        description: { type: string }
+        steps:
+          type: integer
+          minimum: 0
+          description: Quantidade de passos.
+        on_no_match: { type: string, enum: [fallback, error, repeat_last] }
+        on_exhausted: { type: string, enum: [repeat_last, error, fallback] }
+
+    ScenarioLoaded:
+      type: object
+      required: [loaded]
+      properties:
+        loaded:
+          type: array
+          items: { type: string }
+        replaced:
+          type: array
+          description: Subconjunto de `loaded` que já existia.
+          items: { type: string }
+
+    ErrorType:
+      type: string
+      description: |
+        Tipo de erro injetável: `core.ErrorKind` (`invalid_request`, `context_length`,
+        `invalid_api_key`, `permission`, `model_not_found`, `request_too_large`, `rate_limit`,
+        `quota`, `spend_limit`, `server_error`, `bad_gateway`, `overloaded`, `gateway_timeout`,
+        `content_filter`, `slow_down`, `geo_blocked`, `account_suspended`, `account_banned`, ...)
+        ou falha de transporte (`connection_reset`, `slow_headers`, `empty_response`,
+        `random_data_then_close`, `corrupt_body`, `malformed_chunk`, `hang`).
+      minLength: 1
+
+    ErrorProfile:
+      type: object
+      description: Mesmo schema de `profiles.errors` (config.ErrorProfile).
+      additionalProperties: false
+      properties:
+        rate: { $ref: '#/components/schemas/Percent' }
+        types:
+          type: array
+          items: { $ref: '#/components/schemas/ErrorType' }
+        weights:
+          type: object
+          additionalProperties: { type: number, minimum: 0 }
+        mid_stream_rate: { $ref: '#/components/schemas/Percent' }
+        mid_stream_types:
+          type: array
+          items:
+            type: string
+            enum: [stream_error_event, stream_truncated, stream_hang, stream_malformed, stream_reset, stream_slow_tail, duplicate_frames, usage_missing]
+        after_chunks: { type: integer, minimum: 0 }
+        after_ratio: { type: number, minimum: 0, maximum: 1 }
+        hang_duration: { $ref: '#/components/schemas/Duration' }
+        timeout_delay: { $ref: '#/components/schemas/Duration' }
+        retry_after: { $ref: '#/components/schemas/Duration' }
+        after_n: { type: integer, minimum: 0 }
+        burst:
+          type: object
+          additionalProperties: false
+          properties:
+            every: { $ref: '#/components/schemas/Duration' }
+            duration: { $ref: '#/components/schemas/Duration' }
+            rate: { $ref: '#/components/schemas/Percent' }
+        tool_misbehavior:
+          type: object
+          additionalProperties: false
+          properties:
+            rate: { $ref: '#/components/schemas/Percent' }
+            kinds:
+              type: array
+              items: { type: string }
+            tool: { type: string }
+        moderation:
+          type: object
+          additionalProperties: false
+          properties:
+            probability: { $ref: '#/components/schemas/Percent' }
+            mode: { type: string, enum: [finish_reason, http_403, refusal] }
+            category: { type: string }
+
+    ChaosRequest:
+      type: object
+      additionalProperties: false
+      required: [duration]
+      description: Exige exatamente um entre `type` e `profile`.
+      oneOf:
+        - required: [type]
+        - required: [profile]
+      properties:
+        type: { $ref: '#/components/schemas/ErrorType' }
+        profile: { $ref: '#/components/schemas/ErrorProfile' }
+        duration: { $ref: '#/components/schemas/Duration' }
+        models:
+          type: array
+          description: Modelos afetados; `*` = todos.
+          default: ['*']
+          items: { type: string, minLength: 1 }
+        rate:
+          allOf: [{ $ref: '#/components/schemas/Percent' }]
+          default: 100
+          description: Probabilidade por requisição quando se usa `type`.
+        retry_after: { $ref: '#/components/schemas/Duration' }
+        test_id:
+          type: string
+          minLength: 1
+          description: Restringe o evento às requisições com este `X-Test-Id`.
+
+    ChaosEvent:
+      type: object
+      required: [id, until, models]
+      properties:
+        id: { type: string }
+        type: { $ref: '#/components/schemas/ErrorType' }
+        profile: { $ref: '#/components/schemas/ErrorProfile' }
+        models:
+          type: array
+          items: { type: string }
+        rate: { $ref: '#/components/schemas/Percent' }
+        test_id: { type: string }
+        started: { type: string, format: date-time }
+        until: { type: string, format: date-time }
+
+    ChaosList:
+      type: object
+      required: [events, pending_next]
+      properties:
+        events:
+          type: array
+          items: { $ref: '#/components/schemas/ChaosEvent' }
+        pending_next:
+          type: array
+          description: Erros one-shot ainda não consumidos.
+          items: { $ref: '#/components/schemas/ChaosNextRequest' }
+
+    ChaosNextRequest:
+      type: object
+      additionalProperties: false
+      required: [test_id]
+      description: Exige `type` ou `status`.
+      anyOf:
+        - required: [type]
+        - required: [status]
+      properties:
+        test_id: { type: string, minLength: 1 }
+        type:
+          $ref: '#/components/schemas/ErrorType'
+        status:
+          type: integer
+          minimum: 100
+          maximum: 599
+          description: Sobrescreve o status padrão do driver para o `type` (sem `type`, o kind é inferido do status).
+        message:
+          type: string
+          description: Mensagem no envelope de erro do driver.
+        code:
+          type: string
+          description: Sobrescreve o código de erro do dialeto.
+        retry_after: { $ref: '#/components/schemas/Duration' }
+        body:
+          type: string
+          description: Corpo bruto enviado no lugar do envelope do driver.
+
+    EntityKind:
+      type: string
+      enum: [ip, key, user, account, project, deployment]
+
+    EntityStatus:
+      type: string
+      enum: [active, limited, suspended, banned]
+
+    Entity:
+      type: object
+      required: [kind, id]
+      properties:
+        kind: { $ref: '#/components/schemas/EntityKind' }
+        id: { type: string }
+
+    EntityState:
+      type: object
+      description: |
+        Espelha `limits.EntityState` (internal/limits/store.go). `limits.Entity` precisa de tags
+        JSON `kind`/`id` para casar com este contrato.
+      required: [entity, status, strikes, requests, spend_usd]
+      properties:
+        entity: { $ref: '#/components/schemas/Entity' }
+        status: { $ref: '#/components/schemas/EntityStatus' }
+        reason: { type: string }
+        until:
+          type: string
+          format: date-time
+          description: Fim do bloqueio; ausente quando não há bloqueio ou ele é indefinido.
+        since: { type: string, format: date-time }
+        strikes: { type: integer, minimum: 0 }
+        by:
+          type: string
+          description: Quem aplicou (`admin`, `panel:<usuario>`, `abuse`).
+        tier:
+          type: string
+          description: Tier atribuído à entidade por `POST .../tier` (campo `tier` de `ent`); ausente sem sobreposição.
+        requests: { type: integer, minimum: 0 }
+        spend_usd: { type: number }
+        credits_usd: { type: number }
+        purchased_usd:
+          type: number
+          description: Créditos comprados acumulados (`add_usd`), base de `promote_when.purchased_usd` (ADR 0051); ausente sem compras.
+
+    BlockRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        reason: { type: string }
+        duration: { $ref: '#/components/schemas/Duration' }
+        by: { type: string, default: admin }
+
+    BanRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        reason: { type: string }
+        by: { type: string, default: admin }
+
+    CreditsRequest:
+      type: object
+      additionalProperties: false
+      minProperties: 1
+      maxProperties: 1
+      properties:
+        usd:
+          type: number
+          description: Novo saldo em USD (pode ser negativo para simular dívida).
+        add_usd:
+          type: number
+          exclusiveMinimum: 0
+          description: Compra de créditos em USD, somada ao saldo e a `purchased_usd` (ADR 0051).
+
+    TierRequest:
+      type: object
+      additionalProperties: false
+      required: [tier]
+      properties:
+        tier:
+          type: [string, 'null']
+          description: Nome do tier; `""` ou `null` remove a sobreposição.
+
+    EntityResetRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        scope:
+          type: array
+          description: O que zerar; padrão `[counters]`.
+          minItems: 1
+          uniqueItems: true
+          items:
+            type: string
+            enum: [counters, strikes]
+
+    LeakRequest:
+      type: object
+      additionalProperties: false
+      anyOf:
+        - required: [label]
+        - required: [key]
+      properties:
+        label: { type: string, minLength: 1, description: Label da chave na configuração. }
+        key: { type: string, minLength: 1, description: Segredo da chave (nunca é registrado em log). }
+        reason: { type: string, default: leaked }
+
+    LeakResult:
+      type: object
+      required: [key]
+      properties:
+        key: { $ref: '#/components/schemas/EntityState' }
+        account:
+          $ref: '#/components/schemas/EntityState'
+          description: Ausente quando a chave não tem `account`.
+
+    ResilienceReport:
+      type: object
+      description: Espelha `engine.TestReport` (internal/engine/recorder.go).
+      required: [test_id, requests, errors, retried, retry_after_sent, retry_after_honoured, retry_after_early, retry_intervals_ms, backoff_growing, statuses, streams_consumed, resent_after_stream, first, last]
+      properties:
+        test_id: { type: string }
+        requests: { type: integer, minimum: 0 }
+        errors:
+          type: integer
+          minimum: 0
+          description: Respostas retentáveis (429, 500, 502, 503, 504, 529).
+        retried: { type: integer, minimum: 0 }
+        retry_after_sent: { type: integer, minimum: 0 }
+        retry_after_honoured: { type: integer, minimum: 0 }
+        retry_after_early: { type: integer, minimum: 0 }
+        retry_intervals_ms:
+          type: [array, 'null']
+          description: Últimos 200 intervalos entre erro e nova tentativa.
+          items: { type: number }
+        backoff_growing: { type: boolean }
+        statuses:
+          type: object
+          description: Contagem por status HTTP (chave é o status como string).
+          additionalProperties: { type: integer, minimum: 0 }
+        streams_consumed:
+          type: integer
+          minimum: 0
+          description: >-
+            Streams (`stream: true` com status 200) que o cliente leu, completos ou cortados
+            por falha injetada no meio do stream (I15).
+        resent_after_stream:
+          type: integer
+          minimum: 0
+          description: >-
+            Requisições que repetiram o corpo do stream imediatamente anterior do mesmo teste
+            (reenvio após stream cortado, não o turno seguinte da conversa).
+        first: { type: string, format: date-time }
+        last: { type: string, format: date-time }
+
+    ResilienceList:
+      type: object
+      required: [tests]
+      properties:
+        tests:
+          type: array
+          items: { $ref: '#/components/schemas/ResilienceReport' }

@@ -1,0 +1,24 @@
+{
+  "provider": "anthropic",
+  "name": "x_pt_auto",
+  "recorded_at": "2026-10-31",
+  "note": "claude-haiku-4-5, task 259",
+  "compare": {
+    "base": "base_x",
+    "probe": "probe_pt"
+  },
+  "request": {
+    "method": "POST",
+    "path": "/v1/messages/count_tokens",
+    "headers": {
+      "x-api-key": "<key>",
+      "anthropic-version": "2023-06-01"
+    },
+    "body": "{\"model\": \"claude-haiku-4-5\", \"messages\": [{\"role\": \"user\", \"content\": \"x\"}], \"tools\": [{\"name\": \"consultar_pedido\", \"description\": \"Consulta o status de um pedido pelo número e devolve a previsão de entrega.\", \"input_schema\": {\"type\": \"object\", \"properties\": {\"numero\": {\"type\": \"string\", \"pattern\": \"^[0-9]{8}$\", \"description\": \"Número do pedido com 8 dígitos\"}, \"incluir_itens\": {\"type\": \"boolean\"}}, \"required\": [\"numero\"]}}]}"
+  },
+  "response": {
+    "status": 200,
+    "content_type": "application/json",
+    "body": "{\"input_tokens\":639}"
+  }
+}

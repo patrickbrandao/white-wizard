@@ -1,0 +1,51 @@
+# creditos-openrouter-esgotando: saldo pré-pago do OpenRouter decrescendo a cada
+# chamada, pelo custo do modelo (models[].pricing), até zerar. Com o saldo
+# esgotado, 402 no envelope do OpenRouter (limit_source openrouter_credits).
+# Specs 010 e 006 (seção 16.4, "Saldo zerado" e "Saldo negativo").
+#
+# O saldo é da CONTA (ADR 0051): as duas chaves da conta "pobre" gastam do mesmo
+# saldo; a conta "rica" tem outro e não é afetada. Preços inflados para o smoke
+# esgotar o saldo em poucas chamadas (veja pricing): cada resposta tem 100 tokens
+# fixos de saída e custa ~US$ 0,50.
+server:
+  listen: ":8000"
+  auth: keys
+
+admin:
+  listen: ":9000"
+
+keys:
+  - { key: wwz-key-or-a, label: pobre-a, account: pobre }
+  - { key: wwz-key-or-b, label: pobre-b, account: pobre }
+  - { key: wwz-key-or-rica, label: rica, account: rica }
+
+accounts:
+  - id: pobre
+    limits:
+      credits_usd: 3 # US$ 3,00 de saldo inicial
+  - id: rica
+    limits:
+      credits_usd: 1000
+
+drivers:
+  - name: openrouter
+
+models:
+  - id: openai/gpt-4o-mini
+    protocols: [openai]
+    latency: rapida
+    generation: fixa
+    # US$ 5.000 por milhão de tokens de saída (inflado; o real é ~US$ 0,60):
+    # cada resposta de 100 tokens custa ~US$ 0,50.
+    pricing: { input_per_m: 1, output_per_m: 5000 }
+
+profiles:
+  latency:
+    rapida: { ttft: 5ms, itl: 1ms }
+  generation:
+    fixa:
+      mode: random
+      output_tokens: { dist: uniform, min: 100, max: 100 }
+
+logging:
+  level: warn

@@ -1,0 +1,22 @@
+{
+  "provider": "openrouter",
+  "name": "type_stream",
+  "recorded_at": "2026-10-31",
+  "request": {
+    "method": "POST",
+    "path": "/api/v1/responses",
+    "headers": {
+      "authorization": "Bearer <key>"
+    },
+    "body": "{\"model\": \"openai/gpt-4o-mini\", \"input\": \"hi\", \"max_output_tokens\": 16, \"stream\": \"yes\"}"
+  },
+  "response": {
+    "status": 400,
+    "headers": {
+      "access-control-allow-origin": "*",
+      "access-control-expose-headers": "X-Generation-Id,X-Provider-Name,request-id,cf-ray",
+      "content-type": "application/json"
+    },
+    "body": "{\"error\":{\"code\":\"invalid_prompt\",\"message\":\"Invalid Responses API request\"},\"metadata\":{\"raw\":\"[\\n  {\\n    \\\"expected\\\": \\\"boolean\\\",\\n    \\\"code\\\": \\\"invalid_type\\\",\\n    \\\"path\\\": [\\n      \\\"stream\\\"\\n    ],\\n    \\\"message\\\": \\\"Invalid input: expected boolean, received string\\\"\\n  }\\n]\"}}"
+  }
+}

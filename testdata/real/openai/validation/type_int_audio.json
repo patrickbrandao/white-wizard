@@ -1,0 +1,18 @@
+{
+  "provider": "openai",
+  "name": "type_int_audio",
+  "recorded_at": "2026-10-31",
+  "request": {
+    "method": "POST",
+    "path": "/v1/chat/completions",
+    "headers": {
+      "authorization": "Bearer <key>"
+    },
+    "body": "{\"model\": \"gpt-4o-mini\", \"messages\": [{\"role\": \"user\", \"content\": \"hi\"}], \"audio\": 12345}"
+  },
+  "response": {
+    "status": 400,
+    "content_type": "application/json",
+    "body": "{\n  \"error\": {\n    \"message\": \"Invalid type for 'audio': expected an object, but got an integer instead.\",\n    \"type\": \"invalid_request_error\",\n    \"param\": \"audio\",\n    \"code\": \"invalid_type\"\n  }\n}"
+  }
+}

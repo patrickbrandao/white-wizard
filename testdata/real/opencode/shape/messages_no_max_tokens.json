@@ -1,0 +1,24 @@
+{
+  "provider": "opencode",
+  "name": "messages_no_max_tokens",
+  "recorded_at": "2026-10-31",
+  "note": "Messages sem max_tokens",
+  "request": {
+    "method": "POST",
+    "path": "/inference/go/anthropic/v1/messages",
+    "headers": {
+      "authorization": "Bearer <key>",
+      "x-opencode-session": "<session>"
+    },
+    "body": "{\"model\": \"deepseek-v4.1-flash\", \"messages\": [{\"role\": \"user\", \"content\": \"Responda só: ok\"}]}"
+  },
+  "response": {
+    "status": 400,
+    "headers": {
+      "content-type": "application/json",
+      "x-opencode-log-id": "<log_id>",
+      "x-zen-model": "deepseek-v4.1-flash"
+    },
+    "body": "{\"model\":\"deepseek-v4.1-flash\"}"
+  }
+}

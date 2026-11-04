@@ -1,0 +1,38 @@
+{{define "layout"}}<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="htmx-config" content='{"includeIndicatorStyles":false,"allowEval":false,"allowScriptTags":false,"selfRequestsOnly":true}'>
+<title>{{.Title}} · wwz-panel</title>
+<link rel="stylesheet" href="{{asset "panel.css"}}">
+<script src="{{asset "htmx.min.js"}}" defer></script>
+</head>
+<body{{with .CSRF}} hx-headers='{"X-CSRF-Token":"{{.}}"}'{{end}}>
+<header class="top">
+<span class="brand">White Wizard · painel</span>
+{{if .Me}}<nav>
+<a href="/"{{if eq .Nav "overview"}} aria-current="page"{{end}}>Visão geral</a>
+<a href="/usage"{{if eq .Nav "usage"}} aria-current="page"{{end}}>Uso</a>
+<a href="/limits"{{if eq .Nav "limits"}} aria-current="page"{{end}}>Limites</a>
+<a href="/errors"{{if eq .Nav "errors"}} aria-current="page"{{end}}>Erros</a>
+<a href="/blocks"{{if eq .Nav "blocks"}} aria-current="page"{{end}}>Bloqueios</a>
+<a href="/scenarios"{{if eq .Nav "scenarios"}} aria-current="page"{{end}}>Cenários</a>
+<a href="/config"{{if eq .Nav "config"}} aria-current="page"{{end}}>Configuração</a>
+<a href="/audit"{{if eq .Nav "audit"}} aria-current="page"{{end}}>Auditoria</a>
+</nav>
+<form class="who" method="post" action="/api/v1/logout">
+<input type="hidden" name="csrf" value="{{.CSRF}}">
+<span>{{.Me.Name}} ({{.Me.Role}})</span>
+<button type="submit">Sair</button>
+</form>{{end}}
+</header>
+<main>
+<h1>{{.Title}}</h1>
+{{template "content" .}}
+</main>
+</body>
+</html>
+{{end}}
+
+{{define "messages"}}{{with .Flash}}<p class="flash" role="status">{{.}}</p>{{end}}{{with .Err}}<div class="error" role="alert"><p>{{.}}</p>{{with $.ErrDetails}}<ul>{{range .}}<li>{{.}}</li>{{end}}</ul>{{end}}</div>{{end}}{{end}}

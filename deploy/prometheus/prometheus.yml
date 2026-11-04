@@ -1,0 +1,28 @@
+# Prometheus local: raspa o control plane do wwz, o painel e o wwz-tools
+# (/metrics do wwz e do painel é público, sem token) e avalia as regras de alerta da spec 016.
+global:
+  scrape_interval: 5s
+  evaluation_interval: 15s
+
+rule_files:
+  - /etc/prometheus/alerts.yml
+
+scrape_configs:
+  - job_name: wwz
+    metrics_path: /metrics
+    static_configs:
+      - targets: ["wwz:9000"]
+
+  - job_name: wwz-panel
+    metrics_path: /metrics
+    static_configs:
+      - targets: ["wwz-panel:8100"]
+
+  # wwz-tools (spec 017, `wwz-tools serve --listen :9200`): serviço wwz-tools do
+  # docker-compose.yml raiz (binário da imagem do wwz-load, ADR 0034). O local
+  # sobe sem WWZ_TOOLS_TOKEN; com token, /metrics exige bearer: monte o token num
+  # arquivo e acrescente `authorization: { credentials_file: /etc/prometheus/wwz-tools.token }`.
+  - job_name: wwz-tools
+    metrics_path: /metrics
+    static_configs:
+      - targets: ["wwz-tools:9200"]

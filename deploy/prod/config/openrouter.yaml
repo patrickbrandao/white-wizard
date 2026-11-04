@@ -1,0 +1,36 @@
+# Produção (ADR 0017, spec 019): porta 8005, OpenRouter perfeito.
+# Modelo de configuração SEM segredos: os placeholders WWZ_KEY_1..3 são trocados por
+# `scripts/prod-deploy.sh render` no servidor (valores do .env); nunca vai ao repositório.
+# Sem admin.debug: produção não herda o ajuste do compose de dev.
+server:
+  auth: keys
+  reuseport: true
+
+admin:
+  debug: false
+
+keys:
+  - {key: ${WWZ_KEY_1}, label: prod-1, account: acct-prod, project: proj-prod}
+  - {key: ${WWZ_KEY_2}, label: prod-2, account: acct-prod, project: proj-prod}
+  - {key: ${WWZ_KEY_3}, label: prod-3, account: acct-prod, project: proj-prod}
+
+drivers:
+  - {name: openrouter}
+
+models:
+  - id: wwz-fast
+    owned_by: white-wizard
+    protocols: ["*"]
+    context_window: 128000
+    capabilities: {tools: true, reasoning: true, json_schema: true}
+    latency: fast
+    errors: none
+    generation: default
+  - id: wwz-realistic
+    owned_by: white-wizard
+    protocols: ["*"]
+    context_window: 128000
+    capabilities: {tools: true, reasoning: true}
+    latency: gpt-4o-like
+    errors: none
+    generation: default

@@ -1,0 +1,18 @@
+{
+  "provider": "openrouter",
+  "name": "get_model_nitro",
+  "recorded_at": "2026-10-31",
+  "request": {
+    "method": "GET",
+    "path": "/api/v1/model/openai/gpt-4o-mini:nitro",
+    "headers": {
+      "authorization": "Bearer <key>"
+    }
+  },
+  "response": {
+    "status": 200,
+    "content_type": "application/json",
+    "body": null,
+    "model": "openai/gpt-4o-mini"
+  }
+}

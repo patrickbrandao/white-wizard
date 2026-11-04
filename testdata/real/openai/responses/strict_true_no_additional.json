@@ -1,0 +1,19 @@
+{
+  "provider": "openai",
+  "name": "strict_true_no_additional",
+  "recorded_at": "2026-10-31",
+  "request": {
+    "method": "POST",
+    "path": "/v1/responses",
+    "headers": {
+      "authorization": "Bearer <key>",
+      "content-type": "application/json"
+    },
+    "body": "{\"model\": \"gpt-4o-mini\", \"input\": \"x\", \"max_output_tokens\": 16, \"store\": false, \"tools\": [{\"type\": \"function\", \"name\": \"f\", \"strict\": true, \"parameters\": {\"type\": \"object\", \"properties\": {\"a\": {\"type\": \"string\"}}}}]}"
+  },
+  "response": {
+    "status": 400,
+    "content_type": "application/json",
+    "body": "{\n  \"error\": {\n    \"message\": \"Invalid schema for function 'f': In context=(), 'additionalProperties' is required to be supplied and to be false.\",\n    \"type\": \"invalid_request_error\",\n    \"param\": \"tools[0].parameters\",\n    \"code\": \"invalid_function_parameters\"\n  }\n}"
+  }
+}

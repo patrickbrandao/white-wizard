@@ -1,0 +1,20 @@
+{
+  "name": "outside_v1",
+  "note": "fora de /v1: 404 sem corpo",
+  "provider": "anthropic",
+  "recorded_at": "2026-10-31",
+  "request": {
+    "body": null,
+    "headers": {
+      "anthropic-version": "2023-06-01",
+      "x-api-key": "<key>"
+    },
+    "method": "GET",
+    "path": "/nope"
+  },
+  "response": {
+    "body": "",
+    "headers": {},
+    "status": 404
+  }
+}

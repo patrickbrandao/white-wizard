@@ -1,0 +1,52 @@
+# ban-por-abuso: detecção de abuso e bloqueio de chave (spec 012, política de
+# abuso). Uma chave que leva 429 repetidos no mesmo minuto vira "abusiva": o
+# wwz bloqueia a chave (403 account_suspended, sem retry-after) e o bloqueio
+# aparece na API admin (GET /admin/entities/key/<label>, status "suspended" e
+# `until`). Desbloquear pela admin devolve o 200. O estado fica no Valkey
+# (store compartilhado), então qualquer instância do cluster passa a negar.
+#
+# Gatilho: strike_429 = 5 respostas 429 em 1 minuto para a mesma chave. A
+# escada tem um degrau: suspend por 10 minutos (o smoke não espera: desbloqueia
+# pela admin).
+server:
+  listen: ":8000"
+  auth: keys
+
+admin:
+  listen: ":9000"
+
+store:
+  kind: valkey
+  addr: [valkey:6379]
+
+keys:
+  # Abusiva: rpm baixo; quem insiste depois do 429 acumula strikes.
+  - { key: wwz-key-abusiva, label: abusiva, account: acme-abusiva, limits: { rpm: 6 } }
+  # Bem-comportada: outra conta, sem teto de chave; nunca é bloqueada.
+  - { key: wwz-key-ok, label: bem-comportada, account: acme-ok }
+
+abuse:
+  enabled: true
+  strike_429: { count: 5, window: 1m }
+  ladder:
+    - { action: suspend, duration: 10m }
+
+drivers:
+  - name: openai
+
+models:
+  - id: gpt-4o-mini
+    protocols: [openai]
+    latency: rapida
+    generation: curta
+
+profiles:
+  latency:
+    rapida: { ttft: 5ms, itl: 1ms }
+  generation:
+    curta:
+      mode: random
+      output_tokens: { dist: uniform, min: 5, max: 15 }
+
+logging:
+  level: warn

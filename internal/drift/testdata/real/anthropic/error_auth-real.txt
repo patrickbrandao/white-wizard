@@ -1,0 +1,15 @@
+HTTP 401
+Cache-Control: no-store
+Cf-Cache-Status: DYNAMIC
+Cf-Ray: a532ae23b95ac76a-GRU
+Content-Length: 130
+Content-Security-Policy: default-src 'none'; frame-ancestors 'none'
+Content-Type: application/json
+Date: Sat, 31 Oct 2026 12:32:03 GMT
+Request-Id: req_011CgaKVpgX5RcyiEUKAeH9S
+Server: cloudflare
+Server-Timing: x-originResponse;dur=
+X-Robots-Tag: none
+X-Should-Retry: false
+
+{"type":"error","error":{"type":"authentication_error","message":"invalid x-api-key"},"request_id":"req_011CgaKVpgX5RcyiEUKAeH9S"}

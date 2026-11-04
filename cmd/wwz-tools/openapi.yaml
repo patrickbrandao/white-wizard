@@ -1,0 +1,496 @@
+openapi: 3.1.0
+info:
+  title: White Wizard (wwz-tools) — servidor de ferramentas falsas
+  version: 0.1.0
+  summary: Catálogo, sessões e execução simulada de ferramentas, saúde e métricas.
+  description: |
+    Contrato do binário `wwz-tools serve` (net/http, `--listen` / `WWZ_TOOLS_LISTEN`, padrão
+    `:9200`). Fonte: specs/017-recursos-importados.md (seção "Contrato do `wwz-tools` (fase 4)",
+    normativa); decisões ADR 0034 (contrato do `wwz-tools`) e 0006 (contratos OpenAPI, estendida
+    a este binário). O núcleo é `internal/tools`, o mesmo usado em processo pelo
+    `wwz-load agents` (spec 015). Divergência necessária vira tarefa para o guardião das specs.
+
+    Regras gerais:
+    - Nada é executado de verdade: sistema de arquivos virtual em memória por sessão, comandos
+      simulados, sem acesso à rede.
+    - Corpos JSON (`application/json`, `snake_case`), no máximo 1 MiB; corpo maior, JSON
+      malformado, campo desconhecido ou tipo errado → 400 `invalid_request`.
+    - Autenticação: com `WWZ_TOOLS_TOKEN` não vazio, toda rota exceto `/healthz` (inclusive
+      `/metrics`) exige `Authorization: Bearer <token>`, comparado em tempo constante; ausente ou
+      diferente → 401 `unauthorized`. Com a variável vazia não há autenticação.
+    - Erros usam o envelope `Error` (`{"error": {"type", "message"}}`). Tipos: `invalid_request`
+      (400), `unauthorized` (401), `not_found` (404), `timeout` (504), `internal` (500).
+    - Resultado de ferramenta não é erro HTTP: `natural_error`, `error` e `invalid_payload`
+      voltam 200 com `is_error`/`outcome` no corpo. Só o `timeout` injetado ou forçado vira 504.
+    - Semente (determinismo): `x-wwz-seed` > campo `seed` da sessão > `--seed`/`WWZ_TOOLS_SEED`
+      > arquivo; `0` = aleatória. Com a mesma semente, sessão e sequência de chamadas, conteúdo,
+      latência e resultado injetado são idênticos.
+    - Sessões ociosas expiram após `session_ttl` (padrão `30m`); acima de `max_sessions`
+      (padrão 100 000) a menos usada recentemente é despejada.
+servers:
+  - url: http://127.0.0.1:9200
+    description: Servidor local (padrão `WWZ_TOOLS_LISTEN=:9200`).
+tags:
+  - name: saude
+    description: Liveness (aberto) e métricas.
+  - name: catalogo
+    description: Catálogo de ferramentas por perfil e formato.
+  - name: sessoes
+    description: Sandboxes virtuais por sessão.
+  - name: chamadas
+    description: Execução simulada de uma tool call.
+
+security:
+  - {}
+  - bearerAuth: []
+
+paths:
+  /healthz:
+    get:
+      tags: [saude]
+      operationId: getHealthz
+      summary: Liveness
+      description: 200 com o texto `ok` enquanto o processo vive. Nunca exige token.
+      security: []
+      responses:
+        '200':
+          description: Processo vivo.
+          content:
+            text/plain:
+              schema: { type: string, const: ok }
+
+  /metrics:
+    get:
+      tags: [saude]
+      operationId: getMetrics
+      summary: Métricas Prometheus
+      description: |
+        Formato texto do Prometheus: `wwz_tools_calls_total{tool,outcome}` (contador),
+        `wwz_tools_call_duration_seconds{tool}` (histograma) e `wwz_tools_sessions` (gauge com as
+        sessões vivas). `outcome` ∈ `success`, `natural_error`, `error`, `timeout`,
+        `invalid_payload`. Exige bearer quando `WWZ_TOOLS_TOKEN` está definido.
+      responses:
+        '200':
+          description: Métricas.
+          content:
+            text/plain; version=0.0.4:
+              schema: { type: string }
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /v1/tools:
+    get:
+      tags: [catalogo]
+      operationId: listTools
+      summary: Catálogo do perfil no formato pedido
+      description: |
+        Devolve as ferramentas do perfil, em ordem lexicográfica de nome, no formato pedido:
+        `raw` (`ToolRaw`), `openai` (`ToolOpenAI`, pronto para `tools` do Chat Completions) ou
+        `anthropic` (`ToolAnthropic`, pronto para `tools` do Messages). Perfil `chat` devolve `[]`.
+        Perfil ou formato inválido → 400.
+      parameters:
+        - name: profile
+          in: query
+          description: Perfil do catálogo.
+          schema:
+            $ref: '#/components/schemas/Profile'
+        - name: format
+          in: query
+          description: Formato das entradas.
+          schema:
+            type: string
+            enum: [raw, openai, anthropic]
+            default: raw
+      responses:
+        '200':
+          description: Catálogo.
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - type: array
+                    items: { $ref: '#/components/schemas/ToolRaw' }
+                  - type: array
+                    items: { $ref: '#/components/schemas/ToolOpenAI' }
+                  - type: array
+                    items: { $ref: '#/components/schemas/ToolAnthropic' }
+              example:
+                - name: read_file
+                  description: Lê um arquivo de texto da sandbox.
+                  schema:
+                    type: object
+                    additionalProperties: false
+                    required: [path]
+                    properties:
+                      path: { type: string }
+                      offset: { type: integer, minimum: 0 }
+                      limit: { type: integer, minimum: 1, maximum: 2000 }
+                  profiles: [coder, pesquisa]
+        '400':
+          $ref: '#/components/responses/Invalid'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /v1/sessions:
+    post:
+      tags: [sessoes]
+      operationId: createSession
+      summary: Cria uma sessão (sandbox virtual)
+      description: |
+        Cria uma sessão com id gerado pelo servidor e semeia o sistema de arquivos virtual por
+        `(seed, profile)`: árvore de projeto fixa de 12–30 arquivos (`README.md`, `go.mod`,
+        `cmd/…`, `internal/…`, `docs/…`). O corpo pode ser omitido ou vazio (`{}`): perfil `all`
+        e a semente do servidor. `x-wwz-seed`, quando presente, vence o campo `seed`.
+      parameters:
+        - $ref: '#/components/parameters/SeedHeader'
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SessionRequest'
+            example: { profile: coder, seed: 42 }
+      responses:
+        '201':
+          description: Sessão criada.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Session'
+              example:
+                session: s-9f2c1a7e
+                profile: coder
+                seed: 42
+                files: [README.md, cmd/app/main.go, docs/uso.md, go.mod, internal/core/core.go]
+        '400':
+          $ref: '#/components/responses/Invalid'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /v1/sessions/{id}:
+    delete:
+      tags: [sessoes]
+      operationId: deleteSession
+      summary: Remove uma sessão
+      description: Descarta a sessão e seu sistema de arquivos virtual. Inexistente ou expirada → 404.
+      parameters:
+        - $ref: '#/components/parameters/SessionIdPath'
+      responses:
+        '204':
+          description: Sessão removida.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /v1/call:
+    post:
+      tags: [chamadas]
+      operationId: callTool
+      summary: Executa uma tool call simulada
+      description: |
+        Executa `name` na sessão `session`. Sessão desconhecida é criada na hora com o perfil
+        `all` (semente: `x-wwz-seed`, senão a do servidor). Ferramenta desconhecida ou fora do
+        perfil da sessão → 404 `not_found`.
+
+        `arguments` aceita objeto JSON ou string com JSON (como chega da OpenAI em
+        `function.arguments`); ausente equivale a `{}`. String que não é JSON válido, ou
+        argumentos fora do schema da ferramenta, dão `outcome: natural_error` (200), como a
+        ferramenta real responderia ao modelo; outro tipo JSON em `arguments` (número, array,
+        booleano, null) é corpo inválido (400).
+
+        Sorteio por chamada, nesta ordem: `timeout`, `error`, `invalid_payload` (taxas em
+        percentual na configuração, globais ou por ferramenta), senão execução normal (que pode
+        dar `natural_error`). `x-wwz-tools-outcome` força o resultado desta chamada e pula o
+        sorteio. `timeout` espera o `timeout` configurado (padrão `30s`) e responde 504; se o
+        cliente desconectar antes, nada é escrito.
+      parameters:
+        - $ref: '#/components/parameters/SeedHeader'
+        - name: x-wwz-tools-outcome
+          in: header
+          description: |
+            Força o resultado desta chamada. `success` executa normalmente sem sorteio de falha
+            (ainda pode resultar em `natural_error`). Valor fora do enum → 400.
+          schema:
+            type: string
+            enum: [success, error, timeout, invalid_payload]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CallRequest'
+            examples:
+              objeto:
+                value:
+                  session: s-9f2c1a7e
+                  name: read_file
+                  arguments: { path: README.md, limit: 20 }
+                  tool_call_id: call_abc123
+              string:
+                value:
+                  session: s-9f2c1a7e
+                  name: read_file
+                  arguments: '{"path":"README.md"}'
+                  tool_call_id: toolu_01A
+      responses:
+        '200':
+          description: Chamada executada (com sucesso ou com erro de ferramenta no corpo).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CallResult'
+              examples:
+                sucesso:
+                  value:
+                    tool_call_id: call_abc123
+                    content: "# Projeto\n\nLorem ipsum dolor sit amet.\n"
+                    is_error: false
+                    outcome: success
+                    latency_ms: 17
+                erro_natural:
+                  value:
+                    tool_call_id: call_abc124
+                    content: "ENOENT: no such file or directory, open 'nao/existe.go'"
+                    is_error: true
+                    outcome: natural_error
+                    latency_ms: 9
+        '400':
+          $ref: '#/components/responses/Invalid'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '504':
+          description: Resultado `timeout` (injetado ou forçado), após esperar o `timeout` configurado.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example: { error: { type: timeout, message: tool timed out after 30s } }
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: |
+        Valor de `WWZ_TOOLS_TOKEN` (ADR 0034). Exigido só quando a variável não está vazia; por
+        isso a segurança global admite também o requisito vazio (`{}`).
+
+  parameters:
+    SessionIdPath:
+      name: id
+      in: path
+      required: true
+      description: Id da sessão.
+      schema:
+        $ref: '#/components/schemas/SessionId'
+    SeedHeader:
+      name: x-wwz-seed
+      in: header
+      description: Semente da sessão (inteiro ≥ 0; `0` = aleatória). Vence o campo `seed` e `--seed`; valor não numérico → 400.
+      schema: { type: integer, format: int64, minimum: 0 }
+
+  responses:
+    Unauthorized:
+      description: Bearer ausente ou inválido (só com `WWZ_TOOLS_TOKEN` definido).
+      headers:
+        WWW-Authenticate:
+          schema: { type: string }
+          example: Bearer
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example: { error: { type: unauthorized, message: missing or invalid bearer token } }
+    Invalid:
+      description: Corpo, parâmetro ou header inválido; nada foi executado.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example: { error: { type: invalid_request, message: 'profile: unknown value "dev"' } }
+    NotFound:
+      description: Sessão ou ferramenta não encontrada.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example: { error: { type: not_found, message: 'unknown tool "rm_rf"' } }
+
+  schemas:
+    Profile:
+      type: string
+      description: |
+        Perfil de ferramentas. `coder`: `read_file`, `write_file`, `edit_file`, `list_dir`,
+        `search_code`, `run_command`. `pesquisa`: `web_search`, `fetch_url`, `read_file`.
+        `chat`: nenhuma. `all`: união.
+      enum: [coder, pesquisa, chat, all]
+      default: all
+
+    ToolName:
+      type: string
+      enum:
+        - read_file
+        - write_file
+        - edit_file
+        - list_dir
+        - search_code
+        - run_command
+        - web_search
+        - fetch_url
+
+    Outcome:
+      type: string
+      description: |
+        `success`: resultado normal. `natural_error`: erro que a ferramenta real daria (mensagem
+        no estilo POSIX). `error`: falha injetada (`permission denied`, `EIO: i/o error`,
+        `resource temporarily unavailable`, `internal tool error`). `invalid_payload`: injetado,
+        `is_error: false` com `content` inválido para o formato prometido (JSON truncado, bytes
+        não UTF-8 ou texto vazio). `timeout` nunca aparece num 200 (vira 504).
+      enum: [success, natural_error, error, invalid_payload]
+
+    JSONSchema:
+      type: object
+      description: 'JSON Schema dos argumentos (sempre `type: object`, `additionalProperties: false`).'
+      required: [type, properties, additionalProperties]
+      properties:
+        type: { type: string, const: object }
+        properties: { type: object }
+        required:
+          type: array
+          items: { type: string }
+        additionalProperties: { type: boolean, const: false }
+      additionalProperties: true
+
+    ToolRaw:
+      type: object
+      description: Formato `raw`.
+      required: [name, description, schema, profiles]
+      additionalProperties: false
+      properties:
+        name: { $ref: '#/components/schemas/ToolName' }
+        description: { type: string }
+        schema: { $ref: '#/components/schemas/JSONSchema' }
+        profiles:
+          type: array
+          description: Perfis que contêm a ferramenta (sem `all`).
+          items:
+            type: string
+            enum: [coder, pesquisa]
+
+    ToolOpenAI:
+      type: object
+      description: Formato `openai` (entrada de `tools` do Chat Completions).
+      required: [type, function]
+      additionalProperties: false
+      properties:
+        type: { type: string, const: function }
+        function:
+          type: object
+          required: [name, description, parameters]
+          additionalProperties: false
+          properties:
+            name: { $ref: '#/components/schemas/ToolName' }
+            description: { type: string }
+            parameters: { $ref: '#/components/schemas/JSONSchema' }
+
+    ToolAnthropic:
+      type: object
+      description: Formato `anthropic` (entrada de `tools` do Messages).
+      required: [name, description, input_schema]
+      additionalProperties: false
+      properties:
+        name: { $ref: '#/components/schemas/ToolName' }
+        description: { type: string }
+        input_schema: { $ref: '#/components/schemas/JSONSchema' }
+
+    SessionId:
+      type: string
+      description: Id opaco da sessão; o cliente pode escolher o seu em `POST /v1/call`.
+      pattern: '^[A-Za-z0-9._-]{1,128}$'
+
+    SessionRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        profile: { $ref: '#/components/schemas/Profile' }
+        seed:
+          type: integer
+          format: int64
+          minimum: 0
+          description: Semente da sessão; ausente ou `0` usa a semente do servidor (`0` lá = aleatória).
+
+    Session:
+      type: object
+      required: [session, profile, seed, files]
+      additionalProperties: false
+      properties:
+        session: { $ref: '#/components/schemas/SessionId' }
+        profile: { $ref: '#/components/schemas/Profile' }
+        seed:
+          type: integer
+          format: int64
+          minimum: 1
+          description: Semente efetiva (sorteada quando a pedida era `0`), para reproduzir a sessão.
+        files:
+          type: array
+          description: Caminhos dos arquivos semeados, relativos à raiz, em ordem lexicográfica.
+          items: { type: string }
+
+    CallRequest:
+      type: object
+      required: [session, name]
+      additionalProperties: false
+      properties:
+        session: { $ref: '#/components/schemas/SessionId' }
+        name:
+          type: string
+          minLength: 1
+          description: Nome da ferramenta (`ToolName`); outro valor → 404.
+        arguments:
+          description: Argumentos como objeto JSON ou string com JSON; ausente = `{}`.
+          oneOf:
+            - type: object
+              additionalProperties: true
+            - type: string
+        tool_call_id:
+          type: string
+          description: Id da tool call do modelo (`call_…`, `toolu_…`), devolvido sem alteração.
+
+    CallResult:
+      type: object
+      required: [tool_call_id, content, is_error, outcome, latency_ms]
+      additionalProperties: false
+      properties:
+        tool_call_id:
+          type: string
+          description: O `tool_call_id` recebido (string vazia quando ausente).
+        content:
+          type: string
+          description: |
+            Resultado textual da ferramenta (spec 017, tabela do catálogo). Em `invalid_payload`
+            pode ser vazio, JSON truncado ou conter bytes não UTF-8 (trocados por U+FFFD pelo
+            encoder JSON).
+        is_error: { type: boolean }
+        outcome: { $ref: '#/components/schemas/Outcome' }
+        latency_ms:
+          type: integer
+          minimum: 0
+          description: Latência simulada aplicada à chamada, em milissegundos.
+
+    Error:
+      type: object
+      required: [error]
+      additionalProperties: false
+      properties:
+        error:
+          type: object
+          required: [type, message]
+          additionalProperties: false
+          properties:
+            type:
+              type: string
+              enum: [invalid_request, unauthorized, not_found, timeout, internal]
+            message: { type: string }

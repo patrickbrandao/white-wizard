@@ -1,0 +1,18 @@
+{
+  "provider": "openai",
+  "name": "model_empty",
+  "recorded_at": "2026-10-31",
+  "request": {
+    "method": "POST",
+    "path": "/v1/chat/completions",
+    "headers": {
+      "authorization": "Bearer <key>"
+    },
+    "body": "{\"model\": \"\", \"messages\": [{\"role\": \"user\", \"content\": \"hi\"}]}"
+  },
+  "response": {
+    "status": 400,
+    "content_type": "application/json; charset=utf-8",
+    "body": "{\n    \"error\": {\n        \"message\": \"you must provide a model parameter\",\n        \"type\": \"invalid_request_error\",\n        \"param\": null,\n        \"code\": null\n    }\n}\n"
+  }
+}

@@ -1,0 +1,7 @@
+HTTP 401
+Content-Length: 195
+Content-Type: application/json
+Date: Sat, 31 Oct 2026 12:32:02 GMT
+X-Request-Id: req_5b974716cd0f8be09c49b4830e7017ea
+
+{"error":{"code":"invalid_api_key","message":"Incorrect API key provided. You can find your API key at https://platform.openai.com/account/api-keys.","param":null,"type":"invalid_request_error"}}

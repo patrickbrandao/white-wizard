@@ -1,0 +1,18 @@
+{
+  "provider": "openrouter",
+  "name": "validkey_unknown_model_wrong_type_stream",
+  "recorded_at": "2026-10-31",
+  "request": {
+    "method": "POST",
+    "path": "/api/v1/chat/completions",
+    "headers": {
+      "authorization": "Bearer <key>"
+    },
+    "body": "{\"model\": \"wwz-nao-existe\", \"messages\": [{\"role\": \"user\", \"content\": \"oi\"}], \"stream\": \"x\"}"
+  },
+  "response": {
+    "status": 400,
+    "content_type": "application/json",
+    "body": "{\"error\":{\"message\":\"wwz-nao-existe is not a valid model ID\",\"code\":400},\"user_id\":\"<user_id>\"}"
+  }
+}

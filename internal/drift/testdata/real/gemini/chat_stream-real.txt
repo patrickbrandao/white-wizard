@@ -1,0 +1,16 @@
+HTTP 200
+Alt-Svc: h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+Content-Disposition: attachment
+Content-Type: text/event-stream
+Date: Sat, 31 Oct 2026 15:09:04 GMT
+Server: scaffolding on HTTPServer2
+Server-Timing: gfet4t7; dur=729
+Vary: Origin, X-Origin, Referer
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+X-Xss-Protection: 0
+
+data: {"candidates": [{"content": {"parts": [{"text": "Ok"}],"role": "model"},"index": 0}],"usageMetadata": {"promptTokenCount": 7,"candidatesTokenCount": 1,"totalTokenCount": 8,"promptTokensDetails": [{"modality": "TEXT","tokenCount": 7}],"serviceTier": "standard"},"modelVersion": "gemini-3.5-flash-lite","responseId": "kATmavnOFeWtuMYPk5XviAY"}
+
+data: {"candidates": [{"content": {"parts": [{"text": "","thoughtSignature": "EmAKXgFpFH0TKiRiCA7wlayWgaPb1iO2LGJ1wBk8sqI/inK0no6Oi3zcF3r5vo8Ih1rb4LQKGzfbOqzjkZrYGEUH7Gd/g2XiZQTow2r21Dm6k0H722tNM+NU+VduFERnzoQ="}],"role": "model"},"finishReason": "STOP","index": 0}],"usageMetadata": {"promptTokenCount": 7,"candidatesTokenCount": 1,"totalTokenCount": 8,"promptTokensDetails": [{"modality": "TEXT","tokenCount": 7}],"serviceTier": "standard"},"modelVersion": "gemini-3.5-flash-lite","responseId": "kATmavnOFeWtuMYPk5XviAY"}
+

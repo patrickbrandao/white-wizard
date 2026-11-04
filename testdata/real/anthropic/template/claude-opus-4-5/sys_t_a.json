@@ -1,0 +1,20 @@
+{
+  "provider": "anthropic",
+  "name": "sys_t_a",
+  "recorded_at": "2026-10-31",
+  "note": "claude-opus-4-5, task 264",
+  "request": {
+    "method": "POST",
+    "path": "/v1/messages/count_tokens",
+    "headers": {
+      "x-api-key": "<key>",
+      "anthropic-version": "2023-06-01"
+    },
+    "body": "{\"model\": \"claude-opus-4-5\", \"system\": \"x\", \"tools\": [{\"name\": \"a\", \"input_schema\": {\"type\": \"object\", \"properties\": {}}}], \"messages\": [{\"role\": \"user\", \"content\": \"x\"}]}"
+  },
+  "response": {
+    "status": 200,
+    "content_type": "application/json",
+    "body": "{\"input_tokens\":533}"
+  }
+}

@@ -1,0 +1,33 @@
+{{define "content"}}
+{{template "live" .}}
+<h2>Políticas do cluster (cfg:policies)</h2>
+{{with .Data.PolErr}}<div class="error" role="alert"><p>{{.}}</p></div>{{end}}
+{{with .Data.Policies}}{{if .Source}}
+<p class="muted">Fonte {{.Source}} · versão {{.Version}}{{if not .Writable}} · só leitura (sem Valkey; edite os tiers no YAML do wwz){{end}}</p>
+<table>
+<thead><tr><th>Atribuições de tier (ent:*)</th></tr></thead>
+<tbody>
+{{range $.Data.Entities}}<tr><td>{{.}}</td></tr>{{else}}<tr><td class="muted">Nenhuma entidade com tier atribuído.</td></tr>{{end}}
+</tbody>
+</table>
+{{if and $.CanAct .Writable}}
+<form class="act stack" method="post" action="/config/policies">
+<input type="hidden" name="csrf" value="{{$.CSRF}}"><input type="hidden" name="version" value="{{.Version}}">
+<label>Tiers (JSON: nome → limites com os nomes do YAML) <textarea name="tiers" rows="14" required>{{$.Data.Tiers}}</textarea></label>
+<button type="submit">Publicar para o cluster</button>
+<span class="muted">Publica com a versão {{.Version}}; se outra pessoa publicou antes, recarregue a página.</span>
+</form>
+{{else}}<pre>{{$.Data.Tiers}}</pre>{{end}}
+{{end}}{{end}}
+{{end}}
+
+{{define "live"}}<section id="live" hx-get="{{.Live}}" hx-trigger="every 2s" hx-swap="outerHTML">
+{{template "messages" .}}
+{{with .Data.Config}}{{if .AdminURL}}
+<p class="muted">YAML efetivo da instância {{.AdminURL}} (segredos mascarados)</p>
+<h2>Instâncias vivas</h2>
+<p>{{range .Instances}}<span class="tag">{{.}}</span> {{else}}<span class="muted">Nenhuma instância no heartbeat.</span>{{end}}</p>
+<h2>Configuração efetiva</h2>
+<pre>{{$.Data.YAML}}</pre>
+{{end}}{{end}}
+</section>{{end}}

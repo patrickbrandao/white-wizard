@@ -1,0 +1,24 @@
+{
+  "provider": "openrouter",
+  "name": "error_validation",
+  "recorded_at": "2026-10-31",
+  "note": "400 do gateway com x-generation-id",
+  "request": {
+    "method": "POST",
+    "path": "/api/v1/chat/completions",
+    "headers": {
+      "authorization": "Bearer <key>"
+    },
+    "body": "{\"model\": \"openai/gpt-4.1-nano\"}"
+  },
+  "response": {
+    "status": 400,
+    "headers": {
+      "access-control-allow-origin": "*",
+      "access-control-expose-headers": "X-Generation-Id,X-Provider-Name,request-id,cf-ray",
+      "content-type": "application/json",
+      "x-generation-id": "<generation_id>"
+    },
+    "body": "{\"error\":{\"message\":\"Input required: specify \\\"prompt\\\" or \\\"messages\\\"\",\"code\":400},\"user_id\":\"<user_id>\"}"
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "provider": "anthropic",
+  "name": "error_model",
+  "recorded_at": "2026-10-31",
+  "note": "sonda error_model do wwz-drift (wwz-drift record)",
+  "request": {
+    "method": "POST",
+    "path": "/v1/messages",
+    "headers": {
+      "anthropic-version": "2023-06-01",
+      "x-api-key": "<key>"
+    },
+    "body": "{\"model\":\"wwz-drift-modelo-inexistente\",\"messages\":[{\"role\":\"user\",\"content\":\"Responda só: ok\"}],\"max_tokens\":16}"
+  },
+  "response": {
+    "status": 404,
+    "headers": {
+      "anthropic-organization-id": "<organization_id>",
+      "anthropic-workspace-id": "<workspace_id>",
+      "content-type": "application/json",
+      "request-id": "<request_id>",
+      "x-should-retry": "false"
+    },
+    "body": "{\"type\":\"error\",\"error\":{\"type\":\"not_found_error\",\"message\":\"model: wwz-drift-modelo-inexistente\"},\"request_id\":\"<request_id>\"}"
+  }
+}

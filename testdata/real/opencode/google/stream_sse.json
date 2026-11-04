@@ -1,0 +1,25 @@
+{
+  "provider": "opencode",
+  "name": "stream_sse",
+  "recorded_at": "2026-10-31",
+  "note": "rota Gemini do gateway (task 241)",
+  "request": {
+    "method": "POST",
+    "path": "/inference/go/google/v1beta/models/gemini-4-argon:streamGenerateContent?alt=sse",
+    "headers": {
+      "x-goog-api-key": "<key>",
+      "x-opencode-session": "<session>"
+    },
+    "body": "{\"contents\":[{\"role\":\"user\",\"parts\":[{\"text\":\"Responda só: ok\"}]}],\"generationConfig\":{\"maxOutputTokens\":16}}"
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "content-type": "text/event-stream",
+      "cache-control": "no-cache",
+      "x-opencode-log-id": "<log_id>",
+      "x-zen-model": "gemini-4-argon"
+    },
+    "body": "data: {\"createTime\":\"2026-10-31T15:32:06.867499Z\",\"responseId\":\"9gnmaqv5NI7Mw-UP2rG64QU\",\"modelVersion\":\"gemini-4-argon\",\"candidates\":[{\"content\":{\"role\":\"model\",\"parts\":[{\"text\":\"ok\"}]}}],\"usageMetadata\":{}}\n\ndata: {\"createTime\":\"2026-10-31T15:32:06.867499Z\",\"responseId\":\"9gnmaqv5NI7Mw-UP2rG64QU\",\"modelVersion\":\"gemini-4-argon\",\"candidates\":[{\"finishReason\":\"STOP\",\"content\":{\"role\":\"model\",\"parts\":[{\"text\":\"\",\"thoughtSignature\":\"AY89a1+nxCzTEwjXGvNAPOFms/m/BpukfgataNbu2E7mCpBnRq8dYzYc1qeXXpXEiRBZd5CujRZJvn6+fZ4qQC3+IRGpwO9BWE+u4M+cSl17NagC/Q==\"}]}}],\"usageMetadata\":{\"candidatesTokensDetails\":[{\"modality\":\"TEXT\",\"tokenCount\":5}],\"promptTokensDetails\":[{\"modality\":\"TEXT\",\"tokenCount\":36}],\"candidatesTokenCount\":5,\"promptTokenCount\":36,\"totalTokenCount\":41,\"cost\":0,\"opencode\":{\"billing_source\":\"go\",\"list_cost\":0.000122,\"allowance\":0.000244,\"tokens\":{\"input\":36,\"output\":5,\"reasoning\":0,\"cache_read\":0,\"cache_write_5m\":0,\"cache_write_1h\":0}}}}\n\n"
+  }
+}

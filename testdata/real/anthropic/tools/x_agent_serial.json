@@ -1,0 +1,24 @@
+{
+  "provider": "anthropic",
+  "name": "x_agent_serial",
+  "recorded_at": "2026-10-31",
+  "note": "claude-haiku-4-5, task 259",
+  "compare": {
+    "base": "base_x",
+    "probe": "probe_agent"
+  },
+  "request": {
+    "method": "POST",
+    "path": "/v1/messages/count_tokens",
+    "headers": {
+      "x-api-key": "<key>",
+      "anthropic-version": "2023-06-01"
+    },
+    "body": "{\"model\": \"claude-haiku-4-5\", \"messages\": [{\"role\": \"user\", \"content\": \"x\"}], \"tools\": [{\"name\": \"read_file\", \"description\": \"Read a file from the workspace and return its contents.\", \"input_schema\": {\"type\": \"object\", \"properties\": {\"path\": {\"type\": \"string\", \"description\": \"Path relative to the workspace root\"}, \"offset\": {\"type\": \"integer\", \"minimum\": 0}, \"limit\": {\"type\": \"integer\", \"default\": 2000}}, \"required\": [\"path\"]}}, {\"name\": \"write_file\", \"description\": \"Create or overwrite a file.\", \"input_schema\": {\"type\": \"object\", \"properties\": {\"path\": {\"type\": \"string\"}, \"content\": {\"type\": \"string\"}}, \"required\": [\"path\", \"content\"]}}, {\"name\": \"run_command\", \"description\": \"Run a shell command and return stdout, stderr and the exit code.\", \"input_schema\": {\"type\": \"object\", \"properties\": {\"command\": {\"type\": \"string\"}, \"timeout_ms\": {\"type\": \"integer\", \"maximum\": 600000}, \"env\": {\"type\": \"object\", \"additionalProperties\": {\"type\": \"string\"}}}, \"required\": [\"command\"]}}], \"tool_choice\": {\"type\": \"auto\", \"disable_parallel_tool_use\": true}}"
+  },
+  "response": {
+    "status": 200,
+    "content_type": "application/json",
+    "body": "{\"input_tokens\":567}"
+  }
+}

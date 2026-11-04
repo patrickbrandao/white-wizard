@@ -1,0 +1,25 @@
+{
+  "provider": "anthropic",
+  "name": "count_tokens",
+  "recorded_at": "2026-10-31",
+  "note": "sem anthropic-ratelimit-*",
+  "request": {
+    "method": "POST",
+    "path": "/v1/messages/count_tokens",
+    "headers": {
+      "x-api-key": "<key>",
+      "anthropic-version": "2023-06-01"
+    },
+    "body": "{\"model\": \"claude-haiku-4-5-20251001\", \"messages\": [{\"role\": \"user\", \"content\": \"Responda só: ok\"}]}"
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "anthropic-organization-id": "<organization_id>",
+      "anthropic-workspace-id": "<workspace_id>",
+      "content-type": "application/json",
+      "request-id": "<request_id>"
+    },
+    "body": "{\"input_tokens\":13}"
+  }
+}

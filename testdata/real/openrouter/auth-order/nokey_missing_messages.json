@@ -1,0 +1,16 @@
+{
+  "provider": "openrouter",
+  "name": "nokey_missing_messages",
+  "recorded_at": "2026-10-31",
+  "request": {
+    "method": "POST",
+    "path": "/api/v1/chat/completions",
+    "headers": {},
+    "body": "{\"model\": \"openai/gpt-4o-mini\"}"
+  },
+  "response": {
+    "status": 401,
+    "content_type": "application/json",
+    "body": "{\"error\":{\"message\":\"No cookie auth credentials found\",\"code\":401}}"
+  }
+}

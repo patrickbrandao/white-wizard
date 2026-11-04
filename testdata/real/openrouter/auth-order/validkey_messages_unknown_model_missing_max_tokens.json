@@ -1,0 +1,18 @@
+{
+  "provider": "openrouter",
+  "name": "validkey_messages_unknown_model_missing_max_tokens",
+  "recorded_at": "2026-10-31",
+  "request": {
+    "method": "POST",
+    "path": "/api/v1/messages",
+    "headers": {
+      "authorization": "Bearer <key>"
+    },
+    "body": "{\"model\": \"wwz-nao-existe\", \"messages\": [{\"role\": \"user\", \"content\": \"oi\"}]}"
+  },
+  "response": {
+    "status": 400,
+    "content_type": "application/json",
+    "body": "{\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"wwz-nao-existe is not a valid model ID\",\"error_type\":\"invalid_request\"},\"request_id\":\"<request_id>\"}"
+  }
+}

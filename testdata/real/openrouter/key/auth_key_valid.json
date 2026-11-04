@@ -1,0 +1,25 @@
+{
+  "provider": "openrouter",
+  "name": "auth_key_valid",
+  "recorded_at": "2026-10-31",
+  "note": "Legacy alias of /api/v1/key",
+  "request": {
+    "method": "GET",
+    "path": "/api/v1/auth/key",
+    "headers": {
+      "authorization": "Bearer <key>"
+    },
+    "body": ""
+  },
+  "response": {
+    "status": 200,
+    "content_type": "application/json",
+    "headers": {
+      "content-type": "application/json",
+      "access-control-allow-origin": "*",
+      "cache-control": "private, no-store",
+      "access-control-expose-headers": "X-Generation-Id,X-Provider-Name,request-id,cf-ray"
+    },
+    "body": "{\"data\":{\"label\":\"<label>\",\"is_management_key\":false,\"is_provisioning_key\":false,\"limit\":null,\"limit_reset\":null,\"limit_remaining\":null,\"include_byok_in_limit\":false,\"budgets\":[],\"effective_budget\":null,\"usage\":\"<usd>\",\"usage_daily\":\"<usd>\",\"usage_weekly\":\"<usd>\",\"usage_monthly\":\"<usd>\",\"byok_usage\":0,\"byok_usage_daily\":0,\"byok_usage_weekly\":0,\"byok_usage_monthly\":0,\"is_free_tier\":false,\"expires_at\":null,\"creator_user_id\":\"<user_id>\",\"organization_id\":null,\"workspace_id\":\"<workspace_id>\",\"allowed_data_regions\":[\"global\"],\"free_model_daily_requests\":{\"used\":0,\"limit\":1000,\"remaining\":1000},\"rate_limit\":{\"requests\":-1,\"interval\":\"10s\",\"note\":\"This field is deprecated and safe to ignore.\"}}}"
+  }
+}

@@ -1,0 +1,262 @@
+--- turn 1/6 status=200 attempt=1 scenario=file-agent-flow seed=42 step=read
+{
+  "id": "chatcmpl-r67sLYINKZOcsxluQARALeRrbTo7l",
+  "object": "chat.completion",
+  "created": 0,
+  "model": "wwz-fast",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": null,
+        "tool_calls": [
+          {
+            "id": "call_file-agent-flow_read_0_12mndqf",
+            "type": "function",
+            "function": {
+              "name": "read_file",
+              "arguments": "{\"path\":\"/tmp/notes-8418.txt\"}"
+            }
+          }
+        ],
+        "refusal": null,
+        "annotations": []
+      },
+      "logprobs": null,
+      "finish_reason": "tool_calls"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 186,
+    "completion_tokens": 79,
+    "total_tokens": 265,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "audio_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 59,
+      "audio_tokens": 0,
+      "accepted_prediction_tokens": 0,
+      "rejected_prediction_tokens": 0
+    }
+  },
+  "service_tier": "default",
+  "system_fingerprint": "fp_3a7e128613"
+}
+--- turn 2/6 status=200 attempt=1 scenario=file-agent-flow seed=42 step=write
+{
+  "id": "chatcmpl-WMtwhKjxzTfoGJ9FAzgV9q0Ll6Nn3",
+  "object": "chat.completion",
+  "created": 0,
+  "model": "wwz-fast",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": null,
+        "tool_calls": [
+          {
+            "id": "call_file-agent-flow_write_0_19elotg",
+            "type": "function",
+            "function": {
+              "name": "write_file",
+              "arguments": "{\"content\":\"Labore consequat consequat nulla veniam deserunt consectetur anim dolor pariatur anim anim. Est labore laboris aliquip consequat id in minim duis nisi aliqua labore. In sint ad qui sit incididunt quis ex do veniam sint fugiat. Do ex in adipiscing magna enim eiusmod ad culpa in aliqua cupidatat. Officia in consequat incididunt esse incididunt qui aute ipsum fugiat minim aute. Reprehenderit aliquip ad occaecat magna commodo aute cillum adipiscing est eiusmod non. Pariatur anim proident sint cillum consectetur anim fugiat consequat ipsum elit qui. Ea non do sed aliquip sed fugiat mollit excepteur lorem proident commodo. Officia do mollit tempor quis cillum fugiat nostrud id non tempor amet. Proident minim ullamco non reprehenderit cupidatat laborum amet ipsum lorem et esse. Non tempor adipiscing ipsum ad magna eiusmod eiusmod tempor id et sed. Minim occaecat enim duis irure nisi magna culpa amet mollit ea labore. Consectetur do irure excepteur qui ea proident magna est incididunt nisi cupidatat. Adipiscing enim deserunt qui aliqua duis proident enim aliquip quis occaecat pariatur. Et veniam id anim labore et quis incididunt nulla incididunt esse id. Aliqua et laboris occaecat duis ad eiusmod tempor consequat nisi ut cupidatat. Dolore reprehenderit ea nulla quis adipiscing do aliquip nostrud consequat velit qui. Ea sunt commodo consequat minim deserunt et voluptate quis magna mollit laboris. Aute consequat amet nostrud dolor aute amet dolore sed amet sunt aute. Ut minim incididunt eiusmod adipiscing nulla elit sint consequat commodo esse tempor. Nulla ut aliquip quis voluptate incididunt nisi deserunt irure exercitation cupidatat culpa. Magna commodo deserunt mollit do velit voluptate veniam in magna aliquip et. Ex duis culpa cillum elit quis officia elit et excepteur occaecat ea. Elit dolor occaecat officia aliquip laboris ex mollit sit mollit esse ipsum. Irure commodo nostrud magna pariatur consequat pariatur laborum quis sint aute ipsum.\",\"path\":\"/tmp/notes-8418.txt\"}"
+            }
+          }
+        ],
+        "refusal": null,
+        "annotations": []
+      },
+      "logprobs": null,
+      "finish_reason": "tool_calls"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 246,
+    "completion_tokens": 455,
+    "total_tokens": 701,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "audio_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "audio_tokens": 0,
+      "accepted_prediction_tokens": 0,
+      "rejected_prediction_tokens": 0
+    }
+  },
+  "service_tier": "default",
+  "system_fingerprint": "fp_3a7e128613"
+}
+--- turn 3/6 status=200 attempt=1 scenario=file-agent-flow seed=42 step=edit
+{
+  "id": "chatcmpl-ebSSDtK73edvKLNiwAFoCmvUNDvSC",
+  "object": "chat.completion",
+  "created": 0,
+  "model": "wwz-fast",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": null,
+        "tool_calls": [
+          {
+            "id": "call_file-agent-flow_edit_0_1fnah5s",
+            "type": "function",
+            "function": {
+              "name": "edit_file",
+              "arguments": "{\"new_text\":\"oscar\",\"old_text\":\"sierra juliet\",\"path\":\"charlie yankee alpha\"}"
+            }
+          }
+        ],
+        "refusal": null,
+        "annotations": []
+      },
+      "logprobs": null,
+      "finish_reason": "tool_calls"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 741,
+    "completion_tokens": 37,
+    "total_tokens": 778,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "audio_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "audio_tokens": 0,
+      "accepted_prediction_tokens": 0,
+      "rejected_prediction_tokens": 0
+    }
+  },
+  "service_tier": "default",
+  "system_fingerprint": "fp_3a7e128613"
+}
+--- turn 4/6 status=200 attempt=1 scenario=file-agent-flow seed=42 step=delete
+{
+  "id": "chatcmpl-U7e6bReuLlChzt0cMo2ILcvh67VCq",
+  "object": "chat.completion",
+  "created": 0,
+  "model": "wwz-fast",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": null,
+        "tool_calls": [
+          {
+            "id": "call_file-agent-flow_delete_0_h5jnnk",
+            "type": "function",
+            "function": {
+              "name": "delete_file",
+              "arguments": "{\"path\":\"/tmp/notes-8418.txt\"}"
+            }
+          }
+        ],
+        "refusal": null,
+        "annotations": []
+      },
+      "logprobs": null,
+      "finish_reason": "tool_calls"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 818,
+    "completion_tokens": 20,
+    "total_tokens": 838,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "audio_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "audio_tokens": 0,
+      "accepted_prediction_tokens": 0,
+      "rejected_prediction_tokens": 0
+    }
+  },
+  "service_tier": "default",
+  "system_fingerprint": "fp_3a7e128613"
+}
+--- turn 5/6 status=200 attempt=1 scenario=file-agent-flow seed=42 step=done
+{
+  "id": "chatcmpl-oyPreY4T6T4fZXuRxE167GSdYbsh8",
+  "object": "chat.completion",
+  "created": 0,
+  "model": "wwz-fast",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "The schema matches the expected structure and all required fields are present. Performance under load depends mostly on connection reuse and payload size. This summary covers the main points without going into implementation detail. Everything requested has been completed and verified. The service responded within the expected time window. Caching the intermediate result avoids recomputing it on every",
+        "refusal": null,
+        "annotations": []
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 878,
+    "completion_tokens": 86,
+    "total_tokens": 964,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "audio_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "audio_tokens": 0,
+      "accepted_prediction_tokens": 0,
+      "rejected_prediction_tokens": 0
+    }
+  },
+  "service_tier": "default",
+  "system_fingerprint": "fp_3a7e128613"
+}
+--- turn 6/6 status=200 attempt=2 scenario=file-agent-flow seed=42 step=done
+{
+  "id": "chatcmpl-3M6pBivPGj4zgRdSYDez2SaXTDnlj",
+  "object": "chat.completion",
+  "created": 0,
+  "model": "wwz-fast",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "Each option has trade-offs in latency, cost and operational complexity. Based on the information provided, the most reasonable approach is to proceed step by step. A simple baseline is often the best starting point for comparison. The request has been processed and the result is summarised below. The configuration appears valid, although a few parameters could be tuned",
+        "refusal": null,
+        "annotations": []
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 976,
+    "completion_tokens": 86,
+    "total_tokens": 1062,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "audio_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "audio_tokens": 0,
+      "accepted_prediction_tokens": 0,
+      "rejected_prediction_tokens": 0
+    }
+  },
+  "service_tier": "default",
+  "system_fingerprint": "fp_3a7e128613"
+}

@@ -1,0 +1,24 @@
+{
+  "provider": "opencode",
+  "name": "chat",
+  "recorded_at": "2026-10-31",
+  "note": "sonda chat do wwz-drift (wwz-drift record)",
+  "request": {
+    "method": "POST",
+    "path": "/inference/go/openai/v1/chat/completions",
+    "headers": {
+      "authorization": "Bearer <key>",
+      "x-opencode-session": "<session>"
+    },
+    "body": "{\"model\":\"deepseek-v4.1-flash\",\"messages\":[{\"role\":\"user\",\"content\":\"Responda só: ok\"}],\"max_tokens\":256}"
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "content-type": "application/json",
+      "x-opencode-log-id": "<log_id>",
+      "x-zen-model": "deepseek-v4.1-flash"
+    },
+    "body": "{\"id\":\"<gw_id>\",\"object\":\"chat.completion\",\"created\":1793465703,\"model\":\"deepseek-v4.1-flash\",\"choices\":[{\"index\":0,\"finish_reason\":\"stop\",\"message\":{\"role\":\"assistant\",\"content\":\"ok\",\"reasoning_content\":\"We need answer only \\\"ok\\\". The user says \\\"Responda só: ok\\\" meaning answer only: ok. Need comply, in Portuguese. Just \\\"ok\\\".\"}}],\"usage\":{\"prompt_tokens\":35,\"completion_tokens\":36,\"total_tokens\":71,\"prompt_tokens_details\":{\"cached_tokens\":0},\"completion_tokens_details\":{\"reasoning_tokens\":33},\"cost\":0,\"opencode\":{\"billing_source\":\"go\",\"list_cost\":0.00002685,\"allowance\":0.00001611,\"tokens\":{\"input\":35,\"output\":36,\"reasoning\":33,\"cache_read\":0,\"cache_write_5m\":0,\"cache_write_1h\":0}}}}"
+  }
+}

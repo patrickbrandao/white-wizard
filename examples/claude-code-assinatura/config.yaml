@@ -1,0 +1,72 @@
+# claude-code-assinatura: assinatura do Claude Code (OAuth) no driver anthropic e
+# o modo estrito do cliente (spec 006, 16.2.1; spec 020; ADR 0074).
+#
+# Dois mounts do mesmo driver, com a mesma assinatura (oauth_key: assinante):
+#   /anthropic    a API real: aceita qualquer cliente (SDK, curl, Claude Code)
+#   /claude-code  client_verification: claude-code: só o Claude Code 2.1.308 (ou
+#                 o wwz-load claude-code, que manda os mesmos bytes) passa; o
+#                 resto recebe 403 forged_request_error
+#
+# Os tokens sk-ant-oat01-… são assinados com o valor da chave "assinante" e
+# representam essa chave: conta "assinatura", com a cota de assinatura em
+# quota_usd (5 h = 20 %, semana = 50 % de US$ 60 por mês). oauth_plan: max_20x
+# só muda o que o perfil OAuth diz (claude_max, default_claude_max_20x).
+#
+# Para o smoke caber em segundos, o preço de saída é inflado: cada resposta tem
+# 100 tokens fixos a US$ 15 000 por milhão (~US$ 1,50 por chamada), então ~8
+# chamadas esgotam a janela de 5 h (US$ 12) e o 429 sai com
+# anthropic-ratelimit-unified-status: rejected.
+server:
+  listen: ":8000"
+  auth: keys
+
+admin:
+  listen: ":9000"
+
+keys:
+  # O valor é o segredo dos tokens OAuth (chave de teste, sem valor fora do exemplo).
+  - { key: wwz-ex-claude-code-assinante, label: assinante, account: assinatura }
+
+accounts:
+  - id: assinatura
+    limits:
+      quota_usd: { monthly_usd: 60, rolling_5h_pct: 20, weekly_pct: 50 }
+
+drivers:
+  - name: anthropic
+    prefix: /anthropic
+    options: { oauth_key: assinante, oauth_plan: max_20x }
+  - name: anthropic
+    prefix: /claude-code
+    options: { oauth_key: assinante, oauth_plan: max_20x, client_verification: claude-code }
+
+# Os modelos padrão do Claude Code 2.1.308: claude-sonnet-5-5 com OAuth,
+# claude-opus-5-5 com API key; claude-haiku-5-5 nas consultas laterais.
+models:
+  - id: claude-sonnet-5-5
+    protocols: [anthropic]
+    latency: rapida
+    generation: fixa
+    pricing: { input_per_m: 1, output_per_m: 15000 } # inflado para o smoke
+  - id: claude-opus-5-5
+    protocols: [anthropic]
+    latency: rapida
+    generation: fixa
+    pricing: { input_per_m: 1, output_per_m: 15000 }
+  - id: claude-haiku-5-5
+    protocols: [anthropic]
+    latency: rapida
+    generation: fixa
+    pricing: { input_per_m: 1, output_per_m: 15000 }
+
+profiles:
+  latency:
+    rapida: { ttft: 5ms, itl: 1ms }
+  generation:
+    fixa:
+      mode: random
+      output_tokens: { dist: uniform, min: 100, max: 100 }
+      reasoning_tokens: { min: 0, max: 0, probability: 0 } # 100 tokens fixos por chamada
+
+logging:
+  level: info

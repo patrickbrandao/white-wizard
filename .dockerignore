@@ -1,0 +1,23 @@
+# Contexto mínimo do build (Dockerfile).
+.git
+.github
+.claude
+.grill
+tasks/
+tmp/
+bin/
+dist/
+node_modules/
+**/*.test
+*.out
+coverage.*
+.env
+.env.*
+*.pem
+*.key
+*.db
+*.sqlite*
+.DS_Store
+deploy/
+docs/
+specs/

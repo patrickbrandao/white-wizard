@@ -1,0 +1,26 @@
+{
+  "provider": "gemini",
+  "name": "model_one",
+  "recorded_at": "2026-10-31",
+  "note": "GET models/{id}",
+  "request": {
+    "method": "GET",
+    "path": "/v1beta/models/gemini-3.5-flash-lite",
+    "headers": {
+      "x-goog-api-key": "<key>"
+    },
+    "body": ""
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "content-type": "application/json; charset=UTF-8",
+      "server": "scaffolding on HTTPServer2",
+      "server-timing": "gfet4t7; dur=<ms>",
+      "x-content-type-options": "nosniff",
+      "x-frame-options": "SAMEORIGIN",
+      "x-xss-protection": "0"
+    },
+    "body": "{\n  \"name\": \"models/gemini-3.5-flash-lite\",\n  \"version\": \"3.5-flash-lite-07-2026\",\n  \"displayName\": \"Gemini 3.5 Flash Lite\",\n  \"description\": \"Gemini 3.5 Flash Lite\",\n  \"inputTokenLimit\": 1048576,\n  \"outputTokenLimit\": 65536,\n  \"supportedGenerationMethods\": [\n    \"generateContent\",\n    \"countTokens\",\n    \"createCachedContent\",\n    \"batchGenerateContent\"\n  ],\n  \"temperature\": 1,\n  \"topP\": 0.95,\n  \"topK\": 64,\n  \"maxTemperature\": 2,\n  \"thinking\": true\n}\n"
+  }
+}

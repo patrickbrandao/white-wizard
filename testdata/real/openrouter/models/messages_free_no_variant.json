@@ -1,0 +1,18 @@
+{
+  "provider": "openrouter",
+  "name": "messages_free_no_variant",
+  "recorded_at": "2026-10-31",
+  "request": {
+    "method": "POST",
+    "path": "/api/v1/messages",
+    "headers": {
+      "authorization": "Bearer <key>"
+    },
+    "body": "{\"model\": \"openai/gpt-4o-mini:free\", \"max_tokens\": 1, \"messages\": [{\"role\": \"user\", \"content\": \"hi\"}]}"
+  },
+  "response": {
+    "status": 404,
+    "content_type": "application/json",
+    "body": "{\"type\":\"error\",\"error\":{\"type\":\"not_found_error\",\"message\":\"This model is unavailable for free. The paid version is available now - use this slug instead: openai/gpt-4o-mini\",\"error_type\":\"not_found\"},\"request_id\":\"<request_id>\"}"
+  }
+}

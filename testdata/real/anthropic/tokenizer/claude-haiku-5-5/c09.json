@@ -1,0 +1,20 @@
+{
+  "provider": "anthropic",
+  "name": "c09",
+  "recorded_at": "2026-10-31",
+  "note": "claude-haiku-5-5, task 301",
+  "request": {
+    "method": "POST",
+    "path": "/v1/messages/count_tokens",
+    "headers": {
+      "x-api-key": "<key>",
+      "anthropic-version": "2023-06-01"
+    },
+    "body": "{\"model\": \"claude-haiku-5-5\", \"messages\": [{\"role\": \"user\", \"content\": \"See https://docs.example.com/v1/messages?model=claude-opus-5-5&stream=true#usage and README.md, CONTRIBUTING.md, LICENSE (MIT). ERROR: HTTP 429 TOO_MANY_REQUESTS; retry-after=30s.\"}]}"
+  },
+  "response": {
+    "status": 200,
+    "content_type": "application/json",
+    "body": "{\"input_tokens\":105}"
+  }
+}

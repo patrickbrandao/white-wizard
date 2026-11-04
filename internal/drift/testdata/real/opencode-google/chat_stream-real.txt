@@ -1,0 +1,33 @@
+HTTP 200
+Cache-Control: no-cache
+Cf-Placement: remote-IAD
+Cf-Ray: a533d2f2ab984399-EWR
+Connection: keep-alive
+Content-Type: text/event-stream
+Date: Sat, 31 Oct 2026 15:51:57 GMT
+Server: cloudflare
+X-Opencode-Log-Id: 01a192a9-13b1-7d67-983c-5d1e823b90eb
+X-Zen-Model: deepseek-v4.1-flash
+
+data: {"candidates":[{"content":{"role":"model","parts":[{"text":"We","thought":true}]},"index":0}],"modelVersion":"deepseek-v4.1-flash"}
+
+data: {"candidates":[{"content":{"role":"model","parts":[{"text":" need answer only","thought":true}]},"index":0}],"modelVersion":"deepseek-v4.1-flash"}
+
+data: {"candidates":[{"content":{"role":"model","parts":[{"text":" \"ok\". They","thought":true}]},"index":0}],"modelVersion":"deepseek-v4.1-flash"}
+
+data: {"candidates":[{"content":{"role":"model","parts":[{"text":" ask \"","thought":true}]},"index":0}],"modelVersion":"deepseek-v4.1-flash"}
+
+data: {"candidates":[{"content":{"role":"model","parts":[{"text":"Responda só:","thought":true}]},"index":0}],"modelVersion":"deepseek-v4.1-flash"}
+
+data: {"candidates":[{"content":{"role":"model","parts":[{"text":" ok\" means","thought":true}]},"index":0}],"modelVersion":"deepseek-v4.1-flash"}
+
+data: {"candidates":[{"content":{"role":"model","parts":[{"text":" respond only:","thought":true}]},"index":0}],"modelVersion":"deepseek-v4.1-flash"}
+
+data: {"candidates":[{"content":{"role":"model","parts":[{"text":" ok. Need output","thought":true}]},"index":0}],"modelVersion":"deepseek-v4.1-flash"}
+
+data: {"candidates":[{"content":{"role":"model","parts":[{"text":" ok.","thought":true}]},"index":0}],"modelVersion":"deepseek-v4.1-flash"}
+
+data: {"candidates":[{"content":{"role":"model","parts":[{"text":"ok"}]},"index":0}],"modelVersion":"deepseek-v4.1-flash"}
+
+data: {"candidates":[{"content":{"role":"model","parts":[]},"finishReason":"STOP","index":0}],"usageMetadata":{"promptTokenCount":35,"candidatesTokenCount":3,"totalTokenCount":64,"thoughtsTokenCount":26,"cost":0,"opencode":{"billing_source":"go","list_cost":0.00002265,"allowance":0.00001359,"tokens":{"input":35,"output":29,"reasoning":26,"cache_read":0,"cache_write_5m":0,"cache_write_1h":0}}},"modelVersion":"deepseek-v4.1-flash"}
+

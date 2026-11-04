@@ -1,0 +1,80 @@
+# benchmark-vazao-maxima (spec 019, ADR 0016): wwz sem latência nem limites e o
+# wwz-load do perfil `load` (só roda sob demanda).
+#   EX_PORT=18115 docker compose up -d --wait                 # só o wwz
+#   docker compose run --rm -T wwz-load                       # 10 s de carga, JSON no stdout
+#   WWZ_LOAD_DURATION=30s WWZ_LOAD_CONCURRENCY=256 docker compose run --rm -T wwz-load
+#   docker compose down -v
+name: wwz-ex-benchmark-vazao-maxima
+
+x-hardening: &hardening
+  read_only: true
+  tmpfs:
+    - /run
+    - /tmp
+  security_opt:
+    - no-new-privileges:true
+  cap_drop: [ALL]
+
+services:
+  wwz:
+    <<: *hardening
+    image: ${WWZ_IMAGE:-white-wizard:dev}
+    command: ["serve"]
+    environment:
+      WWZ_CONFIG: /etc/wwz/config.yaml
+      WWZ_ADMIN_TOKEN: wwz-admin-example # token de teste, sem valor fora do exemplo
+    volumes:
+      - ./config.yaml:/etc/wwz/config.yaml:ro
+    ports:
+      - "127.0.0.1:${EX_PORT:-18115}:8000"
+    ulimits:
+      nofile: { soft: 1048576, hard: 1048576 }
+    deploy:
+      resources:
+        limits:
+          cpus: "${WWZ_CPUS:-2}"
+          memory: "${WWZ_MEMORY:-512m}"
+    stop_grace_period: 10s
+    healthcheck:
+      test: ["CMD", "/usr/local/bin/healthcheck", "http://127.0.0.1:9000/health/ready"]
+      interval: 3s
+      timeout: 3s
+      start_period: 3s
+      retries: 10
+
+  # Perfil de vazão: malha fechada (N conexões, cada uma manda a próxima assim
+  # que a anterior termina), sem stream e com resposta de 16 tokens.
+  wwz-load:
+    <<: *hardening
+    profiles: [load]
+    image: ${WWZ_LOAD_IMAGE:-white-wizard-load:dev}
+    entrypoint: ["/usr/local/bin/wwz-load", "run", "--target", "http://wwz:8000", "--admin", "http://wwz:9000"]
+    command:
+      - "--concurrency"
+      - "${WWZ_LOAD_CONCURRENCY:-64}"
+      - "--duration"
+      - "${WWZ_LOAD_DURATION:-10s}"
+      - "--warmup"
+      - "${WWZ_LOAD_WARMUP:-1s}"
+      - "--stream=false"
+      - "--max-tokens"
+      - "16"
+      - "--seed"
+      - "20260101"
+      - "--output"
+      - "json"
+      - "--progress"
+      - "0"
+    environment:
+      WWZ_LOAD_KEY: wwz-key-01
+      WWZ_ADMIN_TOKEN: wwz-admin-example
+    depends_on:
+      wwz:
+        condition: service_healthy
+    ulimits:
+      nofile: { soft: 1048576, hard: 1048576 }
+    deploy:
+      resources:
+        limits:
+          cpus: "${WWZ_LOAD_CPUS:-2}"
+          memory: "${WWZ_LOAD_MEMORY:-256m}"

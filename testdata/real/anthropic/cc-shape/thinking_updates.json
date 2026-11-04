@@ -1,0 +1,38 @@
+{
+  "provider": "anthropic",
+  "name": "thinking_updates",
+  "recorded_at": "2026-11-03",
+  "note": "display updates (beta thinking-display-updates-2026-08-18): com raciocínio curto, igual ao omitted",
+  "request": {
+    "method": "POST",
+    "path": "/v1/messages",
+    "headers": {
+      "x-api-key": "<key>",
+      "anthropic-version": "2023-06-01",
+      "anthropic-beta": "thinking-display-updates-2026-08-18"
+    },
+    "body": "{\"model\": \"claude-haiku-5-5\", \"max_tokens\": 1500, \"messages\": [{\"role\": \"user\", \"content\": \"What is 37*43? Reply with the number only.\"}], \"thinking\": {\"type\": \"adaptive\", \"display\": \"updates\"}, \"output_config\": {\"effort\": \"high\"}, \"stream\": false}"
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "anthropic-organization-id": "<organization_id>",
+      "anthropic-ratelimit-input-tokens-limit": "<int>",
+      "anthropic-ratelimit-input-tokens-remaining": "<int>",
+      "anthropic-ratelimit-input-tokens-reset": "<rfc3339>",
+      "anthropic-ratelimit-output-tokens-limit": "<int>",
+      "anthropic-ratelimit-output-tokens-remaining": "<int>",
+      "anthropic-ratelimit-output-tokens-reset": "<rfc3339>",
+      "anthropic-ratelimit-requests-limit": "<int>",
+      "anthropic-ratelimit-requests-remaining": "<int>",
+      "anthropic-ratelimit-requests-reset": "<rfc3339>",
+      "anthropic-ratelimit-tokens-limit": "<int>",
+      "anthropic-ratelimit-tokens-remaining": "<int>",
+      "anthropic-ratelimit-tokens-reset": "<rfc3339>",
+      "anthropic-workspace-id": "<workspace_id>",
+      "content-type": "application/json",
+      "request-id": "<request_id>"
+    },
+    "body": "{\"model\":\"claude-haiku-5-5\",\"id\":\"<msg_id>\",\"type\":\"message\",\"role\":\"assistant\",\"content\":[{\"type\":\"thinking\",\"thinking\":\"\",\"signature\":\"<signature>\"},{\"type\":\"text\",\"text\":\"1591\"}],\"container\":null,\"stop_reason\":\"end_turn\",\"stop_sequence\":null,\"stop_details\":null,\"usage\":{\"input_tokens\":23,\"cache_creation_input_tokens\":0,\"cache_read_input_tokens\":0,\"cache_creation\":{\"ephemeral_5m_input_tokens\":0,\"ephemeral_1h_input_tokens\":0},\"output_tokens\":33,\"output_tokens_details\":{\"thinking_tokens\":29},\"service_tier\":\"standard\",\"inference_geo\":\"global\",\"speed\":\"standard\"},\"diagnostics\":null}"
+  }
+}

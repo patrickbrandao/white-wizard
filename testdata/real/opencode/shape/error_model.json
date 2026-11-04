@@ -1,0 +1,23 @@
+{
+  "provider": "opencode",
+  "name": "error_model",
+  "recorded_at": "2026-10-31",
+  "note": "sonda error_model do wwz-drift (wwz-drift record)",
+  "request": {
+    "method": "POST",
+    "path": "/inference/go/openai/v1/chat/completions",
+    "headers": {
+      "authorization": "Bearer <key>",
+      "x-opencode-session": "<session>"
+    },
+    "body": "{\"model\":\"wwz-drift-modelo-inexistente\",\"messages\":[{\"role\":\"user\",\"content\":\"Responda só: ok\"}],\"max_tokens\":256}"
+  },
+  "response": {
+    "status": 400,
+    "headers": {
+      "content-type": "application/json",
+      "x-opencode-log-id": "<log_id>"
+    },
+    "body": "{\"error\":{\"type\":\"server_error\",\"message\":\"Upstream request failed: Model is unavailable.\"}}"
+  }
+}

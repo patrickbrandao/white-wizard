@@ -1,0 +1,19 @@
+{
+  "provider": "opencode",
+  "name": "inference_go_chat_get_nokey",
+  "recorded_at": "2026-10-31",
+  "note": "",
+  "request": {
+    "method": "GET",
+    "path": "/inference/go/v1/chat/completions",
+    "headers": {},
+    "body": null
+  },
+  "response": {
+    "status": 404,
+    "headers": {
+      "x-opencode-log-id": "<log_id>"
+    },
+    "body": ""
+  }
+}

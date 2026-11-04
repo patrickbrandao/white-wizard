@@ -1,0 +1,26 @@
+{
+  "provider": "gemini",
+  "name": "error_json",
+  "recorded_at": "2026-10-31",
+  "note": "erro ou ordem de checagem",
+  "request": {
+    "method": "POST",
+    "path": "/v1beta/models/gemini-3.5-flash-lite:generateContent",
+    "headers": {
+      "x-goog-api-key": "<key>"
+    },
+    "body": "{\"contents\": ["
+  },
+  "response": {
+    "status": 400,
+    "headers": {
+      "content-type": "application/json; charset=UTF-8",
+      "server": "scaffolding on HTTPServer2",
+      "server-timing": "gfet4t7; dur=<ms>",
+      "x-content-type-options": "nosniff",
+      "x-frame-options": "SAMEORIGIN",
+      "x-xss-protection": "0"
+    },
+    "body": "{\n  \"error\": {\n    \"code\": 400,\n    \"message\": \"Invalid JSON payload received. Unexpected end of string. Expected a value or ] within an array.\\n\\n^\",\n    \"status\": \"INVALID_ARGUMENT\"\n  }\n}\n"
+  }
+}

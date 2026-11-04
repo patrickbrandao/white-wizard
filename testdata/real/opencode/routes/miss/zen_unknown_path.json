@@ -1,0 +1,19 @@
+{
+  "provider": "opencode",
+  "name": "zen_unknown_path",
+  "recorded_at": "2026-10-31",
+  "note": "rota desconhecida sob /zen: 404 sem corpo e sem x-opencode-log-id, antes da chave",
+  "request": {
+    "method": "GET",
+    "path": "/zen/v1/nope",
+    "headers": {
+      "authorization": "Bearer <key>"
+    },
+    "body": null
+  },
+  "response": {
+    "status": 404,
+    "headers": {},
+    "body": ""
+  }
+}

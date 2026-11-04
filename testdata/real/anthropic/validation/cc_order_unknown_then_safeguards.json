@@ -1,0 +1,19 @@
+{
+  "provider": "anthropic",
+  "name": "cc_order_unknown_then_safeguards",
+  "recorded_at": "2026-11-03",
+  "request": {
+    "method": "POST",
+    "path": "/v1/messages",
+    "headers": {
+      "x-api-key": "<key>",
+      "anthropic-version": "2023-06-01"
+    },
+    "body": "{\"model\": \"claude-haiku-5-5\", \"max_tokens\": 1, \"foo\": 1, \"messages\": [{\"role\": \"user\", \"content\": \"x\"}], \"safeguards\": []}"
+  },
+  "response": {
+    "status": 400,
+    "content_type": "application/json",
+    "body": "{\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"safeguards: Extra inputs are not permitted\"},\"request_id\":\"<request_id>\"}"
+  }
+}

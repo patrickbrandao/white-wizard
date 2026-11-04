@@ -1,0 +1,48 @@
+# benchmark-vazao-maxima: configuração para medir o teto de req/s do wwz ou do
+# roteador na frente dele (spec 019). Latência zero, nenhum limite, nenhum erro,
+# resposta mínima e log quase mudo: o que sobra de tempo por requisição é o do
+# servidor, não o do modelo simulado.
+server:
+  listen: ":8000"
+  auth: keys
+  seed: 20260101
+  reuseport: true # um listener por CPU
+  concurrency: 262144
+  max_rps: 0 # sem proteção global
+
+admin:
+  listen: ":9000"
+
+keys:
+  # Sem limits: nenhum rpm/tpm/concorrência por chave (0 = sem limite).
+  - key: wwz-key-01
+    label: carga
+
+drivers:
+  - name: openai
+  - name: anthropic
+
+models:
+  - id: wwz-fast
+    protocols: [openai, anthropic]
+    latency: zero
+    errors: none
+    generation: minima
+
+profiles:
+  latency:
+    zero: { ttft: 0ms, itl: 0ms } # sem fila, sem TTFT, sem ITL
+  errors:
+    none: { rate: 0 }
+  generation:
+    minima:
+      mode: random
+      output_tokens: { dist: fixed, value: 16 }
+      reasoning_tokens: { min: 0, max: 0, probability: 0 }
+      tool_calls: { probability: 0 }
+
+metrics:
+  enabled: false # menos trabalho por requisição
+
+logging:
+  level: error # só falhas; nenhuma linha por requisição

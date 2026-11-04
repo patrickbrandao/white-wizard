@@ -1,0 +1,24 @@
+{
+  "provider": "opencode",
+  "name": "gen_thinking",
+  "recorded_at": "2026-10-31",
+  "note": "rota Gemini do gateway (task 241)",
+  "request": {
+    "method": "POST",
+    "path": "/inference/go/google/v1beta/models/gemini-4-argon:generateContent",
+    "headers": {
+      "x-goog-api-key": "<key>",
+      "x-opencode-session": "<session>"
+    },
+    "body": "{\"contents\":[{\"role\":\"user\",\"parts\":[{\"text\":\"Quanto é 17*3? Responda só o número.\"}]}],\"generationConfig\":{\"maxOutputTokens\":256,\"thinkingConfig\":{\"thinkingBudget\":128,\"includeThoughts\":true}}}"
+  },
+  "response": {
+    "status": 400,
+    "headers": {
+      "content-type": "application/json",
+      "x-opencode-log-id": "<log_id>",
+      "x-zen-model": "gemini-4-argon"
+    },
+    "body": "{\"error\":{\"code\":400,\"status\":\"INVALID_ARGUMENT\",\"message\":\"Upstream request failed: [400] Thinking budget is not supported for this model. Use thinking level instead. See https://ai.google.dev/gemini-api/docs/thinking for details.\"}}"
+  }
+}

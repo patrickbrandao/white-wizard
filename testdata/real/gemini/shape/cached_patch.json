@@ -1,0 +1,26 @@
+{
+  "provider": "gemini",
+  "name": "cached_patch",
+  "recorded_at": "2026-10-31",
+  "note": "PATCH cachedContents/{id}?updateMask=ttl",
+  "request": {
+    "method": "PATCH",
+    "path": "/v1beta/cachedContents/<cache_id>?updateMask=ttl",
+    "headers": {
+      "x-goog-api-key": "<key>"
+    },
+    "body": "{\"ttl\": \"120s\"}"
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "content-type": "application/json; charset=UTF-8",
+      "server": "scaffolding on HTTPServer2",
+      "server-timing": "gfet4t7; dur=<ms>",
+      "x-content-type-options": "nosniff",
+      "x-frame-options": "SAMEORIGIN",
+      "x-xss-protection": "0"
+    },
+    "body": "{\n  \"name\": \"cachedContents/<cache_id>\",\n  \"model\": \"models/gemini-3.5-flash-lite\",\n  \"createTime\": \"<time>\",\n  \"updateTime\": \"<time>\",\n  \"expireTime\": \"<time>\",\n  \"displayName\": \"wwz-probe\",\n  \"usageMetadata\": {\n    \"totalTokenCount\": 3281\n  }\n}\n"
+  }
+}

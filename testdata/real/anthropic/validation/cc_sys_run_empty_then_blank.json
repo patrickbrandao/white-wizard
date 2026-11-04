@@ -1,0 +1,20 @@
+{
+  "provider": "anthropic",
+  "name": "cc_sys_run_empty_then_blank",
+  "recorded_at": "2026-11-03",
+  "note": "claude-haiku-5-5, task 453",
+  "request": {
+    "method": "POST",
+    "path": "/v1/messages",
+    "headers": {
+      "x-api-key": "<key>",
+      "anthropic-version": "2023-06-01"
+    },
+    "body": "{\"model\": \"claude-haiku-5-5\", \"max_tokens\": 1, \"messages\": [{\"role\": \"user\", \"content\": \"x\"}, {\"role\": \"system\", \"content\": \"\"}, {\"role\": \"system\", \"content\": [{\"type\": \"text\", \"text\": \" \"}]}, {\"role\": \"assistant\", \"content\": \"ok\"}]}"
+  },
+  "response": {
+    "status": 400,
+    "content_type": "application/json",
+    "body": "{\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"messages.1: system content must contain at least one block\"},\"request_id\":\"<request_id>\"}"
+  }
+}

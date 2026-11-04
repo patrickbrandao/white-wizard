@@ -1,0 +1,23 @@
+{
+  "provider": "opencode",
+  "name": "zen_chat_path",
+  "recorded_at": "2026-10-31",
+  "note": "rota legada /zen/go",
+  "request": {
+    "method": "POST",
+    "path": "/zen/go/v1/chat/completions",
+    "headers": {
+      "authorization": "Bearer sk-invalid-wwz-drift",
+      "x-opencode-session": "<session>"
+    },
+    "body": "{\"model\": \"deepseek-v4.1-flash\", \"messages\": [{\"role\": \"user\", \"content\": \"Responda só: ok\"}], \"max_tokens\": 16}"
+  },
+  "response": {
+    "status": 401,
+    "headers": {
+      "content-type": "application/json",
+      "x-opencode-log-id": "<log_id>"
+    },
+    "body": "{\"error\":{\"type\":\"server_error\",\"message\":\"Upstream request failed: Invalid credential\"}}"
+  }
+}

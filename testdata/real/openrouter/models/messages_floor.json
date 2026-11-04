@@ -1,0 +1,19 @@
+{
+  "provider": "openrouter",
+  "name": "messages_floor",
+  "recorded_at": "2026-10-31",
+  "request": {
+    "method": "POST",
+    "path": "/api/v1/messages",
+    "headers": {
+      "authorization": "Bearer <key>"
+    },
+    "body": "{\"model\": \"anthropic/claude-haiku-4.5:floor\", \"max_tokens\": 1, \"messages\": [{\"role\": \"user\", \"content\": \"hi\"}]}"
+  },
+  "response": {
+    "status": 200,
+    "content_type": "application/json",
+    "body": null,
+    "model": "anthropic/claude-haiku-4.5"
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "provider": "anthropic",
+  "name": "context_management_stream",
+  "recorded_at": "2026-11-03",
+  "note": "context_management no stream: null em message_start, applied_edits [] depois do usage de message_delta",
+  "request": {
+    "method": "POST",
+    "path": "/v1/messages",
+    "headers": {
+      "x-api-key": "<key>",
+      "anthropic-version": "2023-06-01",
+      "anthropic-beta": "context-management-2025-06-27"
+    },
+    "body": "{\"model\": \"claude-haiku-5-5\", \"max_tokens\": 1500, \"messages\": [{\"role\": \"user\", \"content\": \"What is 37*43? Reply with the number only.\"}], \"thinking\": {\"type\": \"adaptive\", \"display\": \"omitted\"}, \"output_config\": {\"effort\": \"high\"}, \"stream\": true, \"context_management\": {\"edits\": [{\"type\": \"clear_thinking_20251015\", \"keep\": \"all\"}]}}"
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "anthropic-organization-id": "<organization_id>",
+      "anthropic-ratelimit-input-tokens-limit": "<int>",
+      "anthropic-ratelimit-input-tokens-remaining": "<int>",
+      "anthropic-ratelimit-input-tokens-reset": "<rfc3339>",
+      "anthropic-ratelimit-output-tokens-limit": "<int>",
+      "anthropic-ratelimit-output-tokens-remaining": "<int>",
+      "anthropic-ratelimit-output-tokens-reset": "<rfc3339>",
+      "anthropic-ratelimit-requests-limit": "<int>",
+      "anthropic-ratelimit-requests-remaining": "<int>",
+      "anthropic-ratelimit-requests-reset": "<rfc3339>",
+      "anthropic-ratelimit-tokens-limit": "<int>",
+      "anthropic-ratelimit-tokens-remaining": "<int>",
+      "anthropic-ratelimit-tokens-reset": "<rfc3339>",
+      "anthropic-workspace-id": "<workspace_id>",
+      "cache-control": "no-cache",
+      "content-type": "text/event-stream; charset=utf-8",
+      "request-id": "<request_id>"
+    },
+    "body": "event: message_start\ndata: {\"type\":\"message_start\",\"message\":{\"model\":\"claude-haiku-5-5\",\"id\":\"<msg_id>\",\"type\":\"message\",\"role\":\"assistant\",\"content\":[],\"container\":null,\"stop_reason\":null,\"stop_sequence\":null,\"stop_details\":null,\"usage\":{\"input_tokens\":23,\"cache_creation_input_tokens\":0,\"cache_read_input_tokens\":0,\"cache_creation\":{\"ephemeral_5m_input_tokens\":0,\"ephemeral_1h_input_tokens\":0},\"output_tokens\":7,\"service_tier\":\"standard\",\"inference_geo\":\"global\",\"speed\":\"standard\"},\"diagnostics\":null,\"context_management\":null}}\n\nevent: content_block_start\ndata: {\"type\":\"content_block_start\",\"index\":0,\"content_block\":{\"type\":\"thinking\",\"thinking\":\"\",\"signature\":\"\"}}\n\nevent: ping\ndata: {\"type\": \"ping\"}\n\nevent: content_block_delta\ndata: {\"type\":\"content_block_delta\",\"index\":0,\"delta\":{\"type\":\"thinking_delta\",\"thinking\":\"\"}}\n\nevent: content_block_delta\ndata: {\"type\":\"content_block_delta\",\"index\":0,\"delta\":{\"type\":\"signature_delta\",\"signature\":\"<signature>\"}}\n\nevent: content_block_stop\ndata: {\"type\":\"content_block_stop\",\"index\":0}\n\nevent: content_block_start\ndata: {\"type\":\"content_block_start\",\"index\":1,\"content_block\":{\"type\":\"text\",\"text\":\"\"}}\n\nevent: content_block_delta\ndata: {\"type\":\"content_block_delta\",\"index\":1,\"delta\":{\"type\":\"text_delta\",\"text\":\"1591\"}}\n\nevent: content_block_stop\ndata: {\"type\":\"content_block_stop\",\"index\":1}\n\nevent: message_delta\ndata: {\"type\":\"message_delta\",\"delta\":{\"stop_reason\":\"end_turn\",\"stop_sequence\":null,\"stop_details\":null,\"container\":null},\"usage\":{\"input_tokens\":23,\"cache_creation_input_tokens\":0,\"cache_read_input_tokens\":0,\"output_tokens\":33,\"output_tokens_details\":{\"thinking_tokens\":29}},\"context_management\":{\"applied_edits\":[]}}\n\nevent: message_stop\ndata: {\"type\":\"message_stop\"}\n\n"
+  }
+}

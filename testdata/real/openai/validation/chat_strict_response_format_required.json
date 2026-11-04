@@ -1,0 +1,18 @@
+{
+  "provider": "openai",
+  "name": "chat_strict_response_format_required",
+  "recorded_at": "2026-10-31",
+  "request": {
+    "method": "POST",
+    "path": "/v1/chat/completions",
+    "headers": {
+      "authorization": "Bearer <key>"
+    },
+    "body": "{\"model\": \"gpt-4o-mini\", \"messages\": [{\"role\": \"user\", \"content\": \"hi\"}], \"response_format\": {\"type\": \"json_schema\", \"json_schema\": {\"name\": \"out\", \"strict\": true, \"schema\": {\"type\": \"object\", \"properties\": {\"a\": {\"type\": \"string\"}, \"b\": {\"type\": \"string\"}}, \"required\": [\"a\"], \"additionalProperties\": false}}}}"
+  },
+  "response": {
+    "status": 400,
+    "content_type": "application/json",
+    "body": "{\n  \"error\": {\n    \"message\": \"Invalid schema for response_format 'out': In context=(), 'required' is required to be supplied and to be an array including every key in properties. Missing 'b'.\",\n    \"type\": \"invalid_request_error\",\n    \"param\": \"response_format\",\n    \"code\": null\n  }\n}"
+  }
+}

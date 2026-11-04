@@ -1,0 +1,11 @@
+HTTP 200
+Cf-Placement: remote-IAD
+Cf-Ray: a533d2e9edf74399-EWR
+Connection: keep-alive
+Content-Type: application/json
+Date: Sat, 31 Oct 2026 15:51:56 GMT
+Server: cloudflare
+X-Opencode-Log-Id: 01a192a9-0fa8-7e96-b660-125704052399
+X-Zen-Model: deepseek-v4.1-flash
+
+{"candidates":[{"content":{"role":"model","parts":[{"text":"We need answer only: ok. Need comply.","thought":true},{"text":"ok"}]},"finishReason":"STOP","index":0}],"usageMetadata":{"promptTokenCount":35,"candidatesTokenCount":3,"totalTokenCount":48,"thoughtsTokenCount":10,"cost":0,"opencode":{"billing_source":"go","list_cost":0.00001305,"allowance":0.00000783,"tokens":{"input":35,"output":13,"reasoning":10,"cache_read":0,"cache_write_5m":0,"cache_write_1h":0}}},"modelVersion":"deepseek-v4.1-flash"}

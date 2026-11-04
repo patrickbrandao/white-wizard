@@ -1,0 +1,27 @@
+{
+  "provider": "gemini",
+  "name": "thoughts_stream",
+  "recorded_at": "2026-10-31",
+  "note": "thinkingLevel HIGH com includeThoughts, stream",
+  "request": {
+    "method": "POST",
+    "path": "/v1beta/models/gemini-3.5-flash-lite:streamGenerateContent?alt=sse",
+    "headers": {
+      "x-goog-api-key": "<key>"
+    },
+    "body": "{\"contents\":[{\"role\":\"user\",\"parts\":[{\"text\":\"Um trem sai às 9h a 60 km/h e outro às 10h a 90 km/h no mesmo sentido. Quando o segundo alcança o primeiro? Responda só o horário.\"}]}],\"generationConfig\":{\"maxOutputTokens\":600,\"thinkingConfig\":{\"includeThoughts\":true,\"thinkingLevel\":\"HIGH\"}}}"
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "content-disposition": "attachment",
+      "content-type": "text/event-stream",
+      "server": "scaffolding on HTTPServer2",
+      "server-timing": "gfet4t7; dur=<ms>",
+      "x-content-type-options": "nosniff",
+      "x-frame-options": "SAMEORIGIN",
+      "x-xss-protection": "0"
+    },
+    "body": "data: {\"candidates\": [{\"content\": {\"parts\": [{\"text\": \"**Defining the Scenario**\\n\\nI'm now zeroing in on the core of the problem. It's clear I need to calculate the precise moment a faster train overtakes a slower one. The departure times and speeds of the trains are the key inputs. I'm focusing on defining the variables and their relationships.\\n\\n\\n\",\"thought\": true}],\"role\": \"model\"},\"index\": 0}],\"usageMetadata\": {\"promptTokenCount\": 48,\"totalTokenCount\": 399,\"promptTokensDetails\": [{\"modality\": \"TEXT\",\"tokenCount\": 48}],\"thoughtsTokenCount\": 351,\"serviceTier\": \"standard\"},\"modelVersion\": \"gemini-3.5-flash-lite\",\"responseId\": \"<response_id>\"}\r\n\r\ndata: {\"candidates\": [{\"content\": {\"parts\": [{\"text\": \"12h\"}],\"role\": \"model\"},\"index\": 0}],\"usageMetadata\": {\"promptTokenCount\": 48,\"candidatesTokenCount\": 3,\"totalTokenCount\": 489,\"promptTokensDetails\": [{\"modality\": \"TEXT\",\"tokenCount\": 48}],\"thoughtsTokenCount\": 438,\"serviceTier\": \"standard\"},\"modelVersion\": \"gemini-3.5-flash-lite\",\"responseId\": \"<response_id>\"}\r\n\r\ndata: {\"candidates\": [{\"content\": {\"parts\": [{\"text\": \"\",\"thoughtSignature\": \"<signature>\"}],\"role\": \"model\"},\"finishReason\": \"STOP\",\"index\": 0}],\"usageMetadata\": {\"promptTokenCount\": 48,\"candidatesTokenCount\": 3,\"totalTokenCount\": 489,\"promptTokensDetails\": [{\"modality\": \"TEXT\",\"tokenCount\": 48}],\"thoughtsTokenCount\": 438,\"serviceTier\": \"standard\"},\"modelVersion\": \"gemini-3.5-flash-lite\",\"responseId\": \"<response_id>\"}\r\n\r\n"
+  }
+}

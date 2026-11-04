@@ -1,0 +1,20 @@
+{
+  "name": "outside_v1_badkey",
+  "note": "",
+  "provider": "anthropic",
+  "recorded_at": "2026-10-31",
+  "request": {
+    "body": null,
+    "headers": {
+      "anthropic-version": "2023-06-01",
+      "x-api-key": "sk-ant-api03-wwz-invalid"
+    },
+    "method": "GET",
+    "path": "/nope"
+  },
+  "response": {
+    "body": "",
+    "headers": {},
+    "status": 404
+  }
+}

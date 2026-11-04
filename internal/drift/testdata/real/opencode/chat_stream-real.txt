@@ -1,0 +1,29 @@
+HTTP 200
+Cache-Control: no-cache
+Cf-Placement: remote-IAD
+Cf-Ray: a532af730ec4dcd7-MIA
+Connection: keep-alive
+Content-Type: text/event-stream
+Date: Sat, 31 Oct 2026 12:32:57 GMT
+Server: cloudflare
+X-Opencode-Log-Id: 01a191f2-e3fc-7043-a1de-44101bb539f2
+X-Zen-Model: deepseek-v4.1-flash
+
+data: {"id":"gw-7555da408f86-350e0e","object":"chat.completion.chunk","created":1793449977,"model":"deepseek-v4.1-flash","choices":[{"index":0,"finish_reason":null,"delta":{"role":"assistant","content":""}}]}
+
+data: {"id":"gw-7555da408f86-350e0e","object":"chat.completion.chunk","created":1793449977,"model":"deepseek-v4.1-flash","choices":[{"index":0,"finish_reason":null,"delta":{"reasoning_content":"We"}}]}
+
+data: {"id":"gw-7555da408f86-350e0e","object":"chat.completion.chunk","created":1793449977,"model":"deepseek-v4.1-flash","choices":[{"index":0,"finish_reason":null,"delta":{"reasoning_content":" need answer only:"}}]}
+
+data: {"id":"gw-7555da408f86-350e0e","object":"chat.completion.chunk","created":1793449977,"model":"deepseek-v4.1-flash","choices":[{"index":0,"finish_reason":null,"delta":{"reasoning_content":" \""}}]}
+
+data: {"id":"gw-7555da408f86-350e0e","object":"chat.completion.chunk","created":1793449977,"model":"deepseek-v4.1-flash","choices":[{"index":0,"finish_reason":null,"delta":{"reasoning_content":"ok\". Need"}}]}
+
+data: {"id":"gw-7555da408f86-350e0e","object":"chat.completion.chunk","created":1793449977,"model":"deepseek-v4.1-flash","choices":[{"index":0,"finish_reason":null,"delta":{"reasoning_content":" comply."}}]}
+
+data: {"id":"gw-7555da408f86-350e0e","object":"chat.completion.chunk","created":1793449977,"model":"deepseek-v4.1-flash","choices":[{"index":0,"finish_reason":null,"delta":{"content":"ok"}}]}
+
+data: {"id":"gw-7555da408f86-350e0e","object":"chat.completion.chunk","created":1793449977,"model":"deepseek-v4.1-flash","choices":[{"index":0,"finish_reason":"stop","delta":{}}],"usage":{"prompt_tokens":35,"completion_tokens":14,"total_tokens":49,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":11},"cost":0,"opencode":{"billing_source":"go","list_cost":0.00001365,"allowance":0.00000819,"tokens":{"input":35,"output":14,"reasoning":11,"cache_read":0,"cache_write_5m":0,"cache_write_1h":0}}}}
+
+data: [DONE]
+

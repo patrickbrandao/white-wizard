@@ -1,0 +1,19 @@
+{
+  "provider": "anthropic",
+  "name": "a_max_tokens_strnum",
+  "recorded_at": "2026-10-31",
+  "request": {
+    "method": "POST",
+    "path": "/v1/messages",
+    "headers": {
+      "x-api-key": "<key>",
+      "anthropic-version": "2023-06-01"
+    },
+    "body": "{\"model\": \"claude-haiku-4-5\", \"max_tokens\": \"5\", \"messages\": [{\"role\": \"user\", \"content\": \"hi\"}]}"
+  },
+  "response": {
+    "status": 400,
+    "content_type": "application/json",
+    "body": "{\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"max_tokens: Input should be a valid integer\"},\"request_id\":\"<request_id>\"}"
+  }
+}

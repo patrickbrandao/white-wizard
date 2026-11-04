@@ -1,0 +1,18 @@
+{
+  "provider": "openrouter",
+  "name": "badkey_wellformed_invalid_json",
+  "recorded_at": "2026-10-31",
+  "request": {
+    "method": "POST",
+    "path": "/api/v1/chat/completions",
+    "headers": {
+      "authorization": "Bearer sk-or-v1-0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    "body": "{\"model\": \"openai/gpt-4o-mini\", "
+  },
+  "response": {
+    "status": 401,
+    "content_type": "application/json",
+    "body": "{\"error\":{\"message\":\"User not found.\",\"code\":401}}"
+  }
+}

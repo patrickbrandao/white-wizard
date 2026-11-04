@@ -1,0 +1,20 @@
+{
+  "provider": "anthropic",
+  "name": "c00",
+  "recorded_at": "2026-10-31",
+  "note": "claude-opus-5-5, task 301",
+  "request": {
+    "method": "POST",
+    "path": "/v1/messages/count_tokens",
+    "headers": {
+      "x-api-key": "<key>",
+      "anthropic-version": "2023-06-01"
+    },
+    "body": "{\"model\": \"claude-opus-5-5\", \"messages\": [{\"role\": \"user\", \"content\": \"O White Wizard é um servidor que finge ser um provedor de modelos de linguagem para testar roteadores sob carga. Ele devolve respostas inventadas no formato exato de cada provedor e simula latência, filas, erros, limites e bloqueios, sem GPU e sem custo de API. A ideia é que o roteador não perceba a diferença entre o simulador e o provedor real, de modo que os testes de carga, de failover e de controle de custo possam rodar todos os dias, em qualquer máquina, sem gastar um centavo. Para isso cada driver reproduz os cabeçalhos, os envelopes de erro, os limites de taxa e até a contagem de tokens do provedor que imita, conferida contra a API real sempre que possível.\"}]}"
+  },
+  "response": {
+    "status": 200,
+    "content_type": "application/json",
+    "body": "{\"input_tokens\":259}"
+  }
+}

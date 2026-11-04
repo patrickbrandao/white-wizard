@@ -1,0 +1,17 @@
+{
+  "provider": "opencode",
+  "name": "zen_unknown_path_nokey",
+  "recorded_at": "2026-10-31",
+  "note": "",
+  "request": {
+    "method": "GET",
+    "path": "/zen/v1/nope",
+    "headers": {},
+    "body": null
+  },
+  "response": {
+    "status": 404,
+    "headers": {},
+    "body": ""
+  }
+}

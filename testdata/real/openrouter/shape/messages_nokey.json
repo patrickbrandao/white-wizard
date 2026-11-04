@@ -1,0 +1,21 @@
+{
+  "provider": "openrouter",
+  "name": "messages_nokey",
+  "recorded_at": "2026-10-31",
+  "note": "401 sem chave em Messages",
+  "request": {
+    "method": "POST",
+    "path": "/api/v1/messages",
+    "headers": {},
+    "body": "{\"model\": \"wwz-nao-existe\", \"max_tokens\": 5, \"messages\": [{\"role\": \"user\", \"content\": \"oi\"}]}"
+  },
+  "response": {
+    "status": 401,
+    "headers": {
+      "access-control-allow-origin": "*",
+      "access-control-expose-headers": "X-Generation-Id,X-Provider-Name,request-id,cf-ray",
+      "content-type": "application/json"
+    },
+    "body": "{\"type\":\"error\",\"error\":{\"type\":\"authentication_error\",\"message\":\"No cookie auth credentials found\",\"error_type\":\"authentication\"},\"request_id\":null}"
+  }
+}

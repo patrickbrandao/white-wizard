@@ -1,0 +1,7 @@
+HTTP 404
+Content-Length: 181
+Content-Type: application/json
+Date: Sat, 31 Oct 2026 12:32:02 GMT
+X-Request-Id: req_2a9ff2f5a96f15dc76722797ed992761
+
+{"error":{"code":"model_not_found","message":"The model `wwz-drift-modelo-inexistente` does not exist or you do not have access to it.","param":null,"type":"invalid_request_error"}}

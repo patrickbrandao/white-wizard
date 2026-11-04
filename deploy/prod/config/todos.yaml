@@ -1,0 +1,127 @@
+# Produção (ADR 0017, spec 019): instância principal, todos os drivers por prefixo.
+# Atende https://$WWZ_HOST_INFERENCIA (data plane, porta 8000 interna) e o control
+# plane em https://$WWZ_HOST_ADMIN e na porta 8007 do IP público (valores em
+# autor/prod.env, fora do git, ADR 0076).
+# Modelo SEM segredos: os placeholders WWZ_KEY_1..3 e WWZ_OAUTH_KEY são trocados por
+# `scripts/prod-deploy.sh render` no servidor. O store Valkey vem do ambiente do compose (WWZ_VALKEY_ADDR).
+# Sem admin.debug: produção não herda o ajuste do compose de dev.
+server:
+  auth: keys
+  reuseport: true
+  # Traefik e a rede interna do Docker (X-Forwarded-For só vale vindo deles).
+  trusted_proxies: [10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16]
+
+admin:
+  debug: false
+
+store:
+  event_stream: true # eventos para o painel (ev:stream)
+
+usage:
+  extended: true
+
+keys:
+  - {key: ${WWZ_KEY_1}, label: prod-1, account: acct-prod, project: proj-prod}
+  - {key: ${WWZ_KEY_2}, label: prod-2, account: acct-prod, project: proj-prod}
+  - {key: ${WWZ_KEY_3}, label: prod-3, account: acct-prod, project: proj-prod}
+  # Segredo próprio da assinatura OAuth (oauth_key de /anthropic; o mesmo de
+  # config/anthropic.yaml): é o que create_api_key devolve, então vale só nos
+  # modelos claude-* (que só o driver anthropic serve) e na conta da cota.
+  - {key: ${WWZ_OAUTH_KEY}, label: claude-code-oauth, account: acct-claude-max, project: proj-claude-code, models: [claude-sonnet-5-5, claude-opus-5-5, claude-haiku-5-5]}
+
+# Cota da assinatura (a mesma da 8004/8008, spec 010): base dos
+# anthropic-ratelimit-unified-* e do 429 de cota. Aqui fica no Valkey (zera
+# com o reinício do wwz-valkey, sem persistência).
+accounts:
+  - id: acct-claude-max
+    limits:
+      quota_usd: {monthly_usd: 1000, rolling_5h_pct: 5, weekly_pct: 25}
+
+# Uma linha por driver: os seis do MVP (gemini e azure desde as tarefas 164,
+# 165 e 156). No Azure o deployment é o id do modelo (wwz-fast...).
+# /anthropic tem a assinatura OAuth do Claude Code (ADR 0074, spec 006 16.2.1):
+# claude-code-oauth é o oauth_key (segredo dos tokens sk-ant-oat01-…). Sem
+# client_verification: atrás do Traefik os headers não chegam crus (spec 020);
+# o modo estrito fica na porta 8008 (TCP), em /claude-code.
+drivers:
+  - {name: openai, prefix: /openai}
+  - {name: anthropic, prefix: /anthropic, options: {oauth_key: claude-code-oauth, oauth_plan: max_20x}}
+  - {name: openrouter, prefix: /openrouter}
+  - {name: opencode, prefix: /opencode}
+  - {name: gemini, prefix: /gemini}
+  - {name: azure, prefix: /azure}
+
+models:
+  - id: wwz-fast
+    owned_by: white-wizard
+    protocols: ["*"]
+    context_window: 128000
+    capabilities: {tools: true, reasoning: true, json_schema: true}
+    latency: fast
+    errors: none
+    generation: default
+  - id: wwz-realistic
+    owned_by: white-wizard
+    protocols: ["*"]
+    context_window: 128000
+    capabilities: {tools: true, reasoning: true}
+    latency: gpt-4o-like
+    errors: none
+    generation: default
+  - id: wwz-flaky
+    owned_by: white-wizard
+    protocols: ["*"]
+    context_window: 32000
+    capabilities: {tools: true, reasoning: true}
+    latency: slow-flaky
+    errors: flaky
+    generation: default
+  # Os ids que o Claude Code 2.1.308 pede, só no driver anthropic (mesmos de
+  # config/anthropic.yaml; texto sem tool calls, ver o perfil claude-code).
+  - id: claude-sonnet-5-5
+    display_name: Claude Sonnet 5.5
+    owned_by: anthropic
+    drivers: [anthropic]
+    protocols: [anthropic]
+    created: 1790553600
+    context_window: 1000000
+    max_output: 128000
+    capabilities: {tools: true, reasoning: true, json_schema: true}
+    pricing: {input_per_m: 2, output_per_m: 10, cache_read_per_m: 0.2, cache_write_per_m: 2.5}
+    latency: gpt-4o-like
+    errors: none
+    generation: claude-code
+  - id: claude-opus-5-5
+    display_name: Claude Opus 5.5
+    owned_by: anthropic
+    drivers: [anthropic]
+    protocols: [anthropic]
+    created: 1790035200
+    context_window: 1000000
+    max_output: 128000
+    capabilities: {tools: true, reasoning: true, json_schema: true}
+    pricing: {input_per_m: 4, output_per_m: 20, cache_read_per_m: 0.2, cache_write_per_m: 5}
+    latency: gpt-4o-like
+    errors: none
+    generation: claude-code
+  - id: claude-haiku-5-5
+    display_name: Claude Haiku 5.5
+    owned_by: anthropic
+    drivers: [anthropic]
+    protocols: [anthropic]
+    created: 1791331200
+    context_window: 1000000
+    max_output: 128000
+    capabilities: {tools: true, reasoning: true, json_schema: true}
+    pricing: {input_per_m: 0.1, output_per_m: 0.5, cache_read_per_m: 0.01, cache_write_per_m: 0.125}
+    latency: gpt-4o-like
+    errors: none
+    generation: claude-code
+
+profiles:
+  generation:
+    # Texto sem tool calls: o Claude Code real apontado para cá executaria as
+    # ferramentas inventadas (Bash, Write...) na máquina de quem testa.
+    claude-code:
+      mode: random
+      tool_calls: {probability: 0}

@@ -1,0 +1,25 @@
+{
+  "provider": "openrouter",
+  "name": "credits_regular",
+  "recorded_at": "2026-10-31",
+  "note": "Account credits read with an inference key",
+  "request": {
+    "method": "GET",
+    "path": "/api/v1/credits",
+    "headers": {
+      "authorization": "Bearer <key>"
+    },
+    "body": ""
+  },
+  "response": {
+    "status": 200,
+    "content_type": "application/json",
+    "headers": {
+      "content-type": "application/json",
+      "access-control-allow-origin": "*",
+      "cache-control": "private, no-store",
+      "access-control-expose-headers": "X-Generation-Id,X-Provider-Name,request-id,cf-ray"
+    },
+    "body": "{\"data\":{\"total_credits\":\"<usd>\",\"total_usage\":\"<usd>\"}}"
+  }
+}

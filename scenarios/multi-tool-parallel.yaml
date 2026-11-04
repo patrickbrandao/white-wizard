@@ -1,0 +1,16 @@
+# Three independent tool calls in one response, then the answer once all
+# three results are back.
+name: multi-tool-parallel
+description: 3 parallel tool calls -> final answer
+steps:
+  - id: fan-out
+    expect: { tool_results: 0 }
+    parallel: true
+    tool_calls:
+      - { name: any_read, args: schema }
+      - { name: any_read, args: schema }
+      - { name: any_read, args: schema }
+  - id: answer
+    expect: { tool_results_gte: 3 }
+    content: { tokens: "80..300" }
+    finish_reason: stop

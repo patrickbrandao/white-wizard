@@ -1,0 +1,26 @@
+HTTP 401
+Access-Control-Expose-Headers: CF-Ray, CF-Ray
+Alt-Svc: h3=":443"; ma=86400
+Cf-Cache-Status: DYNAMIC
+Cf-Ray: a532ae1da9770683-CNF
+Content-Length: 266
+Content-Type: text/plain
+Date: Sat, 31 Oct 2026 12:32:02 GMT
+Server: cloudflare
+Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
+X-Content-Type-Options: nosniff
+X-Error-Json: ewogICJlcnJvciI6IHsKICAgICJtZXNzYWdlIjogIkluY29ycmVjdCBBUEkga2V5IHByb3ZpZGVkOiBzay1pbnZhbCoqKioqKioqcmlmdC4gWW91IGNhbiBmaW5kIHlvdXIgQVBJIGtleSBhdCBodHRwczovL3BsYXRmb3JtLm9wZW5haS5jb20vYWNjb3VudC9hcGkta2V5cy4iLAogICAgInR5cGUiOiAiaW52YWxpZF9yZXF1ZXN0X2Vycm9yIiwKICAgICJjb2RlIjogImludmFsaWRfYXBpX2tleSIsCiAgICAicGFyYW0iOiBudWxsCiAgfSwKICAic3RhdHVzIjogNDAxCn0=
+X-Openai-Authorization-Error: 401
+X-Openai-Ide-Error-Code: invalid_api_key
+X-Openai-Internal-Caller: unknown_through_ide
+X-Request-Id: req_0867938ae9114affb4ff98837ebf514c
+
+{
+  "error": {
+    "message": "Incorrect API key provided: sk-inval********rift. You can find your API key at https://platform.openai.com/account/api-keys.",
+    "type": "invalid_request_error",
+    "code": "invalid_api_key",
+    "param": null
+  },
+  "status": 401
+}

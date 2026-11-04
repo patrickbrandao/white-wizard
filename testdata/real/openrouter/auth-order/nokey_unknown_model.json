@@ -1,0 +1,16 @@
+{
+  "provider": "openrouter",
+  "name": "nokey_unknown_model",
+  "recorded_at": "2026-10-31",
+  "request": {
+    "method": "POST",
+    "path": "/api/v1/chat/completions",
+    "headers": {},
+    "body": "{\"model\": \"wwz-nao-existe\", \"messages\": [{\"role\": \"user\", \"content\": \"oi\"}]}"
+  },
+  "response": {
+    "status": 401,
+    "content_type": "application/json",
+    "body": "{\"error\":{\"message\":\"No cookie auth credentials found\",\"code\":401}}"
+  }
+}

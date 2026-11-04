@@ -1,0 +1,41 @@
+# agente-de-arquivos: o cenário embutido `file-agent-flow` (spec 011, ADR 0048)
+# conduz um agente de arquivos: read_file -> write_file -> edit_file ->
+# delete_file -> resposta final. O servidor não guarda estado: o passo sai do
+# histórico da conversa (resultados de tool e ids das tool calls).
+# Os seis cenários embutidos vêm no binário (scenarios.builtin, padrão true):
+# não é preciso montar nenhum arquivo.
+server:
+  listen: ":8000"
+  auth: keys
+
+admin:
+  listen: ":9000"
+
+keys:
+  - { key: wwz-key-demo, label: demo }
+
+drivers:
+  - name: openai
+  - name: anthropic
+
+scenarios:
+  builtin: true
+
+profiles:
+  latency:
+    rapida: { ttft: 5ms, itl: 1ms }
+
+models:
+  - id: gpt-4o-mini
+    protocols: [openai]
+    latency: rapida
+    capabilities: { tools: true }
+    scenarios: [file-agent-flow]
+  - id: claude-sonnet-4
+    protocols: [anthropic]
+    latency: rapida
+    capabilities: { tools: true }
+    scenarios: [file-agent-flow]
+
+logging:
+  level: warn

@@ -1,0 +1,25 @@
+{
+  "name": "models_delete_badkey",
+  "note": "",
+  "provider": "anthropic",
+  "recorded_at": "2026-10-31",
+  "request": {
+    "body": null,
+    "headers": {
+      "anthropic-version": "2023-06-01",
+      "x-api-key": "sk-ant-api03-wwz-invalid"
+    },
+    "method": "DELETE",
+    "path": "/v1/models"
+  },
+  "response": {
+    "body": "{\"type\":\"error\",\"error\":{\"type\":\"authentication_error\",\"message\":\"invalid x-api-key\"},\"request_id\":\"<request_id>\"}",
+    "headers": {
+      "cache-control": "no-store",
+      "content-type": "application/json",
+      "request-id": "<request_id>",
+      "x-should-retry": "false"
+    },
+    "status": 401
+  }
+}

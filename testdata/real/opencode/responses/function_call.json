@@ -1,0 +1,23 @@
+{
+  "provider": "opencode",
+  "name": "function_call",
+  "recorded_at": "2026-10-31",
+  "request": {
+    "method": "POST",
+    "path": "/inference/go/openai/v1/responses",
+    "headers": {
+      "authorization": "Bearer <key>",
+      "x-opencode-session": "<session>"
+    },
+    "body": "{\"model\": \"deepseek-v4.1-flash\", \"input\": \"Weather in Paris?\", \"max_output_tokens\": 256, \"tools\": [{\"type\": \"function\", \"name\": \"get_weather\", \"description\": \"Weather of a city\", \"parameters\": {\"type\": \"object\", \"properties\": {\"city\": {\"type\": \"string\"}}, \"required\": [\"city\"]}}], \"tool_choice\": \"required\"}"
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "content-type": "application/json",
+      "x-opencode-log-id": "<log_id>",
+      "x-zen-model": "deepseek-v4.1-flash"
+    },
+    "body": "{\"id\":\"resp_d7b91d629fd649d48c74200781c9a0da\",\"object\":\"response\",\"created_at\":1793458824,\"status\":\"completed\",\"error\":null,\"incomplete_details\":null,\"instructions\":null,\"metadata\":{},\"model\":\"deepseek-v4.1-flash\",\"output\":[{\"id\":\"rs_66e51a51f061478fa34106d000946d03\",\"type\":\"reasoning\",\"summary\":[{\"type\":\"summary_text\",\"text\":\"The user asks for weather in Paris. I should call the tool.\"}]},{\"id\":\"fc_c329519ba2cc4e2ab3992b8b0378f0e2\",\"type\":\"function_call\",\"call_id\":\"call_00_3okp41z017pnxy45pu2devvq\",\"name\":\"get_weather\",\"arguments\":\"{\\\"city\\\":\\\"Paris\\\"}\",\"status\":\"completed\"}],\"parallel_tool_calls\":true,\"temperature\":null,\"tool_choice\":\"required\",\"tools\":[{\"type\":\"function\",\"name\":\"get_weather\",\"description\":\"Weather of a city\",\"parameters\":{\"type\":\"object\",\"properties\":{\"city\":{\"type\":\"string\"}},\"required\":[\"city\"]}}],\"top_p\":null,\"max_output_tokens\":256,\"usage\":{\"input_tokens\":291,\"input_tokens_details\":{\"cached_tokens\":0},\"output_tokens\":53,\"output_tokens_details\":{\"reasoning_tokens\":0},\"total_tokens\":344,\"cost\":0,\"opencode\":{\"billing_source\":\"go\",\"list_cost\":0.00007545,\"allowance\":0.00004527,\"tokens\":{\"input\":291,\"output\":53,\"reasoning\":0,\"cache_read\":0,\"cache_write_5m\":0,\"cache_write_1h\":0}}}}"
+  }
+}

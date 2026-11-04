@@ -1,0 +1,18 @@
+{
+  "provider": "openrouter",
+  "name": "chat_two_types",
+  "recorded_at": "2026-10-31",
+  "request": {
+    "method": "POST",
+    "path": "/api/v1/chat/completions",
+    "headers": {
+      "authorization": "Bearer <key>"
+    },
+    "body": "{\"model\": \"openai/gpt-4o-mini\", \"messages\": [{\"role\": \"user\", \"content\": \"hi\"}], \"top_p\": \"x\", \"temperature\": \"x\"}"
+  },
+  "response": {
+    "status": 400,
+    "content_type": "application/json",
+    "body": "{\"error\":{\"message\":\"temperature: Invalid input: expected number, received string\",\"code\":400},\"user_id\":\"<user_id>\"}"
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "provider": "gemini",
+  "name": "route_cached_deep_badkey",
+  "recorded_at": "2026-10-31",
+  "note": "rota desconhecida: 404 vazio antes da chave (task 265)",
+  "request": {
+    "method": "GET",
+    "path": "/v1beta/cachedContents/abc/def",
+    "headers": {
+      "x-goog-api-key": "sk-invalid-wwz-drift"
+    },
+    "body": ""
+  },
+  "response": {
+    "status": 404,
+    "headers": {
+      "content-type": "text/html",
+      "server": "scaffolding on HTTPServer2",
+      "server-timing": "gfet4t7; dur=<ms>",
+      "x-content-type-options": "nosniff",
+      "x-frame-options": "SAMEORIGIN",
+      "x-xss-protection": "0"
+    },
+    "body": ""
+  }
+}

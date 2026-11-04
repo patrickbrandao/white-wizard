@@ -1,0 +1,6 @@
+HTTP 200
+Content-Length: 197
+Content-Type: application/json
+Date: Sat, 31 Oct 2026 12:32:02 GMT
+
+{"data":[{"created_at":"2025-01-01T00:00:00Z","display_name":"Claude Haiku 4.5","id":"claude-haiku-4-5","type":"model"}],"first_id":"claude-haiku-4-5","has_more":false,"last_id":"claude-haiku-4-5"}

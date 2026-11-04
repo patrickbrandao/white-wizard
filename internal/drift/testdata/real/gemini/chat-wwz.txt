@@ -1,0 +1,44 @@
+HTTP 200
+Content-Length: 726
+Content-Type: application/json; charset=UTF-8
+Date: Sat, 31 Oct 2026 15:09:04 GMT
+Server: scaffolding on HTTPServer2
+Server-Timing: gfet4t7; dur=0
+Vary: Origin, X-Origin, Referer
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+X-Gemini-Service-Tier: standard
+X-Wwz-Seed: 1
+X-Xss-Protection: 0
+
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "Each option",
+            "thoughtSignature": "EmAKXgFpFH0TcCzG2jjjIvQo06j+4Cr5MU+LPhcLo/ouBUC3wqCF/YEHeHHMbiofrNWEc3vVEDfmMBvKf1EnFmMmVAEs7c7IhZfcNNIllHCSNzSs8/Dn43x8GvYMjDzTvYQ="
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 12,
+    "candidatesTokenCount": 2,
+    "totalTokenCount": 14,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 12
+      }
+    ],
+    "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.5-flash-lite",
+  "responseId": "kATmarX3-WzPoJLIcoxVMNQ"
+}

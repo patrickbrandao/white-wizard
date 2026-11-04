@@ -1,0 +1,25 @@
+{
+  "provider": "openrouter",
+  "name": "unknown_path",
+  "recorded_at": "2026-10-31",
+  "note": "rota desconhecida sob /api/v1: 404 JSON do Next.js (CORS amplo, sem expose-headers), antes da chave",
+  "request": {
+    "method": "GET",
+    "path": "/api/v1/nope",
+    "headers": {
+      "authorization": "Bearer <key>"
+    },
+    "body": null
+  },
+  "response": {
+    "status": 404,
+    "headers": {
+      "content-type": "application/json",
+      "access-control-allow-headers": "Authorization, User-Agent, X-Api-Key, X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version, HTTP-Referer, X-Windowai-Title, X-Openrouter-Title, X-Title, X-Openrouter-Categories, X-Openrouter-App-Visibility, X-Stainless-Lang, X-Stainless-Package-Version, X-Stainless-OS, X-Stainless-Arch, X-Stainless-Runtime, X-Stainless-Runtime-Version, X-Stainless-Retry-Count, X-Stainless-Timeout, X-Stainless-Helper-Method, Protection-Key, traceparent, tracestate, b3",
+      "access-control-allow-methods": "GET,OPTIONS,PATCH,DELETE,POST,PUT",
+      "access-control-allow-origin": "*",
+      "cache-control": "private, no-store"
+    },
+    "body": "{\"error\":{\"message\":\"Not Found\",\"code\":404}}"
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "provider": "opencode",
+  "name": "input_empty_string",
+  "recorded_at": "2026-10-31",
+  "request": {
+    "method": "POST",
+    "path": "/inference/go/openai/v1/responses",
+    "headers": {
+      "authorization": "Bearer <key>",
+      "x-opencode-session": "<session>"
+    },
+    "body": "{\"model\": \"deepseek-v4.1-flash\", \"input\": \"\"}"
+  },
+  "response": {
+    "status": 400,
+    "headers": {
+      "content-type": "application/json",
+      "x-opencode-log-id": "<log_id>",
+      "x-zen-model": "deepseek-v4.1-flash"
+    },
+    "body": "{\"error\":{\"code\":\"server_error\",\"message\":\"Upstream request failed: [BadRequest] Invalid request: messages must not be empty, trace_id: cf980ecc3f4b4ea340bfcda1b2ee0ae1\"}}"
+  }
+}

@@ -1,0 +1,358 @@
+{
+  "provider": "openai",
+  "name": "cache_automatic_prefix",
+  "recorded_at": "2026-10-31",
+  "path": "/v1/responses",
+  "note": "gpt-4o-mini on the Responses API: a prompt over 1024 tokens three times (6 s apart), then streamed; usage.input_tokens_details as the real sends it",
+  "steps": [
+    {
+      "request": {
+        "body": {
+          "model": "gpt-4o-mini",
+          "instructions": "Reference document n39642b53-resp. Echo uniform valley alpha sierra uniform tower romeo desert tower tower. India tower delta oscar november mike alpha tango golf papa romeo. Lima tower bravo echo valley harbor sierra castle golf tango whiskey. Yankee mike bravo valley desert charlie valley romeo alpha mike valley. India papa harbor alpha quebec uniform golf romeo victor mike tango. Charlie lima castle forest sierra garden alpha echo xray harbor harbor. Lima echo november charlie xray castle desert alpha charlie oscar castle. Village harbor whiskey whiskey valley kilo delta kilo village bravo hotel. November victor alpha whiskey forest bravo alpha victor november tango harbor. Delta forest juliet lima zulu village papa forest india papa papa. Lima charlie harbor echo juliet yankee kilo tango whiskey harbor tango. India charlie harbor bravo foxtrot mike sierra romeo india garden xray. Tower kilo forest alpha alpha valley yankee golf juliet lima garden. Foxtrot romeo golf tower castle golf oscar sierra quebec bravo castle. Oscar alpha tango victor oscar valley charlie alpha harbor mike quebec. Tango lima golf yankee forest uniform garden xray tango xray delta. Papa zulu charlie delta desert victor alpha echo golf harbor forest. Delta juliet juliet papa alpha desert xray hotel desert november papa. Foxtrot alpha tower uniform papa sierra whiskey castle desert uniform quebec. Yankee zulu sierra desert hotel delta desert juliet oscar zulu village. Foxtrot quebec tango bravo zulu whiskey kilo india xray kilo xray. Kilo valley papa garden juliet kilo foxtrot xray tower juliet echo. Juliet golf lima castle delta garden village papa echo uniform oscar. Tower kilo zulu tango harbor forest charlie romeo bravo november xray. Juliet sierra uniform charlie charlie juliet bravo echo castle yankee zulu. Hotel garden harbor village golf papa alpha hotel oscar victor xray. Uniform echo echo village zulu papa sierra castle sierra charlie forest. Hotel hotel bravo alpha november november sierra oscar lima castle harbor. Charlie bravo forest delta xray foxtrot juliet uniform valley romeo juliet. Foxtrot sierra papa castle castle tower hotel juliet lima tower romeo. Garden tower charlie quebec oscar golf juliet oscar alpha lima lima. Victor forest oscar castle xray november golf india harbor yankee valley. Yankee desert romeo india juliet forest foxtrot charlie bravo oscar zulu. Lima charlie oscar xray india xray juliet delta papa zulu romeo. Delta sierra garden castle tower charlie desert lima india zulu romeo. Lima india mike juliet yankee garden echo uniform castle castle victor. Quebec zulu valley delta sierra village foxtrot november golf yankee valley. Garden sierra tower india valley xray sierra tango desert delta garden. Castle uniform xray bravo valley garden november village echo oscar tower. Garden quebec lima harbor papa alpha quebec charlie mike lima valley. Bravo whiskey village golf hotel whiskey yankee delta uniform desert quebec. Yankee delta forest juliet hotel november alpha tower forest zulu papa. Charlie golf castle romeo kilo yankee tower tower whiskey mike whiskey. Harbor november lima garden delta delta bravo charlie mike castle desert. Hotel papa victor romeo whiskey quebec tango foxtrot tower alpha sierra. Papa bravo uniform yankee garden lima bravo valley whiskey mike victor. Yankee mike delta yankee whiskey victor forest november mike delta foxtrot. Papa bravo echo sierra desert charlie bravo valley lima papa quebec. Juliet sierra sierra quebec zulu charlie tower alpha village alpha xray. Whiskey yankee india alpha bravo india quebec golf sierra garden oscar. Valley delta juliet november papa garden tower delta victor victor zulu. Yankee mike delta sierra delta echo forest mike zulu xray victor. Uniform valley desert foxtrot charlie mike foxtrot uniform whiskey xray whiskey. Bravo garden india whiskey november juliet lima foxtrot alpha tango tango. Delta xray tango kilo garden forest oscar alpha tower hotel mike. Valley mike delta desert india alpha alpha hotel sierra foxtrot romeo. Charlie forest harbor bravo mike golf village echo juliet forest tango. Yankee echo november tango hotel tower forest yankee delta oscar village. Tango romeo yankee desert garden tango xray november papa romeo tango. Quebec charlie yankee foxtrot garden mike valley sierra november zulu golf. Juliet delta xray desert delta november foxtrot november foxtrot xray charlie. Romeo village harbor xray zulu tower alpha xray hotel tango papa. Golf castle quebec harbor delta yankee desert golf foxtrot tango quebec. Echo garden uniform echo garden valley november foxtrot kilo hotel harbor. Valley valley charlie quebec foxtrot forest zulu harbor delta harbor mike. Victor forest echo tango india romeo uniform foxtrot yankee desert uniform. Lima oscar garden harbor victor hotel hotel golf valley village tango. Oscar papa tower papa delta hotel juliet foxtrot desert hotel village. Garden quebec village india delta kilo garden india juliet oscar mike. Desert garden juliet charlie charlie delta papa harbor quebec echo yankee. Tower quebec november kilo victor village village papa tower india valley. Xray victor sierra sierra alpha victor valley whiskey echo forest golf. Oscar mike golf echo tango romeo hotel echo desert valley valley. India november oscar valley papa xray romeo alpha golf xray kilo. Zulu juliet golf november xray papa hotel kilo hotel romeo desert. Village bravo yankee papa castle castle lima oscar desert bravo tango. Lima romeo lima tower juliet papa alpha village garden tower india. Delta tower xray november kilo quebec forest forest tower alpha garden. Forest juliet village quebec castle valley echo yankee tango november castle. Sierra village delta yankee valley tower charlie november kilo tango november. Castle zulu alpha november quebec romeo forest castle tango xray papa. Valley foxtrot quebec desert hotel golf kilo quebec november golf garden. Whiskey village tango garden golf bravo echo alpha golf valley romeo. Charlie india sierra quebec alpha xray garden castle papa kilo garden. Oscar tango forest hotel sierra zulu echo delta quebec sierra november. Uniform quebec castle echo castle romeo echo romeo romeo echo forest. Echo castle mike valley desert castle victor whiskey desert mike uniform. India hotel castle forest hotel victor tower lima sierra bravo hotel. Alpha quebec desert november harbor uniform harbor papa delta bravo hotel. November november sierra kilo yankee charlie romeo quebec castle india uniform. Alpha valley harbor quebec tower tower yankee charlie uniform mike oscar. Papa hotel uniform bravo november hotel echo xray forest delta castle. Yankee victor whiskey india castle castle bravo tower forest lima november. Lima xray oscar valley juliet xray romeo whiskey golf romeo foxtrot. Tango forest yankee zulu papa lima hotel garden harbor romeo victor. Harbor november hotel xray sierra mike victor desert castle harbor zulu. November sierra delta bravo oscar november yankee hotel golf tower whiskey. Oscar xray papa lima november charlie hotel zulu castle golf zulu. Zulu india romeo november tower papa victor lima golf castle golf. Papa castle village alpha forest golf hotel tower yankee echo victor. Castle hotel foxtrot uniform yankee zulu echo yankee alpha desert valley. Romeo hotel november hotel xray oscar village mike foxtrot hotel romeo. Bravo valley whiskey forest victor echo india alpha sierra alpha valley. Hotel hotel uniform victor whiskey village delta castle november hotel uniform. Hotel golf village garden bravo november juliet yankee sierra kilo bravo. Harbor golf xray kilo mike garden oscar echo oscar tower echo. India golf valley yankee kilo romeo india tower sierra juliet mike. Uniform juliet kilo kilo zulu papa bravo kilo valley yankee zulu. Zulu juliet golf november xray lima village castle yankee quebec echo. Zulu delta kilo harbor zulu echo echo valley tango echo sierra.",
+          "input": "Reply with the word Ok.",
+          "max_output_tokens": 16,
+          "store": false
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": {
+          "id": "<id>",
+          "object": "response",
+          "created_at": 0,
+          "status": "completed",
+          "access_programs": null,
+          "background": false,
+          "billing": {
+            "payer": "openai"
+          },
+          "completed_at": 0,
+          "error": null,
+          "frequency_penalty": 0.0,
+          "incomplete_details": null,
+          "instructions": "Reference document n39642b53-resp. Echo uniform valley alpha sierra uniform tower romeo desert tower tower. India tower delta oscar november mike alpha tango golf papa romeo. Lima tower bravo echo valley harbor sierra castle golf tango whiskey. Yankee mike bravo valley desert charlie valley romeo alpha mike valley. India papa harbor alpha quebec uniform golf romeo victor mike tango. Charlie lima castle forest sierra garden alpha echo xray harbor harbor. Lima echo november charlie xray castle desert alpha charlie oscar castle. Village harbor whiskey whiskey valley kilo delta kilo village bravo hotel. November victor alpha whiskey forest bravo alpha victor november tango harbor. Delta forest juliet lima zulu village papa forest india papa papa. Lima charlie harbor echo juliet yankee kilo tango whiskey harbor tango. India charlie harbor bravo foxtrot mike sierra romeo india garden xray. Tower kilo forest alpha alpha valley yankee golf juliet lima garden. Foxtrot romeo golf tower castle golf oscar sierra quebec bravo castle. Oscar alpha tango victor oscar valley charlie alpha harbor mike quebec. Tango lima golf yankee forest uniform garden xray tango xray delta. Papa zulu charlie delta desert victor alpha echo golf harbor forest. Delta juliet juliet papa alpha desert xray hotel desert november papa. Foxtrot alpha tower uniform papa sierra whiskey castle desert uniform quebec. Yankee zulu sierra desert hotel delta desert juliet oscar zulu village. Foxtrot quebec tango bravo zulu whiskey kilo india xray kilo xray. Kilo valley papa garden juliet kilo foxtrot xray tower juliet echo. Juliet golf lima castle delta garden village papa echo uniform oscar. Tower kilo zulu tango harbor forest charlie romeo bravo november xray. Juliet sierra uniform charlie charlie juliet bravo echo castle yankee zulu. Hotel garden harbor village golf papa alpha hotel oscar victor xray. Uniform echo echo village zulu papa sierra castle sierra charlie forest. Hotel hotel bravo alpha november november sierra oscar lima castle harbor. Charlie bravo forest delta xray foxtrot juliet uniform valley romeo juliet. Foxtrot sierra papa castle castle tower hotel juliet lima tower romeo. Garden tower charlie quebec oscar golf juliet oscar alpha lima lima. Victor forest oscar castle xray november golf india harbor yankee valley. Yankee desert romeo india juliet forest foxtrot charlie bravo oscar zulu. Lima charlie oscar xray india xray juliet delta papa zulu romeo. Delta sierra garden castle tower charlie desert lima india zulu romeo. Lima india mike juliet yankee garden echo uniform castle castle victor. Quebec zulu valley delta sierra village foxtrot november golf yankee valley. Garden sierra tower india valley xray sierra tango desert delta garden. Castle uniform xray bravo valley garden november village echo oscar tower. Garden quebec lima harbor papa alpha quebec charlie mike lima valley. Bravo whiskey village golf hotel whiskey yankee delta uniform desert quebec. Yankee delta forest juliet hotel november alpha tower forest zulu papa. Charlie golf castle romeo kilo yankee tower tower whiskey mike whiskey. Harbor november lima garden delta delta bravo charlie mike castle desert. Hotel papa victor romeo whiskey quebec tango foxtrot tower alpha sierra. Papa bravo uniform yankee garden lima bravo valley whiskey mike victor. Yankee mike delta yankee whiskey victor forest november mike delta foxtrot. Papa bravo echo sierra desert charlie bravo valley lima papa quebec. Juliet sierra sierra quebec zulu charlie tower alpha village alpha xray. Whiskey yankee india alpha bravo india quebec golf sierra garden oscar. Valley delta juliet november papa garden tower delta victor victor zulu. Yankee mike delta sierra delta echo forest mike zulu xray victor. Uniform valley desert foxtrot charlie mike foxtrot uniform whiskey xray whiskey. Bravo garden india whiskey november juliet lima foxtrot alpha tango tango. Delta xray tango kilo garden forest oscar alpha tower hotel mike. Valley mike delta desert india alpha alpha hotel sierra foxtrot romeo. Charlie forest harbor bravo mike golf village echo juliet forest tango. Yankee echo november tango hotel tower forest yankee delta oscar village. Tango romeo yankee desert garden tango xray november papa romeo tango. Quebec charlie yankee foxtrot garden mike valley sierra november zulu golf. Juliet delta xray desert delta november foxtrot november foxtrot xray charlie. Romeo village harbor xray zulu tower alpha xray hotel tango papa. Golf castle quebec harbor delta yankee desert golf foxtrot tango quebec. Echo garden uniform echo garden valley november foxtrot kilo hotel harbor. Valley valley charlie quebec foxtrot forest zulu harbor delta harbor mike. Victor forest echo tango india romeo uniform foxtrot yankee desert uniform. Lima oscar garden harbor victor hotel hotel golf valley village tango. Oscar papa tower papa delta hotel juliet foxtrot desert hotel village. Garden quebec village india delta kilo garden india juliet oscar mike. Desert garden juliet charlie charlie delta papa harbor quebec echo yankee. Tower quebec november kilo victor village village papa tower india valley. Xray victor sierra sierra alpha victor valley whiskey echo forest golf. Oscar mike golf echo tango romeo hotel echo desert valley valley. India november oscar valley papa xray romeo alpha golf xray kilo. Zulu juliet golf november xray papa hotel kilo hotel romeo desert. Village bravo yankee papa castle castle lima oscar desert bravo tango. Lima romeo lima tower juliet papa alpha village garden tower india. Delta tower xray november kilo quebec forest forest tower alpha garden. Forest juliet village quebec castle valley echo yankee tango november castle. Sierra village delta yankee valley tower charlie november kilo tango november. Castle zulu alpha november quebec romeo forest castle tango xray papa. Valley foxtrot quebec desert hotel golf kilo quebec november golf garden. Whiskey village tango garden golf bravo echo alpha golf valley romeo. Charlie india sierra quebec alpha xray garden castle papa kilo garden. Oscar tango forest hotel sierra zulu echo delta quebec sierra november. Uniform quebec castle echo castle romeo echo romeo romeo echo forest. Echo castle mike valley desert castle victor whiskey desert mike uniform. India hotel castle forest hotel victor tower lima sierra bravo hotel. Alpha quebec desert november harbor uniform harbor papa delta bravo hotel. November november sierra kilo yankee charlie romeo quebec castle india uniform. Alpha valley harbor quebec tower tower yankee charlie uniform mike oscar. Papa hotel uniform bravo november hotel echo xray forest delta castle. Yankee victor whiskey india castle castle bravo tower forest lima november. Lima xray oscar valley juliet xray romeo whiskey golf romeo foxtrot. Tango forest yankee zulu papa lima hotel garden harbor romeo victor. Harbor november hotel xray sierra mike victor desert castle harbor zulu. November sierra delta bravo oscar november yankee hotel golf tower whiskey. Oscar xray papa lima november charlie hotel zulu castle golf zulu. Zulu india romeo november tower papa victor lima golf castle golf. Papa castle village alpha forest golf hotel tower yankee echo victor. Castle hotel foxtrot uniform yankee zulu echo yankee alpha desert valley. Romeo hotel november hotel xray oscar village mike foxtrot hotel romeo. Bravo valley whiskey forest victor echo india alpha sierra alpha valley. Hotel hotel uniform victor whiskey village delta castle november hotel uniform. Hotel golf village garden bravo november juliet yankee sierra kilo bravo. Harbor golf xray kilo mike garden oscar echo oscar tower echo. India golf valley yankee kilo romeo india tower sierra juliet mike. Uniform juliet kilo kilo zulu papa bravo kilo valley yankee zulu. Zulu juliet golf november xray lima village castle yankee quebec echo. Zulu delta kilo harbor zulu echo echo valley tango echo sierra.",
+          "max_output_tokens": 16,
+          "max_tool_calls": null,
+          "model": "gpt-4o-mini-2024-07-18",
+          "moderation": null,
+          "output": [
+            {
+              "id": "<item_id>",
+              "type": "message",
+              "status": "completed",
+              "content": [
+                {
+                  "type": "output_text",
+                  "annotations": [],
+                  "logprobs": [],
+                  "text": "Ok."
+                }
+              ],
+              "role": "assistant"
+            }
+          ],
+          "parallel_tool_calls": true,
+          "presence_penalty": 0.0,
+          "previous_response_id": null,
+          "prompt_cache_key": null,
+          "prompt_cache_retention": "in_memory",
+          "reasoning": {
+            "context": null,
+            "effort": null,
+            "summary": null
+          },
+          "safety_identifier": null,
+          "service_tier": "default",
+          "store": false,
+          "temperature": 1.0,
+          "text": {
+            "format": {
+              "type": "text"
+            },
+            "verbosity": "medium"
+          },
+          "tool_choice": "auto",
+          "tool_usage": {
+            "image_gen": {
+              "input_tokens": 0,
+              "input_tokens_details": {
+                "image_tokens": 0,
+                "text_tokens": 0
+              },
+              "output_tokens": 0,
+              "output_tokens_details": {
+                "image_tokens": 0,
+                "text_tokens": 0
+              },
+              "total_tokens": 0
+            },
+            "web_search": {
+              "num_requests": 0
+            }
+          },
+          "tools": [],
+          "top_logprobs": 0,
+          "top_p": 1.0,
+          "truncation": "disabled",
+          "usage": {
+            "input_tokens": 1697,
+            "input_tokens_details": {
+              "cache_write_tokens": 0,
+              "cached_tokens": 0
+            },
+            "output_tokens": 3,
+            "output_tokens_details": {
+              "reasoning_tokens": 0
+            },
+            "total_tokens": 1700
+          },
+          "user": null,
+          "metadata": {}
+        }
+      }
+    },
+    {
+      "request": {
+        "body": {
+          "model": "gpt-4o-mini",
+          "instructions": "Reference document n39642b53-resp. Echo uniform valley alpha sierra uniform tower romeo desert tower tower. India tower delta oscar november mike alpha tango golf papa romeo. Lima tower bravo echo valley harbor sierra castle golf tango whiskey. Yankee mike bravo valley desert charlie valley romeo alpha mike valley. India papa harbor alpha quebec uniform golf romeo victor mike tango. Charlie lima castle forest sierra garden alpha echo xray harbor harbor. Lima echo november charlie xray castle desert alpha charlie oscar castle. Village harbor whiskey whiskey valley kilo delta kilo village bravo hotel. November victor alpha whiskey forest bravo alpha victor november tango harbor. Delta forest juliet lima zulu village papa forest india papa papa. Lima charlie harbor echo juliet yankee kilo tango whiskey harbor tango. India charlie harbor bravo foxtrot mike sierra romeo india garden xray. Tower kilo forest alpha alpha valley yankee golf juliet lima garden. Foxtrot romeo golf tower castle golf oscar sierra quebec bravo castle. Oscar alpha tango victor oscar valley charlie alpha harbor mike quebec. Tango lima golf yankee forest uniform garden xray tango xray delta. Papa zulu charlie delta desert victor alpha echo golf harbor forest. Delta juliet juliet papa alpha desert xray hotel desert november papa. Foxtrot alpha tower uniform papa sierra whiskey castle desert uniform quebec. Yankee zulu sierra desert hotel delta desert juliet oscar zulu village. Foxtrot quebec tango bravo zulu whiskey kilo india xray kilo xray. Kilo valley papa garden juliet kilo foxtrot xray tower juliet echo. Juliet golf lima castle delta garden village papa echo uniform oscar. Tower kilo zulu tango harbor forest charlie romeo bravo november xray. Juliet sierra uniform charlie charlie juliet bravo echo castle yankee zulu. Hotel garden harbor village golf papa alpha hotel oscar victor xray. Uniform echo echo village zulu papa sierra castle sierra charlie forest. Hotel hotel bravo alpha november november sierra oscar lima castle harbor. Charlie bravo forest delta xray foxtrot juliet uniform valley romeo juliet. Foxtrot sierra papa castle castle tower hotel juliet lima tower romeo. Garden tower charlie quebec oscar golf juliet oscar alpha lima lima. Victor forest oscar castle xray november golf india harbor yankee valley. Yankee desert romeo india juliet forest foxtrot charlie bravo oscar zulu. Lima charlie oscar xray india xray juliet delta papa zulu romeo. Delta sierra garden castle tower charlie desert lima india zulu romeo. Lima india mike juliet yankee garden echo uniform castle castle victor. Quebec zulu valley delta sierra village foxtrot november golf yankee valley. Garden sierra tower india valley xray sierra tango desert delta garden. Castle uniform xray bravo valley garden november village echo oscar tower. Garden quebec lima harbor papa alpha quebec charlie mike lima valley. Bravo whiskey village golf hotel whiskey yankee delta uniform desert quebec. Yankee delta forest juliet hotel november alpha tower forest zulu papa. Charlie golf castle romeo kilo yankee tower tower whiskey mike whiskey. Harbor november lima garden delta delta bravo charlie mike castle desert. Hotel papa victor romeo whiskey quebec tango foxtrot tower alpha sierra. Papa bravo uniform yankee garden lima bravo valley whiskey mike victor. Yankee mike delta yankee whiskey victor forest november mike delta foxtrot. Papa bravo echo sierra desert charlie bravo valley lima papa quebec. Juliet sierra sierra quebec zulu charlie tower alpha village alpha xray. Whiskey yankee india alpha bravo india quebec golf sierra garden oscar. Valley delta juliet november papa garden tower delta victor victor zulu. Yankee mike delta sierra delta echo forest mike zulu xray victor. Uniform valley desert foxtrot charlie mike foxtrot uniform whiskey xray whiskey. Bravo garden india whiskey november juliet lima foxtrot alpha tango tango. Delta xray tango kilo garden forest oscar alpha tower hotel mike. Valley mike delta desert india alpha alpha hotel sierra foxtrot romeo. Charlie forest harbor bravo mike golf village echo juliet forest tango. Yankee echo november tango hotel tower forest yankee delta oscar village. Tango romeo yankee desert garden tango xray november papa romeo tango. Quebec charlie yankee foxtrot garden mike valley sierra november zulu golf. Juliet delta xray desert delta november foxtrot november foxtrot xray charlie. Romeo village harbor xray zulu tower alpha xray hotel tango papa. Golf castle quebec harbor delta yankee desert golf foxtrot tango quebec. Echo garden uniform echo garden valley november foxtrot kilo hotel harbor. Valley valley charlie quebec foxtrot forest zulu harbor delta harbor mike. Victor forest echo tango india romeo uniform foxtrot yankee desert uniform. Lima oscar garden harbor victor hotel hotel golf valley village tango. Oscar papa tower papa delta hotel juliet foxtrot desert hotel village. Garden quebec village india delta kilo garden india juliet oscar mike. Desert garden juliet charlie charlie delta papa harbor quebec echo yankee. Tower quebec november kilo victor village village papa tower india valley. Xray victor sierra sierra alpha victor valley whiskey echo forest golf. Oscar mike golf echo tango romeo hotel echo desert valley valley. India november oscar valley papa xray romeo alpha golf xray kilo. Zulu juliet golf november xray papa hotel kilo hotel romeo desert. Village bravo yankee papa castle castle lima oscar desert bravo tango. Lima romeo lima tower juliet papa alpha village garden tower india. Delta tower xray november kilo quebec forest forest tower alpha garden. Forest juliet village quebec castle valley echo yankee tango november castle. Sierra village delta yankee valley tower charlie november kilo tango november. Castle zulu alpha november quebec romeo forest castle tango xray papa. Valley foxtrot quebec desert hotel golf kilo quebec november golf garden. Whiskey village tango garden golf bravo echo alpha golf valley romeo. Charlie india sierra quebec alpha xray garden castle papa kilo garden. Oscar tango forest hotel sierra zulu echo delta quebec sierra november. Uniform quebec castle echo castle romeo echo romeo romeo echo forest. Echo castle mike valley desert castle victor whiskey desert mike uniform. India hotel castle forest hotel victor tower lima sierra bravo hotel. Alpha quebec desert november harbor uniform harbor papa delta bravo hotel. November november sierra kilo yankee charlie romeo quebec castle india uniform. Alpha valley harbor quebec tower tower yankee charlie uniform mike oscar. Papa hotel uniform bravo november hotel echo xray forest delta castle. Yankee victor whiskey india castle castle bravo tower forest lima november. Lima xray oscar valley juliet xray romeo whiskey golf romeo foxtrot. Tango forest yankee zulu papa lima hotel garden harbor romeo victor. Harbor november hotel xray sierra mike victor desert castle harbor zulu. November sierra delta bravo oscar november yankee hotel golf tower whiskey. Oscar xray papa lima november charlie hotel zulu castle golf zulu. Zulu india romeo november tower papa victor lima golf castle golf. Papa castle village alpha forest golf hotel tower yankee echo victor. Castle hotel foxtrot uniform yankee zulu echo yankee alpha desert valley. Romeo hotel november hotel xray oscar village mike foxtrot hotel romeo. Bravo valley whiskey forest victor echo india alpha sierra alpha valley. Hotel hotel uniform victor whiskey village delta castle november hotel uniform. Hotel golf village garden bravo november juliet yankee sierra kilo bravo. Harbor golf xray kilo mike garden oscar echo oscar tower echo. India golf valley yankee kilo romeo india tower sierra juliet mike. Uniform juliet kilo kilo zulu papa bravo kilo valley yankee zulu. Zulu juliet golf november xray lima village castle yankee quebec echo. Zulu delta kilo harbor zulu echo echo valley tango echo sierra.",
+          "input": "Reply with the word Ok.",
+          "max_output_tokens": 16,
+          "store": false
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": {
+          "id": "<id>",
+          "object": "response",
+          "created_at": 0,
+          "status": "completed",
+          "access_programs": null,
+          "background": false,
+          "billing": {
+            "payer": "openai"
+          },
+          "completed_at": 0,
+          "error": null,
+          "frequency_penalty": 0.0,
+          "incomplete_details": null,
+          "instructions": "Reference document n39642b53-resp. Echo uniform valley alpha sierra uniform tower romeo desert tower tower. India tower delta oscar november mike alpha tango golf papa romeo. Lima tower bravo echo valley harbor sierra castle golf tango whiskey. Yankee mike bravo valley desert charlie valley romeo alpha mike valley. India papa harbor alpha quebec uniform golf romeo victor mike tango. Charlie lima castle forest sierra garden alpha echo xray harbor harbor. Lima echo november charlie xray castle desert alpha charlie oscar castle. Village harbor whiskey whiskey valley kilo delta kilo village bravo hotel. November victor alpha whiskey forest bravo alpha victor november tango harbor. Delta forest juliet lima zulu village papa forest india papa papa. Lima charlie harbor echo juliet yankee kilo tango whiskey harbor tango. India charlie harbor bravo foxtrot mike sierra romeo india garden xray. Tower kilo forest alpha alpha valley yankee golf juliet lima garden. Foxtrot romeo golf tower castle golf oscar sierra quebec bravo castle. Oscar alpha tango victor oscar valley charlie alpha harbor mike quebec. Tango lima golf yankee forest uniform garden xray tango xray delta. Papa zulu charlie delta desert victor alpha echo golf harbor forest. Delta juliet juliet papa alpha desert xray hotel desert november papa. Foxtrot alpha tower uniform papa sierra whiskey castle desert uniform quebec. Yankee zulu sierra desert hotel delta desert juliet oscar zulu village. Foxtrot quebec tango bravo zulu whiskey kilo india xray kilo xray. Kilo valley papa garden juliet kilo foxtrot xray tower juliet echo. Juliet golf lima castle delta garden village papa echo uniform oscar. Tower kilo zulu tango harbor forest charlie romeo bravo november xray. Juliet sierra uniform charlie charlie juliet bravo echo castle yankee zulu. Hotel garden harbor village golf papa alpha hotel oscar victor xray. Uniform echo echo village zulu papa sierra castle sierra charlie forest. Hotel hotel bravo alpha november november sierra oscar lima castle harbor. Charlie bravo forest delta xray foxtrot juliet uniform valley romeo juliet. Foxtrot sierra papa castle castle tower hotel juliet lima tower romeo. Garden tower charlie quebec oscar golf juliet oscar alpha lima lima. Victor forest oscar castle xray november golf india harbor yankee valley. Yankee desert romeo india juliet forest foxtrot charlie bravo oscar zulu. Lima charlie oscar xray india xray juliet delta papa zulu romeo. Delta sierra garden castle tower charlie desert lima india zulu romeo. Lima india mike juliet yankee garden echo uniform castle castle victor. Quebec zulu valley delta sierra village foxtrot november golf yankee valley. Garden sierra tower india valley xray sierra tango desert delta garden. Castle uniform xray bravo valley garden november village echo oscar tower. Garden quebec lima harbor papa alpha quebec charlie mike lima valley. Bravo whiskey village golf hotel whiskey yankee delta uniform desert quebec. Yankee delta forest juliet hotel november alpha tower forest zulu papa. Charlie golf castle romeo kilo yankee tower tower whiskey mike whiskey. Harbor november lima garden delta delta bravo charlie mike castle desert. Hotel papa victor romeo whiskey quebec tango foxtrot tower alpha sierra. Papa bravo uniform yankee garden lima bravo valley whiskey mike victor. Yankee mike delta yankee whiskey victor forest november mike delta foxtrot. Papa bravo echo sierra desert charlie bravo valley lima papa quebec. Juliet sierra sierra quebec zulu charlie tower alpha village alpha xray. Whiskey yankee india alpha bravo india quebec golf sierra garden oscar. Valley delta juliet november papa garden tower delta victor victor zulu. Yankee mike delta sierra delta echo forest mike zulu xray victor. Uniform valley desert foxtrot charlie mike foxtrot uniform whiskey xray whiskey. Bravo garden india whiskey november juliet lima foxtrot alpha tango tango. Delta xray tango kilo garden forest oscar alpha tower hotel mike. Valley mike delta desert india alpha alpha hotel sierra foxtrot romeo. Charlie forest harbor bravo mike golf village echo juliet forest tango. Yankee echo november tango hotel tower forest yankee delta oscar village. Tango romeo yankee desert garden tango xray november papa romeo tango. Quebec charlie yankee foxtrot garden mike valley sierra november zulu golf. Juliet delta xray desert delta november foxtrot november foxtrot xray charlie. Romeo village harbor xray zulu tower alpha xray hotel tango papa. Golf castle quebec harbor delta yankee desert golf foxtrot tango quebec. Echo garden uniform echo garden valley november foxtrot kilo hotel harbor. Valley valley charlie quebec foxtrot forest zulu harbor delta harbor mike. Victor forest echo tango india romeo uniform foxtrot yankee desert uniform. Lima oscar garden harbor victor hotel hotel golf valley village tango. Oscar papa tower papa delta hotel juliet foxtrot desert hotel village. Garden quebec village india delta kilo garden india juliet oscar mike. Desert garden juliet charlie charlie delta papa harbor quebec echo yankee. Tower quebec november kilo victor village village papa tower india valley. Xray victor sierra sierra alpha victor valley whiskey echo forest golf. Oscar mike golf echo tango romeo hotel echo desert valley valley. India november oscar valley papa xray romeo alpha golf xray kilo. Zulu juliet golf november xray papa hotel kilo hotel romeo desert. Village bravo yankee papa castle castle lima oscar desert bravo tango. Lima romeo lima tower juliet papa alpha village garden tower india. Delta tower xray november kilo quebec forest forest tower alpha garden. Forest juliet village quebec castle valley echo yankee tango november castle. Sierra village delta yankee valley tower charlie november kilo tango november. Castle zulu alpha november quebec romeo forest castle tango xray papa. Valley foxtrot quebec desert hotel golf kilo quebec november golf garden. Whiskey village tango garden golf bravo echo alpha golf valley romeo. Charlie india sierra quebec alpha xray garden castle papa kilo garden. Oscar tango forest hotel sierra zulu echo delta quebec sierra november. Uniform quebec castle echo castle romeo echo romeo romeo echo forest. Echo castle mike valley desert castle victor whiskey desert mike uniform. India hotel castle forest hotel victor tower lima sierra bravo hotel. Alpha quebec desert november harbor uniform harbor papa delta bravo hotel. November november sierra kilo yankee charlie romeo quebec castle india uniform. Alpha valley harbor quebec tower tower yankee charlie uniform mike oscar. Papa hotel uniform bravo november hotel echo xray forest delta castle. Yankee victor whiskey india castle castle bravo tower forest lima november. Lima xray oscar valley juliet xray romeo whiskey golf romeo foxtrot. Tango forest yankee zulu papa lima hotel garden harbor romeo victor. Harbor november hotel xray sierra mike victor desert castle harbor zulu. November sierra delta bravo oscar november yankee hotel golf tower whiskey. Oscar xray papa lima november charlie hotel zulu castle golf zulu. Zulu india romeo november tower papa victor lima golf castle golf. Papa castle village alpha forest golf hotel tower yankee echo victor. Castle hotel foxtrot uniform yankee zulu echo yankee alpha desert valley. Romeo hotel november hotel xray oscar village mike foxtrot hotel romeo. Bravo valley whiskey forest victor echo india alpha sierra alpha valley. Hotel hotel uniform victor whiskey village delta castle november hotel uniform. Hotel golf village garden bravo november juliet yankee sierra kilo bravo. Harbor golf xray kilo mike garden oscar echo oscar tower echo. India golf valley yankee kilo romeo india tower sierra juliet mike. Uniform juliet kilo kilo zulu papa bravo kilo valley yankee zulu. Zulu juliet golf november xray lima village castle yankee quebec echo. Zulu delta kilo harbor zulu echo echo valley tango echo sierra.",
+          "max_output_tokens": 16,
+          "max_tool_calls": null,
+          "model": "gpt-4o-mini-2024-07-18",
+          "moderation": null,
+          "output": [
+            {
+              "id": "<item_id>",
+              "type": "message",
+              "status": "completed",
+              "content": [
+                {
+                  "type": "output_text",
+                  "annotations": [],
+                  "logprobs": [],
+                  "text": "Ok."
+                }
+              ],
+              "role": "assistant"
+            }
+          ],
+          "parallel_tool_calls": true,
+          "presence_penalty": 0.0,
+          "previous_response_id": null,
+          "prompt_cache_key": null,
+          "prompt_cache_retention": "in_memory",
+          "reasoning": {
+            "context": null,
+            "effort": null,
+            "summary": null
+          },
+          "safety_identifier": null,
+          "service_tier": "default",
+          "store": false,
+          "temperature": 1.0,
+          "text": {
+            "format": {
+              "type": "text"
+            },
+            "verbosity": "medium"
+          },
+          "tool_choice": "auto",
+          "tool_usage": {
+            "image_gen": {
+              "input_tokens": 0,
+              "input_tokens_details": {
+                "image_tokens": 0,
+                "text_tokens": 0
+              },
+              "output_tokens": 0,
+              "output_tokens_details": {
+                "image_tokens": 0,
+                "text_tokens": 0
+              },
+              "total_tokens": 0
+            },
+            "web_search": {
+              "num_requests": 0
+            }
+          },
+          "tools": [],
+          "top_logprobs": 0,
+          "top_p": 1.0,
+          "truncation": "disabled",
+          "usage": {
+            "input_tokens": 1697,
+            "input_tokens_details": {
+              "cache_write_tokens": 0,
+              "cached_tokens": 0
+            },
+            "output_tokens": 3,
+            "output_tokens_details": {
+              "reasoning_tokens": 0
+            },
+            "total_tokens": 1700
+          },
+          "user": null,
+          "metadata": {}
+        }
+      }
+    },
+    {
+      "request": {
+        "body": {
+          "model": "gpt-4o-mini",
+          "instructions": "Reference document n39642b53-resp. Echo uniform valley alpha sierra uniform tower romeo desert tower tower. India tower delta oscar november mike alpha tango golf papa romeo. Lima tower bravo echo valley harbor sierra castle golf tango whiskey. Yankee mike bravo valley desert charlie valley romeo alpha mike valley. India papa harbor alpha quebec uniform golf romeo victor mike tango. Charlie lima castle forest sierra garden alpha echo xray harbor harbor. Lima echo november charlie xray castle desert alpha charlie oscar castle. Village harbor whiskey whiskey valley kilo delta kilo village bravo hotel. November victor alpha whiskey forest bravo alpha victor november tango harbor. Delta forest juliet lima zulu village papa forest india papa papa. Lima charlie harbor echo juliet yankee kilo tango whiskey harbor tango. India charlie harbor bravo foxtrot mike sierra romeo india garden xray. Tower kilo forest alpha alpha valley yankee golf juliet lima garden. Foxtrot romeo golf tower castle golf oscar sierra quebec bravo castle. Oscar alpha tango victor oscar valley charlie alpha harbor mike quebec. Tango lima golf yankee forest uniform garden xray tango xray delta. Papa zulu charlie delta desert victor alpha echo golf harbor forest. Delta juliet juliet papa alpha desert xray hotel desert november papa. Foxtrot alpha tower uniform papa sierra whiskey castle desert uniform quebec. Yankee zulu sierra desert hotel delta desert juliet oscar zulu village. Foxtrot quebec tango bravo zulu whiskey kilo india xray kilo xray. Kilo valley papa garden juliet kilo foxtrot xray tower juliet echo. Juliet golf lima castle delta garden village papa echo uniform oscar. Tower kilo zulu tango harbor forest charlie romeo bravo november xray. Juliet sierra uniform charlie charlie juliet bravo echo castle yankee zulu. Hotel garden harbor village golf papa alpha hotel oscar victor xray. Uniform echo echo village zulu papa sierra castle sierra charlie forest. Hotel hotel bravo alpha november november sierra oscar lima castle harbor. Charlie bravo forest delta xray foxtrot juliet uniform valley romeo juliet. Foxtrot sierra papa castle castle tower hotel juliet lima tower romeo. Garden tower charlie quebec oscar golf juliet oscar alpha lima lima. Victor forest oscar castle xray november golf india harbor yankee valley. Yankee desert romeo india juliet forest foxtrot charlie bravo oscar zulu. Lima charlie oscar xray india xray juliet delta papa zulu romeo. Delta sierra garden castle tower charlie desert lima india zulu romeo. Lima india mike juliet yankee garden echo uniform castle castle victor. Quebec zulu valley delta sierra village foxtrot november golf yankee valley. Garden sierra tower india valley xray sierra tango desert delta garden. Castle uniform xray bravo valley garden november village echo oscar tower. Garden quebec lima harbor papa alpha quebec charlie mike lima valley. Bravo whiskey village golf hotel whiskey yankee delta uniform desert quebec. Yankee delta forest juliet hotel november alpha tower forest zulu papa. Charlie golf castle romeo kilo yankee tower tower whiskey mike whiskey. Harbor november lima garden delta delta bravo charlie mike castle desert. Hotel papa victor romeo whiskey quebec tango foxtrot tower alpha sierra. Papa bravo uniform yankee garden lima bravo valley whiskey mike victor. Yankee mike delta yankee whiskey victor forest november mike delta foxtrot. Papa bravo echo sierra desert charlie bravo valley lima papa quebec. Juliet sierra sierra quebec zulu charlie tower alpha village alpha xray. Whiskey yankee india alpha bravo india quebec golf sierra garden oscar. Valley delta juliet november papa garden tower delta victor victor zulu. Yankee mike delta sierra delta echo forest mike zulu xray victor. Uniform valley desert foxtrot charlie mike foxtrot uniform whiskey xray whiskey. Bravo garden india whiskey november juliet lima foxtrot alpha tango tango. Delta xray tango kilo garden forest oscar alpha tower hotel mike. Valley mike delta desert india alpha alpha hotel sierra foxtrot romeo. Charlie forest harbor bravo mike golf village echo juliet forest tango. Yankee echo november tango hotel tower forest yankee delta oscar village. Tango romeo yankee desert garden tango xray november papa romeo tango. Quebec charlie yankee foxtrot garden mike valley sierra november zulu golf. Juliet delta xray desert delta november foxtrot november foxtrot xray charlie. Romeo village harbor xray zulu tower alpha xray hotel tango papa. Golf castle quebec harbor delta yankee desert golf foxtrot tango quebec. Echo garden uniform echo garden valley november foxtrot kilo hotel harbor. Valley valley charlie quebec foxtrot forest zulu harbor delta harbor mike. Victor forest echo tango india romeo uniform foxtrot yankee desert uniform. Lima oscar garden harbor victor hotel hotel golf valley village tango. Oscar papa tower papa delta hotel juliet foxtrot desert hotel village. Garden quebec village india delta kilo garden india juliet oscar mike. Desert garden juliet charlie charlie delta papa harbor quebec echo yankee. Tower quebec november kilo victor village village papa tower india valley. Xray victor sierra sierra alpha victor valley whiskey echo forest golf. Oscar mike golf echo tango romeo hotel echo desert valley valley. India november oscar valley papa xray romeo alpha golf xray kilo. Zulu juliet golf november xray papa hotel kilo hotel romeo desert. Village bravo yankee papa castle castle lima oscar desert bravo tango. Lima romeo lima tower juliet papa alpha village garden tower india. Delta tower xray november kilo quebec forest forest tower alpha garden. Forest juliet village quebec castle valley echo yankee tango november castle. Sierra village delta yankee valley tower charlie november kilo tango november. Castle zulu alpha november quebec romeo forest castle tango xray papa. Valley foxtrot quebec desert hotel golf kilo quebec november golf garden. Whiskey village tango garden golf bravo echo alpha golf valley romeo. Charlie india sierra quebec alpha xray garden castle papa kilo garden. Oscar tango forest hotel sierra zulu echo delta quebec sierra november. Uniform quebec castle echo castle romeo echo romeo romeo echo forest. Echo castle mike valley desert castle victor whiskey desert mike uniform. India hotel castle forest hotel victor tower lima sierra bravo hotel. Alpha quebec desert november harbor uniform harbor papa delta bravo hotel. November november sierra kilo yankee charlie romeo quebec castle india uniform. Alpha valley harbor quebec tower tower yankee charlie uniform mike oscar. Papa hotel uniform bravo november hotel echo xray forest delta castle. Yankee victor whiskey india castle castle bravo tower forest lima november. Lima xray oscar valley juliet xray romeo whiskey golf romeo foxtrot. Tango forest yankee zulu papa lima hotel garden harbor romeo victor. Harbor november hotel xray sierra mike victor desert castle harbor zulu. November sierra delta bravo oscar november yankee hotel golf tower whiskey. Oscar xray papa lima november charlie hotel zulu castle golf zulu. Zulu india romeo november tower papa victor lima golf castle golf. Papa castle village alpha forest golf hotel tower yankee echo victor. Castle hotel foxtrot uniform yankee zulu echo yankee alpha desert valley. Romeo hotel november hotel xray oscar village mike foxtrot hotel romeo. Bravo valley whiskey forest victor echo india alpha sierra alpha valley. Hotel hotel uniform victor whiskey village delta castle november hotel uniform. Hotel golf village garden bravo november juliet yankee sierra kilo bravo. Harbor golf xray kilo mike garden oscar echo oscar tower echo. India golf valley yankee kilo romeo india tower sierra juliet mike. Uniform juliet kilo kilo zulu papa bravo kilo valley yankee zulu. Zulu juliet golf november xray lima village castle yankee quebec echo. Zulu delta kilo harbor zulu echo echo valley tango echo sierra.",
+          "input": "Reply with the word Ok.",
+          "max_output_tokens": 16,
+          "store": false
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": {
+          "id": "<id>",
+          "object": "response",
+          "created_at": 0,
+          "status": "completed",
+          "access_programs": null,
+          "background": false,
+          "billing": {
+            "payer": "openai"
+          },
+          "completed_at": 0,
+          "error": null,
+          "frequency_penalty": 0.0,
+          "incomplete_details": null,
+          "instructions": "Reference document n39642b53-resp. Echo uniform valley alpha sierra uniform tower romeo desert tower tower. India tower delta oscar november mike alpha tango golf papa romeo. Lima tower bravo echo valley harbor sierra castle golf tango whiskey. Yankee mike bravo valley desert charlie valley romeo alpha mike valley. India papa harbor alpha quebec uniform golf romeo victor mike tango. Charlie lima castle forest sierra garden alpha echo xray harbor harbor. Lima echo november charlie xray castle desert alpha charlie oscar castle. Village harbor whiskey whiskey valley kilo delta kilo village bravo hotel. November victor alpha whiskey forest bravo alpha victor november tango harbor. Delta forest juliet lima zulu village papa forest india papa papa. Lima charlie harbor echo juliet yankee kilo tango whiskey harbor tango. India charlie harbor bravo foxtrot mike sierra romeo india garden xray. Tower kilo forest alpha alpha valley yankee golf juliet lima garden. Foxtrot romeo golf tower castle golf oscar sierra quebec bravo castle. Oscar alpha tango victor oscar valley charlie alpha harbor mike quebec. Tango lima golf yankee forest uniform garden xray tango xray delta. Papa zulu charlie delta desert victor alpha echo golf harbor forest. Delta juliet juliet papa alpha desert xray hotel desert november papa. Foxtrot alpha tower uniform papa sierra whiskey castle desert uniform quebec. Yankee zulu sierra desert hotel delta desert juliet oscar zulu village. Foxtrot quebec tango bravo zulu whiskey kilo india xray kilo xray. Kilo valley papa garden juliet kilo foxtrot xray tower juliet echo. Juliet golf lima castle delta garden village papa echo uniform oscar. Tower kilo zulu tango harbor forest charlie romeo bravo november xray. Juliet sierra uniform charlie charlie juliet bravo echo castle yankee zulu. Hotel garden harbor village golf papa alpha hotel oscar victor xray. Uniform echo echo village zulu papa sierra castle sierra charlie forest. Hotel hotel bravo alpha november november sierra oscar lima castle harbor. Charlie bravo forest delta xray foxtrot juliet uniform valley romeo juliet. Foxtrot sierra papa castle castle tower hotel juliet lima tower romeo. Garden tower charlie quebec oscar golf juliet oscar alpha lima lima. Victor forest oscar castle xray november golf india harbor yankee valley. Yankee desert romeo india juliet forest foxtrot charlie bravo oscar zulu. Lima charlie oscar xray india xray juliet delta papa zulu romeo. Delta sierra garden castle tower charlie desert lima india zulu romeo. Lima india mike juliet yankee garden echo uniform castle castle victor. Quebec zulu valley delta sierra village foxtrot november golf yankee valley. Garden sierra tower india valley xray sierra tango desert delta garden. Castle uniform xray bravo valley garden november village echo oscar tower. Garden quebec lima harbor papa alpha quebec charlie mike lima valley. Bravo whiskey village golf hotel whiskey yankee delta uniform desert quebec. Yankee delta forest juliet hotel november alpha tower forest zulu papa. Charlie golf castle romeo kilo yankee tower tower whiskey mike whiskey. Harbor november lima garden delta delta bravo charlie mike castle desert. Hotel papa victor romeo whiskey quebec tango foxtrot tower alpha sierra. Papa bravo uniform yankee garden lima bravo valley whiskey mike victor. Yankee mike delta yankee whiskey victor forest november mike delta foxtrot. Papa bravo echo sierra desert charlie bravo valley lima papa quebec. Juliet sierra sierra quebec zulu charlie tower alpha village alpha xray. Whiskey yankee india alpha bravo india quebec golf sierra garden oscar. Valley delta juliet november papa garden tower delta victor victor zulu. Yankee mike delta sierra delta echo forest mike zulu xray victor. Uniform valley desert foxtrot charlie mike foxtrot uniform whiskey xray whiskey. Bravo garden india whiskey november juliet lima foxtrot alpha tango tango. Delta xray tango kilo garden forest oscar alpha tower hotel mike. Valley mike delta desert india alpha alpha hotel sierra foxtrot romeo. Charlie forest harbor bravo mike golf village echo juliet forest tango. Yankee echo november tango hotel tower forest yankee delta oscar village. Tango romeo yankee desert garden tango xray november papa romeo tango. Quebec charlie yankee foxtrot garden mike valley sierra november zulu golf. Juliet delta xray desert delta november foxtrot november foxtrot xray charlie. Romeo village harbor xray zulu tower alpha xray hotel tango papa. Golf castle quebec harbor delta yankee desert golf foxtrot tango quebec. Echo garden uniform echo garden valley november foxtrot kilo hotel harbor. Valley valley charlie quebec foxtrot forest zulu harbor delta harbor mike. Victor forest echo tango india romeo uniform foxtrot yankee desert uniform. Lima oscar garden harbor victor hotel hotel golf valley village tango. Oscar papa tower papa delta hotel juliet foxtrot desert hotel village. Garden quebec village india delta kilo garden india juliet oscar mike. Desert garden juliet charlie charlie delta papa harbor quebec echo yankee. Tower quebec november kilo victor village village papa tower india valley. Xray victor sierra sierra alpha victor valley whiskey echo forest golf. Oscar mike golf echo tango romeo hotel echo desert valley valley. India november oscar valley papa xray romeo alpha golf xray kilo. Zulu juliet golf november xray papa hotel kilo hotel romeo desert. Village bravo yankee papa castle castle lima oscar desert bravo tango. Lima romeo lima tower juliet papa alpha village garden tower india. Delta tower xray november kilo quebec forest forest tower alpha garden. Forest juliet village quebec castle valley echo yankee tango november castle. Sierra village delta yankee valley tower charlie november kilo tango november. Castle zulu alpha november quebec romeo forest castle tango xray papa. Valley foxtrot quebec desert hotel golf kilo quebec november golf garden. Whiskey village tango garden golf bravo echo alpha golf valley romeo. Charlie india sierra quebec alpha xray garden castle papa kilo garden. Oscar tango forest hotel sierra zulu echo delta quebec sierra november. Uniform quebec castle echo castle romeo echo romeo romeo echo forest. Echo castle mike valley desert castle victor whiskey desert mike uniform. India hotel castle forest hotel victor tower lima sierra bravo hotel. Alpha quebec desert november harbor uniform harbor papa delta bravo hotel. November november sierra kilo yankee charlie romeo quebec castle india uniform. Alpha valley harbor quebec tower tower yankee charlie uniform mike oscar. Papa hotel uniform bravo november hotel echo xray forest delta castle. Yankee victor whiskey india castle castle bravo tower forest lima november. Lima xray oscar valley juliet xray romeo whiskey golf romeo foxtrot. Tango forest yankee zulu papa lima hotel garden harbor romeo victor. Harbor november hotel xray sierra mike victor desert castle harbor zulu. November sierra delta bravo oscar november yankee hotel golf tower whiskey. Oscar xray papa lima november charlie hotel zulu castle golf zulu. Zulu india romeo november tower papa victor lima golf castle golf. Papa castle village alpha forest golf hotel tower yankee echo victor. Castle hotel foxtrot uniform yankee zulu echo yankee alpha desert valley. Romeo hotel november hotel xray oscar village mike foxtrot hotel romeo. Bravo valley whiskey forest victor echo india alpha sierra alpha valley. Hotel hotel uniform victor whiskey village delta castle november hotel uniform. Hotel golf village garden bravo november juliet yankee sierra kilo bravo. Harbor golf xray kilo mike garden oscar echo oscar tower echo. India golf valley yankee kilo romeo india tower sierra juliet mike. Uniform juliet kilo kilo zulu papa bravo kilo valley yankee zulu. Zulu juliet golf november xray lima village castle yankee quebec echo. Zulu delta kilo harbor zulu echo echo valley tango echo sierra.",
+          "max_output_tokens": 16,
+          "max_tool_calls": null,
+          "model": "gpt-4o-mini-2024-07-18",
+          "moderation": null,
+          "output": [
+            {
+              "id": "<item_id>",
+              "type": "message",
+              "status": "completed",
+              "content": [
+                {
+                  "type": "output_text",
+                  "annotations": [],
+                  "logprobs": [],
+                  "text": "Ok."
+                }
+              ],
+              "role": "assistant"
+            }
+          ],
+          "parallel_tool_calls": true,
+          "presence_penalty": 0.0,
+          "previous_response_id": null,
+          "prompt_cache_key": null,
+          "prompt_cache_retention": "in_memory",
+          "reasoning": {
+            "context": null,
+            "effort": null,
+            "summary": null
+          },
+          "safety_identifier": null,
+          "service_tier": "default",
+          "store": false,
+          "temperature": 1.0,
+          "text": {
+            "format": {
+              "type": "text"
+            },
+            "verbosity": "medium"
+          },
+          "tool_choice": "auto",
+          "tool_usage": {
+            "image_gen": {
+              "input_tokens": 0,
+              "input_tokens_details": {
+                "image_tokens": 0,
+                "text_tokens": 0
+              },
+              "output_tokens": 0,
+              "output_tokens_details": {
+                "image_tokens": 0,
+                "text_tokens": 0
+              },
+              "total_tokens": 0
+            },
+            "web_search": {
+              "num_requests": 0
+            }
+          },
+          "tools": [],
+          "top_logprobs": 0,
+          "top_p": 1.0,
+          "truncation": "disabled",
+          "usage": {
+            "input_tokens": 1697,
+            "input_tokens_details": {
+              "cache_write_tokens": 0,
+              "cached_tokens": 1536
+            },
+            "output_tokens": 3,
+            "output_tokens_details": {
+              "reasoning_tokens": 0
+            },
+            "total_tokens": 1700
+          },
+          "user": null,
+          "metadata": {}
+        }
+      }
+    },
+    {
+      "request": {
+        "body": {
+          "model": "gpt-4o-mini",
+          "instructions": "Reference document n39642b53-resp. Echo uniform valley alpha sierra uniform tower romeo desert tower tower. India tower delta oscar november mike alpha tango golf papa romeo. Lima tower bravo echo valley harbor sierra castle golf tango whiskey. Yankee mike bravo valley desert charlie valley romeo alpha mike valley. India papa harbor alpha quebec uniform golf romeo victor mike tango. Charlie lima castle forest sierra garden alpha echo xray harbor harbor. Lima echo november charlie xray castle desert alpha charlie oscar castle. Village harbor whiskey whiskey valley kilo delta kilo village bravo hotel. November victor alpha whiskey forest bravo alpha victor november tango harbor. Delta forest juliet lima zulu village papa forest india papa papa. Lima charlie harbor echo juliet yankee kilo tango whiskey harbor tango. India charlie harbor bravo foxtrot mike sierra romeo india garden xray. Tower kilo forest alpha alpha valley yankee golf juliet lima garden. Foxtrot romeo golf tower castle golf oscar sierra quebec bravo castle. Oscar alpha tango victor oscar valley charlie alpha harbor mike quebec. Tango lima golf yankee forest uniform garden xray tango xray delta. Papa zulu charlie delta desert victor alpha echo golf harbor forest. Delta juliet juliet papa alpha desert xray hotel desert november papa. Foxtrot alpha tower uniform papa sierra whiskey castle desert uniform quebec. Yankee zulu sierra desert hotel delta desert juliet oscar zulu village. Foxtrot quebec tango bravo zulu whiskey kilo india xray kilo xray. Kilo valley papa garden juliet kilo foxtrot xray tower juliet echo. Juliet golf lima castle delta garden village papa echo uniform oscar. Tower kilo zulu tango harbor forest charlie romeo bravo november xray. Juliet sierra uniform charlie charlie juliet bravo echo castle yankee zulu. Hotel garden harbor village golf papa alpha hotel oscar victor xray. Uniform echo echo village zulu papa sierra castle sierra charlie forest. Hotel hotel bravo alpha november november sierra oscar lima castle harbor. Charlie bravo forest delta xray foxtrot juliet uniform valley romeo juliet. Foxtrot sierra papa castle castle tower hotel juliet lima tower romeo. Garden tower charlie quebec oscar golf juliet oscar alpha lima lima. Victor forest oscar castle xray november golf india harbor yankee valley. Yankee desert romeo india juliet forest foxtrot charlie bravo oscar zulu. Lima charlie oscar xray india xray juliet delta papa zulu romeo. Delta sierra garden castle tower charlie desert lima india zulu romeo. Lima india mike juliet yankee garden echo uniform castle castle victor. Quebec zulu valley delta sierra village foxtrot november golf yankee valley. Garden sierra tower india valley xray sierra tango desert delta garden. Castle uniform xray bravo valley garden november village echo oscar tower. Garden quebec lima harbor papa alpha quebec charlie mike lima valley. Bravo whiskey village golf hotel whiskey yankee delta uniform desert quebec. Yankee delta forest juliet hotel november alpha tower forest zulu papa. Charlie golf castle romeo kilo yankee tower tower whiskey mike whiskey. Harbor november lima garden delta delta bravo charlie mike castle desert. Hotel papa victor romeo whiskey quebec tango foxtrot tower alpha sierra. Papa bravo uniform yankee garden lima bravo valley whiskey mike victor. Yankee mike delta yankee whiskey victor forest november mike delta foxtrot. Papa bravo echo sierra desert charlie bravo valley lima papa quebec. Juliet sierra sierra quebec zulu charlie tower alpha village alpha xray. Whiskey yankee india alpha bravo india quebec golf sierra garden oscar. Valley delta juliet november papa garden tower delta victor victor zulu. Yankee mike delta sierra delta echo forest mike zulu xray victor. Uniform valley desert foxtrot charlie mike foxtrot uniform whiskey xray whiskey. Bravo garden india whiskey november juliet lima foxtrot alpha tango tango. Delta xray tango kilo garden forest oscar alpha tower hotel mike. Valley mike delta desert india alpha alpha hotel sierra foxtrot romeo. Charlie forest harbor bravo mike golf village echo juliet forest tango. Yankee echo november tango hotel tower forest yankee delta oscar village. Tango romeo yankee desert garden tango xray november papa romeo tango. Quebec charlie yankee foxtrot garden mike valley sierra november zulu golf. Juliet delta xray desert delta november foxtrot november foxtrot xray charlie. Romeo village harbor xray zulu tower alpha xray hotel tango papa. Golf castle quebec harbor delta yankee desert golf foxtrot tango quebec. Echo garden uniform echo garden valley november foxtrot kilo hotel harbor. Valley valley charlie quebec foxtrot forest zulu harbor delta harbor mike. Victor forest echo tango india romeo uniform foxtrot yankee desert uniform. Lima oscar garden harbor victor hotel hotel golf valley village tango. Oscar papa tower papa delta hotel juliet foxtrot desert hotel village. Garden quebec village india delta kilo garden india juliet oscar mike. Desert garden juliet charlie charlie delta papa harbor quebec echo yankee. Tower quebec november kilo victor village village papa tower india valley. Xray victor sierra sierra alpha victor valley whiskey echo forest golf. Oscar mike golf echo tango romeo hotel echo desert valley valley. India november oscar valley papa xray romeo alpha golf xray kilo. Zulu juliet golf november xray papa hotel kilo hotel romeo desert. Village bravo yankee papa castle castle lima oscar desert bravo tango. Lima romeo lima tower juliet papa alpha village garden tower india. Delta tower xray november kilo quebec forest forest tower alpha garden. Forest juliet village quebec castle valley echo yankee tango november castle. Sierra village delta yankee valley tower charlie november kilo tango november. Castle zulu alpha november quebec romeo forest castle tango xray papa. Valley foxtrot quebec desert hotel golf kilo quebec november golf garden. Whiskey village tango garden golf bravo echo alpha golf valley romeo. Charlie india sierra quebec alpha xray garden castle papa kilo garden. Oscar tango forest hotel sierra zulu echo delta quebec sierra november. Uniform quebec castle echo castle romeo echo romeo romeo echo forest. Echo castle mike valley desert castle victor whiskey desert mike uniform. India hotel castle forest hotel victor tower lima sierra bravo hotel. Alpha quebec desert november harbor uniform harbor papa delta bravo hotel. November november sierra kilo yankee charlie romeo quebec castle india uniform. Alpha valley harbor quebec tower tower yankee charlie uniform mike oscar. Papa hotel uniform bravo november hotel echo xray forest delta castle. Yankee victor whiskey india castle castle bravo tower forest lima november. Lima xray oscar valley juliet xray romeo whiskey golf romeo foxtrot. Tango forest yankee zulu papa lima hotel garden harbor romeo victor. Harbor november hotel xray sierra mike victor desert castle harbor zulu. November sierra delta bravo oscar november yankee hotel golf tower whiskey. Oscar xray papa lima november charlie hotel zulu castle golf zulu. Zulu india romeo november tower papa victor lima golf castle golf. Papa castle village alpha forest golf hotel tower yankee echo victor. Castle hotel foxtrot uniform yankee zulu echo yankee alpha desert valley. Romeo hotel november hotel xray oscar village mike foxtrot hotel romeo. Bravo valley whiskey forest victor echo india alpha sierra alpha valley. Hotel hotel uniform victor whiskey village delta castle november hotel uniform. Hotel golf village garden bravo november juliet yankee sierra kilo bravo. Harbor golf xray kilo mike garden oscar echo oscar tower echo. India golf valley yankee kilo romeo india tower sierra juliet mike. Uniform juliet kilo kilo zulu papa bravo kilo valley yankee zulu. Zulu juliet golf november xray lima village castle yankee quebec echo. Zulu delta kilo harbor zulu echo echo valley tango echo sierra.",
+          "input": "Reply with the word Ok.",
+          "max_output_tokens": 16,
+          "store": false,
+          "stream": true
+        }
+      },
+      "response": {
+        "status": 200,
+        "event": "response.completed",
+        "usage": {
+          "input_tokens": 1697,
+          "input_tokens_details": {
+            "cache_write_tokens": 0,
+            "cached_tokens": 0
+          },
+          "output_tokens": 3,
+          "output_tokens_details": {
+            "reasoning_tokens": 0
+          },
+          "total_tokens": 1700
+        }
+      }
+    }
+  ]
+}

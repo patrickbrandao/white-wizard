@@ -1,0 +1,18 @@
+HTTP 200
+Content-Disposition: attachment
+Content-Type: text/event-stream
+Date: Sat, 31 Oct 2026 15:09:04 GMT
+Server: scaffolding on HTTPServer2
+Server-Timing: gfet4t7; dur=0
+Vary: Origin, X-Origin, Referer
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+X-Wwz-Seed: 1
+X-Xss-Protection: 0
+
+data: {"candidates": [{"content": {"parts": [{"text": "Each"}],"role": "model"},"index": 0}],"usageMetadata": {"promptTokenCount": 12,"candidatesTokenCount": 1,"totalTokenCount": 13,"promptTokensDetails": [{"modality": "TEXT","tokenCount": 12}],"serviceTier": "standard"},"modelVersion": "gemini-3.5-flash-lite","responseId": "kATmarX3-WzPoJLIcoxVMNQ"}
+
+data: {"candidates": [{"content": {"parts": [{"text": " option"}],"role": "model"},"index": 0}],"usageMetadata": {"promptTokenCount": 12,"candidatesTokenCount": 2,"totalTokenCount": 14,"promptTokensDetails": [{"modality": "TEXT","tokenCount": 12}],"serviceTier": "standard"},"modelVersion": "gemini-3.5-flash-lite","responseId": "kATmarX3-WzPoJLIcoxVMNQ"}
+
+data: {"candidates": [{"content": {"parts": [{"text": "","thoughtSignature": "EmAKXgFpFH0TcCzG2jjjIvQo06j+4Cr5MU+LPhcLo/ouBUC3wqCF/YEHeHHMbiofrNWEc3vVEDfmMBvKf1EnFmMmVAEs7c7IhZfcNNIllHCSNzSs8/Dn43x8GvYMjDzTvYQ="}],"role": "model"},"finishReason": "STOP","index": 0}],"usageMetadata": {"promptTokenCount": 12,"candidatesTokenCount": 2,"totalTokenCount": 14,"promptTokensDetails": [{"modality": "TEXT","tokenCount": 12}],"serviceTier": "standard"},"modelVersion": "gemini-3.5-flash-lite","responseId": "kATmarX3-WzPoJLIcoxVMNQ"}
+

@@ -1,0 +1,25 @@
+{
+  "provider": "openrouter",
+  "name": "messages",
+  "recorded_at": "2026-10-31",
+  "note": "Messages com upstream Amazon Bedrock: id msg_bdrk_ (normalizado <msg_id>); request-id = x-generation-id",
+  "request": {
+    "method": "POST",
+    "path": "/api/v1/messages",
+    "headers": {
+      "authorization": "Bearer <key>"
+    },
+    "body": "{\"model\": \"anthropic/claude-haiku-4.5\", \"max_tokens\": 16, \"messages\": [{\"role\": \"user\", \"content\": \"Responda só: ok\"}]}"
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "access-control-allow-origin": "*",
+      "access-control-expose-headers": "X-Generation-Id,X-Provider-Name,request-id,cf-ray",
+      "content-type": "application/json",
+      "request-id": "<generation_id>",
+      "x-generation-id": "<generation_id>"
+    },
+    "body": "{\"id\":\"<msg_id>\",\"type\":\"message\",\"role\":\"assistant\",\"container\":null,\"content\":[{\"type\":\"text\",\"text\":\"ok\",\"citations\":[]}],\"model\":\"anthropic/claude-haiku-4.5\",\"stop_reason\":\"end_turn\",\"stop_details\":null,\"stop_sequence\":null,\"usage\":{\"input_tokens\":13,\"output_tokens\":4,\"output_tokens_details\":{\"thinking_tokens\":0},\"cache_creation_input_tokens\":0,\"cache_read_input_tokens\":0,\"cache_creation\":{\"ephemeral_5m_input_tokens\":0,\"ephemeral_1h_input_tokens\":0},\"inference_geo\":null,\"server_tool_use\":null,\"service_tier\":\"standard\",\"speed\":\"standard\",\"cost\":0.000033,\"is_byok\":false,\"cost_details\":{\"upstream_inference_cost\":0.000033,\"upstream_inference_prompt_cost\":0.000013,\"upstream_inference_completions_cost\":0.00002}},\"context_management\":null,\"provider\":\"Amazon Bedrock\"}"
+  }
+}

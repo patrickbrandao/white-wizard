@@ -1,0 +1,25 @@
+{
+  "provider": "opencode",
+  "name": "tool_notools",
+  "recorded_at": "2026-10-31",
+  "note": "tool inexistente sem tools: recusa repassada (task 342)",
+  "request": {
+    "method": "POST",
+    "path": "/zen/go/v1/messages",
+    "headers": {
+      "anthropic-version": "2023-06-01",
+      "x-api-key": "<key>",
+      "x-opencode-session": "<session>"
+    },
+    "body": "{\"model\": \"claude-haiku-5-5\", \"max_tokens\": 1, \"messages\": [{\"role\": \"user\", \"content\": \"x\"}], \"tool_choice\": {\"type\": \"tool\", \"name\": \"zzz\"}}"
+  },
+  "response": {
+    "status": 400,
+    "headers": {
+      "content-type": "application/json",
+      "x-opencode-log-id": "<log_id>",
+      "x-zen-model": "claude-haiku-5-5"
+    },
+    "body": "{\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Upstream request failed: [invalid_request_error] Tool 'zzz' not found in provided tools\"}}"
+  }
+}

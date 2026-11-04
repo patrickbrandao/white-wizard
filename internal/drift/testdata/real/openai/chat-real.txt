@@ -1,0 +1,59 @@
+HTTP 200
+Access-Control-Expose-Headers: X-Request-ID, CF-Ray, CF-Ray
+Alt-Svc: h3=":443"; ma=86400
+Cf-Cache-Status: DYNAMIC
+Cf-Ray: a532af099bd70685-CNF
+Content-Type: application/json
+Date: Sat, 31 Oct 2026 12:32:50 GMT
+Openai-Organization: org-redacted
+Openai-Processing-Ms: 10562
+Openai-Project: proj_RedactedProjectID000000
+Openai-Version: 2020-10-01
+Server: cloudflare
+Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
+X-Content-Type-Options: nosniff
+X-Openai-Proxy-Wasm: v0.1
+X-Ratelimit-Limit-Requests: 5000
+X-Ratelimit-Limit-Tokens: 2000000
+X-Ratelimit-Remaining-Requests: 4999
+X-Ratelimit-Remaining-Tokens: 1999994
+X-Ratelimit-Reset-Requests: 12ms
+X-Ratelimit-Reset-Tokens: 0s
+X-Request-Id: req_923a1a13e4ca4419bd25f8ef60ef0666
+
+{
+  "id": "chatcmpl-Ef2YMuGdqwgKVZW6Q1InrPJS2S1hR",
+  "object": "chat.completion",
+  "created": 1793449970,
+  "model": "gpt-4o-mini-2024-07-18",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "Ok.",
+        "refusal": null,
+        "annotations": []
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 13,
+    "completion_tokens": 2,
+    "total_tokens": 15,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "audio_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "audio_tokens": 0,
+      "accepted_prediction_tokens": 0,
+      "rejected_prediction_tokens": 0
+    }
+  },
+  "service_tier": "default",
+  "system_fingerprint": "fp_3a7e128613"
+}

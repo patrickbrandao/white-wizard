@@ -1,0 +1,24 @@
+{
+  "provider": "opencode",
+  "name": "models",
+  "recorded_at": "2026-10-31",
+  "note": "sonda models do wwz-drift (wwz-drift record)",
+  "request": {
+    "method": "GET",
+    "path": "/inference/go/google/v1beta/models",
+    "headers": {
+      "x-goog-api-key": "<key>",
+      "x-opencode-session": "<session>"
+    },
+    "body": null
+  },
+  "response": {
+    "status": 404,
+    "headers": {
+      "content-length": "0",
+      "server": "cloudflare",
+      "x-opencode-log-id": "<log_id>"
+    },
+    "body": ""
+  }
+}

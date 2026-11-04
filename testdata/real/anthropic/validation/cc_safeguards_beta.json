@@ -1,0 +1,20 @@
+{
+  "provider": "anthropic",
+  "name": "cc_safeguards_beta",
+  "recorded_at": "2026-11-03",
+  "request": {
+    "method": "POST",
+    "path": "/v1/messages",
+    "headers": {
+      "x-api-key": "<key>",
+      "anthropic-version": "2023-06-01",
+      "anthropic-beta": "dangerous-tool-use-2026-09-03"
+    },
+    "body": "{\"model\": \"claude-haiku-5-5\", \"max_tokens\": 1, \"messages\": [{\"role\": \"user\", \"content\": \"x\"}], \"safeguards\": [{\"type\": \"dangerous_tool_use\", \"classifier_context\": {\"v\": 1, \"permission_mode\": \"auto\", \"platform\": \"linux\", \"live_cwd\": \"/work\", \"home_dir\": \"/home/user\", \"user_identity\": \"user\"}}]}"
+  },
+  "response": {
+    "status": 200,
+    "content_type": "application/json",
+    "body": null
+  }
+}

@@ -1,0 +1,8 @@
+HTTP 401
+Content-Length: 130
+Content-Type: application/json
+Date: Sat, 31 Oct 2026 12:32:03 GMT
+Request-Id: req_01GMy1NXAepycu03vfNDOdda
+X-Request-Id: req_01GMy1NXAepycu03vfNDOdda
+
+{"error":{"message":"invalid x-api-key","type":"authentication_error"},"request_id":"req_01GMy1NXAepycu03vfNDOdda","type":"error"}

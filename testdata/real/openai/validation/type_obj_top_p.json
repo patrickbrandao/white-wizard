@@ -1,0 +1,18 @@
+{
+  "provider": "openai",
+  "name": "type_obj_top_p",
+  "recorded_at": "2026-10-31",
+  "request": {
+    "method": "POST",
+    "path": "/v1/chat/completions",
+    "headers": {
+      "authorization": "Bearer <key>"
+    },
+    "body": "{\"model\": \"gpt-4o-mini\", \"messages\": [{\"role\": \"user\", \"content\": \"hi\"}], \"top_p\": {\"x\": [1]}}"
+  },
+  "response": {
+    "status": 400,
+    "content_type": "application/json",
+    "body": "{\n  \"error\": {\n    \"message\": \"Invalid type for 'top_p': expected a decimal, but got an object instead.\",\n    \"type\": \"invalid_request_error\",\n    \"param\": \"top_p\",\n    \"code\": \"invalid_type\"\n  }\n}"
+  }
+}

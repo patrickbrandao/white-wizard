@@ -1,0 +1,25 @@
+{
+  "provider": "anthropic",
+  "name": "error_auth",
+  "recorded_at": "2026-10-31",
+  "note": "sonda error_auth do wwz-drift (wwz-drift record)",
+  "request": {
+    "method": "POST",
+    "path": "/v1/messages",
+    "headers": {
+      "anthropic-version": "2023-06-01",
+      "x-api-key": "sk-invalid-wwz-drift"
+    },
+    "body": "{\"model\":\"claude-haiku-4-5-20251001\",\"messages\":[{\"role\":\"user\",\"content\":\"Responda só: ok\"}],\"max_tokens\":16}"
+  },
+  "response": {
+    "status": 401,
+    "headers": {
+      "cache-control": "no-store",
+      "content-type": "application/json",
+      "request-id": "<request_id>",
+      "x-should-retry": "false"
+    },
+    "body": "{\"type\":\"error\",\"error\":{\"type\":\"authentication_error\",\"message\":\"invalid x-api-key\"},\"request_id\":\"<request_id>\"}"
+  }
+}

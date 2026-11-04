@@ -1,0 +1,42 @@
+# Exemplo claude-code-assinatura (ADR 0016, ADR 0074). Sobe só o wwz, com store em
+# memória; o cliente (wwz-load claude-code ou o Claude Code real) roda no host.
+#   EX_PORT=18117 docker compose up -d --wait   # data plane em 127.0.0.1:18117
+# O smoke.sh faz tudo isso (projeto wwz-ex-claude-code-assinatura) e derruba com `down -v`.
+#
+# A porta é publicada direto, sem proxy na frente: o modo estrito
+# (client_verification: claude-code) precisa dos headers na ordem e grafia em
+# que o cliente os mandou, e um proxy que os reescreve (Traefik, net/http) faz
+# toda requisição ser recusada com header_order (ADR 0074, item 15).
+name: wwz-ex-claude-code-assinatura
+
+services:
+  wwz:
+    image: ${WWZ_IMAGE:-white-wizard:dev}
+    environment:
+      WWZ_CONFIG: /etc/wwz/wwz.yaml
+      WWZ_ADMIN_TOKEN: wwz-ex-admin-token # token de teste, sem valor fora do exemplo
+    volumes:
+      - ./config.yaml:/etc/wwz/wwz.yaml:ro
+    ports:
+      - "127.0.0.1:${EX_PORT:-18117}:8000"
+    read_only: true
+    tmpfs:
+      - /run
+      - /tmp
+    security_opt:
+      - no-new-privileges:true
+    cap_drop: [ALL]
+    ulimits:
+      nofile: { soft: 65536, hard: 65536 }
+    deploy:
+      resources:
+        limits:
+          cpus: "${WWZ_CPUS:-1}"
+          memory: "${WWZ_MEMORY:-256m}"
+    stop_grace_period: 10s
+    healthcheck:
+      test: ["CMD", "/usr/local/bin/healthcheck", "http://127.0.0.1:9000/health/ready"]
+      interval: 3s
+      timeout: 3s
+      start_period: 3s
+      retries: 10

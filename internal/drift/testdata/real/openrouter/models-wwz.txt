@@ -1,0 +1,6 @@
+HTTP 200
+Content-Length: 800
+Content-Type: application/json
+Date: Sat, 31 Oct 2026 12:32:04 GMT
+
+{"data":[{"architecture":{"input_modalities":["text"],"instruct_type":null,"modality":"text-\u003etext","output_modalities":["text"],"tokenizer":"Other"},"canonical_slug":"openai/gpt-4.1-nano","context_length":128000,"created":1735689600,"description":"Simulated model served by White Wizard (wwz).","id":"openai/gpt-4.1-nano","name":"White Wizard: openai/gpt-4.1-nano","per_request_limits":null,"pricing":{"completion":"0","image":"0","input_cache_read":"0","input_cache_write":"0","internal_reasoning":"0","prompt":"0","request":"0","web_search":"0"},"supported_parameters":["max_tokens","temperature","top_p","stop","frequency_penalty","presence_penalty","seed","response_format","tools","tool_choice"],"top_provider":{"context_length":128000,"is_moderated":false,"max_completion_tokens":16384}}]}

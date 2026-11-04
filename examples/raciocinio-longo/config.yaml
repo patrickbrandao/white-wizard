@@ -1,0 +1,55 @@
+# raciocinio-longo: modelo que raciocina por muito tempo antes de responder
+# (spec 007, spec 019). Quem pede raciocínio (`reasoning_effort` na OpenAI,
+# `thinking` na Anthropic) espera segundos até o primeiro token da resposta;
+# quem não pede responde na latência normal.
+server:
+  listen: ":8000"
+  auth: keys
+  seed: 20260101
+
+admin:
+  listen: ":9000"
+
+keys:
+  - key: wwz-key-01
+    label: roteador-sob-teste
+
+drivers:
+  # openai: raciocínio oculto, como a Chat Completions real (reasoning_field: hidden,
+  # o padrão): só `usage.completion_tokens_details.reasoning_tokens` e o atraso.
+  - name: openai
+    options: { reasoning_field: hidden }
+  # anthropic: formato fixo, blocos `thinking` com `thinking_delta` antes do texto.
+  - name: anthropic
+
+models:
+  - id: wwz-reasoner
+    display_name: WWZ Reasoner
+    protocols: [openai, anthropic]
+    context_window: 200000
+    max_output: 64000
+    capabilities: { tools: true, reasoning: true }
+    latency: reasoner
+    errors: none
+    generation: longo
+
+profiles:
+  latency:
+    reasoner:
+      ttft: { dist: normal, mean: 300ms, stddev: 60ms }
+      itl: { dist: normal, mean: 10ms, stddev: 2ms }
+      # 8 ms por token de raciocínio: 300 a 400 tokens (effort medium) = 2,4 a 3,2 s;
+      # o dobro com effort high.
+      reasoning_itl: { dist: normal, mean: 8ms, stddev: 1ms }
+  errors:
+    none: { rate: 0 }
+  generation:
+    longo:
+      mode: random
+      output_tokens: { dist: uniform, min: 20, max: 40 }
+      # Sorteio entre 300 e 400 tokens, sempre (probability 100). `reasoning_effort`
+      # low/medium/high multiplica por 0,5 / 1 / 2 (spec 007); `budget_tokens` é o teto.
+      reasoning_tokens: { min: 300, max: 400, probability: 100 }
+
+logging:
+  level: warn

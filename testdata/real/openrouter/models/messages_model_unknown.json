@@ -1,0 +1,18 @@
+{
+  "provider": "openrouter",
+  "name": "messages_model_unknown",
+  "recorded_at": "2026-10-31",
+  "request": {
+    "method": "POST",
+    "path": "/api/v1/messages",
+    "headers": {
+      "authorization": "Bearer <key>"
+    },
+    "body": "{\"model\": \"nonexistent-wwz\", \"max_tokens\": 1, \"messages\": [{\"role\": \"user\", \"content\": \"hi\"}]}"
+  },
+  "response": {
+    "status": 400,
+    "content_type": "application/json",
+    "body": "{\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"nonexistent-wwz is not a valid model ID\",\"error_type\":\"invalid_request\"},\"request_id\":\"<request_id>\"}"
+  }
+}

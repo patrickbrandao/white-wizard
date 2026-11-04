@@ -1,0 +1,24 @@
+{
+  "provider": "opencode",
+  "name": "gen_tool",
+  "recorded_at": "2026-10-31",
+  "note": "rota Gemini do gateway (task 241)",
+  "request": {
+    "method": "POST",
+    "path": "/inference/go/google/v1beta/models/gemini-4-argon:generateContent",
+    "headers": {
+      "x-goog-api-key": "<key>",
+      "x-opencode-session": "<session>"
+    },
+    "body": "{\"contents\":[{\"role\":\"user\",\"parts\":[{\"text\":\"Qual o clima em Recife? Use a ferramenta.\"}]}],\"tools\":[{\"functionDeclarations\":[{\"name\":\"get_weather\",\"description\":\"clima\",\"parameters\":{\"type\":\"OBJECT\",\"properties\":{\"city\":{\"type\":\"STRING\"}},\"required\":[\"city\"]}}]}],\"toolConfig\":{\"functionCallingConfig\":{\"mode\":\"ANY\"}},\"generationConfig\":{\"maxOutputTokens\":64}}"
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "content-type": "application/json",
+      "x-opencode-log-id": "<log_id>",
+      "x-zen-model": "gemini-4-argon"
+    },
+    "body": "{\"createTime\":\"2026-10-31T15:33:19.397117Z\",\"responseId\":\"Pwrmar2eGPHNw-UP5sLAsQ8\",\"modelVersion\":\"gemini-4-argon\",\"candidates\":[{\"finishReason\":\"STOP\",\"content\":{\"role\":\"model\",\"parts\":[{\"thoughtSignature\":\"AY89a1/VITIr3kqXz3mb+aOOm6IT0VTapMQmN+aT9KYsgnsCF3/YYYyIU7LYlbzpTMLoDaGsGhuRaJCtZupeV9TIviE0B6KnDO2g4yJiqLiXbCydjA==\",\"functionCall\":{\"id\":\"call_267449\",\"name\":\"get_weather\",\"args\":{\"city\":\"Recife\"}}}]}}],\"usageMetadata\":{\"candidatesTokensDetails\":[{\"modality\":\"TEXT\",\"tokenCount\":23}],\"promptTokensDetails\":[{\"modality\":\"TEXT\",\"tokenCount\":88}],\"candidatesTokenCount\":23,\"promptTokenCount\":88,\"totalTokenCount\":111,\"cost\":0,\"opencode\":{\"billing_source\":\"go\",\"list_cost\":0.000406,\"allowance\":0.000812,\"tokens\":{\"input\":88,\"output\":23,\"reasoning\":0,\"cache_read\":0,\"cache_write_5m\":0,\"cache_write_1h\":0}}}}"
+  }
+}

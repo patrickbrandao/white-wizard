@@ -1,0 +1,19 @@
+{
+  "provider": "anthropic",
+  "name": "cc_h55_role_system_empty_string",
+  "recorded_at": "2026-11-03",
+  "request": {
+    "method": "POST",
+    "path": "/v1/messages",
+    "headers": {
+      "x-api-key": "<key>",
+      "anthropic-version": "2023-06-01"
+    },
+    "body": "{\"model\": \"claude-haiku-5-5\", \"max_tokens\": 1, \"messages\": [{\"role\": \"user\", \"content\": \"x\"}, {\"role\": \"system\", \"content\": \"\"}]}"
+  },
+  "response": {
+    "status": 400,
+    "content_type": "application/json",
+    "body": "{\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"messages.1: system content must contain at least one block\"},\"request_id\":\"<request_id>\"}"
+  }
+}

@@ -1,0 +1,43 @@
+HTTP 200
+Alt-Svc: h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+Content-Type: application/json; charset=UTF-8
+Date: Sat, 31 Oct 2026 15:09:04 GMT
+Server: scaffolding on HTTPServer2
+Server-Timing: gfet4t7; dur=1040
+Vary: Origin, X-Origin, Referer
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+X-Gemini-Service-Tier: standard
+X-Xss-Protection: 0
+
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "ok",
+            "thoughtSignature": "EmAKXgFpFH0TuRGmhvhxz8/I7j/jKmEuI2+gxdRmOja0evqlhYRD8w7vRIuJYzTK+jnHNzxo6ViWVePanjFa7GiS65QM+2H/Qf2yOs1RtWzolAq15VGavzK/DMkffDox4Ag="
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 7,
+    "candidatesTokenCount": 1,
+    "totalTokenCount": 8,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 7
+      }
+    ],
+    "serviceTier": "standard"
+  },
+  "modelVersion": "gemini-3.5-flash-lite",
+  "responseId": "jwTmauCWJY_NytMP5YWPqQM"
+}

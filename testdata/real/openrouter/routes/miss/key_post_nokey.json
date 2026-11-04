@@ -1,0 +1,23 @@
+{
+  "provider": "openrouter",
+  "name": "key_post_nokey",
+  "recorded_at": "2026-10-31",
+  "note": "",
+  "request": {
+    "method": "POST",
+    "path": "/api/v1/key",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "body": "{}"
+  },
+  "response": {
+    "status": 404,
+    "headers": {
+      "content-type": "application/json",
+      "access-control-allow-origin": "*",
+      "access-control-expose-headers": "X-Generation-Id,X-Provider-Name,request-id,cf-ray"
+    },
+    "body": "{\"error\":{\"message\":\"Not Found\",\"code\":404}}"
+  }
+}

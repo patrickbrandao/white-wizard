@@ -1,0 +1,52 @@
+# indisponibilidade-janelas: errors.outages com janelas em segundos, minutos e
+# horas (spec 009, ADR 0016). `schedule` é um cron de seis campos
+# (segundo minuto hora dia-do-mês mês dia-da-semana), avaliado em UTC.
+#
+# Cada janela está num modelo próprio (errors inline) para que o smoke possa
+# provar a de segundos a qualquer hora e conferir as de minutos e horas pelo
+# relógio, sem depender de a execução cair dentro delas.
+server:
+  listen: ":8000"
+  auth: keys
+  seed: 20242
+
+admin:
+  listen: ":9000"
+
+store:
+  kind: memory
+
+keys:
+  - { key: wwz-key-demo, label: demo }
+
+profiles:
+  latency:
+    rapida: { ttft: 5ms, itl: 1ms }
+
+models:
+  # Segundos: 5 s fora de 20 s (nos segundos :00-:04, :20-:24, :40-:44 de cada
+  # minuto). Dentro da janela: 503 overloaded com retry-after até o fim dela.
+  - id: janela-segundos
+    protocols: [openai]
+    latency: rapida
+    errors:
+      outages:
+        - { schedule: "*/20 * * * * *", duration: 5s, type: overloaded }
+
+  # Minutos: 1 min a cada 10 min (minutos hh:00, hh:10, ... hh:50 de cada hora).
+  # Dentro da janela: 500 server_error.
+  - id: janela-minutos
+    protocols: [openai]
+    latency: rapida
+    errors:
+      outages:
+        - { schedule: "0 */10 * * * *", duration: 1m, type: server_error }
+
+  # Horas: 1 h a cada 6 h (00:00, 06:00, 12:00 e 18:00 UTC). Dentro da janela:
+  # 502 bad_gateway. Para um fuso de negócio use `timezone: America/Sao_Paulo`.
+  - id: janela-horas
+    protocols: [openai]
+    latency: rapida
+    errors:
+      outages:
+        - { schedule: "0 0 */6 * * *", duration: 1h, type: bad_gateway }

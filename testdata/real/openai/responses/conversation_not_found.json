@@ -1,0 +1,19 @@
+{
+  "provider": "openai",
+  "name": "conversation_not_found",
+  "recorded_at": "2026-10-31",
+  "request": {
+    "method": "POST",
+    "path": "/v1/responses",
+    "headers": {
+      "authorization": "Bearer <key>",
+      "content-type": "application/json"
+    },
+    "body": "{\"model\": \"gpt-4o-mini\", \"input\": \"x\", \"conversation\": \"conv_x\", \"store\": false, \"max_output_tokens\": 16}"
+  },
+  "response": {
+    "status": 404,
+    "content_type": "application/json",
+    "body": "{\n  \"error\": {\n    \"message\": \"Conversation with id 'conv_x' not found.\",\n    \"type\": \"invalid_request_error\",\n    \"param\": null,\n    \"code\": null\n  }\n}"
+  }
+}

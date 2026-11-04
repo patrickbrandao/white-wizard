@@ -1,0 +1,23 @@
+{
+  "provider": "opencode",
+  "name": "messages_model",
+  "recorded_at": "2026-10-31",
+  "note": "Messages com modelo inexistente",
+  "request": {
+    "method": "POST",
+    "path": "/inference/go/anthropic/v1/messages",
+    "headers": {
+      "authorization": "Bearer sk-invalid-wwz-drift",
+      "x-opencode-session": "<session>"
+    },
+    "body": "{\"model\": \"wwz-drift-modelo-inexistente\", \"messages\": [{\"role\": \"user\", \"content\": \"Responda só: ok\"}], \"max_tokens\": 16}"
+  },
+  "response": {
+    "status": 400,
+    "headers": {
+      "content-type": "application/json",
+      "x-opencode-log-id": "<log_id>"
+    },
+    "body": "{\"type\":\"error\",\"error\":{\"type\":\"api_error\",\"message\":\"Upstream request failed: Model is unavailable.\"}}"
+  }
+}

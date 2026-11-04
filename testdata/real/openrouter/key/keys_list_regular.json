@@ -1,0 +1,25 @@
+{
+  "provider": "openrouter",
+  "name": "keys_list_regular",
+  "recorded_at": "2026-10-31",
+  "note": "Key management API with an inference key (not a provisioning key)",
+  "request": {
+    "method": "GET",
+    "path": "/api/v1/keys",
+    "headers": {
+      "authorization": "Bearer <key>"
+    },
+    "body": ""
+  },
+  "response": {
+    "status": 401,
+    "content_type": "application/json",
+    "headers": {
+      "content-type": "application/json",
+      "access-control-allow-origin": "*",
+      "cache-control": "private, no-store",
+      "access-control-expose-headers": "X-Generation-Id,X-Provider-Name,request-id,cf-ray"
+    },
+    "body": "{\"error\":{\"message\":\"Invalid API key\",\"code\":401}}"
+  }
+}

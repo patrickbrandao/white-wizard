@@ -1,0 +1,1711 @@
+openapi: 3.1.0
+info:
+  title: White Wizard (wwz-panel) — API do painel
+  version: 0.2.0
+  summary: API JSON do painel do cluster wwz, autenticação, saúde e métricas.
+  description: |
+    Contrato do binário `wwz-panel` (net/http, `WWZ_PANEL_LISTEN`, padrão `:8100`). Fonte:
+    specs/016-painel.md (seção "Contrato do `wwz-panel` (fase 3)", normativa); decisões ADR 0005
+    (bootstrap), 0009 (backup), 0023 (dependências) e 0025 (políticas, tier e reset por entidade).
+    Implementado sem desvio pelas tarefas 049 e 053; divergência necessária vira tarefa para o
+    guardião das specs.
+
+    Regras gerais:
+    - Tudo que as telas fazem está em `/api/v1/*` (JSON, `snake_case`). As páginas HTML (telas,
+      `/login`, `/static/*`) não fazem parte deste contrato e usam a mesma camada de serviço.
+    - Autenticação: cookie de sessão `wwz_panel_session` (login local ou OIDC) ou
+      `Authorization: Bearer <WWZ_PANEL_API_TOKEN>` (automação; age como `operator` com usuário
+      de auditoria `api-token`; com a variável vazia o bearer é recusado com 401).
+    - CSRF: todo método não-GET autenticado por cookie exige o header `X-CSRF-Token` (o valor vem
+      em `GET /api/v1/me`) ou o campo de formulário `csrf`; ausente ou diferente → 403
+      `csrf`. Requisições com bearer dispensam CSRF. `POST /api/v1/login` não tem sessão e exige
+      `Origin` igual ao host do painel (ou ausente).
+    - Papéis: `viewer` lê tudo; `operator` lê e executa ações. A extensão `x-wwz-role` de cada
+      operação diz o papel mínimo. Sem sessão → 401; `viewer` numa ação → 403 `forbidden`.
+    - Ações: cada uma chama a rota do control plane do wwz indicada em `x-wwz-admin`
+      (cmd/wwz/openapi.yaml, com `Authorization: Bearer <WWZ_ADMIN_TOKEN>`) e grava uma linha de
+      `audit` com a ação de `x-wwz-audit-action`, o alvo e `diff` = `{"request", "before",
+      "after"}` (`before` via GET da entidade antes da ação). Resposta 4xx do admin: o painel
+      repassa 400/404 com o envelope `Problem` (mensagem do admin em `details`) e grava
+      `result = 'error'`; 401/403/5xx do admin, timeout ou conexão recusada → 502
+      `upstream_unavailable`.
+    - Fontes de dados (spec 016, "Fontes de dados"): falha de uma fonte responde 502
+      `upstream_unavailable` só para o que dependia dela. Campo sem dado na fonte vem `null`
+      (a tela mostra "—"), nunca zero. As respostas de leitura trazem `source` dizendo de onde
+      veio o dado.
+    - Paginação por cursor: `limit` (padrão 100, máximo 1000) e `cursor` (opaco, vindo de
+      `next_cursor` da página anterior); `next_cursor` ausente = última página. Ordem: mais
+      recentes primeiro.
+    - Erros usam o schema `Problem` (mesmo formato do admin do wwz). Códigos: `unauthorized`,
+      `forbidden`, `csrf`, `not_found`, `invalid`, `conflict`, `too_many_requests`,
+      `upstream_unavailable`, `not_implemented`, `internal`.
+    - Durante a fase 3, rotas do contrato ainda sem código respondem 501 `not_implemented` com o
+      envelope `Problem` (tarefa 049 até a 053). Não há 501 depois da fase 3.
+    - Tempos em JSON são RFC 3339 (`date-time`); durações no formato Go (`30s`, `5m`).
+servers:
+  - url: http://127.0.0.1:8100
+    description: Painel local (padrão `WWZ_PANEL_LISTEN=:8100`).
+tags:
+  - name: saude
+    description: Liveness, readiness e métricas (abertos).
+  - name: auth
+    description: Login local, OIDC, sessão.
+  - name: visao
+    description: Visão geral, uso, instâncias, erros e eventos (leitura).
+  - name: entidades
+    description: Entidades, limites ao vivo e ações (bloqueio, banimento, tier, reset, créditos).
+  - name: caos
+    description: Injeção de erros e eventos de caos.
+  - name: cenarios
+    description: Cenários carregados no wwz.
+  - name: config
+    description: Configuração efetiva e políticas do cluster (`cfg:policies`).
+  - name: auditoria
+    description: Trilha de ações de operador.
+
+security:
+  - cookieAuth: []
+  - bearerAuth: []
+
+paths:
+  /health:
+    get:
+      tags: [saude]
+      operationId: getHealth
+      summary: Liveness
+      description: 200 enquanto o processo vive.
+      security: []
+      x-wwz-role: none
+      responses:
+        '200':
+          description: Processo vivo.
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [status]
+                properties:
+                  status: { type: string, const: ok }
+
+  /health/ready:
+    get:
+      tags: [saude]
+      operationId: getReady
+      summary: Readiness e estado das fontes
+      description: |
+        200 quando o SQLite abriu (fontes indisponíveis não derrubam o ready; aparecem no corpo).
+        503 enquanto o SQLite não abriu.
+      security: []
+      x-wwz-role: none
+      responses:
+        '200':
+          description: Pronto.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Ready'
+              example: { status: ready, sources: { valkey: ok, admin: ok, prometheus: off } }
+        '503':
+          description: SQLite ainda não abriu.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Ready'
+
+  /metrics:
+    get:
+      tags: [saude]
+      operationId: getMetrics
+      summary: Métricas Prometheus do painel
+      description: |
+        Formato texto do Prometheus (escrito com a stdlib): `wwz_panel_stream_lag`,
+        `wwz_panel_events_ingested_total`, `wwz_panel_last_backup_timestamp_seconds`,
+        `wwz_panel_source_up{source}` (`valkey`, `admin`, `prometheus`).
+      security: []
+      x-wwz-role: none
+      responses:
+        '200':
+          description: Métricas.
+          content:
+            text/plain; version=0.0.4:
+              schema: { type: string }
+
+  /auth/oidc/login:
+    get:
+      tags: [auth]
+      operationId: oidcLogin
+      summary: Inicia o login OIDC
+      description: |
+        Authorization code com PKCE, `state` e `nonce` (guardados num cookie curto assinado).
+        Redireciona ao `issuer`. `next` (caminho relativo do painel) é devolvido no callback.
+      security: []
+      x-wwz-role: none
+      parameters:
+        - name: next
+          in: query
+          description: Caminho relativo para onde voltar após o login (só `/...`; outro valor é ignorado).
+          schema: { type: string }
+      responses:
+        '302':
+          description: Redirecionamento ao provedor OIDC.
+          headers:
+            Location:
+              schema: { type: string, format: uri }
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /auth/oidc/callback:
+    get:
+      tags: [auth]
+      operationId: oidcCallback
+      summary: Retorno do provedor OIDC
+      description: |
+        Troca o `code`, valida o ID token (`go-oidc`), `state` e `nonce`, calcula o papel pelas
+        claims (`oidc.role_claim`, `operator_values`, `viewer_values`, `default_role`), cria ou
+        atualiza o usuário (`source = 'oidc'`) e abre a sessão. Redirect = `public_url` +
+        `/auth/oidc/callback`.
+      security: []
+      x-wwz-role: none
+      parameters:
+        - name: code
+          in: query
+          schema: { type: string }
+        - name: state
+          in: query
+          schema: { type: string }
+        - name: error
+          in: query
+          description: Erro devolvido pelo provedor.
+          schema: { type: string }
+      responses:
+        '302':
+          description: Sessão aberta; redireciona para `next` (ou `/`).
+          headers:
+            Location:
+              schema: { type: string }
+            Set-Cookie:
+              schema: { type: string }
+        '400':
+          $ref: '#/components/responses/Invalid'
+        '403':
+          description: 'Usuário sem papel (`default_role: none`) ou desativado.'
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Problem' }
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '502':
+          $ref: '#/components/responses/UpstreamUnavailable'
+
+  /api/v1/login:
+    post:
+      tags: [auth]
+      operationId: login
+      summary: Login local
+      description: |
+        Verifica a senha (argon2id, comparação em tempo constante) e abre a sessão
+        (`Set-Cookie: wwz_panel_session=...; HttpOnly; SameSite=Lax; Path=/`, com `Secure` sob
+        https). Limite de 10 tentativas por minuto por IP. Com corpo de formulário (página
+        `/login`) responde 303 para `next` (ou `/`) em sucesso e para `/login?error=1` em falha.
+      security: []
+      x-wwz-role: none
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/LoginRequest' }
+          application/x-www-form-urlencoded:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/LoginRequest'
+                - type: object
+                  properties:
+                    next: { type: string }
+      responses:
+        '200':
+          description: Sessão aberta.
+          headers:
+            Set-Cookie:
+              schema: { type: string }
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Me' }
+        '303':
+          description: Resposta ao formulário HTML.
+          headers:
+            Location:
+              schema: { type: string }
+        '400':
+          $ref: '#/components/responses/Invalid'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          description: '`Origin` diferente do host do painel.'
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Problem' }
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+
+  /api/v1/logout:
+    post:
+      tags: [auth]
+      operationId: logout
+      summary: Encerra a sessão
+      description: Revoga a sessão no banco e apaga o cookie. Com bearer, não faz nada (204).
+      x-wwz-role: viewer
+      parameters:
+        - $ref: '#/components/parameters/CSRFHeader'
+      responses:
+        '204':
+          description: Sessão encerrada.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+
+  /api/v1/me:
+    get:
+      tags: [auth]
+      operationId: getMe
+      summary: Usuário da sessão
+      x-wwz-role: viewer
+      responses:
+        '200':
+          description: Usuário, papel e token CSRF da sessão.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Me' }
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /api/v1/overview:
+    get:
+      tags: [visao]
+      operationId: getOverview
+      summary: Visão geral do cluster
+      description: |
+        req/s, tokens/s, streams abertos, p50/p99 de TTFT e E2E, erros/s por tipo e status,
+        rejeições por limite e instâncias vivas. Prometheus quando configurado (consultas da
+        spec 016); sem ele, `/admin/stats` da instância de `WWZ_PANEL_WWZ_ADMIN_URL`
+        (`source: admin_stats`, taxas calculadas pela diferença entre duas leituras).
+      x-wwz-role: viewer
+      parameters:
+        - $ref: '#/components/parameters/Window'
+        - $ref: '#/components/parameters/DriverFilter'
+        - $ref: '#/components/parameters/ModelFilter'
+        - name: series
+          in: query
+          description: Inclui séries temporais (`query_range` com passo `janela/60`).
+          schema: { type: boolean, default: false }
+      responses:
+        '200':
+          description: Visão geral.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Overview' }
+        '400':
+          $ref: '#/components/responses/Invalid'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '502':
+          $ref: '#/components/responses/UpstreamUnavailable'
+
+  /api/v1/usage:
+    get:
+      tags: [visao]
+      operationId: getUsage
+      summary: Uso da inferência falsa
+      description: |
+        Linhas agrupadas por `group`. Por `driver` e `model` vem do Prometheus quando disponível
+        (exato); por `key`, `account` e `ip`, e as colunas de raciocínio, cache, gasto e tool
+        calls, vêm da agregação da tabela `events` (tipo `request`, peso `1/sample`). Coluna sem
+        dado na fonte vem `null`. A composição da entrada (`input_breakdown`, I16, ADR 0032) e
+        `input_breakdown_requests` também vêm de `events`, somadas só sobre os eventos que trazem
+        `fields.input_breakdown` (wwz com `usage.extended: true`). `format=csv` devolve as mesmas
+        colunas em CSV (cabeçalho na primeira linha; `tool_calls` como `nome=n;nome=n`;
+        `input_breakdown` achatado nas nove colunas `input_system`, `input_tool_schemas`,
+        `input_user`, `input_assistant`, `input_tool_calls`, `input_tool_results`,
+        `input_images`, `input_cached`, `input_total`, seguidas de `input_breakdown_requests`;
+        `null` como campo vazio).
+      x-wwz-role: viewer
+      parameters:
+        - name: group
+          in: query
+          required: true
+          schema:
+            type: string
+            enum: [driver, model, key, account, ip]
+        - $ref: '#/components/parameters/UsageWindow'
+        - $ref: '#/components/parameters/DriverFilter'
+        - $ref: '#/components/parameters/ModelFilter'
+        - name: limit
+          in: query
+          description: Máximo de linhas (as de mais requisições primeiro).
+          schema: { type: integer, minimum: 1, maximum: 10000, default: 100 }
+        - $ref: '#/components/parameters/Format'
+      responses:
+        '200':
+          description: Uso agregado.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Usage' }
+            text/csv:
+              schema: { type: string }
+        '400':
+          $ref: '#/components/responses/Invalid'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '502':
+          $ref: '#/components/responses/UpstreamUnavailable'
+
+  /api/v1/usage/series:
+    get:
+      tags: [visao]
+      operationId: getUsageSeries
+      summary: Série temporal de uso de um grupo
+      description: |
+        "Ver série temporal" da tela de uso: requisições, tokens e gasto de um valor de `group`
+        ao longo de `window`, em 60 pontos. Mesmas fontes de `GET /api/v1/usage`.
+      x-wwz-role: viewer
+      parameters:
+        - name: group
+          in: query
+          required: true
+          schema:
+            type: string
+            enum: [driver, model, key, account, ip]
+        - name: value
+          in: query
+          required: true
+          description: Valor do grupo (nome do driver, id do modelo, label da chave, conta ou IP).
+          schema: { type: string, minLength: 1 }
+        - $ref: '#/components/parameters/UsageWindow'
+      responses:
+        '200':
+          description: Série.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/UsageSeries' }
+        '400':
+          $ref: '#/components/responses/Invalid'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '502':
+          $ref: '#/components/responses/UpstreamUnavailable'
+
+  /api/v1/entities:
+    get:
+      tags: [entidades]
+      operationId: listEntities
+      summary: Lista entidades
+      description: |
+        Com Valkey: `idx:ent`/`idx:status:*` + hash `ent:` (status efetivo pelas marcas, como
+        `List` do store). Sem Valkey: `GET /admin/entities?status=`. Tela "Bloqueios e
+        banimentos" usa `status=suspended` e `status=banned`; tela "Limites", sem `status`.
+      x-wwz-role: viewer
+      parameters:
+        - name: status
+          in: query
+          schema: { $ref: '#/components/schemas/EntityStatus' }
+        - name: kind
+          in: query
+          schema: { $ref: '#/components/schemas/EntityKind' }
+        - $ref: '#/components/parameters/Limit'
+        - $ref: '#/components/parameters/Cursor'
+      responses:
+        '200':
+          description: Entidades.
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [entities, source]
+                properties:
+                  entities:
+                    type: array
+                    items: { $ref: '#/components/schemas/EntityState' }
+                  next_cursor: { type: string }
+                  source: { type: string, enum: [valkey, admin] }
+        '400':
+          $ref: '#/components/responses/Invalid'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '502':
+          $ref: '#/components/responses/UpstreamUnavailable'
+
+  /api/v1/entities/{kind}/{id}:
+    parameters:
+      - $ref: '#/components/parameters/EntityKindPath'
+      - $ref: '#/components/parameters/EntityIdPath'
+    get:
+      tags: [entidades]
+      operationId: getEntity
+      summary: Estado e limites ao vivo de uma entidade
+      description: |
+        Estado da entidade mais cada limite com `limit`/`remaining`/`reset`. Com Valkey, os
+        limites são calculados no painel a partir de `tb:`, `win:`, `q5h:`, `qwk:` (README do
+        Valkey) e dos limites efetivos do tier (`/admin/config` + `cfg:policies`); sem Valkey,
+        `limits` vem vazio e só o estado de `GET /admin/entities/{tipo}/{id}` aparece. Entidade
+        sem estado → 200 com `status: active`.
+      x-wwz-role: viewer
+      responses:
+        '200':
+          description: Entidade.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/EntityDetail' }
+        '400':
+          $ref: '#/components/responses/Invalid'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '502':
+          $ref: '#/components/responses/UpstreamUnavailable'
+
+  /api/v1/entities/{kind}/{id}/block:
+    parameters:
+      - $ref: '#/components/parameters/EntityKindPath'
+      - $ref: '#/components/parameters/EntityIdPath'
+    post:
+      tags: [entidades]
+      operationId: blockEntity
+      summary: Bloqueia (suspende) a entidade
+      description: '`by` é preenchido pelo painel com `panel:<usuario>`.'
+      x-wwz-role: operator
+      x-wwz-admin: POST /admin/entities/{tipo}/{id}/block
+      x-wwz-audit-action: entity.block
+      parameters:
+        - $ref: '#/components/parameters/CSRFHeader'
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/BlockRequest' }
+            example: { reason: teste de bloqueio, duration: 10m }
+      responses:
+        '200': { $ref: '#/components/responses/EntityAction' }
+        '400': { $ref: '#/components/responses/Invalid' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '502': { $ref: '#/components/responses/UpstreamUnavailable' }
+
+  /api/v1/entities/{kind}/{id}/unblock:
+    parameters:
+      - $ref: '#/components/parameters/EntityKindPath'
+      - $ref: '#/components/parameters/EntityIdPath'
+    post:
+      tags: [entidades]
+      operationId: unblockEntity
+      summary: Remove o bloqueio
+      x-wwz-role: operator
+      x-wwz-admin: POST /admin/entities/{tipo}/{id}/unblock
+      x-wwz-audit-action: entity.unblock
+      parameters:
+        - $ref: '#/components/parameters/CSRFHeader'
+      responses:
+        '200': { $ref: '#/components/responses/EntityAction' }
+        '400': { $ref: '#/components/responses/Invalid' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '502': { $ref: '#/components/responses/UpstreamUnavailable' }
+
+  /api/v1/entities/{kind}/{id}/ban:
+    parameters:
+      - $ref: '#/components/parameters/EntityKindPath'
+      - $ref: '#/components/parameters/EntityIdPath'
+    post:
+      tags: [entidades]
+      operationId: banEntity
+      summary: Bane a entidade
+      description: '`by` é preenchido pelo painel com `panel:<usuario>`.'
+      x-wwz-role: operator
+      x-wwz-admin: POST /admin/entities/{tipo}/{id}/ban
+      x-wwz-audit-action: entity.ban
+      parameters:
+        - $ref: '#/components/parameters/CSRFHeader'
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/BanRequest' }
+      responses:
+        '200': { $ref: '#/components/responses/EntityAction' }
+        '400': { $ref: '#/components/responses/Invalid' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '502': { $ref: '#/components/responses/UpstreamUnavailable' }
+
+  /api/v1/entities/{kind}/{id}/unban:
+    parameters:
+      - $ref: '#/components/parameters/EntityKindPath'
+      - $ref: '#/components/parameters/EntityIdPath'
+    post:
+      tags: [entidades]
+      operationId: unbanEntity
+      summary: Remove o banimento
+      x-wwz-role: operator
+      x-wwz-admin: POST /admin/entities/{tipo}/{id}/unban
+      x-wwz-audit-action: entity.unban
+      parameters:
+        - $ref: '#/components/parameters/CSRFHeader'
+      responses:
+        '200': { $ref: '#/components/responses/EntityAction' }
+        '400': { $ref: '#/components/responses/Invalid' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '502': { $ref: '#/components/responses/UpstreamUnavailable' }
+
+  /api/v1/entities/{kind}/{id}/forgive:
+    parameters:
+      - $ref: '#/components/parameters/EntityKindPath'
+      - $ref: '#/components/parameters/EntityIdPath'
+    post:
+      tags: [entidades]
+      operationId: forgiveEntity
+      summary: Perdoa os strikes da entidade
+      description: 'Chama o reset da entidade com `{"scope": ["strikes"]}` (ADR 0025). Sem corpo.'
+      x-wwz-role: operator
+      x-wwz-admin: 'POST /admin/entities/{tipo}/{id}/reset {"scope": ["strikes"]}'
+      x-wwz-audit-action: entity.forgive
+      parameters:
+        - $ref: '#/components/parameters/CSRFHeader'
+      responses:
+        '200': { $ref: '#/components/responses/EntityAction' }
+        '400': { $ref: '#/components/responses/Invalid' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '502': { $ref: '#/components/responses/UpstreamUnavailable' }
+
+  /api/v1/entities/{kind}/{id}/leak:
+    parameters:
+      - $ref: '#/components/parameters/EntityKindPath'
+      - $ref: '#/components/parameters/EntityIdPath'
+    post:
+      tags: [entidades]
+      operationId: leakKey
+      summary: Marca a chave como vazada
+      description: |
+        Só `kind = key` (outro → 400). Chama `POST /admin/leak` com `{"label": <id>, "reason"}`:
+        ban da chave e bloqueio da conta dona até a rotação.
+      x-wwz-role: operator
+      x-wwz-admin: POST /admin/leak
+      x-wwz-audit-action: entity.leak
+      parameters:
+        - $ref: '#/components/parameters/CSRFHeader'
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              properties:
+                reason: { type: string, default: leaked }
+      responses:
+        '200':
+          description: Chave banida e conta bloqueada.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/LeakAction' }
+        '400': { $ref: '#/components/responses/Invalid' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '404': { $ref: '#/components/responses/NotFound' }
+        '502': { $ref: '#/components/responses/UpstreamUnavailable' }
+
+  /api/v1/entities/{kind}/{id}/tier:
+    parameters:
+      - $ref: '#/components/parameters/EntityKindPath'
+      - $ref: '#/components/parameters/EntityIdPath'
+    post:
+      tags: [entidades]
+      operationId: setEntityTier
+      summary: Altera o tier da entidade
+      description: |
+        "Alterar tier" e "editar limite da entidade" da tela Limites (ADR 0025: edita-se o tier em
+        políticas e atribui-se aqui). O tier pertence à conta (ADR 0051): `kind = account`, ou
+        `kind = key`, que o wwz resolve para a conta da chave (chave desconhecida ou sem conta →
+        400) e a resposta traz o `EntityState` da conta; `ip`, `user` e `project` → 400.
+        `""`/`null` remove a sobreposição. A auditoria grava a entidade pedida (por exemplo `key/<id>`).
+      x-wwz-role: operator
+      x-wwz-admin: POST /admin/entities/{tipo}/{id}/tier
+      x-wwz-audit-action: entity.tier
+      parameters:
+        - $ref: '#/components/parameters/CSRFHeader'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/TierRequest' }
+            example: { tier: tier-4 }
+      responses:
+        '200': { $ref: '#/components/responses/EntityAction' }
+        '400': { $ref: '#/components/responses/Invalid' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '502': { $ref: '#/components/responses/UpstreamUnavailable' }
+
+  /api/v1/entities/{kind}/{id}/reset:
+    parameters:
+      - $ref: '#/components/parameters/EntityKindPath'
+      - $ref: '#/components/parameters/EntityIdPath'
+    post:
+      tags: [entidades]
+      operationId: resetEntity
+      summary: Zera contadores da entidade
+      description: |
+        "Zerar contador" da tela Limites. Corpo vazio = `{"scope": ["counters"]}`; repassado ao
+        wwz como está. Preserva bloqueio, banimento, créditos e tier.
+      x-wwz-role: operator
+      x-wwz-admin: POST /admin/entities/{tipo}/{id}/reset
+      x-wwz-audit-action: entity.reset
+      parameters:
+        - $ref: '#/components/parameters/CSRFHeader'
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/EntityResetRequest' }
+      responses:
+        '200': { $ref: '#/components/responses/EntityAction' }
+        '400': { $ref: '#/components/responses/Invalid' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '502': { $ref: '#/components/responses/UpstreamUnavailable' }
+
+  /api/v1/entities/{kind}/{id}/credits:
+    parameters:
+      - $ref: '#/components/parameters/EntityKindPath'
+      - $ref: '#/components/parameters/EntityIdPath'
+    post:
+      tags: [entidades]
+      operationId: setCredits
+      summary: Define o saldo de créditos ou registra uma compra (USD)
+      description: |
+        Exatamente um entre `usd` (substitui o saldo) e `add_usd` (compra, `> 0`: soma ao saldo e
+        a `purchased_usd` da entidade e dispara a avaliação de `promote_when` da conta, ADR 0051);
+        nenhum ou os dois → 400. Com `kind = key`, `add_usd` é repassado ao wwz, que o credita à
+        conta da chave (os créditos e as compras são da conta, ADR 0058) e responde com o
+        `EntityState` da conta; `usd` age na entidade nomeada. Repassa as demais validações do wwz.
+      x-wwz-role: operator
+      x-wwz-admin: POST /admin/entities/{tipo}/{id}/credits
+      x-wwz-audit-action: entity.credits
+      parameters:
+        - $ref: '#/components/parameters/CSRFHeader'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/CreditsRequest' }
+            examples:
+              definir: { value: { usd: 25.0 } }
+              comprar: { value: { add_usd: 50.0 } }
+      responses:
+        '200': { $ref: '#/components/responses/EntityAction' }
+        '400': { $ref: '#/components/responses/Invalid' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '502': { $ref: '#/components/responses/UpstreamUnavailable' }
+
+  /api/v1/instances:
+    get:
+      tags: [visao]
+      operationId: listInstances
+      summary: Instâncias vivas
+      description: |
+        Com Valkey: `idx:inst` + `inst:` (heartbeat de até 15 s). Sem Valkey: só a instância de
+        `WWZ_PANEL_WWZ_ADMIN_URL`, montada a partir de `/admin/stats`.
+      x-wwz-role: viewer
+      responses:
+        '200':
+          description: Instâncias.
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [instances, source]
+                properties:
+                  instances:
+                    type: array
+                    items: { $ref: '#/components/schemas/Instance' }
+                  source: { type: string, enum: [valkey, admin_stats] }
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '502':
+          $ref: '#/components/responses/UpstreamUnavailable'
+
+  /api/v1/events:
+    get:
+      tags: [visao]
+      operationId: listEvents
+      summary: Eventos individuais retidos no SQLite
+      description: |
+        Tabela `events` (ingestão do `ev:stream` pelo grupo `panel`, ou de `/admin/requests` sem
+        Valkey), retida por `retention_days`. Mais recentes primeiro.
+      x-wwz-role: viewer
+      parameters:
+        - name: type
+          in: query
+          description: Um ou mais tipos separados por vírgula.
+          schema: { type: string, example: 'block,ban' }
+        - name: since
+          in: query
+          description: Só eventos com `t` ≥ este instante.
+          schema: { type: string, format: date-time }
+        - name: until
+          in: query
+          description: Só eventos com `t` < este instante.
+          schema: { type: string, format: date-time }
+        - name: entity_kind
+          in: query
+          schema: { $ref: '#/components/schemas/EntityKind' }
+        - name: entity_id
+          in: query
+          schema: { type: string }
+        - name: test_id
+          in: query
+          schema: { type: string }
+        - $ref: '#/components/parameters/DriverFilter'
+        - $ref: '#/components/parameters/ModelFilter'
+        - $ref: '#/components/parameters/Limit'
+        - $ref: '#/components/parameters/Cursor'
+      responses:
+        '200':
+          description: Eventos.
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [events]
+                properties:
+                  events:
+                    type: array
+                    items: { $ref: '#/components/schemas/StoredEvent' }
+                  next_cursor: { type: string }
+        '400':
+          $ref: '#/components/responses/Invalid'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /api/v1/errors:
+    get:
+      tags: [caos]
+      operationId: getErrors
+      summary: Tela de erros
+      description: |
+        Erros injetados por tipo, fase (`pre`, `mid_stream`) e driver; erros reais do simulador
+        (parse, Valkey indisponível); eventos de caos ativos (`GET /admin/chaos`) e amostra dos
+        últimos `samples` eventos `error` com o motivo.
+      x-wwz-role: viewer
+      parameters:
+        - $ref: '#/components/parameters/Window'
+        - $ref: '#/components/parameters/DriverFilter'
+        - $ref: '#/components/parameters/ModelFilter'
+        - name: samples
+          in: query
+          schema: { type: integer, minimum: 0, maximum: 1000, default: 50 }
+      responses:
+        '200':
+          description: Erros.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ErrorsView' }
+        '400':
+          $ref: '#/components/responses/Invalid'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '502':
+          $ref: '#/components/responses/UpstreamUnavailable'
+
+  /api/v1/injection:
+    post:
+      tags: [caos]
+      operationId: setInjection
+      summary: Liga ou desliga a injeção de erros de um modelo ou perfil
+      description: |
+        "Ligar/desligar injeção por driver ou modelo" da tela Erros. Vira um merge patch em
+        `POST /admin/config`: `{"models": {"<id>": {"errors": <errors>}}}` ou
+        `{"profiles": {"errors": {"<nome>": <errors>}}}`. No YAML, `models[].errors` aceita o nome
+        de um perfil de `profiles.errors` ou um perfil inline; com `model`, o patch grava um perfil
+        inline nesse modelo (substituindo a referência por nome, se houver). Com `profile`, o patch
+        troca o próprio perfil `profiles.errors.<nome>` e afeta todo modelo e chave que o usa (o
+        meio de afetar vários modelos de um driver). `errors: null` desliga: remove o bloco do
+        modelo ou o perfil; remover um perfil ainda referenciado é recusado pela validação do wwz.
+        Vale para a instância de `WWZ_PANEL_WWZ_ADMIN_URL` (o patch do admin é por instância).
+      x-wwz-role: operator
+      x-wwz-admin: POST /admin/config
+      x-wwz-audit-action: errors.injection
+      parameters:
+        - $ref: '#/components/parameters/CSRFHeader'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/InjectionRequest' }
+            example: { model: gpt-5-sim, errors: { rate: 30, types: [overloaded] } }
+      responses:
+        '200':
+          description: Patch aplicado.
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [audit_id, applied]
+                properties:
+                  audit_id: { type: integer }
+                  applied: { type: boolean, const: true }
+        '400': { $ref: '#/components/responses/Invalid' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '502': { $ref: '#/components/responses/UpstreamUnavailable' }
+
+  /api/v1/chaos:
+    get:
+      tags: [caos]
+      operationId: listChaos
+      summary: Eventos de caos ativos
+      x-wwz-role: viewer
+      x-wwz-admin: GET /admin/chaos
+      responses:
+        '200':
+          description: Corpo de `GET /admin/chaos` repassado (`ChaosList` do wwz).
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '502': { $ref: '#/components/responses/UpstreamUnavailable' }
+    post:
+      tags: [caos]
+      operationId: startChaos
+      summary: Dispara um evento de caos
+      description: Corpo repassado a `POST /admin/chaos` (schema `ChaosRequest` de cmd/wwz/openapi.yaml).
+      x-wwz-role: operator
+      x-wwz-admin: POST /admin/chaos
+      x-wwz-audit-action: chaos.start
+      parameters:
+        - $ref: '#/components/parameters/CSRFHeader'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              description: '`ChaosRequest` do wwz.'
+              additionalProperties: true
+            example: { type: overloaded, duration: 30s, models: ['*'] }
+      responses:
+        '201':
+          description: Evento ativo (`ChaosEvent` do wwz) e id da auditoria.
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [audit_id, event]
+                properties:
+                  audit_id: { type: integer }
+                  event: { type: object, additionalProperties: true }
+        '400': { $ref: '#/components/responses/Invalid' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '502': { $ref: '#/components/responses/UpstreamUnavailable' }
+    delete:
+      tags: [caos]
+      operationId: stopChaos
+      summary: Encerra eventos de caos
+      description: Sem parâmetros encerra todos.
+      x-wwz-role: operator
+      x-wwz-admin: DELETE /admin/chaos
+      x-wwz-audit-action: chaos.stop
+      parameters:
+        - $ref: '#/components/parameters/CSRFHeader'
+        - name: id
+          in: query
+          schema: { type: string }
+        - name: test_id
+          in: query
+          schema: { type: string }
+      responses:
+        '200':
+          description: Eventos encerrados.
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [audit_id, stopped]
+                properties:
+                  audit_id: { type: integer }
+                  stopped: { type: integer, minimum: 0 }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '502': { $ref: '#/components/responses/UpstreamUnavailable' }
+
+  /api/v1/scenarios:
+    get:
+      tags: [cenarios]
+      operationId: listScenarios
+      summary: Cenários carregados
+      description: |
+        Lista de `GET /admin/scenarios` com, por cenário, quantas conversas estão em cada passo
+        e a taxa de `on_no_match` na janela, agregadas de `events` (campos `scenario`/`step`
+        quando o wwz os publicar); sem dado, `null`.
+      x-wwz-role: viewer
+      x-wwz-admin: GET /admin/scenarios
+      parameters:
+        - $ref: '#/components/parameters/Window'
+      responses:
+        '200':
+          description: Cenários.
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [scenarios]
+                properties:
+                  scenarios:
+                    type: array
+                    items: { $ref: '#/components/schemas/ScenarioView' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '502': { $ref: '#/components/responses/UpstreamUnavailable' }
+    post:
+      tags: [cenarios]
+      operationId: loadScenarios
+      summary: Carrega cenários (YAML)
+      description: |
+        Repassa o YAML a `POST /admin/scenarios`. É também o "simular" da tela: erro de validação
+        volta 400 com as mensagens do wwz em `details`, e nada é aplicado.
+      x-wwz-role: operator
+      x-wwz-admin: POST /admin/scenarios
+      x-wwz-audit-action: scenario.load
+      parameters:
+        - $ref: '#/components/parameters/CSRFHeader'
+      requestBody:
+        required: true
+        content:
+          application/yaml:
+            schema: { type: string }
+          application/x-yaml:
+            schema: { type: string }
+      responses:
+        '200':
+          description: Cenários carregados.
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [audit_id, loaded]
+                properties:
+                  audit_id: { type: integer }
+                  loaded:
+                    type: array
+                    items: { type: string }
+                  replaced:
+                    type: array
+                    items: { type: string }
+        '400': { $ref: '#/components/responses/Invalid' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '415':
+          description: Content-Type não é YAML.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Problem' }
+        '502': { $ref: '#/components/responses/UpstreamUnavailable' }
+
+  /api/v1/scenarios/{name}:
+    parameters:
+      - name: name
+        in: path
+        required: true
+        schema: { type: string, minLength: 1 }
+    delete:
+      tags: [cenarios]
+      operationId: deleteScenario
+      summary: Desativa (remove) um cenário
+      x-wwz-role: operator
+      x-wwz-admin: DELETE /admin/scenarios?name={name}
+      x-wwz-audit-action: scenario.delete
+      parameters:
+        - $ref: '#/components/parameters/CSRFHeader'
+      responses:
+        '204':
+          description: Removido.
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '404': { $ref: '#/components/responses/NotFound' }
+        '502': { $ref: '#/components/responses/UpstreamUnavailable' }
+
+  /api/v1/config:
+    get:
+      tags: [config]
+      operationId: getConfig
+      summary: Configuração efetiva
+      description: |
+        YAML efetivo (como JSON, segredos mascarados) da instância de `WWZ_PANEL_WWZ_ADMIN_URL`
+        (`GET /admin/config`) e a lista de instâncias vivas pelo heartbeat. Políticas ficam em
+        `GET /api/v1/policies`.
+      x-wwz-role: viewer
+      x-wwz-admin: GET /admin/config
+      responses:
+        '200':
+          description: Configuração.
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [admin_url, config, instances]
+                properties:
+                  admin_url: { type: string }
+                  config:
+                    type: object
+                    description: '`ConfigDocument` do wwz.'
+                    additionalProperties: true
+                  instances:
+                    type: array
+                    items: { type: string }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '502': { $ref: '#/components/responses/UpstreamUnavailable' }
+
+  /api/v1/policies:
+    get:
+      tags: [config]
+      operationId: getPolicies
+      summary: Políticas do cluster (`cfg:policies`)
+      description: |
+        `HGETALL cfg:policies` (cache/valkey/README.md §2.3). Sem Valkey: `source: config`,
+        `version: 0`, `tiers` = os `tiers` de `/admin/config`, só leitura (`writable: false`).
+      x-wwz-role: viewer
+      responses:
+        '200':
+          description: Políticas.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Policies' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '502': { $ref: '#/components/responses/UpstreamUnavailable' }
+    put:
+      tags: [config]
+      operationId: putPolicies
+      summary: Publica políticas para o cluster
+      description: |
+        Única escrita do painel no Valkey (ADR 0025). Substitui o conjunto de `tier:<nome>` pelo
+        enviado (os ausentes são apagados), com concorrência otimista: `version` deve ser a lida
+        em `GET`; divergente → 409. Transação e `PUBLISH cfg:changed` como no README §2.3. Não
+        altera atribuições `ent:*` (feitas por `POST .../tier`). Validação no painel: nomes de
+        tier válidos, `limits` com os campos e tipos do YAML (spec 003), e nenhum tier de
+        `cfg:policies` removido que ainda esteja atribuído a uma entidade, exista ou não no YAML
+        (400 com `"<tier>: atribuído a <tipo>:<id>"` em `details`; ADR 0039). Para remover um
+        tier atribuído, troque antes o tier das entidades em `POST .../tier`. Tiers só do YAML
+        não estão em `cfg:policies` e nunca contam como removidos. O wwz faz a validação final; política recusada por ele aparece em
+        `wwz_policies_errors_total` e não muda nada. Sem Valkey → 409.
+      x-wwz-role: operator
+      x-wwz-admin: nenhuma (escrita direta em cfg:policies)
+      x-wwz-audit-action: policies.publish
+      parameters:
+        - $ref: '#/components/parameters/CSRFHeader'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/PoliciesUpdate' }
+            example: { version: 3, tiers: { tier-4: { rpm: 10000, tpm: 2000000 } } }
+      responses:
+        '200':
+          description: Publicado; devolve as políticas com a nova `version`.
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/Policies'
+                  - type: object
+                    required: [audit_id]
+                    properties:
+                      audit_id: { type: integer }
+        '400': { $ref: '#/components/responses/Invalid' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '409': { $ref: '#/components/responses/Conflict' }
+        '502': { $ref: '#/components/responses/UpstreamUnavailable' }
+
+  /api/v1/audit:
+    get:
+      tags: [auditoria]
+      operationId: listAudit
+      summary: Trilha de auditoria
+      description: Tabela `audit` (nunca purgada). `format=csv` exporta as mesmas colunas (`diff` como JSON).
+      x-wwz-role: viewer
+      parameters:
+        - name: user
+          in: query
+          schema: { type: string }
+        - name: action
+          in: query
+          description: Ação exata ou prefixo terminado em `.` (`entity.`).
+          schema: { type: string }
+        - name: target
+          in: query
+          description: Alvo exato (`key/test-01`, `policies`, `chaos`, `scenario/nome`).
+          schema: { type: string }
+        - name: result
+          in: query
+          schema: { type: string, enum: [ok, error] }
+        - name: since
+          in: query
+          schema: { type: string, format: date-time }
+        - name: until
+          in: query
+          schema: { type: string, format: date-time }
+        - $ref: '#/components/parameters/Limit'
+        - $ref: '#/components/parameters/Cursor'
+        - $ref: '#/components/parameters/Format'
+      responses:
+        '200':
+          description: Linhas de auditoria.
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [entries]
+                properties:
+                  entries:
+                    type: array
+                    items: { $ref: '#/components/schemas/AuditEntry' }
+                  next_cursor: { type: string }
+            text/csv:
+              schema: { type: string }
+        '400': { $ref: '#/components/responses/Invalid' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+
+components:
+  securitySchemes:
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: wwz_panel_session
+      description: Sessão do login local ou OIDC (`base64url(id).base64url(HMAC)`); exige CSRF em não-GET.
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Valor de `WWZ_PANEL_API_TOKEN`; papel `operator`, usuário de auditoria `api-token`.
+
+  parameters:
+    CSRFHeader:
+      name: X-CSRF-Token
+      in: header
+      required: false
+      description: Obrigatório com `cookieAuth` (valor `csrf` de `GET /api/v1/me`); dispensado com bearer.
+      schema: { type: string }
+    EntityKindPath:
+      name: kind
+      in: path
+      required: true
+      schema: { $ref: '#/components/schemas/EntityKind' }
+    EntityIdPath:
+      name: id
+      in: path
+      required: true
+      description: Id cru da entidade, URL-encoded (IP, label da chave, usuário, conta, projeto).
+      schema: { type: string, minLength: 1 }
+    Window:
+      name: window
+      in: query
+      schema: { type: string, enum: [1m, 5m, 1h], default: 5m }
+    UsageWindow:
+      name: window
+      in: query
+      description: '`24h` e `7d` só usam `events` (retenção) ou o Prometheus.'
+      schema: { type: string, enum: [1m, 5m, 1h, 24h, 7d], default: 1h }
+    DriverFilter:
+      name: driver
+      in: query
+      schema: { type: string }
+    ModelFilter:
+      name: model
+      in: query
+      schema: { type: string }
+    Limit:
+      name: limit
+      in: query
+      schema: { type: integer, minimum: 1, maximum: 1000, default: 100 }
+    Cursor:
+      name: cursor
+      in: query
+      description: Opaco; valor de `next_cursor` da página anterior.
+      schema: { type: string }
+    Format:
+      name: format
+      in: query
+      schema: { type: string, enum: [json, csv], default: json }
+
+  responses:
+    Unauthorized:
+      description: Sem sessão válida nem bearer válido (ou credenciais de login erradas).
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/Problem' }
+          example: { error: unauthorized, message: login required }
+    Forbidden:
+      description: '`viewer` numa ação (`forbidden`) ou CSRF ausente/inválido (`csrf`).'
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/Problem' }
+          example: { error: forbidden, message: operator role required }
+    Invalid:
+      description: Parâmetro ou corpo inválido, ou 400 repassado do admin do wwz (mensagens em `details`); nada aplicado.
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/Problem' }
+    NotFound:
+      description: Recurso inexistente (ou OIDC não configurado nas rotas `/auth/oidc/*`).
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/Problem' }
+    Conflict:
+      description: '`version` divergente em `PUT /api/v1/policies`, ou políticas indisponíveis sem Valkey.'
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/Problem' }
+          example: { error: conflict, message: 'policies changed: version is 4, request has 3' }
+    TooManyRequests:
+      description: Mais de 10 tentativas de login por minuto do mesmo IP.
+      headers:
+        Retry-After:
+          schema: { type: integer }
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/Problem' }
+    UpstreamUnavailable:
+      description: |
+        Fonte necessária fora do ar ou com erro (admin do wwz, Valkey, Prometheus, provedor OIDC).
+        `details` diz qual. Numa ação, a auditoria grava `result = 'error'`.
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/Problem' }
+          example: { error: upstream_unavailable, message: wwz admin unavailable, details: ['admin: connection refused'] }
+    EntityAction:
+      description: Ação aplicada; estado da entidade devolvido pelo wwz.
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/EntityAction' }
+
+  schemas:
+    Problem:
+      type: object
+      required: [error, message]
+      properties:
+        error:
+          type: string
+          enum: [unauthorized, forbidden, csrf, not_found, invalid, conflict, too_many_requests, upstream_unavailable, unsupported_media_type, not_implemented, internal]
+        message: { type: string }
+        details:
+          type: array
+          items: { type: string }
+
+    Ready:
+      type: object
+      required: [status, sources]
+      properties:
+        status: { type: string, enum: [ready, starting] }
+        sources:
+          type: object
+          required: [valkey, admin, prometheus]
+          properties:
+            valkey: { type: string, enum: [ok, down, 'off'] }
+            admin: { type: string, enum: [ok, down] }
+            prometheus: { type: string, enum: [ok, down, 'off'] }
+
+    LoginRequest:
+      type: object
+      required: [username, password]
+      properties:
+        username: { type: string, minLength: 1 }
+        password: { type: string, minLength: 1 }
+
+    Me:
+      type: object
+      required: [name, role, source, auth]
+      properties:
+        name: { type: string, description: '`users.name`, ou `api-token`.' }
+        role: { type: string, enum: [viewer, operator] }
+        source: { type: string, enum: [bootstrap, yaml, oidc, api_token] }
+        auth: { type: string, enum: [session, bearer] }
+        csrf: { type: string, description: Token CSRF da sessão; ausente com bearer. }
+        expires_at: { type: string, format: date-time, description: Expiração deslizante da sessão. }
+
+    Quantiles:
+      type: object
+      properties:
+        p50_ms: { type: [number, 'null'] }
+        p99_ms: { type: [number, 'null'] }
+
+    Point:
+      type: array
+      description: '`[t, valor]`, `t` em segundos Unix.'
+      prefixItems:
+        - { type: number }
+        - { type: [number, 'null'] }
+      minItems: 2
+      maxItems: 2
+
+    Overview:
+      type: object
+      required: [window, source, req_per_s, tokens_per_s, streams_open, ttft, e2e, errors_per_s, status_per_s, rate_limited_per_s, instances]
+      properties:
+        window: { type: string, enum: [1m, 5m, 1h] }
+        source: { type: string, enum: [prometheus, admin_stats] }
+        req_per_s: { type: [number, 'null'] }
+        tokens_per_s:
+          type: object
+          description: Por `kind` (`prompt`, `completion`, `reasoning`, `tool_args`).
+          additionalProperties: { type: number }
+        streams_open: { type: [integer, 'null'] }
+        ttft: { $ref: '#/components/schemas/Quantiles' }
+        e2e: { $ref: '#/components/schemas/Quantiles' }
+        errors_per_s:
+          type: object
+          description: Erros injetados por tipo.
+          additionalProperties: { type: number }
+        status_per_s:
+          type: object
+          description: Respostas 4xx/5xx por status.
+          additionalProperties: { type: number }
+        rate_limited_per_s:
+          type: object
+          description: Rejeições por limite (`rpm`, `tpm`, ...).
+          additionalProperties: { type: number }
+        instances:
+          type: array
+          items: { $ref: '#/components/schemas/Instance' }
+        series:
+          type: object
+          description: Só com `series=true`. Chave = `req_per_s`, `tokens_per_s`, `ttft_p99_ms`, `e2e_p99_ms`, `errors_per_s`.
+          additionalProperties:
+            type: array
+            items: { $ref: '#/components/schemas/Point' }
+
+    Usage:
+      type: object
+      required: [group, window, rows]
+      properties:
+        group: { type: string, enum: [driver, model, key, account, ip] }
+        window: { type: string }
+        rows:
+          type: array
+          items: { $ref: '#/components/schemas/UsageRow' }
+
+    UsageRow:
+      type: object
+      required: [value, source, requests]
+      properties:
+        value: { type: string, description: Valor do grupo. }
+        source: { type: string, enum: [prometheus, events] }
+        requests: { type: number, description: 'Estimada por `1/sample` quando vem de `events`.' }
+        prompt_tokens: { type: [number, 'null'] }
+        output_tokens: { type: [number, 'null'] }
+        reasoning_tokens: { type: [number, 'null'] }
+        cached_tokens: { type: [number, 'null'] }
+        cache_hit_rate:
+          type: [number, 'null']
+          minimum: 0
+          maximum: 1
+          description: '`cached_tokens / prompt_tokens`.'
+        cost_usd: { type: [number, 'null'] }
+        tool_calls:
+          type: [object, 'null']
+          description: Chamadas por nome de tool.
+          additionalProperties: { type: number }
+        input_breakdown:
+          $ref: '#/components/schemas/UsageInputBreakdown'
+        input_breakdown_requests:
+          type: number
+          minimum: 0
+          description: |
+            Requisições (estimadas por `1/sample`) cujo evento `request` trouxe
+            `fields.input_breakdown`. 0 = nenhuma; aí todas as chaves de `input_breakdown` vêm
+            `null` e a tela mostra "—" com a dica "ligue `usage.extended`".
+
+    UsageInputBreakdown:
+      type: object
+      description: |
+        Composição da entrada do grupo (I16, spec 016, ADR 0032): soma, com peso `1/sample`, de
+        cada chave de `fields.input_breakdown` (asyncapi `InputBreakdown`) só sobre os eventos
+        que trazem o campo. Cada valor é `null` quando nenhum evento do grupo traz a
+        decomposição. O percentual de cada origem é o valor dividido por `total`.
+      required: [system, tool_schemas, user, assistant, tool_calls, tool_results, images, cached, total]
+      additionalProperties: false
+      properties:
+        system: { type: [number, 'null'], minimum: 0 }
+        tool_schemas: { type: [number, 'null'], minimum: 0 }
+        user: { type: [number, 'null'], minimum: 0 }
+        assistant: { type: [number, 'null'], minimum: 0 }
+        tool_calls: { type: [number, 'null'], minimum: 0 }
+        tool_results: { type: [number, 'null'], minimum: 0 }
+        images: { type: [number, 'null'], minimum: 0 }
+        cached: { type: [number, 'null'], minimum: 0, description: Parte lida do cache. }
+        total: { type: [number, 'null'], minimum: 0, description: 'Entrada total, antes de descontar o cache.' }
+
+    UsageSeries:
+      type: object
+      required: [group, value, window, step_s, points]
+      properties:
+        group: { type: string }
+        value: { type: string }
+        window: { type: string }
+        step_s: { type: number }
+        points:
+          type: object
+          description: Chave = `requests`, `prompt_tokens`, `output_tokens`, `cost_usd`.
+          additionalProperties:
+            type: array
+            items: { $ref: '#/components/schemas/Point' }
+
+    EntityKind:
+      type: string
+      enum: [ip, key, user, account, project, deployment]
+
+    EntityStatus:
+      type: string
+      enum: [active, limited, suspended, banned]
+
+    EntityState:
+      type: object
+      description: '`EntityState` de cmd/wwz/openapi.yaml (mesmos campos).'
+      required: [entity, status]
+      properties:
+        entity:
+          type: object
+          required: [kind, id]
+          properties:
+            kind: { $ref: '#/components/schemas/EntityKind' }
+            id: { type: string }
+        status: { $ref: '#/components/schemas/EntityStatus' }
+        reason: { type: string }
+        until: { type: string, format: date-time }
+        since: { type: string, format: date-time }
+        strikes: { type: integer, minimum: 0 }
+        by: { type: string }
+        tier: { type: string }
+        requests: { type: integer, minimum: 0 }
+        spend_usd: { type: number }
+        credits_usd: { type: number }
+        purchased_usd: { type: number, description: 'Créditos comprados acumulados (`add_usd`), base de `promote_when.purchased_usd` (ADR 0051); ausente sem compras.' }
+
+    LiveLimit:
+      type: object
+      required: [name, window, limit, remaining]
+      properties:
+        name:
+          type: string
+          description: '`rps`, `rpm`, `tpm`, `itpm`, `otpm`, `rpd`, `tpd`, `spend_monthly`, `quota_5h`, `quota_weekly`, `quota_monthly`, `concurrency`, `credits`.'
+        window: { type: string, enum: [second, minute, 5h, day, week, month, none] }
+        limit: { type: number }
+        remaining: { type: number }
+        reset: { type: string, format: date-time, description: Quando volta ao limite cheio (ausente se não se aplica). }
+
+    EntityDetail:
+      type: object
+      required: [state, limits, source]
+      properties:
+        state: { $ref: '#/components/schemas/EntityState' }
+        effective_tier:
+          type: string
+          description: |
+            Tier cujos limites valem para a conta (sobreposição, `accounts[].tier`/`keys[].tier` ou
+            `default`). Para `kind = key` é o tier da conta da chave (a chave só tem o teto próprio
+            de `keys[].limits`, ADR 0051); para `project`, `ip` e `user` fica vazio (ausente).
+        account_id: { type: string, description: 'Só para `kind = key`: a conta cujo tier é `effective_tier`; ausente se a chave não tem conta ou a configuração está indisponível.' }
+        limits:
+          type: array
+          items: { $ref: '#/components/schemas/LiveLimit' }
+        source: { type: string, enum: [valkey, admin] }
+
+    EntityAction:
+      type: object
+      required: [audit_id, entity]
+      properties:
+        audit_id: { type: integer, description: 'Id da linha de `audit` gravada.' }
+        entity: { $ref: '#/components/schemas/EntityState' }
+
+    LeakAction:
+      type: object
+      required: [audit_id, key]
+      properties:
+        audit_id: { type: integer }
+        key: { $ref: '#/components/schemas/EntityState' }
+        account: { $ref: '#/components/schemas/EntityState' }
+
+    BlockRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        reason: { type: string }
+        duration: { type: string, description: 'Duração Go; ausente ou `0s` = até desbloquear.' }
+
+    BanRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        reason: { type: string }
+
+    TierRequest:
+      type: object
+      additionalProperties: false
+      required: [tier]
+      properties:
+        tier: { type: [string, 'null'] }
+
+    EntityResetRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        scope:
+          type: array
+          minItems: 1
+          uniqueItems: true
+          items: { type: string, enum: [counters, strikes] }
+
+    CreditsRequest:
+      type: object
+      additionalProperties: false
+      minProperties: 1
+      maxProperties: 1
+      description: 'Exatamente um dos dois campos; o painel responde 400 se vierem os dois ou nenhum.'
+      properties:
+        usd: { type: number, description: 'Novo saldo em USD (pode ser negativo para simular dívida).' }
+        add_usd: { type: number, exclusiveMinimum: 0, description: 'Compra de créditos em USD, somada ao saldo e a `purchased_usd` (ADR 0051).' }
+
+    Instance:
+      type: object
+      required: [id]
+      properties:
+        id: { type: string }
+        version: { type: string }
+        addr: { type: string }
+        started: { type: string, format: date-time }
+        beat: { type: string, format: date-time }
+        rps: { type: [number, 'null'] }
+        conns: { type: [integer, 'null'] }
+        inflight: { type: [integer, 'null'] }
+        store: { type: string, enum: [ok, open, local, memory] }
+
+    StoredEvent:
+      type: object
+      required: [stream_id, t, type]
+      properties:
+        stream_id: { type: string, description: 'Id do XADD, ou `req:<request_id>` sem Valkey.' }
+        t: { type: string, format: date-time }
+        type: { type: string, enum: [request, error, block, unblock, ban, unban, strike] }
+        instance: { type: string }
+        request_id: { type: string }
+        test_id: { type: string }
+        driver: { type: string }
+        model: { type: string }
+        entity:
+          type: object
+          properties:
+            kind: { $ref: '#/components/schemas/EntityKind' }
+            id: { type: string }
+        status: { type: integer }
+        error: { type: string }
+        sample: { type: number }
+        data:
+          type: object
+          description: JSON completo do evento (eventbus/valkey/asyncapi.yaml, `Event`).
+          additionalProperties: true
+
+    ErrorsView:
+      type: object
+      required: [window, source, injected_by_type, injected_by_phase, injected_by_driver, simulator, chaos, samples]
+      properties:
+        window: { type: string }
+        source: { type: string, enum: [prometheus, admin_stats] }
+        injected_by_type: { type: object, additionalProperties: { type: number } }
+        injected_by_phase: { type: object, additionalProperties: { type: number } }
+        injected_by_driver: { type: object, additionalProperties: { type: number } }
+        simulator:
+          type: object
+          description: Erros do próprio simulador por motivo (`parse`, `store_down`, ...), `null` sem dado.
+          additionalProperties: { type: [number, 'null'] }
+        chaos:
+          type: object
+          description: '`ChaosList` de `GET /admin/chaos`.'
+          additionalProperties: true
+        samples:
+          type: array
+          items: { $ref: '#/components/schemas/StoredEvent' }
+
+    InjectionRequest:
+      type: object
+      additionalProperties: false
+      required: [errors]
+      oneOf:
+        - required: [model]
+        - required: [profile]
+      properties:
+        model: { type: string, minLength: 1, description: '`models[].id`.' }
+        profile: { type: string, minLength: 1, description: 'Nome em `profiles.errors`.' }
+        errors:
+          type: [object, 'null']
+          description: '`ErrorProfile` do wwz; `null` desliga.'
+          additionalProperties: true
+
+    ScenarioView:
+      type: object
+      required: [name, steps]
+      properties:
+        name: { type: string }
+        description: { type: string }
+        steps: { type: integer, minimum: 0 }
+        on_no_match: { type: string }
+        on_exhausted: { type: string }
+        conversations_by_step:
+          type: [object, 'null']
+          additionalProperties: { type: integer }
+        on_no_match_rate: { type: [number, 'null'], minimum: 0, maximum: 1 }
+
+    Policies:
+      type: object
+      required: [version, tiers, entities, source, writable]
+      properties:
+        version: { type: integer, minimum: 0 }
+        tiers:
+          type: object
+          description: Nome → `limits` (nomes do YAML, spec 003); campos `tier:<nome>` do hash.
+          additionalProperties: { type: object, additionalProperties: true }
+        entities:
+          type: object
+          description: '`<tipo>:<id>` → tier; campos `ent:*` (só leitura aqui).'
+          additionalProperties: { type: string }
+        source: { type: string, enum: [valkey, config] }
+        writable: { type: boolean }
+
+    PoliciesUpdate:
+      type: object
+      additionalProperties: false
+      required: [version, tiers]
+      properties:
+        version: { type: integer, minimum: 0, description: '`version` lida em `GET /api/v1/policies`.' }
+        tiers:
+          type: object
+          additionalProperties: { type: object, additionalProperties: true }
+
+    AuditEntry:
+      type: object
+      required: [id, at, user, role, action, target, diff, result]
+      properties:
+        id: { type: integer }
+        at: { type: string, format: date-time }
+        user: { type: string }
+        role: { type: string, enum: [viewer, operator] }
+        action: { type: string, description: '`entity.block`, `entity.tier`, `chaos.start`, `policies.publish`, ...' }
+        target: { type: string }
+        diff:
+          type: object
+          properties:
+            request: {}
+            before: {}
+            after: {}
+        result: { type: string, enum: [ok, error] }
+        error: { type: string }
+        ip: { type: string }

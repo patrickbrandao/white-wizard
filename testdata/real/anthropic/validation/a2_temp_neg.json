@@ -1,0 +1,19 @@
+{
+  "provider": "anthropic",
+  "name": "a2_temp_neg",
+  "recorded_at": "2026-10-31",
+  "request": {
+    "method": "POST",
+    "path": "/v1/messages",
+    "headers": {
+      "x-api-key": "<key>",
+      "anthropic-version": "2023-06-01"
+    },
+    "body": "{\"model\": \"claude-haiku-4-5\", \"max_tokens\": 5, \"messages\": [{\"role\": \"user\", \"content\": \"hi\"}], \"temperature\": -1}"
+  },
+  "response": {
+    "status": 400,
+    "content_type": "application/json",
+    "body": "{\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"`temperature` cannot be set to -1 for this model.\"},\"request_id\":\"<request_id>\"}"
+  }
+}

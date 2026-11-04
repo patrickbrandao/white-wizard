@@ -1,0 +1,24 @@
+POST /v1/messages?beta=true HTTP/1.1
+Accept: application/json
+Authorization: Bearer sk-ant-oat01-WWZFAKEtokenAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA-BBBBBBAA
+Content-Type: application/json
+User-Agent: claude-cli/2.1.308 (external, cli)
+X-Claude-Code-Session-Id: d559555d-99d8-4d64-92ca-d81b6c0f2022
+X-Stainless-Arch: arm64
+X-Stainless-Lang: js
+X-Stainless-OS: MacOS
+X-Stainless-Package-Version: 0.128.0
+X-Stainless-Retry-Count: 0
+X-Stainless-Runtime: node
+X-Stainless-Runtime-Version: v26.3.0
+X-Stainless-Timeout: 600
+anthropic-beta: claude-code-20250219,oauth-2025-04-20,interleaved-thinking-2025-05-14,redact-thinking-2026-02-12,thinking-token-count-2026-05-13,context-management-2025-06-27
+anthropic-dangerous-direct-browser-access: true
+anthropic-version: 2023-06-01
+x-app: cli
+Connection: keep-alive
+Host: 127.0.0.1:18556
+Accept-Encoding: gzip, deflate, br, zstd
+Content-Length: 279
+
+{"model":"claude-sonnet-5-5","max_tokens":1,"messages":[{"role":"user","content":"quota"}],"metadata":{"user_id":"{\"device_id\":\"b5e0d8d89402035d1ac7a4087d321edf0479e8e8c015ea5c7c3ae85f1611fb6c\",\"account_uuid\":\"\",\"session_id\":\"d559555d-99d8-4d64-92ca-d81b6c0f2022\"}"}}

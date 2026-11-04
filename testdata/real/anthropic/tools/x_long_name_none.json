@@ -1,0 +1,24 @@
+{
+  "provider": "anthropic",
+  "name": "x_long_name_none",
+  "recorded_at": "2026-10-31",
+  "note": "claude-haiku-4-5, task 259",
+  "compare": {
+    "base": "base_x",
+    "probe": "probe_long_name"
+  },
+  "request": {
+    "method": "POST",
+    "path": "/v1/messages/count_tokens",
+    "headers": {
+      "x-api-key": "<key>",
+      "anthropic-version": "2023-06-01"
+    },
+    "body": "{\"model\": \"claude-haiku-4-5\", \"messages\": [{\"role\": \"user\", \"content\": \"x\"}], \"tools\": [{\"name\": \"buscar_previsao_do_tempo\", \"input_schema\": {\"type\": \"object\", \"properties\": {}}}], \"tool_choice\": {\"type\": \"none\"}}"
+  },
+  "response": {
+    "status": 200,
+    "content_type": "application/json",
+    "body": "{\"input_tokens\":540}"
+  }
+}

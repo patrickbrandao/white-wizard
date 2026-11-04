@@ -1,0 +1,33 @@
+{{define "content"}}{{$f := .Data.Filter}}
+<form class="filters" method="get" action="/audit">
+<label>Usuário <input name="user" value="{{$f.Get "user"}}"></label>
+<label>Ação <input name="action" value="{{$f.Get "action"}}" placeholder="entity. ou entity.block"></label>
+<label>Alvo <input name="target" value="{{$f.Get "target"}}" placeholder="key/test-01"></label>
+<label>Resultado <select name="result">{{$r := $f.Get "result"}}
+<option value=""{{if eq $r ""}} selected{{end}}>todos</option>
+<option value="ok"{{if eq $r "ok"}} selected{{end}}>ok</option>
+<option value="error"{{if eq $r "error"}} selected{{end}}>erro</option>
+</select></label>
+<label>Desde <input name="since" value="{{$f.Get "since"}}" placeholder="AAAA-MM-DD"></label>
+<label>Até <input name="until" value="{{$f.Get "until"}}" placeholder="AAAA-MM-DD"></label>
+<button type="submit">Filtrar</button>
+{{with .Data.CSV}}<a class="button" href="{{.}}" download>Exportar CSV</a>{{end}}
+</form>
+{{template "live" .}}
+{{end}}
+
+{{define "live"}}<section id="live" hx-get="{{.Live}}" hx-trigger="every 2s" hx-swap="outerHTML">
+{{template "messages" .}}
+<table>
+<thead><tr><th>#</th><th>Data</th><th>Usuário</th><th>Papel</th><th>Ação</th><th>Alvo</th><th>Resultado</th><th>IP</th><th>Diff</th></tr></thead>
+<tbody>
+{{range .Data.Page.Entries}}<tr>
+<td>{{.ID}}</td><td>{{when .At}}</td><td>{{.User}}</td><td>{{.Role}}</td><td>{{.Action}}</td><td>{{.Target}}</td>
+<td><span class="st st-{{.Result}}">{{.Result}}</span>{{with .Error}}<br><small>{{.}}</small>{{end}}</td><td>{{or .IP "—"}}</td>
+<td><details><summary>ver</summary><pre>{{printf "%s" .Diff}}</pre></details></td>
+</tr>
+{{else}}<tr><td colspan="9" class="muted">Nenhuma ação registrada com este filtro.</td></tr>{{end}}
+</tbody>
+</table>
+{{with .Data.Next}}<p><a href="{{.}}">Mais antigos →</a></p>{{end}}
+</section>{{end}}

@@ -1,0 +1,19 @@
+{
+  "provider": "openai",
+  "name": "chat_hist_call2_long",
+  "recorded_at": "2026-10-31",
+  "request": {
+    "method": "POST",
+    "path": "/v1/chat/completions",
+    "headers": {
+      "authorization": "Bearer <key>",
+      "content-type": "application/json"
+    },
+    "body": "{\"model\": \"gpt-4o-mini\", \"messages\": [{\"role\": \"user\", \"content\": \"x\"}, {\"role\": \"assistant\", \"content\": null, \"tool_calls\": [{\"id\": \"call_abc\", \"type\": \"function\", \"function\": {\"name\": \"f\", \"arguments\": \"{\\\"a\\\":\\\"hello world\\\"}\"}}, {\"id\": \"call_def\", \"type\": \"function\", \"function\": {\"name\": \"f\", \"arguments\": \"{\\\"a\\\":\\\"c\\\"}\"}}]}, {\"role\": \"tool\", \"tool_call_id\": \"call_abc\", \"content\": \"sunny\"}, {\"role\": \"tool\", \"tool_call_id\": \"call_def\", \"content\": \"rain\"}], \"max_tokens\": 64, \"tools\": [{\"type\": \"function\", \"function\": {\"name\": \"f\", \"parameters\": {\"type\": \"object\", \"properties\": {\"a\": {\"type\": \"string\"}}, \"required\": [\"a\"]}}}]}"
+  },
+  "response": {
+    "status": 200,
+    "content_type": "application/json",
+    "body": "{\n  \"id\": \"chatcmpl-Ef4h1RfUIfxuNY8PPgL6UPCEMEPZh\",\n  \"object\": \"chat.completion\",\n  \"created\": 1793458195,\n  \"model\": \"gpt-4o-mini-2024-07-18\",\n  \"choices\": [\n    {\n      \"index\": 0,\n      \"message\": {\n        \"role\": \"assistant\",\n        \"content\": \"The results are:\\n- For \\\"hello world\\\": sunny\\n- For \\\"c\\\": rain\",\n        \"refusal\": null,\n        \"annotations\": []\n      },\n      \"logprobs\": null,\n      \"finish_reason\": \"stop\"\n    }\n  ],\n  \"usage\": {\n    \"prompt_tokens\": 97,\n    \"completion_tokens\": 19,\n    \"total_tokens\": 116,\n    \"prompt_tokens_details\": {\n      \"cached_tokens\": 0,\n      \"audio_tokens\": 0\n    },\n    \"completion_tokens_details\": {\n      \"reasoning_tokens\": 0,\n      \"audio_tokens\": 0,\n      \"accepted_prediction_tokens\": 0,\n      \"rejected_prediction_tokens\": 0\n    }\n  },\n  \"service_tier\": \"default\",\n  \"system_fingerprint\": \"fp_2851888338\"\n}\n"
+  }
+}

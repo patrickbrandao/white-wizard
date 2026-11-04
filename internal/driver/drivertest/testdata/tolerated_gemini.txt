@@ -1,0 +1,259 @@
+delete member @type
+delete member consumer
+delete member description
+delete member domain
+delete member field
+delete member fieldViolations
+delete member links
+delete member location
+delete member maxTemperature
+delete member model
+delete member quotaDimensions
+delete member quotaMetric
+delete member service
+delete member supportedGenerationMethods
+delete member temperature
+delete member thinking
+delete member topK
+delete member topP
+delete member url
+delete member version
+replace value "001"
+replace value "Invalid page_token."
+replace value "Learn more about Gemini API quotas"
+replace value "Model m-2"
+replace value "Model m-3"
+replace value "Request contains an invalid argument."
+replace value "The caller does not have permission"
+replace value "batchGenerateContent"
+replace value "countTokens"
+replace value "createCachedContent"
+replace value "generateContent"
+replace value "generation_config.max_output_tokens"
+replace value "generativelanguage.googleapis.com"
+replace value "global"
+replace value "googleapis.com"
+replace value "projects/0"
+replace value "type.googleapis.com/google.rpc.BadRequest"
+replace value "type.googleapis.com/google.rpc.ErrorInfo"
+replace value "type.googleapis.com/google.rpc.Help"
+replace value "type.googleapis.com/google.rpc.QuotaFailure"
+replace value "type.googleapis.com/google.rpc.RetryInfo"
+replace value 0.95
+replace value 17
+replace value 401
+replace value 418
+replace value 64
+drop header content-disposition
+drop header server
+drop header server-timing
+drop header vary
+drop header www-authenticate
+drop header x-content-type-options
+drop header x-frame-options
+drop header x-xss-protection
+status 502 becomes 503
+drop frame 5
+repeat frame 5
+garble frame 5
+cut stream at frame 5
+drop frame 6
+repeat frame 6
+garble frame 6
+cut stream at frame 6
+drop frame 7
+repeat frame 7
+garble frame 7
+cut stream at frame 7
+drop frame 8
+repeat frame 8
+garble frame 8
+cut stream at frame 8
+drop frame 9
+repeat frame 9
+garble frame 9
+cut stream at frame 9
+drop frame 10
+repeat frame 10
+garble frame 10
+cut stream at frame 10
+drop frame 11
+repeat frame 11
+garble frame 11
+cut stream at frame 11
+drop frame 12
+repeat frame 12
+garble frame 12
+cut stream at frame 12
+drop frame 13
+repeat frame 13
+garble frame 13
+cut stream at frame 13
+drop frame 14
+repeat frame 14
+garble frame 14
+cut stream at frame 14
+drop frame 15
+repeat frame 15
+garble frame 15
+cut stream at frame 15
+zero request field Driver
+zero request field ParallelToolCalls
+zero request field IncludeUsage
+zero request field N
+zero request field ResponseSchema
+zero request field Metadata
+zero request field Headers
+zero request field ClientIP
+zero request field Raw
+zero request field Received
+zero request field RequestID
+zero policy field ExcludeCacheRead
+wrong method on route 6
+wrong method on route 14
+drop route 16
+wrong method on route 16
+drop route 17
+wrong method on route 17
+drop route 18
+wrong method on route 18
+drop route 19
+wrong method on route 19
+drop route 20
+wrong method on route 20
+no ids
+no model namer
+add header x-request-id 0
+add header x-request-id wwz-other
+add header request-id 0
+add header request-id wwz-other
+add header x-wwz-unknown 0
+add header x-wwz-unknown wwz-other
+header content-disposition becomes "wwz-other"
+header content-disposition becomes "0"
+header content-disposition becomes "text/html"
+header server becomes "wwz-other"
+header server becomes "0"
+header server becomes "text/html"
+header server-timing becomes "wwz-other"
+header server-timing becomes "0"
+header server-timing becomes "text/html"
+header vary becomes "wwz-other"
+header vary becomes "0"
+header vary becomes "text/html"
+header www-authenticate becomes "wwz-other"
+header www-authenticate becomes "0"
+header www-authenticate becomes "text/html"
+header x-content-type-options becomes "wwz-other"
+header x-content-type-options becomes "0"
+header x-content-type-options becomes "text/html"
+header x-frame-options becomes "wwz-other"
+header x-frame-options becomes "0"
+header x-frame-options becomes "text/html"
+header x-xss-protection becomes "wwz-other"
+header x-xss-protection becomes "0"
+header x-xss-protection becomes "text/html"
+rename reasoning_content
+rename reasoning
+two data lines
+status 529 becomes 200
+status 529 becomes 302
+perturb request field Driver
+perturb request field ParallelToolCalls
+perturb request field IncludeUsage
+perturb request field N
+perturb request field ResponseSchema
+perturb request field Metadata
+perturb request field Headers
+perturb request field ClientIP
+perturb request field Raw
+perturb request field Received
+perturb request field RequestID
+forced model namer
+model name changes
+unprefix changes
+unprefix always
+unprefix never
+body after GetModel
+reasoning leaks into content
+reasoning leaks into stream content
+thinking becomes signature
+usage chunk without choices
+usage chunk with a choice
+usage chunk with null choices
+far reset
+wrong generation epoch
+duplicate route 0
+method GET on route 1
+duplicate route 1
+method GET on route 2
+duplicate route 2
+duplicate route 3
+method GET on route 4
+duplicate route 4
+method GET on route 5
+duplicate route 5
+duplicate route 6
+duplicate route 7
+duplicate route 8
+method GET on route 9
+duplicate route 9
+method GET on route 10
+duplicate route 10
+duplicate route 11
+method GET on route 12
+duplicate route 12
+method GET on route 13
+duplicate route 13
+duplicate route 14
+duplicate route 15
+method GET on route 16
+duplicate route 16
+method GET on route 17
+duplicate route 17
+method GET on route 18
+duplicate route 18
+method GET on route 19
+duplicate route 19
+method GET on route 20
+duplicate route 20
+perturb request leaf 0
+perturb request leaf 4
+perturb request leaf 5
+perturb request leaf 6
+perturb request leaf 7
+perturb request leaf 8
+perturb request leaf 9
+perturb request leaf 11
+perturb request leaf 14
+perturb request leaf 15
+perturb request leaf 16
+perturb request leaf 17
+perturb request leaf 18
+perturb request leaf 19
+perturb request leaf 20
+perturb request leaf 21
+perturb request leaf 22
+perturb request leaf 23
+perturb request leaf 24
+perturb request leaf 25
+perturb request leaf 26
+perturb request leaf 27
+perturb request leaf 28
+perturb request leaf 30
+perturb request leaf 31
+perturb request leaf 33
+perturb request leaf 35
+perturb request leaf 36
+perturb request leaf 41
+perturb request leaf 43
+perturb request leaf 46
+perturb request leaf 48
+perturb request leaf 50
+perturb request leaf 51
+perturb request leaf 52
+perturb request leaf 53
+perturb request leaf 54
+perturb request leaf 55
+perturb request leaf 56
+perturb request leaf 57

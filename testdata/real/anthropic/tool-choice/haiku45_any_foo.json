@@ -1,0 +1,20 @@
+{
+  "provider": "anthropic",
+  "name": "haiku45_any_foo",
+  "recorded_at": "2026-10-31",
+  "note": "claude-haiku-4-5, task 264",
+  "request": {
+    "method": "POST",
+    "path": "/v1/messages",
+    "headers": {
+      "x-api-key": "<key>",
+      "anthropic-version": "2023-06-01"
+    },
+    "body": "{\"model\": \"claude-haiku-4-5\", \"max_tokens\": 1, \"messages\": [{\"role\": \"user\", \"content\": \"x\"}], \"tools\": [{\"name\": \"a\", \"input_schema\": {\"type\": \"object\", \"properties\": {}}}], \"tool_choice\": {\"type\": \"any\", \"foo\": 1}}"
+  },
+  "response": {
+    "status": 400,
+    "content_type": "application/json",
+    "body": "{\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"tool_choice.any.foo: Extra inputs are not permitted\"},\"request_id\":\"<request_id>\"}"
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "provider": "anthropic",
+  "name": "sys_a_tool",
+  "recorded_at": "2026-10-31",
+  "note": "claude-haiku-5-5, task 264",
+  "compare": {
+    "base": "base_sys",
+    "probe": "probe_a"
+  },
+  "request": {
+    "method": "POST",
+    "path": "/v1/messages/count_tokens",
+    "headers": {
+      "x-api-key": "<key>",
+      "anthropic-version": "2023-06-01"
+    },
+    "body": "{\"model\": \"claude-haiku-5-5\", \"messages\": [{\"role\": \"user\", \"content\": \"x\"}], \"system\": \"Seja breve.\", \"tools\": [{\"name\": \"a\", \"input_schema\": {\"type\": \"object\", \"properties\": {}}}], \"tool_choice\": {\"type\": \"tool\", \"name\": \"a\"}}"
+  },
+  "response": {
+    "status": 200,
+    "content_type": "application/json",
+    "body": "{\"input_tokens\":460}"
+  }
+}

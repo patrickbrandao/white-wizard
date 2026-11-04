@@ -1,0 +1,18 @@
+{
+  "provider": "openrouter",
+  "name": "get_models_slug",
+  "recorded_at": "2026-10-31",
+  "request": {
+    "method": "GET",
+    "path": "/api/v1/models/openai/gpt-4o-mini",
+    "headers": {
+      "authorization": "Bearer <key>"
+    },
+    "body": ""
+  },
+  "response": {
+    "status": 404,
+    "content_type": "application/json",
+    "body": "{\"error\":{\"message\":\"Not Found\",\"code\":404}}"
+  }
+}

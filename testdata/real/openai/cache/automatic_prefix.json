@@ -1,0 +1,246 @@
+{
+  "provider": "openai",
+  "name": "automatic_prefix",
+  "recorded_at": "2026-10-31",
+  "path": "/v1/chat/completions",
+  "note": "gpt-4o-mini: identical prompt twice, then a longer prompt sharing the prefix, then the same prompt with prompt_cache_key",
+  "steps": [
+    {
+      "request": {
+        "body": {
+          "model": "gpt-4o-mini",
+          "max_tokens": 1,
+          "messages": [
+            {
+              "role": "system",
+              "content": "Reference document n9350c50f-oa. India tower echo quebec hotel valley forest desert village yankee november golf. Valley bravo yankee mountain garden alpha library forest romeo oscar castle golf. Uniform bravo bravo bravo village harbor alpha yankee market november mountain bravo. Island oscar forest valley bridge oscar whiskey oscar market oscar ocean sierra. Bravo river bridge village golf lima orchard sierra hotel victor canyon mountain. Canyon city mike tango sierra castle valley canyon zulu castle charlie desert. Papa zulu river city lima xray bridge library market xray foxtrot forest. City canyon golf kilo island zulu xray valley bravo desert charlie tango. Meadow castle castle zulu village kilo kilo canyon oscar alpha mike harbor. Bridge oscar zulu canyon whiskey tower whiskey ocean romeo city bridge garden. Alpha yankee canyon india island bridge november mountain delta desert xray tower. Bridge mike canyon river valley whiskey river whiskey alpha harbor harbor meadow. Meadow victor ocean garden bravo oscar orchard lima bridge castle lima foxtrot. Bridge quebec charlie market echo foxtrot bravo forest alpha romeo papa romeo. Hotel meadow lima whiskey sierra echo kilo kilo quebec island kilo city. Romeo village sierra ocean library uniform valley desert hotel bravo tango yankee. Victor river mike quebec golf quebec canyon november garden mountain bravo oscar. Bravo zulu juliet charlie kilo forest canyon market mountain harbor oscar orchard. Library island forest oscar island village bravo zulu market tower uniform city. Orchard mountain delta tango india november delta tango echo echo tango tango. Kilo river tower quebec india alpha bridge charlie castle november tower ocean. Kilo meadow canyon charlie yankee mike whiskey golf november tower market mountain. Castle mike valley golf city yankee sierra canyon valley bravo uniform meadow. Zulu sierra bravo kilo mike uniform tower india victor mountain november romeo. Market golf yankee bridge whiskey market harbor valley harbor papa echo charlie. Foxtrot india kilo kilo harbor november romeo victor garden canyon quebec xray. Victor victor hotel sierra papa garden valley india castle bridge golf uniform. Charlie river echo yankee juliet india victor hotel meadow castle yankee echo. Tower bridge oscar tower foxtrot romeo xray sierra tower harbor hotel ocean. Romeo golf charlie sierra alpha meadow city alpha foxtrot river hotel charlie. Mike papa castle river kilo hotel forest kilo market papa kilo golf. Mountain yankee harbor sierra bridge quebec desert uniform golf november village uniform. Charlie bravo alpha sierra garden uniform forest zulu uniform zulu echo echo. Uniform garden ocean hotel quebec november meadow harbor library desert city whiskey. Quebec lima harbor november tango mike papa xray foxtrot romeo foxtrot forest. Foxtrot village tower village victor oscar yankee tango charlie uniform lima uniform. Castle tango papa victor golf harbor meadow castle garden foxtrot papa oscar. Bravo papa zulu echo romeo bridge echo echo bravo orchard alpha sierra. Whiskey valley desert juliet golf canyon uniform echo canyon city lima lima. Juliet juliet uniform tango golf canyon garden sierra india november juliet harbor. Charlie uniform meadow market bridge library november lima tango mountain harbor kilo. Delta city papa quebec echo market forest mountain bridge quebec harbor forest. Harbor ocean alpha zulu victor kilo quebec valley bravo village river tower. Bravo delta library whiskey castle india castle india india quebec romeo zulu. Tower zulu lima meadow foxtrot oscar valley alpha lima island uniform canyon. Village forest market orchard oscar papa uniform valley market desert oscar river. Victor bridge meadow village romeo village oscar delta echo canyon village xray. Kilo canyon november tango tango library tango bridge xray kilo library library. Ocean garden foxtrot hotel garden canyon tower yankee lima juliet quebec mountain. November tower delta valley market zulu orchard whiskey yankee canyon kilo harbor. Charlie island foxtrot quebec orchard golf romeo foxtrot india meadow city market. Library foxtrot forest papa yankee mountain zulu kilo uniform forest india meadow. Valley november hotel mountain garden harbor river hotel city sierra romeo papa. Yankee bridge alpha mike island forest castle bravo bravo orchard garden papa. Quebec november lima sierra juliet harbor mike romeo tango castle quebec market. Forest kilo harbor whiskey valley river hotel november tower yankee november sierra. Golf bravo hotel tower alpha harbor sierra market village india echo canyon. Xray tower tango mountain canyon market whiskey island uniform alpha hotel forest. Forest whiskey tango harbor zulu victor market tower valley hotel village yankee. Yankee november bridge alpha romeo orchard garden canyon mike ocean garden island. River tango library kilo forest meadow city island mike xray island alpha. Market yankee castle mountain zulu victor meadow castle library echo valley papa. Orchard village sierra orchard bravo river orchard juliet orchard zulu romeo lima. Echo garden alpha whiskey quebec river market harbor tango juliet ocean quebec. Valley kilo ocean canyon charlie romeo canyon golf castle mountain echo whiskey. Echo city forest bravo kilo canyon kilo library foxtrot zulu orchard library. Romeo garden tango november island november papa victor romeo echo echo library. Island city xray ocean canyon bridge delta kilo tango village bridge romeo. Whiskey meadow oscar zulu bridge zulu lima desert quebec meadow victor oscar. Quebec meadow papa city bravo meadow zulu uniform mountain papa romeo mike. Echo orchard kilo castle forest castle juliet garden quebec ocean island kilo. India india forest xray tango zulu papa hotel november market tango echo. Golf oscar zulu uniform valley golf lima charlie delta garden bravo november. Market charlie valley island meadow forest victor city romeo hotel meadow library. Lima golf oscar zulu oscar valley forest yankee kilo oscar papa sierra. Ocean bridge castle yankee november forest quebec victor valley castle hotel november. Foxtrot charlie alpha alpha desert uniform yankee castle sierra mike zulu kilo. Village juliet bravo alpha yankee juliet city harbor delta tower yankee quebec. India foxtrot ocean village tango alpha charlie harbor delta island india charlie. Romeo hotel mountain foxtrot mike bravo valley orchard india romeo market mike. City forest yankee victor orchard romeo quebec village orchard papa papa delta. Castle castle lima whiskey mountain garden library bridge orchard island delta whiskey. Bridge river harbor mike harbor mountain city echo romeo meadow echo quebec. Lima golf juliet delta november mountain charlie delta orchard foxtrot canyon desert. Canyon xray golf uniform charlie india harbor charlie forest city india zulu. Forest bravo island romeo foxtrot quebec uniform foxtrot tango charlie yankee delta. Quebec uniform india quebec yankee hotel market tango golf mountain papa canyon."
+            },
+            {
+              "role": "user",
+              "content": "Say ok."
+            }
+          ]
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": {
+          "id": "<id>",
+          "object": "chat.completion",
+          "created": 0,
+          "model": "gpt-4o-mini-2024-07-18",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "Ok",
+                "refusal": null,
+                "annotations": []
+              },
+              "logprobs": null,
+              "finish_reason": "length"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 1400,
+            "completion_tokens": 1,
+            "total_tokens": 1401,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "audio_tokens": 0
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 0,
+              "audio_tokens": 0,
+              "accepted_prediction_tokens": 0,
+              "rejected_prediction_tokens": 0
+            }
+          },
+          "service_tier": "default",
+          "system_fingerprint": "<fp>"
+        }
+      }
+    },
+    {
+      "request": {
+        "body": {
+          "model": "gpt-4o-mini",
+          "max_tokens": 1,
+          "messages": [
+            {
+              "role": "system",
+              "content": "Reference document n9350c50f-oa. India tower echo quebec hotel valley forest desert village yankee november golf. Valley bravo yankee mountain garden alpha library forest romeo oscar castle golf. Uniform bravo bravo bravo village harbor alpha yankee market november mountain bravo. Island oscar forest valley bridge oscar whiskey oscar market oscar ocean sierra. Bravo river bridge village golf lima orchard sierra hotel victor canyon mountain. Canyon city mike tango sierra castle valley canyon zulu castle charlie desert. Papa zulu river city lima xray bridge library market xray foxtrot forest. City canyon golf kilo island zulu xray valley bravo desert charlie tango. Meadow castle castle zulu village kilo kilo canyon oscar alpha mike harbor. Bridge oscar zulu canyon whiskey tower whiskey ocean romeo city bridge garden. Alpha yankee canyon india island bridge november mountain delta desert xray tower. Bridge mike canyon river valley whiskey river whiskey alpha harbor harbor meadow. Meadow victor ocean garden bravo oscar orchard lima bridge castle lima foxtrot. Bridge quebec charlie market echo foxtrot bravo forest alpha romeo papa romeo. Hotel meadow lima whiskey sierra echo kilo kilo quebec island kilo city. Romeo village sierra ocean library uniform valley desert hotel bravo tango yankee. Victor river mike quebec golf quebec canyon november garden mountain bravo oscar. Bravo zulu juliet charlie kilo forest canyon market mountain harbor oscar orchard. Library island forest oscar island village bravo zulu market tower uniform city. Orchard mountain delta tango india november delta tango echo echo tango tango. Kilo river tower quebec india alpha bridge charlie castle november tower ocean. Kilo meadow canyon charlie yankee mike whiskey golf november tower market mountain. Castle mike valley golf city yankee sierra canyon valley bravo uniform meadow. Zulu sierra bravo kilo mike uniform tower india victor mountain november romeo. Market golf yankee bridge whiskey market harbor valley harbor papa echo charlie. Foxtrot india kilo kilo harbor november romeo victor garden canyon quebec xray. Victor victor hotel sierra papa garden valley india castle bridge golf uniform. Charlie river echo yankee juliet india victor hotel meadow castle yankee echo. Tower bridge oscar tower foxtrot romeo xray sierra tower harbor hotel ocean. Romeo golf charlie sierra alpha meadow city alpha foxtrot river hotel charlie. Mike papa castle river kilo hotel forest kilo market papa kilo golf. Mountain yankee harbor sierra bridge quebec desert uniform golf november village uniform. Charlie bravo alpha sierra garden uniform forest zulu uniform zulu echo echo. Uniform garden ocean hotel quebec november meadow harbor library desert city whiskey. Quebec lima harbor november tango mike papa xray foxtrot romeo foxtrot forest. Foxtrot village tower village victor oscar yankee tango charlie uniform lima uniform. Castle tango papa victor golf harbor meadow castle garden foxtrot papa oscar. Bravo papa zulu echo romeo bridge echo echo bravo orchard alpha sierra. Whiskey valley desert juliet golf canyon uniform echo canyon city lima lima. Juliet juliet uniform tango golf canyon garden sierra india november juliet harbor. Charlie uniform meadow market bridge library november lima tango mountain harbor kilo. Delta city papa quebec echo market forest mountain bridge quebec harbor forest. Harbor ocean alpha zulu victor kilo quebec valley bravo village river tower. Bravo delta library whiskey castle india castle india india quebec romeo zulu. Tower zulu lima meadow foxtrot oscar valley alpha lima island uniform canyon. Village forest market orchard oscar papa uniform valley market desert oscar river. Victor bridge meadow village romeo village oscar delta echo canyon village xray. Kilo canyon november tango tango library tango bridge xray kilo library library. Ocean garden foxtrot hotel garden canyon tower yankee lima juliet quebec mountain. November tower delta valley market zulu orchard whiskey yankee canyon kilo harbor. Charlie island foxtrot quebec orchard golf romeo foxtrot india meadow city market. Library foxtrot forest papa yankee mountain zulu kilo uniform forest india meadow. Valley november hotel mountain garden harbor river hotel city sierra romeo papa. Yankee bridge alpha mike island forest castle bravo bravo orchard garden papa. Quebec november lima sierra juliet harbor mike romeo tango castle quebec market. Forest kilo harbor whiskey valley river hotel november tower yankee november sierra. Golf bravo hotel tower alpha harbor sierra market village india echo canyon. Xray tower tango mountain canyon market whiskey island uniform alpha hotel forest. Forest whiskey tango harbor zulu victor market tower valley hotel village yankee. Yankee november bridge alpha romeo orchard garden canyon mike ocean garden island. River tango library kilo forest meadow city island mike xray island alpha. Market yankee castle mountain zulu victor meadow castle library echo valley papa. Orchard village sierra orchard bravo river orchard juliet orchard zulu romeo lima. Echo garden alpha whiskey quebec river market harbor tango juliet ocean quebec. Valley kilo ocean canyon charlie romeo canyon golf castle mountain echo whiskey. Echo city forest bravo kilo canyon kilo library foxtrot zulu orchard library. Romeo garden tango november island november papa victor romeo echo echo library. Island city xray ocean canyon bridge delta kilo tango village bridge romeo. Whiskey meadow oscar zulu bridge zulu lima desert quebec meadow victor oscar. Quebec meadow papa city bravo meadow zulu uniform mountain papa romeo mike. Echo orchard kilo castle forest castle juliet garden quebec ocean island kilo. India india forest xray tango zulu papa hotel november market tango echo. Golf oscar zulu uniform valley golf lima charlie delta garden bravo november. Market charlie valley island meadow forest victor city romeo hotel meadow library. Lima golf oscar zulu oscar valley forest yankee kilo oscar papa sierra. Ocean bridge castle yankee november forest quebec victor valley castle hotel november. Foxtrot charlie alpha alpha desert uniform yankee castle sierra mike zulu kilo. Village juliet bravo alpha yankee juliet city harbor delta tower yankee quebec. India foxtrot ocean village tango alpha charlie harbor delta island india charlie. Romeo hotel mountain foxtrot mike bravo valley orchard india romeo market mike. City forest yankee victor orchard romeo quebec village orchard papa papa delta. Castle castle lima whiskey mountain garden library bridge orchard island delta whiskey. Bridge river harbor mike harbor mountain city echo romeo meadow echo quebec. Lima golf juliet delta november mountain charlie delta orchard foxtrot canyon desert. Canyon xray golf uniform charlie india harbor charlie forest city india zulu. Forest bravo island romeo foxtrot quebec uniform foxtrot tango charlie yankee delta. Quebec uniform india quebec yankee hotel market tango golf mountain papa canyon."
+            },
+            {
+              "role": "user",
+              "content": "Say ok."
+            }
+          ]
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": {
+          "id": "<id>",
+          "object": "chat.completion",
+          "created": 0,
+          "model": "gpt-4o-mini-2024-07-18",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "Ok",
+                "refusal": null,
+                "annotations": []
+              },
+              "logprobs": null,
+              "finish_reason": "length"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 1400,
+            "completion_tokens": 1,
+            "total_tokens": 1401,
+            "prompt_tokens_details": {
+              "cached_tokens": 1280,
+              "audio_tokens": 0
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 0,
+              "audio_tokens": 0,
+              "accepted_prediction_tokens": 0,
+              "rejected_prediction_tokens": 0
+            }
+          },
+          "service_tier": "default",
+          "system_fingerprint": "<fp>"
+        }
+      }
+    },
+    {
+      "request": {
+        "body": {
+          "model": "gpt-4o-mini",
+          "max_tokens": 1,
+          "messages": [
+            {
+              "role": "system",
+              "content": "Reference document n9350c50f-oa. India tower echo quebec hotel valley forest desert village yankee november golf. Valley bravo yankee mountain garden alpha library forest romeo oscar castle golf. Uniform bravo bravo bravo village harbor alpha yankee market november mountain bravo. Island oscar forest valley bridge oscar whiskey oscar market oscar ocean sierra. Bravo river bridge village golf lima orchard sierra hotel victor canyon mountain. Canyon city mike tango sierra castle valley canyon zulu castle charlie desert. Papa zulu river city lima xray bridge library market xray foxtrot forest. City canyon golf kilo island zulu xray valley bravo desert charlie tango. Meadow castle castle zulu village kilo kilo canyon oscar alpha mike harbor. Bridge oscar zulu canyon whiskey tower whiskey ocean romeo city bridge garden. Alpha yankee canyon india island bridge november mountain delta desert xray tower. Bridge mike canyon river valley whiskey river whiskey alpha harbor harbor meadow. Meadow victor ocean garden bravo oscar orchard lima bridge castle lima foxtrot. Bridge quebec charlie market echo foxtrot bravo forest alpha romeo papa romeo. Hotel meadow lima whiskey sierra echo kilo kilo quebec island kilo city. Romeo village sierra ocean library uniform valley desert hotel bravo tango yankee. Victor river mike quebec golf quebec canyon november garden mountain bravo oscar. Bravo zulu juliet charlie kilo forest canyon market mountain harbor oscar orchard. Library island forest oscar island village bravo zulu market tower uniform city. Orchard mountain delta tango india november delta tango echo echo tango tango. Kilo river tower quebec india alpha bridge charlie castle november tower ocean. Kilo meadow canyon charlie yankee mike whiskey golf november tower market mountain. Castle mike valley golf city yankee sierra canyon valley bravo uniform meadow. Zulu sierra bravo kilo mike uniform tower india victor mountain november romeo. Market golf yankee bridge whiskey market harbor valley harbor papa echo charlie. Foxtrot india kilo kilo harbor november romeo victor garden canyon quebec xray. Victor victor hotel sierra papa garden valley india castle bridge golf uniform. Charlie river echo yankee juliet india victor hotel meadow castle yankee echo. Tower bridge oscar tower foxtrot romeo xray sierra tower harbor hotel ocean. Romeo golf charlie sierra alpha meadow city alpha foxtrot river hotel charlie. Mike papa castle river kilo hotel forest kilo market papa kilo golf. Mountain yankee harbor sierra bridge quebec desert uniform golf november village uniform. Charlie bravo alpha sierra garden uniform forest zulu uniform zulu echo echo. Uniform garden ocean hotel quebec november meadow harbor library desert city whiskey. Quebec lima harbor november tango mike papa xray foxtrot romeo foxtrot forest. Foxtrot village tower village victor oscar yankee tango charlie uniform lima uniform. Castle tango papa victor golf harbor meadow castle garden foxtrot papa oscar. Bravo papa zulu echo romeo bridge echo echo bravo orchard alpha sierra. Whiskey valley desert juliet golf canyon uniform echo canyon city lima lima. Juliet juliet uniform tango golf canyon garden sierra india november juliet harbor. Charlie uniform meadow market bridge library november lima tango mountain harbor kilo. Delta city papa quebec echo market forest mountain bridge quebec harbor forest. Harbor ocean alpha zulu victor kilo quebec valley bravo village river tower. Bravo delta library whiskey castle india castle india india quebec romeo zulu. Tower zulu lima meadow foxtrot oscar valley alpha lima island uniform canyon. Village forest market orchard oscar papa uniform valley market desert oscar river. Victor bridge meadow village romeo village oscar delta echo canyon village xray. Kilo canyon november tango tango library tango bridge xray kilo library library. Ocean garden foxtrot hotel garden canyon tower yankee lima juliet quebec mountain. November tower delta valley market zulu orchard whiskey yankee canyon kilo harbor. Charlie island foxtrot quebec orchard golf romeo foxtrot india meadow city market. Library foxtrot forest papa yankee mountain zulu kilo uniform forest india meadow. Valley november hotel mountain garden harbor river hotel city sierra romeo papa. Yankee bridge alpha mike island forest castle bravo bravo orchard garden papa. Quebec november lima sierra juliet harbor mike romeo tango castle quebec market. Forest kilo harbor whiskey valley river hotel november tower yankee november sierra. Golf bravo hotel tower alpha harbor sierra market village india echo canyon. Xray tower tango mountain canyon market whiskey island uniform alpha hotel forest. Forest whiskey tango harbor zulu victor market tower valley hotel village yankee. Yankee november bridge alpha romeo orchard garden canyon mike ocean garden island. River tango library kilo forest meadow city island mike xray island alpha. Market yankee castle mountain zulu victor meadow castle library echo valley papa. Orchard village sierra orchard bravo river orchard juliet orchard zulu romeo lima. Echo garden alpha whiskey quebec river market harbor tango juliet ocean quebec. Valley kilo ocean canyon charlie romeo canyon golf castle mountain echo whiskey. Echo city forest bravo kilo canyon kilo library foxtrot zulu orchard library. Romeo garden tango november island november papa victor romeo echo echo library. Island city xray ocean canyon bridge delta kilo tango village bridge romeo. Whiskey meadow oscar zulu bridge zulu lima desert quebec meadow victor oscar. Quebec meadow papa city bravo meadow zulu uniform mountain papa romeo mike. Echo orchard kilo castle forest castle juliet garden quebec ocean island kilo. India india forest xray tango zulu papa hotel november market tango echo. Golf oscar zulu uniform valley golf lima charlie delta garden bravo november. Market charlie valley island meadow forest victor city romeo hotel meadow library. Lima golf oscar zulu oscar valley forest yankee kilo oscar papa sierra. Ocean bridge castle yankee november forest quebec victor valley castle hotel november. Foxtrot charlie alpha alpha desert uniform yankee castle sierra mike zulu kilo. Village juliet bravo alpha yankee juliet city harbor delta tower yankee quebec. India foxtrot ocean village tango alpha charlie harbor delta island india charlie. Romeo hotel mountain foxtrot mike bravo valley orchard india romeo market mike. City forest yankee victor orchard romeo quebec village orchard papa papa delta. Castle castle lima whiskey mountain garden library bridge orchard island delta whiskey. Bridge river harbor mike harbor mountain city echo romeo meadow echo quebec. Lima golf juliet delta november mountain charlie delta orchard foxtrot canyon desert. Canyon xray golf uniform charlie india harbor charlie forest city india zulu. Forest bravo island romeo foxtrot quebec uniform foxtrot tango charlie yankee delta. Quebec uniform india quebec yankee hotel market tango golf mountain papa canyon."
+            },
+            {
+              "role": "user",
+              "content": "Say ok."
+            },
+            {
+              "role": "assistant",
+              "content": "ok"
+            },
+            {
+              "role": "user",
+              "content": "Reference document n9350c50f-ob. Delta foxtrot foxtrot xray kilo city tango quebec garden november garden charlie. Castle market kilo mountain orchard zulu canyon xray harbor forest canyon romeo. Charlie bravo xray ocean uniform yankee mountain island kilo bridge lima papa. Oscar bravo lima uniform lima india canyon canyon xray canyon market bridge. Lima forest river island xray castle whiskey xray forest kilo zulu ocean. Village island papa valley romeo valley canyon canyon whiskey city ocean ocean. Whiskey tower bridge ocean valley city oscar uniform library kilo meadow romeo. Desert tango tango canyon bridge island canyon village meadow castle river tango. November valley canyon xray market meadow echo victor alpha mike golf delta. Tower village delta romeo castle oscar market golf island india romeo papa. November delta mountain charlie delta xray xray lima papa market bravo foxtrot. Hotel echo bravo charlie bravo xray quebec india kilo lima island library. Alpha yankee castle charlie papa juliet charlie alpha whiskey meadow orchard hotel. Sierra victor valley bravo tango forest bridge garden charlie quebec zulu meadow. Juliet desert oscar foxtrot city market uniform golf bravo forest india island. Castle zulu valley canyon uniform juliet victor quebec quebec garden river village. Bravo library bridge india city delta quebec charlie india kilo kilo golf. Ocean orchard oscar canyon charlie papa oscar forest echo quebec foxtrot castle. Oscar meadow meadow xray quebec market mountain romeo island alpha juliet charlie. Yankee river kilo hotel canyon foxtrot papa golf golf bravo lima oscar. Golf november bravo island city ocean ocean tango harbor village yankee november. Market november mountain mountain canyon bravo castle castle delta river island castle. Lima golf city desert xray bravo island hotel meadow xray sierra library. Xray tango bravo market river golf golf tango mike market bravo forest. Delta river orchard valley ocean november castle meadow echo alpha sierra bravo."
+            }
+          ]
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": {
+          "id": "<id>",
+          "object": "chat.completion",
+          "created": 0,
+          "model": "gpt-4o-mini-2024-07-18",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "ok",
+                "refusal": null,
+                "annotations": []
+              },
+              "logprobs": null,
+              "finish_reason": "length"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 1811,
+            "completion_tokens": 1,
+            "total_tokens": 1812,
+            "prompt_tokens_details": {
+              "cached_tokens": 1280,
+              "audio_tokens": 0
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 0,
+              "audio_tokens": 0,
+              "accepted_prediction_tokens": 0,
+              "rejected_prediction_tokens": 0
+            }
+          },
+          "service_tier": "default",
+          "system_fingerprint": "<fp>"
+        }
+      }
+    },
+    {
+      "request": {
+        "body": {
+          "model": "gpt-4o-mini",
+          "max_tokens": 1,
+          "messages": [
+            {
+              "role": "system",
+              "content": "Reference document n9350c50f-oa. India tower echo quebec hotel valley forest desert village yankee november golf. Valley bravo yankee mountain garden alpha library forest romeo oscar castle golf. Uniform bravo bravo bravo village harbor alpha yankee market november mountain bravo. Island oscar forest valley bridge oscar whiskey oscar market oscar ocean sierra. Bravo river bridge village golf lima orchard sierra hotel victor canyon mountain. Canyon city mike tango sierra castle valley canyon zulu castle charlie desert. Papa zulu river city lima xray bridge library market xray foxtrot forest. City canyon golf kilo island zulu xray valley bravo desert charlie tango. Meadow castle castle zulu village kilo kilo canyon oscar alpha mike harbor. Bridge oscar zulu canyon whiskey tower whiskey ocean romeo city bridge garden. Alpha yankee canyon india island bridge november mountain delta desert xray tower. Bridge mike canyon river valley whiskey river whiskey alpha harbor harbor meadow. Meadow victor ocean garden bravo oscar orchard lima bridge castle lima foxtrot. Bridge quebec charlie market echo foxtrot bravo forest alpha romeo papa romeo. Hotel meadow lima whiskey sierra echo kilo kilo quebec island kilo city. Romeo village sierra ocean library uniform valley desert hotel bravo tango yankee. Victor river mike quebec golf quebec canyon november garden mountain bravo oscar. Bravo zulu juliet charlie kilo forest canyon market mountain harbor oscar orchard. Library island forest oscar island village bravo zulu market tower uniform city. Orchard mountain delta tango india november delta tango echo echo tango tango. Kilo river tower quebec india alpha bridge charlie castle november tower ocean. Kilo meadow canyon charlie yankee mike whiskey golf november tower market mountain. Castle mike valley golf city yankee sierra canyon valley bravo uniform meadow. Zulu sierra bravo kilo mike uniform tower india victor mountain november romeo. Market golf yankee bridge whiskey market harbor valley harbor papa echo charlie. Foxtrot india kilo kilo harbor november romeo victor garden canyon quebec xray. Victor victor hotel sierra papa garden valley india castle bridge golf uniform. Charlie river echo yankee juliet india victor hotel meadow castle yankee echo. Tower bridge oscar tower foxtrot romeo xray sierra tower harbor hotel ocean. Romeo golf charlie sierra alpha meadow city alpha foxtrot river hotel charlie. Mike papa castle river kilo hotel forest kilo market papa kilo golf. Mountain yankee harbor sierra bridge quebec desert uniform golf november village uniform. Charlie bravo alpha sierra garden uniform forest zulu uniform zulu echo echo. Uniform garden ocean hotel quebec november meadow harbor library desert city whiskey. Quebec lima harbor november tango mike papa xray foxtrot romeo foxtrot forest. Foxtrot village tower village victor oscar yankee tango charlie uniform lima uniform. Castle tango papa victor golf harbor meadow castle garden foxtrot papa oscar. Bravo papa zulu echo romeo bridge echo echo bravo orchard alpha sierra. Whiskey valley desert juliet golf canyon uniform echo canyon city lima lima. Juliet juliet uniform tango golf canyon garden sierra india november juliet harbor. Charlie uniform meadow market bridge library november lima tango mountain harbor kilo. Delta city papa quebec echo market forest mountain bridge quebec harbor forest. Harbor ocean alpha zulu victor kilo quebec valley bravo village river tower. Bravo delta library whiskey castle india castle india india quebec romeo zulu. Tower zulu lima meadow foxtrot oscar valley alpha lima island uniform canyon. Village forest market orchard oscar papa uniform valley market desert oscar river. Victor bridge meadow village romeo village oscar delta echo canyon village xray. Kilo canyon november tango tango library tango bridge xray kilo library library. Ocean garden foxtrot hotel garden canyon tower yankee lima juliet quebec mountain. November tower delta valley market zulu orchard whiskey yankee canyon kilo harbor. Charlie island foxtrot quebec orchard golf romeo foxtrot india meadow city market. Library foxtrot forest papa yankee mountain zulu kilo uniform forest india meadow. Valley november hotel mountain garden harbor river hotel city sierra romeo papa. Yankee bridge alpha mike island forest castle bravo bravo orchard garden papa. Quebec november lima sierra juliet harbor mike romeo tango castle quebec market. Forest kilo harbor whiskey valley river hotel november tower yankee november sierra. Golf bravo hotel tower alpha harbor sierra market village india echo canyon. Xray tower tango mountain canyon market whiskey island uniform alpha hotel forest. Forest whiskey tango harbor zulu victor market tower valley hotel village yankee. Yankee november bridge alpha romeo orchard garden canyon mike ocean garden island. River tango library kilo forest meadow city island mike xray island alpha. Market yankee castle mountain zulu victor meadow castle library echo valley papa. Orchard village sierra orchard bravo river orchard juliet orchard zulu romeo lima. Echo garden alpha whiskey quebec river market harbor tango juliet ocean quebec. Valley kilo ocean canyon charlie romeo canyon golf castle mountain echo whiskey. Echo city forest bravo kilo canyon kilo library foxtrot zulu orchard library. Romeo garden tango november island november papa victor romeo echo echo library. Island city xray ocean canyon bridge delta kilo tango village bridge romeo. Whiskey meadow oscar zulu bridge zulu lima desert quebec meadow victor oscar. Quebec meadow papa city bravo meadow zulu uniform mountain papa romeo mike. Echo orchard kilo castle forest castle juliet garden quebec ocean island kilo. India india forest xray tango zulu papa hotel november market tango echo. Golf oscar zulu uniform valley golf lima charlie delta garden bravo november. Market charlie valley island meadow forest victor city romeo hotel meadow library. Lima golf oscar zulu oscar valley forest yankee kilo oscar papa sierra. Ocean bridge castle yankee november forest quebec victor valley castle hotel november. Foxtrot charlie alpha alpha desert uniform yankee castle sierra mike zulu kilo. Village juliet bravo alpha yankee juliet city harbor delta tower yankee quebec. India foxtrot ocean village tango alpha charlie harbor delta island india charlie. Romeo hotel mountain foxtrot mike bravo valley orchard india romeo market mike. City forest yankee victor orchard romeo quebec village orchard papa papa delta. Castle castle lima whiskey mountain garden library bridge orchard island delta whiskey. Bridge river harbor mike harbor mountain city echo romeo meadow echo quebec. Lima golf juliet delta november mountain charlie delta orchard foxtrot canyon desert. Canyon xray golf uniform charlie india harbor charlie forest city india zulu. Forest bravo island romeo foxtrot quebec uniform foxtrot tango charlie yankee delta. Quebec uniform india quebec yankee hotel market tango golf mountain papa canyon."
+            },
+            {
+              "role": "user",
+              "content": "Say ok."
+            }
+          ],
+          "prompt_cache_key": "wwz-162-n9350c50f"
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": {
+          "id": "<id>",
+          "object": "chat.completion",
+          "created": 0,
+          "model": "gpt-4o-mini-2024-07-18",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "Ok",
+                "refusal": null,
+                "annotations": []
+              },
+              "logprobs": null,
+              "finish_reason": "length"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 1400,
+            "completion_tokens": 1,
+            "total_tokens": 1401,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "audio_tokens": 0
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 0,
+              "audio_tokens": 0,
+              "accepted_prediction_tokens": 0,
+              "rejected_prediction_tokens": 0
+            }
+          },
+          "service_tier": "default",
+          "system_fingerprint": "<fp>"
+        }
+      }
+    }
+  ]
+}

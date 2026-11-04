@@ -1,0 +1,336 @@
+# Produção do White Wizard (ADR 0017, spec 019). Instalado em /opt/white-wizard
+# como projeto compose `wwz`. SEM segredos: tudo vem do .env gerado no servidor
+# (`scripts/prod-deploy.sh credentials`) e de images.env (tags das imagens).
+# Hosts HTTPS sem padrão (ADR 0076): WWZ_HOST_INFERENCIA, WWZ_HOST_ADMIN,
+# WWZ_HOST_PANEL e WWZ_HOST_GRAFANA vêm de autor/prod.env, fora do git, e o
+# prod-deploy.sh os grava no .env do servidor (credentials e up).
+#
+#   docker compose -p wwz --env-file .env --env-file images.env up -d --wait
+#
+# Só recursos `wwz*` (containers, volumes, rede wwz-internal); a rede externa
+# network_public é do Traefik e só é conectada, nunca criada nem alterada.
+# Teto somado: 32 núcleos e 64 GB (deploy/prod/test.sh confere a soma).
+name: wwz
+
+x-hardening: &hardening
+  restart: unless-stopped
+  read_only: true
+  tmpfs:
+    - /run
+    - /tmp
+  security_opt:
+    - no-new-privileges:true
+  cap_drop: [ALL]
+  networks: [internal]
+
+# Instância por papel: uma config renderizada, store memory (limites e contadores
+# isolados por instância), portas 8000-8008 pelo proxy wwz-ports.
+x-role: &role
+  <<: *hardening
+  image: ${WWZ_IMAGE:?defina WWZ_IMAGE (images.env)}
+  environment: &role-env
+    WWZ_PORT: "8000"
+    WWZ_ADMIN_PORT: "9000"
+    WWZ_STORE: memory
+    WWZ_ADMIN_TOKEN: ${WWZ_ADMIN_TOKEN:?defina WWZ_ADMIN_TOKEN (.env)}
+    WWZ_LOG_LEVEL: ${WWZ_LOG_LEVEL:-warn}
+    WWZ_CONFIG: /etc/wwz/wwz.yaml
+  ulimits:
+    nofile: { soft: "${WWZ_NOFILE:-1048576}", hard: "${WWZ_NOFILE:-1048576}" }
+  stop_grace_period: 20s
+  healthcheck:
+    test: ["CMD", "/usr/local/bin/healthcheck", "http://127.0.0.1:9000/health/ready"]
+    interval: 10s
+    timeout: 3s
+    start_period: 10s
+    retries: 10
+
+services:
+  # 8000: OpenAI perfeito.
+  wwz-openai-perfeito:
+    <<: *role
+    container_name: wwz-openai-perfeito
+    networks:
+      internal: {ipv4_address: 198.18.128.11}
+    volumes: ["${WWZ_CONFIG_DIR:-./run/config}/perfeito.yaml:/etc/wwz/wwz.yaml:ro"]
+    cpus: ${WWZ_CPUS_PERFEITO:-5}
+    mem_limit: ${WWZ_MEM_PERFEITO:-12g}
+
+  # 8001: 20% de erros variados.
+  wwz-falhas-20pct:
+    <<: *role
+    container_name: wwz-falhas-20pct
+    networks:
+      internal: {ipv4_address: 198.18.128.12}
+    volumes: ["${WWZ_CONFIG_DIR:-./run/config}/falhas-20pct.yaml:/etc/wwz/wwz.yaml:ro"]
+    cpus: ${WWZ_CPUS_FALHAS:-3}
+    mem_limit: ${WWZ_MEM_FALHAS:-6g}
+
+  # 8002: latência intermitente (cauda pesada).
+  wwz-latencia-intermitente:
+    <<: *role
+    container_name: wwz-latencia-intermitente
+    networks:
+      internal: {ipv4_address: 198.18.128.13}
+    volumes: ["${WWZ_CONFIG_DIR:-./run/config}/latencia-intermitente.yaml:/etc/wwz/wwz.yaml:ro"]
+    cpus: ${WWZ_CPUS_LATENCIA:-3}
+    mem_limit: ${WWZ_MEM_LATENCIA:-6g}
+
+  # 8003: indisponibilidade por janelas.
+  wwz-indisponibilidade:
+    <<: *role
+    container_name: wwz-indisponibilidade
+    networks:
+      internal: {ipv4_address: 198.18.128.14}
+    volumes: ["${WWZ_CONFIG_DIR:-./run/config}/indisponibilidade.yaml:/etc/wwz/wwz.yaml:ro"]
+    cpus: ${WWZ_CPUS_INDISP:-2}
+    mem_limit: ${WWZ_MEM_INDISP:-4g}
+
+  # 8004: Anthropic (e 8008 em TCP para o modo estrito em /claude-code).
+  wwz-anthropic:
+    <<: *role
+    container_name: wwz-anthropic
+    networks:
+      internal: {ipv4_address: 198.18.128.15}
+    volumes: ["${WWZ_CONFIG_DIR:-./run/config}/anthropic.yaml:/etc/wwz/wwz.yaml:ro"]
+    cpus: ${WWZ_CPUS_ANTHROPIC:-3}
+    mem_limit: ${WWZ_MEM_ANTHROPIC:-6g}
+
+  # 8005: OpenRouter.
+  wwz-openrouter:
+    <<: *role
+    container_name: wwz-openrouter
+    networks:
+      internal: {ipv4_address: 198.18.128.16}
+    volumes: ["${WWZ_CONFIG_DIR:-./run/config}/openrouter.yaml:/etc/wwz/wwz.yaml:ro"]
+    cpus: ${WWZ_CPUS_OPENROUTER:-2}
+    mem_limit: ${WWZ_MEM_OPENROUTER:-4g}
+
+  # 8006: OpenCode Go.
+  wwz-opencode:
+    <<: *role
+    container_name: wwz-opencode
+    networks:
+      internal: {ipv4_address: 198.18.128.17}
+    volumes: ["${WWZ_CONFIG_DIR:-./run/config}/opencode.yaml:/etc/wwz/wwz.yaml:ro"]
+    cpus: ${WWZ_CPUS_OPENCODE:-2}
+    mem_limit: ${WWZ_MEM_OPENCODE:-4g}
+
+  # Principal: todos os drivers por prefixo (HTTPS wwz.…) e control plane
+  # (HTTPS admin-wwz.… e 8007). Único com store Valkey e event_stream (painel).
+  wwz-admin:
+    <<: *role
+    container_name: wwz-admin
+    environment:
+      <<: *role-env
+      WWZ_STORE: valkey
+      WWZ_VALKEY_ADDR: wwz-valkey:6379
+    volumes: ["${WWZ_CONFIG_DIR:-./run/config}/todos.yaml:/etc/wwz/wwz.yaml:ro"]
+    depends_on:
+      wwz-valkey: { condition: service_healthy }
+    networks:
+      internal: {ipv4_address: 198.18.128.18}
+      network_public:
+    cpus: ${WWZ_CPUS_ADMIN:-6}
+    mem_limit: ${WWZ_MEM_ADMIN:-12g}
+    labels:
+      traefik.enable: "true"
+      traefik.docker.network: network_public
+      traefik.http.routers.wwz-inferencia.entrypoints: web,websecure
+      traefik.http.routers.wwz-inferencia.rule: Host(`${WWZ_HOST_INFERENCIA:?defina WWZ_HOST_INFERENCIA (autor/prod.env; o prod-deploy.sh grava no .env)}`)
+      traefik.http.routers.wwz-inferencia.tls: "true"
+      traefik.http.routers.wwz-inferencia.tls.certresolver: letsencrypt
+      traefik.http.routers.wwz-inferencia.service: wwz-inferencia
+      traefik.http.services.wwz-inferencia.loadbalancer.server.port: "8000"
+      traefik.http.routers.wwz-admin.entrypoints: web,websecure
+      traefik.http.routers.wwz-admin.rule: Host(`${WWZ_HOST_ADMIN:?defina WWZ_HOST_ADMIN (autor/prod.env; o prod-deploy.sh grava no .env)}`)
+      traefik.http.routers.wwz-admin.tls: "true"
+      traefik.http.routers.wwz-admin.tls.certresolver: letsencrypt
+      traefik.http.routers.wwz-admin.service: wwz-admin
+      traefik.http.services.wwz-admin.loadbalancer.server.port: "9000"
+
+  # Portas 8000-8008 do host: o Docker do servidor (iptables=false,
+  # userland-proxy=false) nao publica `ports:`; este proxy TCP em rede do host
+  # escuta e encaminha para os IPs fixos de wwz-internal (.11 a .18).
+  wwz-ports:
+    restart: unless-stopped
+    read_only: true
+    tmpfs: [/run, /tmp]
+    security_opt: ["no-new-privileges:true"]
+    cap_drop: [ALL]
+    container_name: wwz-ports
+    image: haproxy:3.0-alpine
+    network_mode: host
+    user: "99:99"
+    volumes: ["./haproxy/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg:ro"]
+    ulimits:
+      nofile: { soft: "${WWZ_NOFILE:-1048576}", hard: "${WWZ_NOFILE:-1048576}" }
+    cpus: ${WWZ_CPUS_PORTS:-1}
+    mem_limit: ${WWZ_MEM_PORTS:-1g}
+    depends_on:
+      wwz-admin: { condition: service_healthy }
+    healthcheck:
+      test: ["CMD", "nc", "-z", "127.0.0.1", "8000"]
+      interval: 10s
+      timeout: 3s
+      retries: 6
+
+  # Sem ports: só a rede wwz-internal.
+  wwz-valkey:
+    <<: *hardening
+    container_name: wwz-valkey
+    image: valkey/valkey:${VALKEY_VERSION:-8.1}-alpine
+    user: "999:999" # sem root o entrypoint nao faz chown/gosu (cap_drop ALL)
+    command: ["valkey-server", "--save", "", "--appendonly", "no", "--maxmemory", "${VALKEY_MAXMEMORY:-2gb}"]
+    tmpfs:
+      - /run
+      - /data
+    ulimits:
+      nofile: { soft: 65536, hard: 65536 }
+    cpus: ${WWZ_CPUS_VALKEY:-2}
+    mem_limit: ${WWZ_MEM_VALKEY:-4g}
+    healthcheck:
+      test: ["CMD", "valkey-cli", "ping"]
+      interval: 5s
+      timeout: 2s
+      retries: 10
+
+  # Sem ports: só a rede wwz-internal (Grafana e painel consultam por ela).
+  wwz-prometheus:
+    <<: *hardening
+    container_name: wwz-prometheus
+    image: prom/prometheus:${PROMETHEUS_VERSION:-v3.7.0}
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+      - --storage.tsdb.path=/prometheus
+      - --storage.tsdb.retention.time=${PROMETHEUS_RETENTION:-7d}
+      - --web.listen-address=:9090
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - ./prometheus/alerts.yml:/etc/prometheus/alerts.yml:ro
+      - prometheus-data:/prometheus
+    ulimits:
+      nofile: { soft: 65536, hard: 65536 }
+    cpus: ${WWZ_CPUS_PROMETHEUS:-1}
+    mem_limit: ${WWZ_MEM_PROMETHEUS:-2g}
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://127.0.0.1:9090/-/ready"]
+      interval: 5s
+      timeout: 2s
+      retries: 10
+
+  wwz-grafana:
+    <<: *hardening
+    container_name: wwz-grafana
+    image: grafana/grafana:${GRAFANA_VERSION:-12.2.0}
+    environment:
+      GF_SECURITY_ADMIN_USER: ${GRAFANA_ADMIN_USER:-admin}
+      GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_ADMIN_PASSWORD:?defina GRAFANA_ADMIN_PASSWORD (.env)}
+      GF_SECURITY_COOKIE_SECURE: "true"
+      GF_SERVER_HTTP_PORT: "3000"
+      GF_SERVER_ROOT_URL: https://${WWZ_HOST_GRAFANA:?defina WWZ_HOST_GRAFANA (autor/prod.env; o prod-deploy.sh grava no .env)}
+      GF_USERS_ALLOW_SIGN_UP: "false"
+      GF_AUTH_ANONYMOUS_ENABLED: "false"
+      GF_ANALYTICS_REPORTING_ENABLED: "false"
+      GF_ANALYTICS_CHECK_FOR_UPDATES: "false"
+      GF_ANALYTICS_CHECK_FOR_PLUGIN_UPDATES: "false"
+      GF_PLUGINS_PREINSTALL_DISABLED: "true"
+      GF_NEWS_NEWS_FEED_ENABLED: "false"
+      GF_LOG_MODE: console
+      GF_DASHBOARDS_DEFAULT_HOME_DASHBOARD_PATH: /var/lib/grafana-dashboards/wwz.json
+      GRAFANA_PROMETHEUS_URL: http://wwz-prometheus:9090
+      GRAFANA_SCRAPE_INTERVAL: 5s
+    volumes:
+      - ./grafana/provisioning:/etc/grafana/provisioning:ro
+      - ./grafana/dashboards:/var/lib/grafana-dashboards:ro
+      - grafana-data:/var/lib/grafana
+    depends_on:
+      wwz-prometheus: { condition: service_healthy }
+    networks: [internal, network_public]
+    ulimits:
+      nofile: { soft: 65536, hard: 65536 }
+    cpus: ${WWZ_CPUS_GRAFANA:-1}
+    mem_limit: ${WWZ_MEM_GRAFANA:-1g}
+    stop_grace_period: 10s
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://127.0.0.1:3000/api/health"]
+      interval: 10s
+      timeout: 3s
+      start_period: 20s
+      retries: 10
+    labels:
+      traefik.enable: "true"
+      traefik.docker.network: network_public
+      traefik.http.routers.wwz-grafana.entrypoints: web,websecure
+      traefik.http.routers.wwz-grafana.rule: Host(`${WWZ_HOST_GRAFANA:?defina WWZ_HOST_GRAFANA (autor/prod.env; o prod-deploy.sh grava no .env)}`)
+      traefik.http.routers.wwz-grafana.tls: "true"
+      traefik.http.routers.wwz-grafana.tls.certresolver: letsencrypt
+      traefik.http.services.wwz-grafana.loadbalancer.server.port: "3000"
+
+  wwz-panel:
+    <<: *hardening
+    container_name: wwz-panel
+    image: ${WWZ_PANEL_IMAGE:?defina WWZ_PANEL_IMAGE (images.env)}
+    environment:
+      WWZ_PANEL_LISTEN: ":8100"
+      WWZ_PANEL_DB: /data/panel.db
+      WWZ_PANEL_BACKUP_DIR: /backup
+      WWZ_PANEL_PUBLIC_URL: https://${WWZ_HOST_PANEL:?defina WWZ_HOST_PANEL (autor/prod.env; o prod-deploy.sh grava no .env)}
+      WWZ_PANEL_VALKEY_ADDR: wwz-valkey:6379
+      WWZ_PANEL_WWZ_ADMIN_URL: http://wwz-admin:9000
+      WWZ_PANEL_PROMETHEUS_URL: http://wwz-prometheus:9090
+      WWZ_ADMIN_TOKEN: ${WWZ_ADMIN_TOKEN:?defina WWZ_ADMIN_TOKEN (.env)}
+      WWZ_PANEL_ADMIN_USER: ${WWZ_PANEL_ADMIN_USER:-admin}
+      WWZ_PANEL_ADMIN_PASSWORD: ${WWZ_PANEL_ADMIN_PASSWORD:?defina WWZ_PANEL_ADMIN_PASSWORD (.env)}
+      WWZ_PANEL_API_TOKEN: ${WWZ_PANEL_API_TOKEN:-}
+      WWZ_PANEL_SESSION_KEY: ${WWZ_PANEL_SESSION_KEY:-}
+      WWZ_PANEL_LOG_LEVEL: ${WWZ_LOG_LEVEL:-info}
+    volumes:
+      - panel-data:/data
+      - panel-backup:/backup
+    depends_on:
+      wwz-valkey: { condition: service_healthy }
+      wwz-admin: { condition: service_healthy }
+      wwz-prometheus: { condition: service_started }
+    networks: [internal, network_public]
+    ulimits:
+      nofile: { soft: 65536, hard: 65536 }
+    cpus: ${WWZ_CPUS_PANEL:-1}
+    mem_limit: ${WWZ_MEM_PANEL:-2g}
+    stop_grace_period: 10s
+    healthcheck:
+      test: ["CMD", "/usr/local/bin/healthcheck", "http://127.0.0.1:8100/health/ready"]
+      interval: 5s
+      timeout: 3s
+      start_period: 5s
+      retries: 10
+    labels:
+      traefik.enable: "true"
+      traefik.docker.network: network_public
+      traefik.http.routers.wwz-panel.entrypoints: web,websecure
+      traefik.http.routers.wwz-panel.rule: Host(`${WWZ_HOST_PANEL:?defina WWZ_HOST_PANEL (autor/prod.env; o prod-deploy.sh grava no .env)}`)
+      traefik.http.routers.wwz-panel.tls: "true"
+      traefik.http.routers.wwz-panel.tls.certresolver: letsencrypt
+      traefik.http.services.wwz-panel.loadbalancer.server.port: "8100"
+
+networks:
+  # Sub-rede fixa: o host usa iptables=false e firewall nftables escrito a mao;
+  # o proxy wwz-ports (host network) encaminha 8000-8008 para estes IPs (.11 a .18; a 8008 também vai ao .15).
+  internal:
+    name: wwz-internal
+    ipam:
+      config:
+        - subnet: 198.18.128.0/25
+  network_public:
+    external: true
+    name: network_public
+
+volumes:
+  prometheus-data:
+    name: wwz-prometheus-data
+  grafana-data:
+    name: wwz-grafana-data
+  panel-data:
+    name: wwz-panel-data
+  panel-backup:
+    name: wwz-panel-backup

@@ -1,0 +1,23 @@
+{
+  "provider": "openrouter",
+  "name": "error_auth",
+  "recorded_at": "2026-10-31",
+  "note": "sonda error_auth do wwz-drift (wwz-drift record)",
+  "request": {
+    "method": "POST",
+    "path": "/api/v1/chat/completions",
+    "headers": {
+      "authorization": "Bearer sk-invalid-wwz-drift"
+    },
+    "body": "{\"model\":\"openai/gpt-4.1-nano\",\"messages\":[{\"role\":\"user\",\"content\":\"Responda só: ok\"}],\"max_tokens\":16}"
+  },
+  "response": {
+    "status": 401,
+    "headers": {
+      "access-control-allow-origin": "*",
+      "access-control-expose-headers": "X-Generation-Id,X-Provider-Name,request-id,cf-ray",
+      "content-type": "application/json"
+    },
+    "body": "{\"error\":{\"message\":\"Missing Authentication header\",\"code\":401}}"
+  }
+}

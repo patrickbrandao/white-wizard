@@ -1,0 +1,65 @@
+# cota-5h-semana: cota em dólares em janelas de 5 horas, semana e mês, como a
+# assinatura OpenCode Go (specs 010 e 006, seção 16.3): 5 h = 20 %, semana = 50 %,
+# mês = 100 % da cota mensal. Estourou uma janela, 429 GoUsageLimitError com
+# retry-after em segundos até a janela liberar.
+#
+# A cota REAL do plano é US$ 60/mês (5 h = US$ 12, semana = US$ 30). Esta
+# configuração usa exatamente esses números; para o smoke caber em segundos, o
+# preço do modelo é inflado (US$ 15 por milhão de tokens de saída, e cada resposta
+# tem 100 tokens fixos, ou seja, ~US$ 1,50 por chamada), de modo que ~8 chamadas
+# esgotam a janela de 5 h. A de 5 h é deslizante, a semanal vira na segunda
+# 00:00 UTC e a mensal no dia 1º (UTC), como no real; nenhuma se encurta; o smoke
+# nunca espera por elas, e o admin POST /admin/entities/account/<id>/reset
+# (counters) zera o débito da cota da conta para repetir o teste.
+#
+# Na base Go (/zen/go) a cota cai pelo opencode.allowance e o saldo não é
+# debitado (cost 0, ADR 0072). O real usa 0,6× o preço de lista nos modelos
+# não Gemini; aqui catalogs.opencode-go.allowance_factor: 1 mantém a cota
+# caindo pelo preço de lista (~US$ 1,50 por chamada).
+server:
+  listen: ":8000"
+  auth: keys
+
+admin:
+  listen: ":9000"
+
+keys:
+  - { key: wwz-key-go-5h, label: assinante-5h, account: ws-5h }
+  - { key: wwz-key-go-semana, label: assinante-semana, account: ws-semana }
+  - { key: wwz-key-go-livre, label: sem-cota, account: ws-livre }
+
+accounts:
+  # Plano real: US$ 60/mês; 5 h = 20 % (US$ 12); semana = 50 % (US$ 30).
+  - id: ws-5h
+    limits:
+      quota_usd: { monthly_usd: 60, rolling_5h_pct: 20, weekly_pct: 50 }
+  # Mesmo mês, mas a janela de 5 h não restringe (100 %) e a semanal fica em 25 %
+  # (US$ 15): quem barra aqui é a semana, com retry-after de dias.
+  - id: ws-semana
+    limits:
+      quota_usd: { monthly_usd: 60, rolling_5h_pct: 100, weekly_pct: 25 }
+  # Outra conta sem cota: continua em 200 quando as outras estouram.
+  - id: ws-livre
+
+drivers:
+  - name: opencode
+
+models:
+  - id: glm-5.2
+    protocols: [openai]
+    latency: rapida
+    generation: fixa
+    pricing: { input_per_m: 1, output_per_m: 15000 } # inflado para o smoke
+    catalogs: { opencode-go: { allowance_factor: 1 } } # a cota cai pelo preço de lista
+    capabilities: { reasoning: false } # o opencode raciocina por padrão; 100 tokens fixos por chamada
+
+profiles:
+  latency:
+    rapida: { ttft: 5ms, itl: 1ms }
+  generation:
+    fixa:
+      mode: random
+      output_tokens: { dist: uniform, min: 100, max: 100 }
+
+logging:
+  level: warn

@@ -1,0 +1,21 @@
+{
+  "provider": "opencode",
+  "name": "invalid_json",
+  "recorded_at": "2026-10-31",
+  "request": {
+    "method": "POST",
+    "path": "/inference/go/openai/v1/responses",
+    "headers": {
+      "authorization": "Bearer <key>",
+      "x-opencode-session": "<session>"
+    },
+    "body": "{\"model\": \"deepseek-v4.1-flash\", \"input\": \"hi\",}"
+  },
+  "response": {
+    "status": 400,
+    "headers": {
+      "x-opencode-log-id": "<log_id>"
+    },
+    "body": ""
+  }
+}

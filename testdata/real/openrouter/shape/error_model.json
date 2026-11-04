@@ -1,0 +1,24 @@
+{
+  "provider": "openrouter",
+  "name": "error_model",
+  "recorded_at": "2026-10-31",
+  "note": "sonda error_model do wwz-drift (wwz-drift record)",
+  "request": {
+    "method": "POST",
+    "path": "/api/v1/chat/completions",
+    "headers": {
+      "authorization": "Bearer <key>"
+    },
+    "body": "{\"model\":\"wwz-drift-modelo-inexistente\",\"messages\":[{\"role\":\"user\",\"content\":\"Responda só: ok\"}],\"max_tokens\":16}"
+  },
+  "response": {
+    "status": 400,
+    "headers": {
+      "access-control-allow-origin": "*",
+      "access-control-expose-headers": "X-Generation-Id,X-Provider-Name,request-id,cf-ray",
+      "content-type": "application/json",
+      "x-generation-id": "<generation_id>"
+    },
+    "body": "{\"error\":{\"message\":\"wwz-drift-modelo-inexistente is not a valid model ID\",\"code\":400},\"user_id\":\"<user_id>\"}"
+  }
+}

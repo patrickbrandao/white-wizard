@@ -1,0 +1,19 @@
+{
+  "provider": "anthropic",
+  "name": "cc_h55_role_system_turns",
+  "recorded_at": "2026-11-03",
+  "request": {
+    "method": "POST",
+    "path": "/v1/messages",
+    "headers": {
+      "x-api-key": "<key>",
+      "anthropic-version": "2023-06-01"
+    },
+    "body": "{\"model\": \"claude-haiku-5-5\", \"max_tokens\": 1, \"messages\": [{\"role\": \"user\", \"content\": \"x\"}, {\"role\": \"system\", \"content\": \"s\"}, {\"role\": \"assistant\", \"content\": [{\"type\": \"text\", \"text\": \"ok\"}]}, {\"role\": \"user\", \"content\": \"y\"}, {\"role\": \"system\", \"content\": [{\"type\": \"text\", \"text\": \"t\", \"cache_control\": {\"type\": \"ephemeral\", \"ttl\": \"1h\"}}]}]}"
+  },
+  "response": {
+    "status": 200,
+    "content_type": "application/json",
+    "body": null
+  }
+}

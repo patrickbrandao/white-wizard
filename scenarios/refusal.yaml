@@ -1,0 +1,13 @@
+# The first user turn is answered normally; the second is refused with
+# finish_reason content_filter (the shape of each dialect, spec 009).
+name: refusal
+description: normal first turn, content_filter on the second
+steps:
+  - id: normal
+    expect: { turn: 1 }
+    content: { tokens: "40..160" }
+    finish_reason: stop
+  - id: refused
+    expect: { turn_gte: 2 }
+    content: "I can't help with that request."
+    finish_reason: content_filter

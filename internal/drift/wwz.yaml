@@ -1,0 +1,117 @@
+# wwz embutido no wwz-drift check (spec 017, ADR 0035).
+# Monta os 6 drivers com os modelos fixos das sondas, os mesmos ids pedidos
+# ao provedor real e listados no /models real (ADR 0049); latência zero e
+# sem erros injetados, para que a forma comparada seja só a do dialeto.
+# Os campos de snapshot e ciclo de vida (version, retires_at) entram quando
+# a configuração os tiver (spec 003). protocols é o dialeto de wire e
+# drivers, o catálogo: cada modelo só aparece no provedor que o lista no real
+# (ADR 0048).
+server:
+  listen: 127.0.0.1:0
+  auth: keys
+  seed: 1
+drivers:
+  - {name: openai, prefix: /openai}
+  - {name: anthropic, prefix: /anthropic}
+  # opencode antes do openrouter: os dois sem prefixo, a rota que nenhum
+  # serve (GET .../google/v1beta/models, sem chave oc_sk_) cai no primeiro
+  # da configuração e precisa do 404 do gateway (task 297).
+  - {name: opencode}
+  - {name: openrouter}
+  - {name: gemini, prefix: /gemini}
+  # Azure: deployment = id do modelo (sem chave real, só contra provedor
+  # falso, ADR 0043).
+  - {name: azure, prefix: /azure}
+keys:
+  - {key: wwz-key-drift, label: wwz-drift, account: wwz-drift, project: drift}
+models:
+  # Resposta curta como a do real para a sonda ("Ok.", 2–3 tokens): com
+  # mais de 16 a sonda responses_stream terminaria em response.incomplete
+  # e o real em response.completed (task 239).
+  - id: gpt-4o-mini
+    version: gpt-4o-mini-2024-07-18
+    created: 1721172741
+    retires_at: "2027-01-14"
+    protocols: [openai]
+    drivers: [openai, azure]
+    owned_by: system
+    latency: fast
+    errors: none
+    generation:
+      output_tokens: {dist: uniform, min: 1, max: 3}
+  - id: claude-haiku-4-5-20251001
+    aliases: [claude-haiku-4-5]
+    protocols: [anthropic]
+    drivers: [anthropic]
+    display_name: Claude Haiku 4.5
+    latency: fast
+    errors: none
+  # Preços e campos de /api/v1/models como os do item real (task 174).
+  - id: openai/gpt-4.1-nano
+    version: gpt-4.1-nano-2025-04-14
+    created: 1744651369
+    protocols: [openai]
+    drivers: [openrouter]
+    owned_by: openai
+    display_name: GPT-4.1 Nano
+    pricing: {input_per_m: 0.1, output_per_m: 0.4, cache_read_per_m: 0.03}
+    extra:
+      pricing: {web_search: "0.01"}
+      knowledge_cutoff: "2024-06-30"
+      benchmarks:
+        design_arena: [{arena: models, category: 3d, elo: 922, win_rate: 46, rank: 121}]
+        artificial_analysis: {intelligence_index: null, coding_index: 11.1, agentic_index: null}
+    latency: fast
+    errors: none
+    # Resposta curta como a do real para a sonda ("ok", 2 tokens), pelo
+    # mesmo motivo do gpt-4o-mini (responses_stream, task 239).
+    generation:
+      output_tokens: {dist: uniform, min: 1, max: 3}
+  - id: deepseek-v4.1-flash
+    protocols: [openai]
+    drivers: [opencode]
+    owned_by: opencode
+    display_name: DeepSeek V4.1 Flash
+    capabilities: {reasoning: true, json_schema: true}
+    # Preços e campos de /v1/models como os do item real (task 175).
+    context_window: 1000000
+    max_output: 384000
+    pricing: {input_per_m: 0.15, output_per_m: 0.6, cache_read_per_m: 0.003}
+    extra:
+      canonical_id: deepseek/deepseek-v4.1-flash
+      description: DeepSeek V4.1 Flash model for reasoning and agentic coding
+      family: deepseek-flash
+      open_weights: true
+      knowledge: "2025-05"
+      release_date: "2026-09-10"
+      last_updated: "2026-09-10"
+      modalities: {input: [text, image/jpeg, image/png, image/gif, image/webp], output: [text]}
+      capabilities: {reasoning: {effort: [low, high, max]}}
+      cost:
+        multipliers:
+          - when:
+              utc_days: {in: [mon, tue, wed, thu, fri]}
+              any:
+                - all: [{utc_hours: {gte: "01:00"}}, {utc_hours: {lt: "04:00"}}]
+                - all: [{utc_hours: {gte: "06:00"}}, {utc_hours: {lt: "10:00"}}]
+            factor: 2
+    latency: fast
+    errors: none
+    # Raciocínio curto e resposta curta, como o real para a sonda (7–16 tokens de raciocínio, "ok").
+    generation:
+      reasoning_field: reasoning_content
+      reasoning_tokens: {min: 7, max: 11, probability: 100}
+      output_tokens: {dist: uniform, min: 1, max: 2}
+  # Campos de models/{id} como os do item real (task 164); resposta curta
+  # como a do real para a sonda ("ok", 1 token).
+  - id: gemini-3.5-flash-lite
+    version: 3.5-flash-lite-07-2026
+    protocols: [gemini]
+    drivers: [gemini]
+    display_name: Gemini 3.5 Flash Lite
+    context_window: 1048576
+    max_output: 65536
+    latency: fast
+    errors: none
+    generation:
+      output_tokens: {dist: uniform, min: 1, max: 2}

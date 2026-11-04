@@ -1,0 +1,20 @@
+{
+  "provider": "anthropic",
+  "name": "c04",
+  "recorded_at": "2026-10-31",
+  "note": "claude-opus-5-5, task 301",
+  "request": {
+    "method": "POST",
+    "path": "/v1/messages/count_tokens",
+    "headers": {
+      "x-api-key": "<key>",
+      "anthropic-version": "2023-06-01"
+    },
+    "body": "{\"model\": \"claude-opus-5-5\", \"messages\": [{\"role\": \"user\", \"content\": \"Em 31/10/2026 às 14:35:07 o pedido 1.234.567 somou R$ 98.765,43 (3,14159% de desconto); CPF 123.456.789-00, CEP 01310-100, telefone +55 11 98765-4321.\"}]}"
+  },
+  "response": {
+    "status": 200,
+    "content_type": "application/json",
+    "body": "{\"input_tokens\":95}"
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "provider": "openrouter",
+  "name": "chat_t3_required",
+  "recorded_at": "2026-10-31",
+  "note": "openai/gpt-4.1-nano, task 259",
+  "request": {
+    "method": "POST",
+    "path": "/api/v1/chat/completions",
+    "headers": {
+      "authorization": "Bearer <key>",
+      "content-type": "application/json"
+    },
+    "body": "{\"messages\": [{\"role\": \"user\", \"content\": \"x\"}], \"tools\": [{\"type\": \"function\", \"function\": {\"name\": \"f\", \"parameters\": {\"type\": \"object\", \"properties\": {\"a\": {\"type\": \"string\"}}, \"required\": [\"a\"]}}}, {\"type\": \"function\", \"function\": {\"name\": \"g\", \"parameters\": {\"type\": \"object\", \"properties\": {\"a\": {\"type\": \"string\"}}, \"required\": [\"a\"]}}}, {\"type\": \"function\", \"function\": {\"name\": \"get_weather\", \"parameters\": {\"type\": \"object\", \"properties\": {\"a\": {\"type\": \"string\"}}, \"required\": [\"a\"]}}}], \"tool_choice\": \"required\", \"model\": \"openai/gpt-4.1-nano\", \"max_tokens\": 16}"
+  },
+  "response": {
+    "status": 200,
+    "content_type": "application/json",
+    "body": "{\"id\":\"<generation_id>\",\"object\":\"chat.completion\",\"created\":1793459129,\"model\":\"openai/gpt-4.1-nano\",\"provider\":\"Azure\",\"system_fingerprint\":null,\"service_tier\":\"default\",\"choices\":[{\"index\":0,\"logprobs\":null,\"finish_reason\":\"tool_calls\",\"native_finish_reason\":\"completed\",\"message\":{\"role\":\"assistant\",\"content\":null,\"refusal\":null,\"reasoning\":null,\"tool_calls\":[{\"type\":\"function\",\"index\":0,\"id\":\"<call_id>\",\"function\":{\"name\":\"f\",\"arguments\":\"{\\\"a\\\":\\\"x\\\"}\"}}]}}],\"usage\":{\"prompt_tokens\":58,\"completion_tokens\":14,\"total_tokens\":72,\"cost\":0.0000114,\"is_byok\":false,\"prompt_tokens_details\":{\"cached_tokens\":0,\"cache_write_tokens\":0,\"audio_tokens\":0,\"video_tokens\":0},\"cost_details\":{\"upstream_inference_cost\":0.0000114,\"upstream_inference_prompt_cost\":0.0000058,\"upstream_inference_completions_cost\":0.0000056},\"completion_tokens_details\":{\"reasoning_tokens\":0,\"image_tokens\":0,\"audio_tokens\":0}}}"
+  }
+}

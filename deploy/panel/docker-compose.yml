@@ -1,0 +1,65 @@
+# Painel do cluster (wwz-panel, spec 016, ADR 0007). Incluído pelo docker-compose.yml raiz.
+#
+# Estado só nos volumes nomeados: panel-data (/data, SQLite em WWZ_PANEL_DB) e
+# panel-backup (/backup, snapshots diários). WWZ_PANEL_ADMIN_PASSWORD não tem
+# default: vazio gera uma senha e a imprime uma única vez no log (ADR 0005).
+services:
+  wwz-panel:
+    build:
+      context: ../..
+      target: wwz-panel
+      args:
+        VERSION: ${WWZ_VERSION:-dev}
+    image: ${WWZ_PANEL_IMAGE:-white-wizard-panel:dev}
+    environment:
+      WWZ_PANEL_LISTEN: ":8100"
+      WWZ_PANEL_DB: /data/panel.db
+      WWZ_PANEL_BACKUP_DIR: /backup
+      WWZ_PANEL_PUBLIC_URL: ${WWZ_PANEL_PUBLIC_URL:-}
+      # Segue o wwz: com WWZ_VALKEY_ADDR= (store memory) o painel fica sem Valkey.
+      WWZ_PANEL_VALKEY_ADDR: ${WWZ_PANEL_VALKEY_ADDR-${WWZ_VALKEY_ADDR-valkey:6379}}
+      WWZ_PANEL_WWZ_ADMIN_URL: ${WWZ_PANEL_WWZ_ADMIN_URL:-http://wwz:9000}
+      WWZ_PANEL_PROMETHEUS_URL: ${WWZ_PANEL_PROMETHEUS_URL-http://prometheus:9090}
+      WWZ_ADMIN_TOKEN: ${WWZ_ADMIN_TOKEN:?defina WWZ_ADMIN_TOKEN}
+      WWZ_PANEL_ADMIN_USER: ${WWZ_PANEL_ADMIN_USER:-admin}
+      WWZ_PANEL_ADMIN_PASSWORD: ${WWZ_PANEL_ADMIN_PASSWORD:-}
+      WWZ_PANEL_API_TOKEN: ${WWZ_PANEL_API_TOKEN:-}
+      WWZ_PANEL_SESSION_KEY: ${WWZ_PANEL_SESSION_KEY:-}
+      WWZ_PANEL_LOG_LEVEL: ${WWZ_PANEL_LOG_LEVEL:-info}
+    ports:
+      - "${WWZ_PANEL_PORT:-18002}:8100"
+    volumes:
+      - panel-data:/data
+      - panel-backup:/backup
+    depends_on:
+      valkey:
+        condition: service_healthy
+      wwz:
+        condition: service_healthy
+      prometheus:
+        condition: service_started
+    read_only: true
+    tmpfs:
+      - /run
+      - /tmp
+    security_opt:
+      - no-new-privileges:true
+    cap_drop: [ALL]
+    ulimits:
+      nofile: { soft: 65536, hard: 65536 }
+    deploy:
+      resources:
+        limits:
+          cpus: "${WWZ_PANEL_CPUS:-1}"
+          memory: "${WWZ_PANEL_MEMORY:-256m}"
+    stop_grace_period: 10s
+    healthcheck:
+      test: ["CMD", "/usr/local/bin/healthcheck", "http://127.0.0.1:8100/health/ready"]
+      interval: 5s
+      timeout: 3s
+      start_period: 5s
+      retries: 10
+
+volumes:
+  panel-data:
+  panel-backup:

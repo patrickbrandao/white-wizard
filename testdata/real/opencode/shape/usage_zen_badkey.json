@@ -1,0 +1,26 @@
+{
+  "provider": "opencode",
+  "name": "usage_zen_badkey",
+  "recorded_at": "2026-10-31",
+  "note": "uso legado com chave inválida",
+  "request": {
+    "method": "GET",
+    "path": "/zen/go/v1/usage",
+    "headers": {
+      "authorization": "Bearer sk-invalid-wwz-drift",
+      "x-opencode-session": "<session>"
+    }
+  },
+  "response": {
+    "status": 401,
+    "headers": {
+      "access-control-allow-headers": "Content-Type, Authorization, X-Api-Key, X-Opencode-Org-Id",
+      "access-control-allow-methods": "GET, OPTIONS",
+      "access-control-allow-origin": "*",
+      "cache-control": "no-store",
+      "content-type": "application/json",
+      "x-opencode-log-id": "<log_id>"
+    },
+    "body": "{\"type\":\"error\",\"error\":{\"type\":\"AuthError\",\"message\":\"Unauthorized\"}}"
+  }
+}

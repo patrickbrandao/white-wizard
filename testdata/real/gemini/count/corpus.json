@@ -1,0 +1,322 @@
+{
+ "provider": "gemini",
+ "recorded_at": "2026-10-31",
+ "note": "countTokens de um user content com cada texto (1 de overhead do content), modelo gemini-3.5-flash-lite: corpus de calibração do tokenizador (task 265)",
+ "texts": [
+  {
+   "id": "hand00",
+   "text": "Responda só: ok",
+   "totalTokens": 7
+  },
+  {
+   "id": "hand01",
+   "text": "What is the capital of France?",
+   "totalTokens": 8
+  },
+  {
+   "id": "hand02",
+   "text": "Explain the difference between TCP and UDP in two sentences.",
+   "totalTokens": 12
+  },
+  {
+   "id": "hand03",
+   "text": "Escreva um poema curto sobre o mar e a saudade.",
+   "totalTokens": 14
+  },
+  {
+   "id": "hand04",
+   "text": "Quanto é 1234 + 5678? Responda apenas com o número.",
+   "totalTokens": 23
+  },
+  {
+   "id": "hand05",
+   "text": "The year 2026 had 365 days; 3.14159 is pi; call 555-0199.",
+   "totalTokens": 37
+  },
+  {
+   "id": "hand06",
+   "text": "def add(a, b):\n    return a + b\n",
+   "totalTokens": 15
+  },
+  {
+   "id": "hand07",
+   "text": "SELECT id, name FROM users WHERE created_at > '2026-01-01' ORDER BY id DESC LIMIT 10;",
+   "totalTokens": 33
+  },
+  {
+   "id": "hand08",
+   "text": "¿Dónde está la biblioteca? Je ne sais pas. Das ist gut.",
+   "totalTokens": 16
+  },
+  {
+   "id": "hand09",
+   "text": "日本語のテキストも数えます。",
+   "totalTokens": 8
+  },
+  {
+   "id": "hand10",
+   "text": "Emoji test 🚀🔥 and symbols: <>&{}[]()",
+   "totalTokens": 14
+  },
+  {
+   "id": "hand11",
+   "text": "    indented    with     many   spaces",
+   "totalTokens": 10
+  },
+  {
+   "id": "hand12",
+   "text": "line one\nline two\n\nline four\n\n\n",
+   "totalTokens": 10
+  },
+  {
+   "id": "hand13",
+   "text": "internationalization antidisestablishmentarianism pneumonoultramicroscopic",
+   "totalTokens": 14
+  },
+  {
+   "id": "hand14",
+   "text": "lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor",
+   "totalTokens": 14
+  },
+  {
+   "id": "hand15",
+   "text": "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash-lite:generateContent?alt=sse",
+   "totalTokens": 35
+  },
+  {
+   "id": "hand16",
+   "text": "{\"name\": \"get_weather\", \"args\": {\"city\": \"Recife\", \"unit\": \"celsius\"}}",
+   "totalTokens": 26
+  },
+  {
+   "id": "hand17",
+   "text": "camelCaseIdentifier snake_case_identifier SCREAMING_CASE kebab-case-id",
+   "totalTokens": 19
+  },
+  {
+   "id": "hand18",
+   "text": "a b c d e f g h i j k l m n o p",
+   "totalTokens": 17
+  },
+  {
+   "id": "hand19",
+   "text": "0123456789 9876543210 1000000 42",
+   "totalTokens": 33
+  },
+  {
+   "id": "gen00",
+   "text": "The request has been processed and the result is summarised below.",
+   "totalTokens": 13
+  },
+  {
+   "id": "gen01",
+   "text": "Based on the information provided, the most reasonable approach is to proceed step by step.",
+   "totalTokens": 18
+  },
+  {
+   "id": "gen02",
+   "text": "There are several factors to consider before reaching a conclusion.",
+   "totalTokens": 12
+  },
+  {
+   "id": "gen03",
+   "text": "The configuration appears valid, although a few parameters could be tuned for better throughput.",
+   "totalTokens": 17
+  },
+  {
+   "id": "gen04",
+   "text": "Each option has trade-offs in latency, cost and operational complexity.",
+   "totalTokens": 15
+  },
+  {
+   "id": "gen05",
+   "text": "Consider adding retries with exponential backoff for transient failures.",
+   "totalTokens": 13
+  },
+  {
+   "id": "gen06",
+   "text": "Timeouts should be set slightly above the observed p99 latency.",
+   "totalTokens": 15
+  },
+  {
+   "id": "gen07",
+   "text": "Let me think through this carefully. First, I need to understand what is being asked.",
+   "totalTokens": 19
+  },
+  {
+   "id": "readme00",
+   "text": "rs.md](docs/drivers.md): drivers, rotas, autenticação, limites e erros de cada provedor.\n- [docs/grafana.md](docs/grafana.md): dashboard Grafana pronto.\n- [docs/painel-backup.md](docs/painel-backup.md): backup e restauração do painel.\n- [docs/wwz-load.md](docs/wwz-load.md): benchmark (`run`, distribuído, `--scenario`, `agents`, `top`) e metodologia de medida.\n- [docs/wwz-tools.md](docs/wwz-tools.md): ferramentas falsas para agentes (catálogo, configuração, HTTP).\n- [docs/wwz-drift.md](docs/wwz-drift.md): comparação de forma com os provedores reais (chaves, orçamento, relatório).\n- [docs/verificacao.md](docs/verificacao.md): `verify-quick`/`full`/`heavy`, ensaio de release e fixtures reais.\n\nAs especificações em [specs/](specs/INDEX.md) são a fonte da verdade; as decisões estão em [specs/decisions/](specs/decisions/HISTORY.md). Quando a documentação e uma spec divergirem, vale a spec.\n\n## Desenvolvimento\n\n```sh\ngo mod download\nmake verify-quick      # gofumpt, golangci-lint, vet e testes d",
+   "totalTokens": 315
+  },
+  {
+   "id": "readme01",
+   "text": "icação, limites e erros de cada provedor.\n- [docs/grafana.md](docs/grafana.md): dashboard Grafana pronto.\n- [docs/painel-backup.md](docs/painel-backup.md): backup e restauração do painel.\n- [docs/wwz-load.md](docs/wwz-load.md): benchmark (`run`, distribuído, `--scenario`, `agents`, `top`) e metodologia de medida.\n- [docs/wwz-tools.md](docs/wwz-tools.md): ferramentas falsas para agentes (catálogo, configuração, HTTP).\n- [docs/wwz-drift.md](docs/wwz-drift.md): comparação de forma com os provedores reais (chaves, orçamento, relatório).\n- [docs/verificacao.md](docs/verificacao.md): `verify-quick`/`full`/`heavy`, ensaio de release e fixtures reais.\n\nAs especificações em [specs/](specs/INDEX.md) são a fonte da verdade; as decisões estão em [specs/decisions/](specs/decisions/HISTORY.md). Quando a documentação e uma spec divergirem, vale a",
+   "totalTokens": 266
+  },
+  {
+   "id": "readme02",
+   "text": "` a `wwz-key-10`. `go run ./cmd/wwz validate -config meu.yaml` confere uma configuração antes de subir.\n\n## Binários\n\n| Binário | Papel | Referência |\n| --- | --- | --- |\n| `wwz` | O simulador: `serve`, `validate`, `simulate` | [docs/uso.md](docs/uso.md), [specs/004](specs/004-apis-e-endpoints.md) |\n| `wwz-load` | Cliente de benchmark: TTFT, ITL, E2E, relatórios JSON/CSV, conversas por cenário, instâncias distribuídas, `agents` e `top` | [docs/wwz-load.md](docs/wwz-load.md), [specs/015](specs/015-wwz-load.md) |\n| `wwz-panel` | Painel web (Go + HTMX + SQLite): uso, erros, entidades bloqueadas e banidas, ações de operador com auditoria | [specs/016](specs/016-painel.md), [docs/painel-backup.md](docs/painel-backup.md) |\n| `wwz-tools` | Executor de ferramentas falsas para agentes (catálogos `coder`, `pesquisa`, `chat`) | [docs/wwz-tools.md](docs/wwz-tools.md), [specs/017](specs/017-recursos-importados.md) |\n| `wwz-drift` | Compara o wwz com o provedor real e acusa divergência de forma | [docs/wwz-drift.md](docs/wwz-drift.md), [specs/017](specs/017-recursos-importados.md) |\n\nTodos aceitam `help` e `version`.\n\n## Documentação\n\n- [docs/uso.md](docs/uso.md): subir, chamar cada driver, headers `x-wwz-*`, cenários, caos e API admin.\n- [docs/configuracao.md](do",
+   "totalTokens": 481
+  },
+  {
+   "id": "readme03",
+   "text": "/chat/completions \\\n  -H 'Authorization: Bearer wwz-key-01' -H 'content-type: application/json' \\\n  -d '{\"model\":\"wwz-fast\",\"messages\":[{\"role\":\"user\",\"content\":\"oi\"}],\"max_tokens\":20}'\n```\n\nBenchmark rápido contra o compose (perfil `load`):\n\n```sh\nWWZ_ADMIN_TOKEN=troque-me docker compose run --rm wwz-load --rps 50 --duration 10s\n```\n\n### Direto com Go (sem Docker, store em memória)\n\n```sh\ngo run ./cmd/wwz serve -scenarios-dir ./scenarios\n# data plane em :8000; control plane em 127.0.0.1:9000 (sem token, só loopback)\n```\n\nSem `-config`, o servidor sobe com os padrões embutidos: drivers `openai`, `anthropic`, `open",
+   "totalTokens": 219
+  },
+  {
+   "id": "readme04",
+   "text": " plane em :8000; control plane em 127.0.0.1:9000 (sem token, só loopback)\n```\n\nSem `-config`, o servidor sobe com os padrões embutidos: drivers `openai`, `anthropic`, `openrouter` e `opencode` na raiz, modelos `wwz-fast`, `wwz-realistic` e `wwz-flaky` e chaves `wwz-key-01` a `wwz-key-10`. `go run ./cmd/wwz validate -config meu.yaml` confere uma configuração antes de subir.\n\n## Binários\n\n| Binário | Papel | Referência |\n| --- | --- | --- |\n| `wwz` | O simulador: `serve`, `validate`, `simulate` | [docs/uso.md](docs/uso.md), [specs/004](specs/004-apis-e-endpoints.md) |\n| `wwz-load` | Cliente",
+   "totalTokens": 228
+  },
+  {
+   "id": "readme05",
+   "text": "cs/wwz-drift.md](docs/wwz-drift.md): comparação de forma com os provedores reais (chaves, orçamento, relatório).\n- [docs/verificacao.md](docs/verificacao.md): `verify-quick`/`full`/`heavy`, ensaio de release e fixtures reais.\n\nAs especificações em [specs/](specs/INDEX.md) são a fonte da verdade; as decisões estão em [specs/decisions/](specs/decisions/HISTORY.md). Quando a documentação e uma spec divergirem, vale a spec.\n\n## Desenvolvimento\n\n```sh\ngo mod download\nmake verify-quick      # gofumpt, golangci-lint, vet e testes dos pacotes alterados\n```\n\nFluxo de trabalho, papéis e Definition of Done em [specs/002](specs/002-organizacao-do-trabalho.md); verificação e C",
+   "totalTokens": 206
+  },
+  {
+   "id": "spec00",
+   "text": " no horário de pico, 01–04 e 06–10 UTC em dias úteis, para DeepSeek). `api` é indexado por protocolo (`chat-completions`, `messages`…) e cada protocolo tem `base_url`, `sdk{…}` e o `tools.choice` permitido (GLM só `auto`). Respostas sem `x-request-id`; headers `x-opencode-log-id` e, no chat, `x-zen-model`.\n- Sem header de versão; `v1` só no path. Streaming é o SSE de cada API. Pas",
+   "totalTokens": 134
+  },
+  {
+   "id": "spec01",
+   "text": " autor (`/api/v1/model/gpt-4o-mini`) ou com segmento a mais: 404 `{\"error\":{\"message\":\"Not Found\",\"code\":404}}` (conferido, [ADR 0052](decisions/0052-openrouter-aceita-id-sem-autor.md)). Não há `GET /api/v1/models/{id}` no estilo OpenAI, então o wwz também não o serve: qualquer `GET /api/v1/models/{...}` responde 404 `Not Found` como o real (conferido; [ADR 0046](decisions/0046-cache-de-prompt-real-e-detalhes-dos-drivers.md) retira o desvio de compatibilidade da ADR 0040). Os clientes-alvo são o SDK do OpenRouter (`models.get(author, slug)`) e o HTTP direto. A forma exata é conferida com fixture real ([ADR 0014](decisions/0014-fidelidade-bit-a-bit.md), [ADR 0040](decisions/0040-label-de-modelo-e-get-de-modelo-openrouter.md)).\n- Três dialetos no mesmo serviço: Chat Completions, Responses (`POST /api/v1/responses`, beta, sem estado: `store` sempre `false`, então ",
+   "totalTokens": 330
+  },
+  {
+   "id": "spec02",
+   "text": "itHub é desativada automaticamente** (secret scanning) com e-mail ao dono. Geobloqueio por região (China, Rússia, Hong Kong, Irã, Coreia do Norte, Cuba, Síria, Belarus, Venezuela fora da lista), sem código de erro documentado.\n\n**Detalhes para o driver `anthropic`**\n\n- Headers obrigatórios: `anthropic-version` (`2023-06-01` ou `2026-10-21`), `content-type`; credencial em `Authorization: Bearer` ou `x-api-key` (legado); `anthropic-workspace-id` obrigatório para chave não escopada a workspace; `anthropic-beta: feature-YYYY-MM-DD` (inválido → 400).\n- `service_tier: auto|standard_only` na requisição; `usage.service_tier: standard|priority|batch` na resposta; Priority Tier não é mais vendido.\n- `usage` completo: `input_tokens`, `output_tokens`, `cache_creation_input_tokens`, `cache_read_input_tokens`, `cache_creation.{ephemeral_5m_input_tokens, ephemeral_1h_input_tokens}`, `server_tool_use.{web_search_requests, web_fetch_requests}`, `output_tokens_details.thinking_tokens`, `inference_geo`, `speed`, `iterations`.\n- `stop_reason`: `end_turn`, `max_tokens`, `stop_sequence`, `tool_use`, `pause_turn`, `refusal`, `model_context_window_exceeded`; `max_tokens` obrigatório (0 só aquece cache), máx. 128 k.\n- Cache: mínimos 512–4 096 tokens, até 4 breakpoints, TTL 5 min (×1,25) ou 1 h (×2), leitura ×0,1; só disponível após o início da primeira resposta.\n- Batches: `processing_status: in_progress|canceling|ended`, `result.type: succeeded|errored|canceled|expired`, expira em 24 h, resultados por 29 dias, `custom_id` `^[a-zA-Z0-9_-]{1,64}$`.\n- Admin API (`sk-ant-admin…`): chaves, workspaces (até 100), Rate Limits API (`GET /v1/organizations/rate_limits`, limites por workspace com `limits:[{type,value}]`, `group.id` `rlg_…`), Spend Limits API (Enterprise, `monthly`, valores em centavos).\n\nFontes: [rate limits](https://platform.claude.com/docs/en/api/rate-limits), [errors](https://platform.claude.com/docs/en/api/errors), [overview](https://platform.claude.com/docs/en/api/overview), [versioning](https:",
+   "totalTokens": 666
+  },
+  {
+   "id": "spec03",
+   "text": " key](https://openrouter.ai/docs/api-reference/api-keys/get-current-api-key), [provisioning keys](https://openrouter.ai/docs/features/provisioning-api-keys), [provider routing](https://openrouter.ai/docs/features/provider-routing), [model routing](https://openrouter.ai/docs/features/model-routing), [guardrails](https://openrouter.ai/docs/guides/features/guardrails.md), [BYOK](https://openrouter.ai/docs/use-cases/byok), [usage accounting](https://openrouter.ai/docs/use-cases/usage-accounting), [generation](https://openrouter.ai/docs/api-reference/get-a-generation.md), [models](https://openrouter.ai/docs/api-reference/models/get-models), [get a model](https://openrouter.ai/docs/api/api-reference/models/get-a-model-by-its-slug.md), [list endpoints](https://openrouter.ai/docs/api/api-reference/endpoints/list-all-endpoints-for-a-model.md), [reasoning](https://openrouter.ai/docs/use-cases/reasoning-tokens), [prompt caching](https://openrouter.ai/docs/features/prompt-caching), [free variant](https://openrouter.ai/docs/guides/routing/model-variants/free.md), [self-moderated](https://open",
+   "totalTokens": 345
+  },
+  {
+   "id": "spec04",
+   "text": "s/content-streaming), [content filter annotations](https://learn.microsoft.com/en-us/azure/foundry-classic/openai/concepts/content-filter-annotations), [content filter](https://learn.microsoft.com/en-us/azure/foundry-classic/foundry-models/concepts/content-filter), [provisioned get started](https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/provisioned-get-started), [provisioned throughput](https://learn.microsoft.com/en-us/azure/foundry/openai/concepts/provisioned-throughput), [prompt caching](https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/prompt-caching), [supported languages](https://learn.microsoft.com/en-us/azure/foundry/openai/supported-languages), [openai-python azure.py](https://github.com/openai/openai-python/blob/main/src/openai/lib/azure.py), [openai-node azure.ts](https://github.com/openai/openai-node/blob/master/src/azure.ts); relatos: [401](https://learn.microsoft.com/en-gb/answers/questions/2129941/how-to-resolve-error-401-for-azure-openai-curl-com), [404 DeploymentNotFound](https://learn.microsoft.com/en-us/answers/questions/1299621/azure-openai-keep-returing-deploymentnotfound-erro), [429](https://learn.microsoft.com/en-us/answers/questions/2111423/exceeded-token-rate-limit-on-azure-openai-model-wi), [404 api-version](https://learn.microsoft.com/en-us/answers/a/1831737), [400 content_filter](https://github.com/openai/openai-agents-python/issues/806), [400 argumento desconhecido](https://learn.microsoft.com/en-us/answers/questions/2139738/).\n\n### 16.7 Formas observadas no primeiro drift real (31/10/2026)\n\nNormativo para os drivers `openai`, `anthropic`, `openrouter` e `opencode` ([ADR 0042](decisions/0042-fidelidade-total-ao-provedor-real.md), [ADR 0049](decisions/0049-formas-reais-do-primeiro-drift.md)); prevalece sobre as subseções 16.1–16.4 onde elas divergirem. Fonte: respostas brutas do `wwz-drift check` de 31/10/2026 (`tmp/drift/2026-10-31-raw/`, triagem da task 167). Sondas: `models`, `error_auth` (chave `sk-invalid-wwz-drift`), `error_model` (modelo `wwz-drift-modelo-inexistente`), `chat` e `chat_stream` (mensagem única `Responda só: ok`, `max_tokens: 16`), com os modelos `gpt-4o-mini`, `claude-haiku-4-5`, `openai/gpt-4.1-nano` e `deepseek-v4.1-flash`. O que veio de `curl` sem chave real na mesma triagem está marcado \"(curl)\". O que não aparece ne",
+   "totalTokens": 833
+  },
+  {
+   "id": "spec05",
+   "text": "s.new_account: evaluation` com limites reduzidos por `age_days` |\n| Chave vazada → desativação imediata | `POST /admin/leak` → `ban:key` + 401 no dialeto do driver |\n| Escada aviso → throttle → suspensão → ban | `abuse.ladder: [warn, throttle(pct), suspend(duration), ban]` com `strikes` no Valkey |\n| `safety_identifier` bloqueado individualmente | Entidade `user` = hash de `safety_identifier`/`user`/`x-opencode-session`; `ban:user` responde \"identifier blocked\" |\n| Recusa como 200 | \\`moderation: {mode: finish\\_reason |\n| Geobloqueio | `geo: {blocked_countries: [...]}` com GeoIP opcional → 403 no dialeto |\n| Headers de reset em formatos diferentes | Driver formata: duração Go, RFC 3339, segundos |\n| Erros mid-stream em formatos diferentes | `core.StreamWriter.Error` traduzido por driver (seção 17) |\n\n### 16.1 OpenAI\n\nA OpenAI limita por **organização e por projeto**, nunca por chave nem por usuário final; a única coisa ligada a IP é uma *allowlist* opcional (origem fora dela → 401 \"IP not authorized\"). RPM e TPM são contadores independentes, com reposição contínua (os headers de reset vêm em `20ms`, `6m0s`), e o TPM reserva `max(max_tokens, estimativa do prompt)` — um `max_tokens` alto gasta TPM mesmo com resposta curta. Pesquisa feita em 30/10/2026 em [developers.openai.com/api/docs](https://developers.openai.com/api/docs/guides/",
+   "totalTokens": 420
+  },
+  {
+   "id": "spec06",
+   "text": "(só Priority Tier), `anthropic-fast-*`; `-reset` em **RFC 3339** (`2025-01-12T23:11:59Z`) = instante em que o balde estará cheio. `request-id` (`req_…`, igual ao `request_id` do corpo de erro), `anthropic-organization-id`, `anthropic-workspace-id` (`wrkspc_…`, ausente em 401); `x-should-retry: false` nos erros 401 e 404 (observado; nos demais, não conferido). Os 12 `anthropic-ratelimit-*` saem em toda resposta 200 da Messages, mesmo sem limite configurado, e não saem em `/v1/models` nem nos erros de chave e de modelo (16.7, ADR 0049).\n\n**Erros** — corpo `{\"type\": \"error\", \"error\": {\"type\", \"message\"}, \"request_id\"}`, `error.details` só em casos específicos:\n\n| HTTP | `error.type` | Quando |\n| --- | --- | --- |\n| 400 | `invalid_request_error` | Formato inválido, prompt too long, beta header inválido, `temperature`/`top_p`/`top_k` na versão 2026-10-21, spend limit do cliente, outros 4xx |\n| 401 | `authentication_error` | Chave malformada, revogada, desativada ou expirada |\n| 402 | `billing_error` | Cobrança/pagamento |\n| 403 | `permission_error` | Sem permissão para o recurso/workspace |\n| 404 | `not_found_error` | Recurso ou modelo inexistente |\n| 409 | `conflict_error` | Modificação concorrente |\n| 413 | `request_too_large` | Messages 128 MB, Batches 256 MB, Files 500 MB (o Cloudflare responde antes da API) |\n| 429 | `rate_limit_error` | RPM/ITPM/OTPM, acceleration, fast, priority, spend cap do tier, workspace Claude Code |\n| 500 | `api_error` | Interno; retry com backoff |\n| 504 | `timeout_error` | Timeout; usar streaming |\n| 529 | `overloaded_error` | Sobrecarga global |\n\nNão há 503 documentado. Nova versão `anthropic-version: 2026-10-21` remove `temperature`/`top_p`/`top_k`.\n\n**Streaming.** Erro após o 200 chega como `event: error` com `data: {\"type\":\"error\",\"error\":{\"type\":\"overloaded_error\",\"message\":\"Overloaded\"}}`; `ping` e `error` podem aparecer em qualquer ponto. Ordem: `message_start` (já com `usage.input_tokens`) → blocos, com um `ping` logo depois do primeiro `content_block_start` (observado, 16.7) → `message_delta` (`stop_reason`, `stop_details`, `usage` cumulativo) → `message_stop`.\n\n**Retry.** SDKs oficiais retentam 2 vezes em conexão, 408, 409, 429 e ≥ 500, backoff 0,5 s → 8 s com jitter 0,75–1,0; honram `retry-after`/`retry-after-ms` entre 0 e 60 s; o header **`x-should-retry`** (`true` força, `false` impede) é honrado pelo SDK Python embora não documentado. Timeout padrão 10 min; o SDK recusa não",
+   "totalTokens": 889
+  },
+  {
+   "id": "spec07",
+   "text": "503 documentado. Nova versão `anthropic-version: 2026-10-21` remove `temperature`/`top_p`/`top_k`.\n\n**Streaming.** Erro após o 200 chega como `event: error` com `data: {\"type\":\"error\",\"error\":{\"type\":\"overloaded_error\",\"message\":\"Overloaded\"}}`; `ping` e `error` podem aparecer em qualquer ponto. Ordem: `message_start` (já com `usage.input_tokens`) → blocos, com um `ping` logo depois do primeiro `content_block_start` (observado, 16.7) → `message_delta` (`stop_reason`, `stop_details`, `usage` cumulativo) → `message_stop`.\n\n**Retry.** SDKs oficiais retentam 2 vezes em conexão, 408, 409, 429 e ≥ 500, backoff 0,5 s → 8 s com jitter 0,75–1,0; honram `retry-after`/`retry-after-ms` entre 0 e 60 s; o header **`x-should-retry`** (`true` força, `false` impede) é honrado pelo SDK Python embora não documentado. Timeout padrão 10 min; o SDK recusa não-streaming que estime > 10 min.\n\n**Recusa como sucesso.** Classificadores devolvem **HTTP 200** com `stop_reason: \"refusal\"` e `stop_details: {type: refusal, category: cyber|bio|frontier_llm|reasoning_extraction|general_harms|null}`; pode vir antes",
+   "totalTokens": 376
+  },
+  {
+   "id": "docs00",
+   "text": "-answer\" -H \"$T\"  # remove\n```\n\n**Escolher** (ordem de `scenarios.select`): header `x-wwz-scenario`, `metadata.scenario` (OpenAI) ou `metadata.user_id` com prefixo `scenario:` (Anthropic), marcador `[[wwz:nome]]` na última mensagem do usuário, sufixo `-scenario-<nome>` no `model`, e por fim o `match` dos cenários listados em `models[].scenarios`.\n\n```sh\ncurl -si $B/v1/chat/completions -H 'Authorization: Bearer wwz-key-01' -H 'content-type: application/json' \\\n  -H 'x-wwz-scenario: search-then-answer' \\\n  -d '{\"model\":\"wwz-fast\",\"messages\":[{\"role\":\"user\",\"content\":\"clima em SP\"}],\n       \"tools\":[{\"type\":\"function\",\"function\":{\"name\":\"web_search\",\"parameters\":{\"type\":\"object\",\n         \"properties\":{\"query\":{\"type\":\"string\"}},\"required\":[\"query\"]}}}]}'\n# x-wwz-scenario: search-then-answer / x-wwz-step: search, tool call web_search\n\ncurl -si $B/v1/chat/completions -H 'Authorization: Bearer wwz-key-01' -H 'content-type: application/json' \\\n  -d '{\"model\":\"wwz-fast-scenario-retry-on-error\",\"messages\":[{\"role\":\"user\",\"cont",
+   "totalTokens": 346
+  },
+  {
+   "id": "docs01",
+   "text": "specs/013-observabilidade-admin.md). Todos os comandos abaixo foram executados contra o compose local.\n\n## Subir\n\n**Compose local** (wwz + Valkey + Prometheus + painel):\n\n```sh\nWWZ_ADMIN_TOKEN=troque-me docker compose up -d --build\nB=http://127.0.0.1:18000      # data plane (inferência)\nA=http://127.0.0.1:18001      # control plane (admin, /health, /metrics)\nT='Authorization: Bearer troque-me'\n```\n\nO YAML montado é [deploy/wwz/wwz.yaml](../deploy/wwz/wwz.yaml); troque com `WWZ_CONFIG_FILE=./meu.yaml docker compose up -d wwz`. Portas publicadas: `WWZ_PORT`, `WWZ_ADMIN_PORT`, `WWZ_PANEL_PORT`, `PROMETHEUS_PORT`, `VALKEY_PORT`. Sem Valkey: `WWZ_STORE=memory WWZ_VALKEY_ADDR=`.\n\n**Binário local** (store em memória):\n\n```sh\ngo run ./cmd/wwz serve -scenarios-dir ./scenarios            # :8000 e 127.0.0.1:9000\ngo run ./cmd/wwz serve -config meu.yaml -port 8080 -admin-port 9090\n```\n\nSem `WWZ_ADMIN_TOKEN` (ou `admin.token`) o control plane só escuta em loopback e não pede token; com token, escuta em `admin.listen` e todo `/admin/*` exige o bearer.\n\n**Saúde e métricas** ficam no control plane:\n\n```sh\ncurl -s $A/health            # {\"status\":\"ok\"}\ncurl -s $A/health/ready      # 503 durante server.startup_duration, depois 200\ncurl -s $A/metrics | grep '^wwz_requests_total'\n```\n\n### Padrões embutidos\n\nSem `models`, `keys` e `drivers` no YAML, o ",
+   "totalTokens": 499
+  },
+  {
+   "id": "docs02",
+   "text": "             # eventos ativos\ncurl -s -X DELETE $A/admin/chaos -H \"$T\"       # encerra todos\n```\n\n**One-shot por teste** (o próximo request com aquele `X-Test-Id`):\n\n```sh\ncurl -s $A/admin/chaos/next -H \"$T\" -H 'content-type: application/json' -d '{\"test_id\":\"t1\",\"status\":503}'\ncurl -s -o /dev/null -w '%{http_code}\\n' $B/v1/chat/completions -H 'Authorization: Bearer wwz-key-01' \\\n  -H 'content-type: application/json' -H 'X-Test-Id: t1' \\\n  -d '{\"model\":\"wwz-fast\",\"messages\":[{\"role\":\"user\",\"content\":\"oi\"}]}'          # 503, o seguinte 200\ncurl -s \"$A/admin/resilience\" -H \"$T\"          # retries, backoff e respeito a retry-after por X-Test-Id\n```\n\n## Limites\n\nLimites por chave, tier ou conta (`keys[].limits`, `tiers.<nome>.limits`; [spec 010](../specs/010-controle-de-taxa.md)) saem com os headers do provedor:\n\n```yaml\nkeys:\n  - { key: sk-test-limited, label: com-cota, limits: { rpm: 2 } }\n```\n\n```sh\ncurl -si $B/v1/chat/completions -H 'Authorization: Bearer sk-test-limited' ...\n# x-ratelimit-limit-requests: 2, x-ratelimit-remaining-requests, x-ratelimit-reset-requests: 30s\n# 3.ª requi",
+   "totalTokens": 421
+  },
+  {
+   "id": "docs03",
+   "text": " | --- |\n| `x-wwz-response: <texto>` | Texto literal da resposta |\n| `x-wwz-response-base64: <b64>` | O mesmo, em base64 (para texto com quebras de linha ou não ASCII) |\n| `x-wwz-tool-calls: <json>` | Lista de tool calls a emitir (`[{\"name\":\"x\",\"arguments\":{...}}]`); ignora `tool_choice` |\n| `x-wwz-tool-prob: <0–100>` | Probabilidade de emitir tool c",
+   "totalTokens": 134
+  },
+  {
+   "id": "go00",
+   "text": "st setting system_instruction, tools or tool_config.\\n\\nProposed fix: move those values to CachedContent from GenerateContent request.\"))\n\t\t}\n\t}\n\treturn nil\n}\n\n// fill converts the normalized GenerateContentRequest into the engine's\n// request.\nfunc fill(req *core.Request, g map[string]any",
+   "totalTokens": 76
+  },
+  {
+   "id": "go01",
+   "text": "Reasoning.Exclude = !include\n\tif b, ok := tc[\"thinkingBudget\"].(int64); ok {\n\t\tswitch {\n\t\tcase b > 0:\n\t\t\treq.Reasoning.Requested, req.Reasoning.BudgetTokens = true, int(b)\n\t\tcase b < 0:\n\t\t\treq.Reasoning.Requested = true\n\t\t}\n\t}\n\tswitch lvl, _ := tc[\"thinkingLevel\"].(string); strings.ToUpper(lvl) {\n\tcase \"LOW\":\n\t\treq.Reasoning.Requested, req.Reasoning.Effort = true, \"low\"\n\tcase \"MEDIUM\":\n\t\treq.Reasoning.Requested, req.Reasoning.Effort = true, \"medium\"\n\tcase \"HIGH\":\n\t\treq.Reasoning.Requested, req.Reasoning.Effort = true, \"high\"\n\t}\n}\n\n// toolChoice maps toolConfig.functionCallingConfig (spec 007): NONE never\n// calls, ANY calls at least one (the one allowed name, when there is only\n// one), AUTO and VALIDATED draw; allowedFunctionNames restricts the tools.\nfunc toolChoice(req *core.Request, g map[string]any) {\n\treq.ToolChoice = core.ToolChoice{Mode: core.ToolChoiceAuto}\n\ttc, _ := g[\"toolConfig\"].(map[string]any)\n\tfc, _ := tc[\"functionCallingConfig\"].(map[string]any)\n\tvar allowed []string\n\tfor _, n := range asAny(fc[\"allowedFunctionNames\"]) {\n\t\tif s, ok := n.(string); ok {\n\t\t\tallowed = append(allowed, s)\n\t\t}\n\t}\n\tif len(allowed) > 0 {\n\t\tkeep := req.Tools[:0]\n\t\tfor _, t := range req.Tools {\n\t\t\tfor _, a := range allowed {\n\t\t\t\tif t.Name == a {\n\t\t\t\t\tkeep = append(keep, t)\n\t\t\t\t\tbreak\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t\treq.Tools = keep\n\t}\n\tswitch mode, _ := fc[\"mode\"].(strin",
+   "totalTokens": 477
+  },
+  {
+   "id": "go02",
+   "text": "eq.Endpoint = core.EndpointCountTokens\n\t\treq.MaxTokens = 1\n\t}\n\tif mh, ok := h.(driver.MapHeaders); ok {\n\t\treq.Headers = mh // the engine stores the same map; the cache owner needs it now\n\t}\n\tif e := fill(req, gen); e != nil {\n\t\treturn nil, e\n\t}\n\treturn req, nil\n}\n\n// checkGenerate makes the front end's semantic checks (observed texts):\n// contents present and temperature in [0, 2]; then the backend's: roles,\n// parts, the last turn and cachedContent without systemInstruction, tools\n// or toolConfig.\nfunc checkGenerate(g map[string]any, count bool) *core.Error {\n\tcontents, _ := g[\"con",
+   "totalTokens": 181
+  },
+  {
+   "id": "go03",
+   "text": "ionConfig.thinkingConfig (spec 007): a positive or\n// dynamic (-1) thinkingBudget or a thinkingLevel above MINIMAL asks for\n// reasoning; the text only goes out with includeThoughts, otherwise it is\n// counted in thoughtsTokenCount and not returned.\nfunc thinking(req *core.Request, gc map[string]any) {\n\ttc, ok := gc[\"thinkingConfig\"].(map[string]any)\n\tif !ok {\n\t\treq.Reasoning.Exclude = true\n\t\treturn\n\t}\n\tinclude, _ := tc[\"includeThoughts\"].(bool)\n\treq.Reasoning.Exclude = !include\n\tif b, ok := tc[\"thinkingBudget\"].(int64); ok {\n\t\tswitch {\n\t\tcase b > 0:\n\t\t\treq.Reasoning.Requested, req.Reasoning.BudgetTokens = true, int(b)\n\t\tcase b < 0:\n\t\t\treq.Reasoning.Requested = true\n\t\t}\n\t}\n\tswitch lvl, _ := tc[\"thinkingLevel\"].(string); strings.ToUpper(lvl) {\n\tcase \"LOW\":\n\t\treq.Reasoning.Requested, req.Reasoning.Effort = true, \"low\"\n\tcase \"MEDIUM\":\n\t\treq.Reasoning.Requested, req.Reasoning.Effort = true, \"medium\"\n\tcase \"HIGH\":\n\t\treq.Reasoning.Requested, req.Reasoning.Effort = true, \"high\"\n\t}\n}\n\n// toolChoice maps toolConfig.functionCallingConfig (spec 007): NONE never\n// calls, ANY calls at least one (the one allowed name, when there is only\n// one), AUTO and VALIDATED draw; allowedFunctionNames restricts the tools.\nfunc toolChoice(req *core.Request, g map[string]any) {\n\treq.ToolChoice = core.ToolChoice{Mode: core.ToolChoiceAuto}\n\ttc, _ := g[\"toolConfig\"].(map[string]any)\n\tfc, _ := tc[\"functionCallingConfig\"].(map[string]any)\n\tvar allowed []string\n\tfor _, n := range asAny(fc[\"allowedFunctionNames\"]) {\n\t\tif s, ok := n.(string); ok {\n\t\t\tallowed = append(allowed",
+   "totalTokens": 507
+  },
+  {
+   "id": "go04",
+   "text": "xTokens = int(n)\n\t}\n\tif t, ok := gc[\"temperature\"].(float64); ok {\n\t\treq.Temperature = &t\n\t}\n\tif s, ok := gc[\"seed\"].(int64); ok {\n\t\treq.Seed = &s\n\t}\n\tswitch mt, _ := gc[\"responseMimeType\"].(string); {\n\tcase mt != \"application/json\":\n\tcase gc[\"responseSchema\"] != nil:\n\t\treq.ResponseFormat, req.ResponseSchema = \"json_schema\", gc[\"responseSchema\"].(json.RawMessage)\n\tcase gc[\"responseJsonSchema\"] != nil:\n\t\treq.ResponseFormat, req.ResponseSchema = \"json_schema\", gc[\"responseJsonSchema\"].(json.RawMessage)\n\tdefault:\n\t\treq.ResponseFormat = \"json_object\"\n\t}\n\tthinking(req, gc)\n\treturn nil\n}\n\n// thinking reads generationConfig.thinkingConfig (spec 007): a positive or\n// dynamic (-1) thinkingBudget or a thinkingLevel above MINIMAL asks for\n// reasoning; the text only goes out with includeThoughts, otherwise it is\n// counted in thoughtsTokenCount and not returned.\nfunc thinking(req *core.Request, gc map[string]any) {\n\ttc, ok := gc[\"thinkingConfig\"].(map[string]any)\n\tif !ok {\n\t\treq.Reasoning.Exclude = true\n\t\treturn\n\t}\n\tinclude, _ := tc[\"includeThoughts\"].(bool)\n\treq.Reasoning.Exclude = !include\n\tif b, ok := tc[\"thinkingBudget\"].(int64); ok {\n\t\tswitch {\n\t\tcase b > 0:\n\t\t\treq.Reasoning.Requested, req.Reasoning.BudgetTokens = true, int(b)\n\t\tcase b < 0:\n\t\t\treq.Reasoning.Requested = true\n\t\t}\n\t}\n\tswitch lvl, _ := tc[\"thinkingLevel\"].(string); strings.ToUpper(lvl) {\n\tcase \"LOW\":\n\t\treq.Reasoning.Requested, req.Reasoning.Effort = true, \"low\"\n\tcase \"MEDIUM\":\n\t\treq.Reasoning.Requested, req.Reasoning.Effort = true, \"medium\"\n\tcase \"HIGH\":\n\t\treq.Reasoning.Requested, req.Reasoning.Effort = true, \"high\"\n\t}\n}\n\n// toolChoice maps toolConfig.functionCallingConfig (spec 007): NONE never\n// calls, ANY calls at least one (the one allowed name, when there is only\n// one), AUTO",
+   "totalTokens": 589
+  },
+  {
+   "id": "go05",
+   "text": "or\n// dynamic (-1) thinkingBudget or a thinkingLevel above MINIMAL asks for\n// reasoning; the text only goes out with includeThoughts, otherwise it is\n// counted in thoughtsTokenCount and not returned.\nfunc thinking(req *core.Request, gc map[string]any) {\n\ttc, ok := gc[\"thinkingConfig\"].(map[string]any)\n\tif !ok {\n\t\treq.Reasoning.Exclude = true\n\t\treturn\n\t}\n\tinclude, _ := tc[\"includeThoughts\"].(bool)\n\treq.Reasoning.Exclude = !include\n\tif b, ok := tc[\"thinkingBudget\"].(int64); ok {\n\t\tswitch {\n\t\tcase b > 0:\n\t\t\treq.Reasoning.Requested, req.Reasoning.BudgetTokens = true, int(b)\n\t\tcase b < 0:\n\t\t\treq.Reasoning.Requested = true\n\t\t}\n\t}\n\tswitch lvl, _ := tc[\"thinkingLevel\"].(string); strings.ToUpper(lvl) {\n\tcase \"LOW\":\n\t\treq.Reasoning.Requested, req.Reasoning.Effort = true, \"low\"\n\tcase \"MEDIUM\":\n\t\treq.Reasoning.Requested, req.Reasoning.Effort = true, \"medium\"\n\tcase \"HIGH\":\n\t\treq.Reasoning.Requested, req.Reasoning.Effort = true, \"high\"\n\t}\n}\n\n// toolChoice maps toolConfig.functionCallingConfig (spec 007): NONE never\n// calls, ANY calls at least one (the one allowed name, when there is only\n// one), AUTO and VALIDATED draw; allowedFunctionNames restricts the tools.\nfunc toolChoice(req *core.Request, g map[string]any) {\n\treq.ToolChoice = core.ToolChoice{Mode: core.ToolChoiceAuto}\n\ttc, _ := g[\"toolConfig\"].(map[string]any)\n\tfc, _ := tc[\"functionCallingConfig\"].(map[string]any)\n\tvar allowed []string\n\tfor _, n := range asAny(fc[\"allowedFunctionNames\"]) {\n\t\tif s, ok := n",
+   "totalTokens": 481
+  },
+  {
+   "id": "gotok00",
+   "text": "icode\"\n\t\"unicode/utf8\"\n\n\t\"github.com/patrickbrandao/white-wizard/internal/core\"\n)\n\n// Tokenizer counts and splits text into tokens.\ntype Tokenizer interface {\n\t// Count returns the token count of text (exact for the BPE encodings of\n\t// internal/tokenize, approximate for Simulated).\n\tCount(text string) int\n\t// Split returns the text as a sequence of token strings whose\n\t// concatenation equals the input (used to stream token by token).\n\tSplit(text string) []string\n}\n\n//",
+   "totalTokens": 129
+  },
+  {
+   "id": "gotok01",
+   "text": " {\n\t\tswitch {\n\t\tcase unicode.IsLetter(r) || unicode.IsDigit(r):\n\t\t\tif run == 0 && !pendingSpace && b.Len() > 0 {\n\t\t\t\tflush()\n\t\t\t}\n\t\t\tpendingSpace = false\n\t\t\tb.WriteRune(r)\n\t\t\trun++\n\t\t\tif run == 6 {\n\t\t\t\tflush()\n\t\t\t}\n\t\tcase unicode.IsSpace(r):\n\t\t\tflush()\n\t\t\tb.WriteRune(r)\n\t\t\tpendingSpace = true\n\t\tdefault:\n\t\t\tflush()\n\t\t\tb.WriteRune(r)\n\t\t\tflush()\n\t\t\tpendingSpace = false\n\t\t}\n\t}\n\tflush()\n\treturn out\n}\n\n// Each calls fn with every token of text, in order, as substrings of text\n// (no allocation); the tokens are the ones Split returns.\nfunc (Simulated) Each(text string, fn func(tok string)) {\n\tstart, run := 0, 0\n\tpendingSpace := false\n\tflush := func(i int) {\n\t\tif i > start {\n\t\t\tfn(text[start:i])\n\t\t}\n\t\tstart, run = i, 0\n\t}\n\tfor i, r := range text {\n\t\tswitch {\n\t\tcase unicode.IsLetter(r) || unicode.IsDigit(r):\n\t\t\tif run == 0 && !pendingSpace && i > start {\n\t\t\t\tflush(i)\n\t\t\t}\n\t\t\tpendingSpace = false\n\t\t\trun++\n\t\t\tif run == 6 {\n\t\t\t\tflush(i + utf8.RuneLen(r))\n\t\t\t}\n\t\tcase unicode.IsSpace(r):\n\t\t\tflush(i)\n\t\t\tpendingSpace = true\n\t\tdefault:\n\t\t\tflush(i)\n\t\t\tflush(i + utf8.RuneLen(r))\n\t\t\tpendingSpace = false\n\t\t}\n\t}\n\tflush(len(text))\n}\n\n// EachToken calls fn with every token of text: through Each when tk has it,\n// else over Split.\nfunc EachToken(tk Tokenizer, text string, fn func(tok string)) {\n\tif e, ok := tk.(interface{ Each(string, func(string)) }); ok {\n\t\te.Each(text, fn)\n\t\treturn\n\t}\n\tfor _, t := range tk.Split(text) {\n\t\tfn(t)\n\t}\n}\n\n// PromptBreakdown is the input token composition (ManagedCode-style).\ntype PromptBreakdown struct {\n\tSystem      int `json:\"system\"`\n\tToolSchemas int `json:\"tool_schemas\"`\n\tUser        int `json:\"user\"`\n\tAssistant   int `json:\"assistant\"`\n\tToolCalls   int `json:\"tool_calls\"`\n\tToolResults int `json:\"tool_results\"`\n\tImages      int `json:\"images\"`\n\t// Cached is the part of Total read from the prompt cache; CountPrompt\n\t// leaves i",
+   "totalTokens": 661
+  },
+  {
+   "id": "gotok02",
+   "text": "\t\t{\"total\", b.Total},\n\t}\n\tdst = append(dst, '{')\n\tfor i, f := range fields {\n\t\tif i > 0 {\n\t\t\tdst = append(dst, ',')\n\t\t}\n\t\tdst = append(dst, '\"')\n\t\tdst = append(dst, f.name...)\n\t\tdst = append(dst, '\"', ':')\n\t\tdst = strconv.AppendInt(dst, int64(f.v), 10)\n\t}\n\treturn append(dst, '}')\n}\n\n// Chat template overhead (spec 007, ADR 0049), the rule OpenAI documents for\n// Chat Completions: every message costs MessageOverhead + tokens(role) +\n// tokens(content), plus NameOverhead when it has a name, and the request adds\n// ReplyPriming tokens that open the assistant's reply.\nconst (\n\tMessageOverhead = 3\n\tNameOverhead    = 1\n\tReplyPriming    = 3\n)\n\n// messageCost is the template cost of one message besides its content.\nfunc messageCost(tk Tokenizer, role, name string) int {\n\tn := MessageOverhead + tk.Count(role)\n\tif name != \"\" {\n\t\tn += NameOverhead\n\t}\n\treturn n\n}\n\n// CountPrompt counts prompt tokens with the chat template overhead (3 +\n// role per message, 3 per request, 1 per name; spec 007) and returns the\n// composition by origin. The top-level system prompt (Anthropic) is a system\n// message and the reply priming counts as assistant. Tool definitions,\n// json_schema formats, tool calls and tool results cost as the OpenAI mod",
+   "totalTokens": 389
+  },
+  {
+   "id": "gotok03",
+   "text": " m.Role, m.Name)\n\t\t\tfor _, tr := range m.ToolResults {\n\t\t\t\tb.ToolResults += tk.Count(tr.Content) + 6\n\t\t\t}\n\t\tcase \"assistant\":\n\t\t\t// A turn with calls and no text has no text message.\n\t\t\tif m.Content != \"\" || len(m.ToolCalls) == 0 {\n\t\t\t\tb.Assistant += tk.Count(m.Content) + messageCost(tk, m.Role, m.Name)\n\t\t\t}\n\t\t\tif l",
+   "totalTokens": 118
+  },
+  {
+   "id": "json00",
+   "text": "\": \"POST\",\n    \"path\": \"/v1beta/models/gemini-3.5-flash-lite:generateContent\",\n    \"headers\": {\n      \"x-goog-api-key\": \"<key>\"\n    },\n    \"body\": \"{\\\"contents\\\":[{\\\"role\\\":\\\"user\\\",\\\"parts\\\":[{\\\"text\\\":\\\"Responda só: ok\\\"}]}],\\\"generationConfig\\\":{\\\"maxOutputTokens\\\":16}}\"\n  },\n  \"response\": {\n    \"status\": 200,\n    \"headers\": {\n      \"content-type\": \"application/json; charset=UTF-8\",\n      \"server\": \"scaffolding on HTTPServer2\",\n      \"server-timing\": \"gfet4t7; dur=<ms>\",\n      \"x-content-type-options\": \"nosniff\",\n      \"x-frame-options\": \"SAMEORIGIN\",\n      \"x-gemini-service-tier\": \"standard\",\n      \"x-xss-protection\": \"0\"\n    },\n    \"body\": \"{\\n  \\\"candidates\\\": [\\n    {\\n      \\\"content\\\": {\\n        \\\"parts\\\": [\\n          {\\n            \\\"text\\\": \\\"ok\\\",\\n            \\\"thoughtSignature\\\": \\\"<signature>\\\"\\n          }\\n        ],\\n        \\\"role\\\": \\\"model\\\"\\n      },\\n      \\\"finishReason\\\": \\\"STOP\\\",\\n      \\\"index\\\": 0\\n    }\\n  ],\\n  \\\"usageMetadata\\\": {\\n    \\\"promptTokenCount\\\": 7,\\n    \\\"candidatesTokenCount\\\": 1,\\n    \\\"totalTokenCount\\\": 8,\\n    \\\"promptToken",
+   "totalTokens": 366
+  },
+  {
+   "id": "json01",
+   "text": "/json; charset=UTF-8\",\n      \"server\": \"scaffolding on HTTPServer2\",\n      \"server-timing\": \"gfet4t7; dur=<ms>\",\n      \"x-content-type-options\": \"nosniff\",\n      \"x-frame-options\": \"SAMEORIGIN\",\n      \"x-gemini-service-tier\": \"standard\",\n      \"x-xss-protection\": \"0\"\n    },\n    \"body\": \"{\\n  \\\"candidates\\\": [\\n    {\\n      \\\"content\\\": {\\n        \\\"parts\\\": [\\n          {\\n            \\\"text\\\": \\\"ok\\\",\\n            \\\"thoughtSignature\\\": \\\"<signature>\\\"\\n          }\\n        ],\\n        \\\"role\\\": \\\"model\\\"\\n      },\\n      \\\"finishReason\\\": \\\"STOP\\\",\\n      \\\"index\\\": 0\\n    }\\n  ],\\n  \\\"usageMetadata\\\": {\\n    \\\"promptTokenCount\\\": 7,\\n    \\\"candidatesTokenCount\\\": 1,\\n    \\\"total",
+   "totalTokens": 226
+  },
+  {
+   "id": "json02",
+   "text": " {\n    \"method\": \"POST\",\n    \"path\": \"/v1beta/models/gemini-3.5-flash-lite:generateContent\",\n    \"headers\": {\n      \"x-goog-api-key\": \"<key>\"\n    },\n    \"body\": \"{\\\"contents\\\":[{\\\"role\\\":\\\"user\\\",\\\"parts\\\":[{\\\"text\\\":\\\"Responda só: ok\\\"}]}],\\\"generationConfig\\\":{\\\"maxOutputTokens\\\":16}}\"\n  },\n  \"response\": {\n    \"status\": 200,\n    \"headers\": {\n      \"content-type\": \"application/json; charset=UTF-8\",\n      \"server\": \"scaffolding on HTTPServer2\",\n      \"server-timing\":",
+   "totalTokens": 165
+  },
+  {
+   "id": "yaml00",
+   "text": "     description: |\n        Corpo YAML com um ou mais documentos de cenário (separados por `---`), no formato da\n        spec 011. Cenário com nome já existente é substituído. Se qualquer documento for\n        inválido, nada é aplicado e os cenários",
+   "totalTokens": 62
+  },
+  {
+   "id": "yaml01",
+   "text": "mas:\n    Problem:\n      type: object\n      required: [error, message]\n      properties:\n        error:\n          type: string\n          description: Código curto (`unauthorized`, `invalid`, `not_found`, `unsupported_media_type`, `store_unavailable`, `internal`).\n        message:\n          type: string\n        details:\n          type: array\n          description: Erros de validação, um por item.\n          items: { type: string }\n\n    Health:\n      type: object\n      required: [status]\n      properties:\n        status:\n          type: string\n          enum: [ok, ready, starting]\n\n    Duration:\n      type: string\n      description: Duração no formato Go (`ti",
+   "totalTokens": 169
+  },
+  {
+   "id": "yaml02",
+   "text": "    content:\n        application/json:\n          schema:\n            $ref: '#/components/schemas/EntityState'\n\n  schemas:\n    Problem:\n      type: object\n      required: [error, message]\n      properties:\n        error:\n          type: string\n          description: Código curto (`unauthorized`, `invalid`, `not_found`, `unsupported_media_type`, `store_unavailable`, `internal`).\n        message:\n          type: string\n        details:\n          type: array\n          description: Erros de validação, um por item.\n          items: { type: string }\n\n    Health:\n      type: object\n      required: [status]\n      properties:\n        status:\n          type: string\n          enum: [ok, ready, starting]\n\n    Duration:\n      type: string\n      description: Duração no formato Go (`time.ParseDuration`).\n      pattern: '^(0|([0-9]+(\\.[0-9]+)?(ns|us|µs|ms|s|m|h))+)$'\n      examples: ['30s', '1m30s', '500ms']\n\n    Percent:\n      type: number\n      minimum: 0\n      maximum: 100\n\n    ConfigDocument:\n      type: object\n      description: |\n        Documento de configuração (spec 003) em JSON. Chaves de topo conhecidas: `server`, `admin`,\n        `store`, `drivers`, `keys`, `models`, `profiles`, `tiers`, `abuse`, `scenarios`",
+   "totalTokens": 356
+  },
+  {
+   "id": "yaml03",
+   "text": "    estático e chama `/admin/stats` com o token informado pelo operador na página).\n    - Corpos JSON usam `snake_case`, os mesmos nomes do YAML de configuração (spec 003).\n    - Durações são strings no formato Go (`500ms`, `30s`, `5m`, `1h`).\n    - Erros do control plane usam o schema `Problem` (não o dialeto de nenhum provedor).\n    - `x-wwz-planned-paths` (extensão na raiz) guarda Path Items já contratados cujo código ainda\n      não existe. Têm o mesmo valor normativo de `paths`; ficam fora dele só para que o teste\n      contrato-vs-mux (`internal/admin`, TestOpenAPIRoutesRegistered) continue exigindo que todo\n      `paths` esteja roteado. A tarefa que implementa a rota move o Path Item, sem alterá-lo,\n      para `paths`. Hoje: nenhum.\nservers:\n  - url: http://127.0.0.1:9000\n    description: 'Control plane local (padrão `admin.listen: \":9000\"`).'\ntags:\n  - name: saude\n    description: Liveness, readiness e métricas (abertos).\n  - name: config\n    description: Configuração efetiva e recarga (spec 003, 013; I23).\n  - name: operacao\n    description: Estatísticas, reset e últimas requisições (spec 013).\n  - name: cenarios\n    description: Cenários carregados em runtime (spec 011).\n  - name: caos\n    desc",
+   "totalTokens": 381
+  }
+ ]
+}

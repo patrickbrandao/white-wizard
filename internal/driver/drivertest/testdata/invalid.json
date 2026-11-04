@@ -1,0 +1,23 @@
+{
+  "_comment": "Request bodies the driver must reject with core.ErrInvalidRequest, rendered as HTTP 400 in its dialect. Values are raw bodies (strings), so malformed JSON fits here.",
+  "chat": {
+    "malformed_json": "{\"model\": \"gpt-test\", \"messages\": [",
+    "missing_model": "{\"messages\": [{\"role\": \"user\", \"content\": \"hi\"}]}",
+    "empty_messages": "{\"model\": \"gpt-test\", \"messages\": []}",
+    "bad_role": "{\"model\": \"gpt-test\", \"messages\": [{\"role\": \"robot\", \"content\": \"hi\"}]}",
+    "tool_choice_unknown_tool": "{\"model\": \"gpt-test\", \"messages\": [{\"role\": \"user\", \"content\": \"hi\"}], \"tools\": [{\"type\": \"function\", \"function\": {\"name\": \"get_time\"}}], \"tool_choice\": {\"type\": \"function\", \"function\": {\"name\": \"nope\"}}}"
+  },
+  "completions": {
+    "malformed_json": "{\"model\": ",
+    "missing_model": "{\"prompt\": \"hi\"}"
+  },
+  "messages": {
+    "malformed_json": "{\"model\": \"claude-test\", \"max_tokens\": ",
+    "missing_model": "{\"max_tokens\": 64, \"messages\": [{\"role\": \"user\", \"content\": \"hi\"}]}",
+    "missing_max_tokens": "{\"model\": \"claude-test\", \"messages\": [{\"role\": \"user\", \"content\": \"hi\"}]}",
+    "empty_messages": "{\"model\": \"claude-test\", \"max_tokens\": 64, \"messages\": []}",
+    "thinking_budget_too_small": "{\"model\": \"claude-test\", \"max_tokens\": 4096, \"messages\": [{\"role\": \"user\", \"content\": \"hi\"}], \"thinking\": {\"type\": \"enabled\", \"budget_tokens\": 512}}",
+    "thinking_budget_over_max_tokens": "{\"model\": \"claude-test\", \"max_tokens\": 2048, \"messages\": [{\"role\": \"user\", \"content\": \"hi\"}], \"thinking\": {\"type\": \"enabled\", \"budget_tokens\": 4096}}",
+    "tool_choice_without_tools": "{\"model\": \"claude-test\", \"max_tokens\": 64, \"messages\": [{\"role\": \"user\", \"content\": \"hi\"}], \"tool_choice\": {\"type\": \"any\"}}"
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "provider": "opencode",
+  "name": "error_auth",
+  "recorded_at": "2026-10-31",
+  "note": "sonda error_auth do wwz-drift (wwz-drift record)",
+  "request": {
+    "method": "POST",
+    "path": "/inference/go/openai/v1/chat/completions",
+    "headers": {
+      "authorization": "Bearer sk-invalid-wwz-drift",
+      "x-opencode-session": "<session>"
+    },
+    "body": "{\"model\":\"deepseek-v4.1-flash\",\"messages\":[{\"role\":\"user\",\"content\":\"Responda só: ok\"}],\"max_tokens\":256}"
+  },
+  "response": {
+    "status": 401,
+    "headers": {
+      "content-type": "application/json",
+      "x-opencode-log-id": "<log_id>"
+    },
+    "body": "{\"error\":{\"type\":\"server_error\",\"message\":\"Upstream request failed: Invalid credential\"}}"
+  }
+}

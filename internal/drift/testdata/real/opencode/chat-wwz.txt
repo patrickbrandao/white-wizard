@@ -1,0 +1,8 @@
+HTTP 200
+Content-Length: 761
+Content-Type: application/json
+Date: Sat, 31 Oct 2026 12:32:55 GMT
+X-Request-Id: req_ba34af80fe18b4dd84a8c2f49c532f49
+X-Wwz-Seed: 1
+
+{"choices":[{"finish_reason":"stop","index":0,"logprobs":null,"message":{"content":"The schema matches the expected structure and all required fields are presen","refusal":null,"role":"assistant"}}],"created":1793449976,"id":"chatcmpl-SJAqMlpx57p7nHoEpxCpU9LNdloqB","model":"glm-4.6","object":"chat.completion","usage":{"completion_tokens":16,"completion_tokens_details":{"accepted_prediction_tokens":0,"audio_tokens":0,"reasoning_tokens":0,"rejected_prediction_tokens":0},"cost":0,"opencode":{"allowance":0,"billing_source":"go","estimated":false,"list_cost":0,"tokens":{"cache_read":0,"cache_write_1h":0,"cache_write_5m":0,"input":9,"output":16,"reasoning":0}},"prompt_tokens":9,"prompt_tokens_details":{"audio_tokens":0,"cached_tokens":0},"total_tokens":25}}

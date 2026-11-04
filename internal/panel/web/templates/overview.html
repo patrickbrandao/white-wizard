@@ -1,0 +1,44 @@
+{{define "content"}}
+<form class="filters" method="get" action="/">
+<label>Janela <select name="window">{{$w := .Data.Filter.Get "window"}}
+<option value="1m"{{if eq $w "1m"}} selected{{end}}>1 min</option>
+<option value="5m"{{if or (eq $w "5m") (eq $w "")}} selected{{end}}>5 min</option>
+<option value="1h"{{if eq $w "1h"}} selected{{end}}>1 h</option>
+</select></label>
+<label>Driver <input name="driver" value="{{.Data.Filter.Get "driver"}}"></label>
+<label>Modelo <input name="model" value="{{.Data.Filter.Get "model"}}"></label>
+<button type="submit">Filtrar</button>
+</form>
+{{template "live" .}}
+{{end}}
+
+{{define "live"}}<section id="live" hx-get="{{.Live}}" hx-trigger="every 2s" hx-swap="outerHTML">
+{{template "messages" .}}
+{{with .Data.Ov}}{{if .Window}}
+<p class="muted">Janela {{.Window}} · fonte {{.Source}}</p>
+<div class="cards">
+<div class="card"><h2>req/s</h2><p class="big">{{opt .ReqPerS}}</p></div>
+<div class="card"><h2>tokens/s</h2>{{range $k, $v := .TokensPerS}}<p>{{$k}}: <b>{{num $v}}</b></p>{{else}}<p class="big">—</p>{{end}}</div>
+<div class="card"><h2>Streams abertos</h2><p class="big">{{int .StreamsOpen}}</p></div>
+<div class="card"><h2>TTFT (ms)</h2><p>p50 <b>{{opt .TTFT.P50MS}}</b> · p99 <b>{{opt .TTFT.P99MS}}</b></p></div>
+<div class="card"><h2>E2E (ms)</h2><p>p50 <b>{{opt .E2E.P50MS}}</b> · p99 <b>{{opt .E2E.P99MS}}</b></p></div>
+</div>
+<h2>Erros/s</h2>
+<table>
+<thead><tr><th>Tipo</th><th>Erros/s</th></tr></thead>
+<tbody>
+{{range $k, $v := .ErrorsPerS}}<tr><td>injetado: {{$k}}</td><td>{{num $v}}</td></tr>{{end}}
+{{range $k, $v := .StatusPerS}}<tr><td>status {{$k}}</td><td>{{num $v}}</td></tr>{{end}}
+{{range $k, $v := .RateLimitedPerS}}<tr><td>rate limit: {{$k}}</td><td>{{num $v}}</td></tr>{{end}}
+</tbody>
+</table>
+<h2>Instâncias vivas</h2>
+<table>
+<thead><tr><th>Instância</th><th>Versão</th><th>Endereço</th><th>req/s</th><th>Conexões</th><th>Em voo</th><th>Store</th><th>Início</th><th>Heartbeat</th></tr></thead>
+<tbody>
+{{range .Instances}}<tr><td>{{.ID}}</td><td>{{or .Version "—"}}</td><td>{{or .Addr "—"}}</td><td>{{opt .RPS}}</td><td>{{int .Conns}}</td><td>{{int .InFlight}}</td><td>{{or .Store "—"}}</td><td>{{whenp .Started}}</td><td>{{whenp .Beat}}</td></tr>
+{{else}}<tr><td colspan="9" class="muted">Nenhuma instância viva.</td></tr>{{end}}
+</tbody>
+</table>
+{{end}}{{end}}
+</section>{{end}}

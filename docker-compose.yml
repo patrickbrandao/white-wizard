@@ -1,0 +1,132 @@
+# Ambiente local. Cada sistema tem seu compose na própria pasta (ADR 0007).
+#
+#   WWZ_ADMIN_TOKEN=x docker compose up -d --build
+#   WWZ_STORE=memory WWZ_VALKEY_ADDR= ...   # sem Valkey (WWZ_VALKEY_ADDR força store valkey)
+#   WWZ_CONFIG_FILE=./meu.yaml ...           # outro YAML do wwz (padrão deploy/wwz/wwz.yaml)
+#   docker compose run --rm wwz-load --rps 50 --duration 10s   # benchmark (perfil load)
+include:
+  - cache/valkey/docker-compose.yml
+  - deploy/prometheus/docker-compose.yml
+  - deploy/panel/docker-compose.yml
+
+services:
+  wwz:
+    build:
+      context: .
+      args:
+        VERSION: ${WWZ_VERSION:-dev}
+    image: ${WWZ_IMAGE:-white-wizard:dev}
+    environment:
+      # Portas internas fixas; ${WWZ_PORT}/${WWZ_ADMIN_PORT} do .env são as publicadas.
+      WWZ_PORT: "8000"
+      WWZ_ADMIN_PORT: "9000"
+      WWZ_STORE: ${WWZ_STORE:-valkey}
+      WWZ_VALKEY_ADDR: ${WWZ_VALKEY_ADDR-valkey:6379}
+      WWZ_ADMIN_TOKEN: ${WWZ_ADMIN_TOKEN:?defina WWZ_ADMIN_TOKEN}
+      WWZ_LOG_LEVEL: ${WWZ_LOG_LEVEL:-info}
+      # event_stream, admin.debug e usage.extended para o painel (deploy/wwz/wwz.yaml).
+      WWZ_CONFIG: /etc/wwz/wwz.yaml
+    volumes:
+      - ${WWZ_CONFIG_FILE:-./deploy/wwz/wwz.yaml}:/etc/wwz/wwz.yaml:ro
+    ports:
+      - "${WWZ_PORT:-18000}:8000"
+      - "${WWZ_ADMIN_PORT:-18001}:9000"
+    depends_on:
+      valkey:
+        condition: service_healthy
+    read_only: true
+    tmpfs:
+      - /run
+      - /tmp
+    security_opt:
+      - no-new-privileges:true
+    cap_drop: [ALL]
+    ulimits:
+      nofile: { soft: "${WWZ_NOFILE:-1048576}", hard: "${WWZ_NOFILE:-1048576}" }
+    deploy:
+      resources:
+        limits:
+          cpus: "${WWZ_CPUS:-1}"
+          memory: "${WWZ_MEMORY:-512m}"
+    stop_grace_period: 20s
+    healthcheck:
+      test: ["CMD", "/usr/local/bin/healthcheck", "http://127.0.0.1:9000/health/ready"]
+      interval: 5s
+      timeout: 3s
+      start_period: 5s
+      retries: 10
+
+  # Servidor de ferramentas fake (spec 017, ADR 0034): binário wwz-tools da
+  # imagem do wwz-load (sem imagem própria). Raspado pelo Prometheus em
+  # wwz-tools:9200; o `wwz-load agents --tools-url http://wwz-tools:9200` usa o
+  # mesmo serviço. Sem WWZ_TOOLS_TOKEN no local (com token, /metrics exige
+  # bearer e o job do Prometheus precisa de credentials_file).
+  wwz-tools:
+    build:
+      context: .
+      target: wwz-load
+      args:
+        VERSION: ${WWZ_VERSION:-dev}
+    image: ${WWZ_LOAD_IMAGE:-white-wizard-load:dev}
+    entrypoint: ["/usr/local/bin/wwz-tools"]
+    command: ["serve"]
+    environment:
+      WWZ_TOOLS_LISTEN: ":9200"
+      WWZ_TOOLS_SEED: ${WWZ_TOOLS_SEED:-0}
+      WWZ_TOOLS_TOKEN: ${WWZ_TOOLS_TOKEN:-}
+    ports:
+      - "${WWZ_TOOLS_PORT:-18003}:9200"
+    read_only: true
+    tmpfs:
+      - /run
+      - /tmp
+    security_opt:
+      - no-new-privileges:true
+    cap_drop: [ALL]
+    ulimits:
+      nofile: { soft: 65536, hard: 65536 }
+    deploy:
+      resources:
+        limits:
+          cpus: "${WWZ_TOOLS_CPUS:-1}"
+          memory: "${WWZ_TOOLS_MEMORY:-128m}"
+    stop_grace_period: 10s
+    healthcheck:
+      test: ["CMD", "/usr/local/bin/healthcheck", "http://127.0.0.1:9200/healthz"]
+      interval: 5s
+      timeout: 3s
+      start_period: 5s
+      retries: 10
+
+  # Cliente de benchmark (spec 015): só com o perfil load ou `docker compose run`.
+  # Flags vão depois do nome do serviço; o alvo é o data plane do wwz.
+  wwz-load:
+    profiles: [load]
+    build:
+      context: .
+      target: wwz-load
+      args:
+        VERSION: ${WWZ_VERSION:-dev}
+    image: ${WWZ_LOAD_IMAGE:-white-wizard-load:dev}
+    entrypoint: ["/usr/local/bin/wwz-load", "run", "--target", "http://wwz:8000", "--admin", "http://wwz:9000"]
+    command: ["--rps", "${WWZ_LOAD_RPS:-50}", "--duration", "${WWZ_LOAD_DURATION:-10s}"]
+    environment:
+      WWZ_LOAD_KEY: ${WWZ_LOAD_KEY:-wwz-key-01}
+      WWZ_ADMIN_TOKEN: ${WWZ_ADMIN_TOKEN:?defina WWZ_ADMIN_TOKEN}
+    depends_on:
+      wwz:
+        condition: service_healthy
+    read_only: true
+    tmpfs:
+      - /run
+      - /tmp
+    security_opt:
+      - no-new-privileges:true
+    cap_drop: [ALL]
+    ulimits:
+      nofile: { soft: "${WWZ_NOFILE:-1048576}", hard: "${WWZ_NOFILE:-1048576}" }
+    deploy:
+      resources:
+        limits:
+          cpus: "${WWZ_LOAD_CPUS:-1}"
+          memory: "${WWZ_LOAD_MEMORY:-256m}"

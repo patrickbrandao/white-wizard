@@ -1,0 +1,24 @@
+{
+  "provider": "opencode",
+  "name": "public_messages",
+  "recorded_at": "2026-11-03",
+  "note": "Gravada sem custo (US$ 0) e sem chave real, com curl/8.7.1 (User-Agent padrão do curl; nenhum User-Agent opencode/... nem x-opencode-client foi enviado). x-api-key: public (sem Authorization) na rota Messages pay-as-you-go, gratuito big-pickle, max_tokens 16 (ADR 0072 itens 4 e 5). Mesmo 429 FreeUsageLimitError e mesmo texto de free/public_generic_client.json (retry-after 34368 s, 00:00 UTC); nenhum 403 de cliente. Sozinha não prova que x-api-key é lido (sem chave nenhuma o resultado poderia ser igual; não conferido); ver free/messages_x_api_key.json.",
+  "request": {
+    "method": "POST",
+    "path": "/inference/anthropic/v1/messages",
+    "headers": {
+      "x-api-key": "public",
+      "x-opencode-session": "<session>"
+    },
+    "body": "{\"model\": \"big-pickle\", \"messages\": [{\"role\": \"user\", \"content\": \"Responda só: ok\"}], \"max_tokens\": 16}"
+  },
+  "response": {
+    "status": 429,
+    "headers": {
+      "content-type": "application/json",
+      "retry-after": "34368",
+      "x-opencode-log-id": "<log_id>"
+    },
+    "body": "{\"type\":\"error\",\"error\":{\"type\":\"FreeUsageLimitError\",\"message\":\"Free usage limit reached. Free models work in OpenCode (https://opencode.ai); subscribe to OpenCode Go to keep going: https://opencode.ai/go\"}}"
+  }
+}

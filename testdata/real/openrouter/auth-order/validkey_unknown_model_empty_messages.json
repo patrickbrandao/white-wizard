@@ -1,0 +1,18 @@
+{
+  "provider": "openrouter",
+  "name": "validkey_unknown_model_empty_messages",
+  "recorded_at": "2026-10-31",
+  "request": {
+    "method": "POST",
+    "path": "/api/v1/chat/completions",
+    "headers": {
+      "authorization": "Bearer <key>"
+    },
+    "body": "{\"model\": \"wwz-nao-existe\", \"messages\": []}"
+  },
+  "response": {
+    "status": 400,
+    "content_type": "application/json",
+    "body": "{\"error\":{\"message\":\"Input required: specify \\\"prompt\\\" or \\\"messages\\\"\",\"code\":400},\"user_id\":\"<user_id>\"}"
+  }
+}

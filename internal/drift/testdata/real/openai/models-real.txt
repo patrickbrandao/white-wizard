@@ -1,0 +1,384 @@
+HTTP 200
+Access-Control-Expose-Headers: X-Request-ID, CF-Ray, CF-Ray
+Alt-Svc: h3=":443"; ma=86400
+Cf-Cache-Status: DYNAMIC
+Cf-Ray: a532ae158c630683-CNF
+Content-Type: application/json
+Date: Sat, 31 Oct 2026 12:32:02 GMT
+Openai-Processing-Ms: 1043
+Openai-Version: 2020-10-01
+Server: cloudflare
+Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
+X-Content-Type-Options: nosniff
+X-Openai-Proxy-Wasm: v0.1
+X-Request-Id: ecaf2710-234f-4e79-ba34-59d695af55a8
+
+{
+  "object": "list",
+  "data": [
+    {
+      "id": "gpt-3.5-turbo-0125",
+      "object": "model",
+      "created": 1706048358,
+      "owned_by": "system",
+      "shutdown_date": "2026-10-23"
+    },
+    {
+      "id": "o1-pro",
+      "object": "model",
+      "created": 1742251791,
+      "owned_by": "system",
+      "shutdown_date": "2026-10-23"
+    },
+    {
+      "id": "gpt-4-turbo-2024-04-09",
+      "object": "model",
+      "created": 1712601677,
+      "owned_by": "system",
+      "shutdown_date": "2026-10-23"
+    },
+    {
+      "id": "omni-moderation-2024-09-26",
+      "object": "model",
+      "created": 1732734466,
+      "owned_by": "system",
+      "shutdown_date": null
+    },
+    {
+      "id": "tts-1-hd",
+      "object": "model",
+      "created": 1699046015,
+      "owned_by": "system",
+      "shutdown_date": "2027-01-06"
+    },
+    {
+      "id": "omni-moderation-latest",
+      "object": "model",
+      "created": 1731689265,
+      "owned_by": "system",
+      "shutdown_date": null
+    },
+    {
+      "id": "tts-1-1106",
+      "object": "model",
+      "created": 1699053241,
+      "owned_by": "system",
+      "shutdown_date": null
+    },
+    {
+      "id": "gpt-4o-mini-tts",
+      "object": "model",
+      "created": 1742403959,
+      "owned_by": "system",
+      "shutdown_date": "2027-01-06"
+    },
+    {
+      "id": "gpt-4o-mini-search-preview",
+      "object": "model",
+      "created": 1741391161,
+      "owned_by": "system",
+      "shutdown_date": null
+    },
+    {
+      "id": "gpt-4.1-nano",
+      "object": "model",
+      "created": 1744321707,
+      "owned_by": "system",
+      "shutdown_date": "2026-10-23"
+    },
+    {
+      "id": "gpt-3.5-turbo-16k",
+      "object": "model",
+      "created": 1683758102,
+      "owned_by": "openai-internal",
+      "shutdown_date": null
+    },
+    {
+      "id": "text-embedding-ada-002",
+      "object": "model",
+      "created": 1671217299,
+      "owned_by": "openai-internal",
+      "shutdown_date": null
+    },
+    {
+      "id": "gpt-4.1",
+      "object": "model",
+      "created": 1744316542,
+      "owned_by": "system",
+      "shutdown_date": "2027-01-14"
+    },
+    {
+      "id": "tts-1",
+      "object": "model",
+      "created": 1681940951,
+      "owned_by": "openai-internal",
+      "shutdown_date": "2027-01-06"
+    },
+    {
+      "id": "o4-mini-2025-04-16",
+      "object": "model",
+      "created": 1744133506,
+      "owned_by": "system",
+      "shutdown_date": "2026-10-23"
+    },
+    {
+      "id": "babbage-002",
+      "object": "model",
+      "created": 1692634615,
+      "owned_by": "system",
+      "shutdown_date": "2026-09-28"
+    },
+    {
+      "id": "text-embedding-3-large",
+      "object": "model",
+      "created": 1705953180,
+      "owned_by": "system",
+      "shutdown_date": null
+    },
+    {
+      "id": "gpt-4o-2024-05-13",
+      "object": "model",
+      "created": 1715368132,
+      "owned_by": "system",
+      "shutdown_date": "2026-10-23"
+    },
+    {
+      "id": "o3-mini-2025-01-31",
+      "object": "model",
+      "created": 1738010200,
+      "owned_by": "system",
+      "shutdown_date": "2026-10-23"
+    },
+    {
+      "id": "gpt-4o-2024-11-20",
+      "object": "model",
+      "created": 1739331543,
+      "owned_by": "system",
+      "shutdown_date": "2027-01-14"
+    },
+    {
+      "id": "whisper-1",
+      "object": "model",
+      "created": 1677532384,
+      "owned_by": "openai-internal",
+      "shutdown_date": "2027-02-26"
+    },
+    {
+      "id": "gpt-3.5-turbo-instruct-0914",
+      "object": "model",
+      "created": 1694122472,
+      "owned_by": "system",
+      "shutdown_date": null
+    },
+    {
+      "id": "tts-1-hd-1106",
+      "object": "model",
+      "created": 1699053533,
+      "owned_by": "system",
+      "shutdown_date": null
+    },
+    {
+      "id": "o4-mini-deep-research",
+      "object": "model",
+      "created": 1749685485,
+      "owned_by": "system",
+      "shutdown_date": "2026-07-23"
+    },
+    {
+      "id": "gpt-4o-search-preview-2025-03-11",
+      "object": "model",
+      "created": 1771905621,
+      "owned_by": "system",
+      "shutdown_date": "2026-07-23"
+    },
+    {
+      "id": "text-embedding-3-small",
+      "object": "model",
+      "created": 1705948997,
+      "owned_by": "system",
+      "shutdown_date": null
+    },
+    {
+      "id": "gpt-4o",
+      "object": "model",
+      "created": 1715367049,
+      "owned_by": "system",
+      "shutdown_date": "2027-01-14"
+    },
+    {
+      "id": "gpt-4.1-mini",
+      "object": "model",
+      "created": 1744318173,
+      "owned_by": "system",
+      "shutdown_date": "2027-01-14"
+    },
+    {
+      "id": "gpt-4o-mini",
+      "object": "model",
+      "created": 1721172741,
+      "owned_by": "system",
+      "shutdown_date": "2027-01-14"
+    },
+    {
+      "id": "o1-2024-12-17",
+      "object": "model",
+      "created": 1734326976,
+      "owned_by": "system",
+      "shutdown_date": "2026-10-23"
+    },
+    {
+      "id": "gpt-image-1",
+      "object": "model",
+      "created": 1745517030,
+      "owned_by": "system",
+      "shutdown_date": "2026-10-23"
+    },
+    {
+      "id": "gpt-4-turbo",
+      "object": "model",
+      "created": 1712361441,
+      "owned_by": "system",
+      "shutdown_date": "2026-10-23"
+    },
+    {
+      "id": "gpt-4o-2024-08-06",
+      "object": "model",
+      "created": 1722814719,
+      "owned_by": "system",
+      "shutdown_date": "2027-01-14"
+    },
+    {
+      "id": "gpt-4o-mini-search-preview-2025-03-11",
+      "object": "model",
+      "created": 1741390858,
+      "owned_by": "system",
+      "shutdown_date": "2026-07-23"
+    },
+    {
+      "id": "gpt-3.5-turbo-1106",
+      "object": "model",
+      "created": 1698959748,
+      "owned_by": "system",
+      "shutdown_date": "2026-09-28"
+    },
+    {
+      "id": "gpt-4-0613",
+      "object": "model",
+      "created": 1686588896,
+      "owned_by": "openai",
+      "shutdown_date": "2026-10-23"
+    },
+    {
+      "id": "gpt-4o-search-preview",
+      "object": "model",
+      "created": 1771905534,
+      "owned_by": "system",
+      "shutdown_date": null
+    },
+    {
+      "id": "gpt-4.1-2025-04-14",
+      "object": "model",
+      "created": 1744315746,
+      "owned_by": "system",
+      "shutdown_date": "2027-01-14"
+    },
+    {
+      "id": "gpt-4o-mini-2024-07-18",
+      "object": "model",
+      "created": 1721172717,
+      "owned_by": "system",
+      "shutdown_date": "2027-01-14"
+    },
+    {
+      "id": "o1",
+      "object": "model",
+      "created": 1734375816,
+      "owned_by": "system",
+      "shutdown_date": "2026-10-23"
+    },
+    {
+      "id": "gpt-3.5-turbo",
+      "object": "model",
+      "created": 1677610602,
+      "owned_by": "openai",
+      "shutdown_date": "2026-10-23"
+    },
+    {
+      "id": "gpt-4",
+      "object": "model",
+      "created": 1687882411,
+      "owned_by": "openai",
+      "shutdown_date": "2026-10-23"
+    },
+    {
+      "id": "davinci-002",
+      "object": "model",
+      "created": 1692634301,
+      "owned_by": "system",
+      "shutdown_date": "2026-09-28"
+    },
+    {
+      "id": "o3-mini",
+      "object": "model",
+      "created": 1737146383,
+      "owned_by": "system",
+      "shutdown_date": "2026-10-23"
+    },
+    {
+      "id": "o4-mini-deep-research-2025-06-26",
+      "object": "model",
+      "created": 1750866121,
+      "owned_by": "system",
+      "shutdown_date": "2026-07-23"
+    },
+    {
+      "id": "o1-pro-2025-03-19",
+      "object": "model",
+      "created": 1742251504,
+      "owned_by": "system",
+      "shutdown_date": "2026-10-23"
+    },
+    {
+      "id": "gpt-4o-mini-transcribe",
+      "object": "model",
+      "created": 1742068596,
+      "owned_by": "system",
+      "shutdown_date": "2027-02-26"
+    },
+    {
+      "id": "gpt-3.5-turbo-instruct",
+      "object": "model",
+      "created": 1692901427,
+      "owned_by": "system",
+      "shutdown_date": "2026-09-28"
+    },
+    {
+      "id": "gpt-4.1-nano-2025-04-14",
+      "object": "model",
+      "created": 1744321025,
+      "owned_by": "system",
+      "shutdown_date": "2026-10-23"
+    },
+    {
+      "id": "gpt-4.1-mini-2025-04-14",
+      "object": "model",
+      "created": 1744317547,
+      "owned_by": "system",
+      "shutdown_date": "2027-01-14"
+    },
+    {
+      "id": "o4-mini",
+      "object": "model",
+      "created": 1744225351,
+      "owned_by": "system",
+      "shutdown_date": "2026-10-23"
+    },
+    {
+      "id": "gpt-4o-transcribe",
+      "object": "model",
+      "created": 1742068463,
+      "owned_by": "system",
+      "shutdown_date": "2027-02-26"
+    }
+  ]
+}

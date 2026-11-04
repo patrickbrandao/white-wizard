@@ -1,0 +1,14 @@
+HTTP 400
+Access-Control-Allow-Origin: *
+Access-Control-Expose-Headers: X-Generation-Id,X-Provider-Name,request-id,cf-ray
+Alt-Svc: h3=":443"; ma=86400
+Cf-Ray: a532ae2cd99a0683-CNF
+Content-Type: application/json
+Date: Sat, 31 Oct 2026 12:32:04 GMT
+Permissions-Policy: payment=(self "https://checkout.stripe.com" "https://connect-js.stripe.com" "https://js.stripe.com" "https://*.js.stripe.com" "https://hooks.stripe.com")
+Referrer-Policy: no-referrer, strict-origin-when-cross-origin
+Server: cloudflare
+X-Content-Type-Options: nosniff
+X-Generation-Id: gen-1793449924-X97C0bwJilVPGbl2zO6M
+
+{"error":{"message":"wwz-drift-modelo-inexistente is not a valid model ID","code":400},"user_id":"user_RedactedUserID00000000000"}

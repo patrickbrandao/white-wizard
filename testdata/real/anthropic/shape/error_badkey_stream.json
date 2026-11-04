@@ -1,0 +1,25 @@
+{
+  "provider": "anthropic",
+  "name": "error_badkey_stream",
+  "recorded_at": "2026-10-31",
+  "note": "401 em JSON mesmo com stream",
+  "request": {
+    "method": "POST",
+    "path": "/v1/messages",
+    "headers": {
+      "x-api-key": "sk-invalid-wwz-drift",
+      "anthropic-version": "2023-06-01"
+    },
+    "body": "{\"model\": \"claude-haiku-4-5-20251001\", \"max_tokens\": 16, \"messages\": [{\"role\": \"user\", \"content\": \"Responda só: ok\"}], \"stream\": true}"
+  },
+  "response": {
+    "status": 401,
+    "headers": {
+      "cache-control": "no-store",
+      "content-type": "application/json",
+      "request-id": "<request_id>",
+      "x-should-retry": "false"
+    },
+    "body": "{\"type\":\"error\",\"error\":{\"type\":\"authentication_error\",\"message\":\"invalid x-api-key\"},\"request_id\":\"<request_id>\"}"
+  }
+}

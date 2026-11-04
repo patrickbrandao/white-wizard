@@ -1,0 +1,20 @@
+{
+  "provider": "anthropic",
+  "name": "cc_order_msg_effort_max_missing",
+  "recorded_at": "2026-11-03",
+  "request": {
+    "method": "POST",
+    "path": "/v1/messages",
+    "headers": {
+      "x-api-key": "<key>",
+      "anthropic-version": "2023-06-01",
+      "anthropic-beta": "per-turn-control-2026-07-01"
+    },
+    "body": "{\"model\": \"claude-haiku-5-5\", \"messages\": [{\"role\": \"user\", \"content\": \"x\"}, {\"role\": \"system\", \"content\": \"s\", \"output_config\": {\"effort\": \"zzz\"}}]}"
+  },
+  "response": {
+    "status": 400,
+    "content_type": "application/json",
+    "body": "{\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"messages.1.output_config.effort: Input should be 'low', 'medium', 'high', 'xhigh' or 'max'\"},\"request_id\":\"<request_id>\"}"
+  }
+}

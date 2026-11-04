@@ -1,0 +1,24 @@
+{
+  "name": "model_subpath",
+  "note": "sub-rota de /v1/models/{id}: 404 com request_id e header request-id (diferente de /v1/nope, que tem request_id null)",
+  "provider": "anthropic",
+  "recorded_at": "2026-10-31",
+  "request": {
+    "body": null,
+    "headers": {
+      "anthropic-version": "2023-06-01",
+      "x-api-key": "<key>"
+    },
+    "method": "GET",
+    "path": "/v1/models/claude-haiku-4-5/x"
+  },
+  "response": {
+    "body": "{\"type\":\"error\",\"error\":{\"type\":\"not_found_error\",\"message\":\"Not found\"},\"request_id\":\"<request_id>\"}",
+    "headers": {
+      "content-type": "application/json",
+      "request-id": "<request_id>",
+      "x-should-retry": "false"
+    },
+    "status": 404
+  }
+}

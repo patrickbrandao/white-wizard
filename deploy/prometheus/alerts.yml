@@ -1,0 +1,51 @@
+# Regras de alerta do cluster wwz (spec 016, seção "Alertas"). Carregadas pelo
+# prometheus.yml (rule_files). Validar: promtool check rules alerts.yml
+groups:
+  - name: wwz
+    rules:
+      - alert: WWZInstanceDown
+        expr: up{job="wwz"} == 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Instância wwz sem heartbeat ({{ $labels.instance }})"
+          description: "O Prometheus não consegue raspar {{ $labels.instance }} há 1 minuto."
+
+      - alert: WWZStoreCircuitOpen
+        expr: max(wwz_store_circuit_open) == 1
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Valkey em circuito aberto"
+          description: "Ao menos uma instância wwz abriu o circuito do store Valkey (store.on_down em vigor)."
+
+      - alert: WWZHigh429Rate
+        expr: sum(rate(wwz_requests_total{status="429"}[5m])) / sum(rate(wwz_requests_total[5m])) > 0.05
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "429 acima de 5 % das requisições"
+          description: "{{ $value | humanizePercentage }} das requisições dos últimos 5 minutos receberam 429."
+
+      - alert: WWZSimulatorOverhead
+        expr: histogram_quantile(0.99, sum by (le) (rate(wwz_overhead_seconds_bucket[5m]))) > 0.002
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "p99 do overhead do simulador acima de 2 ms"
+          description: "O simulador está virando gargalo: p99 do overhead = {{ $value | humanizeDuration }}."
+
+  - name: wwz-panel
+    rules:
+      - alert: WWZPanelStreamLag
+        expr: wwz_panel_stream_lag > 500000
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Painel atrasado no ev:stream"
+          description: "O grupo panel tem {{ $value }} eventos pendentes em ev:stream (limite 500 000)."

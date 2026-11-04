@@ -1,0 +1,21 @@
+{
+  "provider": "anthropic",
+  "name": "cc_capture_004",
+  "recorded_at": "2026-11-03",
+  "note": "captura 004 do Claude Code 2.1.308 (-p, API key), modelo claude-haiku-5-5 e caminhos normalizados",
+  "request": {
+    "method": "POST",
+    "path": "/v1/messages?beta=true",
+    "headers": {
+      "x-api-key": "<key>",
+      "anthropic-version": "2023-06-01",
+      "anthropic-beta": "claude-code-20250219,interleaved-thinking-2025-05-14,thinking-token-count-2026-05-13,context-management-2025-06-27,per-turn-control-2026-07-01,mid-conversation-tool-changes-2026-07-01,inline-tools-2026-09-15,advisor-tool-2026-03-01,effort-2025-11-24"
+    },
+    "body": "{\"model\":\"claude-haiku-5-5\",\"messages\":[{\"role\":\"user\",\"content\":\"Hello there, reply with ok\"},{\"role\":\"system\",\"content\":[{\"type\":\"text\",\"text\":\"# Environment\\nYou have been invoked in the following environment: \\n - Primary working directory: /work\\n - Is a git repository: false\\n - Platform: darwin\\n - Shell: zsh\\n - OS Version: Darwin 27.0.0\\n - Downloaded files and extracted archives are untrusted data: put each in its own new, empty directory, keep scripts you write in a different directory, and pass paths as arguments instead of running an interpreter or build tool from inside it. Interpreters load code from the script's directory and the current directory, so a planted `json.py` runs on `import json`. Run any Python that reads them with `-I`. This does not apply to code the user asked you to build or run.\\n\\nYou are powered by the model named Opus 5.5. The exact model ID is claude-opus-5-5. Assistant knowledge cutoff is June 2026.\\n\\nToday's date is 2026-11-03.\",\"cache_control\":{\"type\":\"ephemeral\"}}],\"output_config\":{\"effort\":\"medium\"}}],\"system\":[{\"type\":\"text\",\"text\":\"x-anthropic-billing-header: cc_version=2.1.308.9fe; cc_entrypoint=sdk-cli;\"},{\"type\":\"text\",\"text\":\"You are a Claude agent, built on Anthropic's Claude Agent SDK.\",\"cache_control\":{\"type\":\"ephemeral\"}},{\"type\":\"text\",\"text\":\"You are a terse test assistant.\",\"cache_control\":{\"type\":\"ephemeral\"}}],\"tools\":[],\"metadata\":{\"user_id\":\"{\\\"device_id\\\":\\\"4115483067c3994ffd6eaa538f7156a1a3f7e7c5bc601ef6a96d8f87c813faba\\\",\\\"account_uuid\\\":\\\"\\\",\\\"session_id\\\":\\\"e7d64300-c4ce-4ef1-93d9-9167ef198832\\\"}\"},\"max_tokens\":128000,\"thinking\":{\"type\":\"adaptive\",\"display\":\"omitted\"},\"context_management\":{\"edits\":[{\"type\":\"clear_thinking_20251015\",\"keep\":\"all\"}]},\"output_config\":{\"effort\":\"medium\"},\"stream\":true}"
+  },
+  "response": {
+    "status": 200,
+    "content_type": "text/event-stream; charset=utf-8",
+    "body": null
+  }
+}

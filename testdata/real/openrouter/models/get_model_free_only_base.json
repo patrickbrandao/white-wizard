@@ -1,0 +1,17 @@
+{
+  "provider": "openrouter",
+  "name": "get_model_free_only_base",
+  "recorded_at": "2026-10-31",
+  "request": {
+    "method": "GET",
+    "path": "/api/v1/model/recursive/flint-v1.0",
+    "headers": {
+      "authorization": "Bearer <key>"
+    }
+  },
+  "response": {
+    "status": 404,
+    "content_type": "application/json",
+    "body": "{\"error\":{\"message\":\"Model not found: recursive/flint-v1.0\",\"code\":404}}"
+  }
+}

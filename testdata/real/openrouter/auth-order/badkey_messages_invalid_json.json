@@ -1,0 +1,19 @@
+{
+  "provider": "openrouter",
+  "name": "badkey_messages_invalid_json",
+  "recorded_at": "2026-10-31",
+  "request": {
+    "method": "POST",
+    "path": "/api/v1/messages",
+    "headers": {
+      "x-api-key": "sk-invalid-wwz-0000000000000000",
+      "anthropic-version": "2023-06-01"
+    },
+    "body": "{\"model\": \"openai/gpt-4o-mini\", "
+  },
+  "response": {
+    "status": 401,
+    "content_type": "application/json",
+    "body": "{\"type\":\"error\",\"error\":{\"type\":\"authentication_error\",\"message\":\"Missing Authentication header\",\"error_type\":\"authentication\"},\"request_id\":null}"
+  }
+}

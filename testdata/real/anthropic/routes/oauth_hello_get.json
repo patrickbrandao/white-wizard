@@ -1,0 +1,20 @@
+{
+  "name": "oauth_hello_get",
+  "note": "sonda de conectividade do Claude Code (GET /v1/oauth/hello em platform.claude.com, sem credencial): 200 JSON compacto de 19 bytes, com request-id; curl em 2026-11-03 (task 443)",
+  "provider": "anthropic",
+  "recorded_at": "2026-11-03",
+  "request": {
+    "body": null,
+    "headers": {},
+    "method": "GET",
+    "path": "/v1/oauth/hello"
+  },
+  "response": {
+    "body": "{\"message\":\"hello\"}",
+    "headers": {
+      "content-type": "application/json",
+      "request-id": "<request_id>"
+    },
+    "status": 200
+  }
+}

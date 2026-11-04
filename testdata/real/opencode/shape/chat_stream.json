@@ -1,0 +1,25 @@
+{
+  "provider": "opencode",
+  "name": "chat_stream",
+  "recorded_at": "2026-10-31",
+  "note": "sonda chat_stream do wwz-drift (wwz-drift record)",
+  "request": {
+    "method": "POST",
+    "path": "/inference/go/openai/v1/chat/completions",
+    "headers": {
+      "authorization": "Bearer <key>",
+      "x-opencode-session": "<session>"
+    },
+    "body": "{\"model\":\"deepseek-v4.1-flash\",\"messages\":[{\"role\":\"user\",\"content\":\"Responda só: ok\"}],\"max_tokens\":256,\"stream\":true}"
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "cache-control": "no-cache",
+      "content-type": "text/event-stream",
+      "x-opencode-log-id": "<log_id>",
+      "x-zen-model": "deepseek-v4.1-flash"
+    },
+    "body": "data: {\"id\":\"<gw_id>\",\"object\":\"chat.completion.chunk\",\"created\":1793465704,\"model\":\"deepseek-v4.1-flash\",\"choices\":[{\"index\":0,\"finish_reason\":null,\"delta\":{\"role\":\"assistant\",\"content\":\"\"}}]}\n\ndata: {\"id\":\"<gw_id>\",\"object\":\"chat.completion.chunk\",\"created\":1793465704,\"model\":\"deepseek-v4.1-flash\",\"choices\":[{\"index\":0,\"finish_reason\":null,\"delta\":{\"reasoning_content\":\"We\"}}]}\n\ndata: {\"id\":\"<gw_id>\",\"object\":\"chat.completion.chunk\",\"created\":1793465704,\"model\":\"deepseek-v4.1-flash\",\"choices\":[{\"index\":0,\"finish_reason\":null,\"delta\":{\"reasoning_content\":\" need answer only \\\"ok\\\"?\"}}]}\n\ndata: {\"id\":\"<gw_id>\",\"object\":\"chat.completion.chunk\",\"created\":1793465704,\"model\":\"deepseek-v4.1-flash\",\"choices\":[{\"index\":0,\"finish_reason\":null,\"delta\":{\"reasoning_content\":\" User says Respond\"}}]}\n\ndata: {\"id\":\"<gw_id>\",\"object\":\"chat.completion.chunk\",\"created\":1793465704,\"model\":\"deepseek-v4.1-flash\",\"choices\":[{\"index\":0,\"finish_reason\":null,\"delta\":{\"reasoning_content\":\"a só: ok. Lik\"}}]}\n\ndata: {\"id\":\"<gw_id>\",\"object\":\"chat.completion.chunk\",\"created\":1793465704,\"model\":\"deepseek-v4.1-flash\",\"choices\":[{\"index\":0,\"finish_reason\":null,\"delta\":{\"reasoning_content\":\"ely wants exact\"}}]}\n\ndata: {\"id\":\"<gw_id>\",\"object\":\"chat.completion.chunk\",\"created\":1793465704,\"model\":\"deepseek-v4.1-flash\",\"choices\":[{\"index\":0,\"finish_reason\":null,\"delta\":{\"reasoning_content\":\" \\\"ok\\\". Need comply\"}}]}\n\ndata: {\"id\":\"<gw_id>\",\"object\":\"chat.completion.chunk\",\"created\":1793465704,\"model\":\"deepseek-v4.1-flash\",\"choices\":[{\"index\":0,\"finish_reason\":null,\"delta\":{\"reasoning_content\":\". Final\"}}]}\n\ndata: {\"id\":\"<gw_id>\",\"object\":\"chat.completion.chunk\",\"created\":1793465704,\"model\":\"deepseek-v4.1-flash\",\"choices\":[{\"index\":0,\"finish_reason\":null,\"delta\":{\"reasoning_content\":\" just\"}}]}\n\ndata: {\"id\":\"<gw_id>\",\"object\":\"chat.completion.chunk\",\"created\":1793465704,\"model\":\"deepseek-v4.1-flash\",\"choices\":[{\"index\":0,\"finish_reason\":null,\"delta\":{\"reasoning_content\":\" ok. \\n\"}}]}\n\ndata: {\"id\":\"<gw_id>\",\"object\":\"chat.completion.chunk\",\"created\":1793465704,\"model\":\"deepseek-v4.1-flash\",\"choices\":[{\"index\":0,\"finish_reason\":null,\"delta\":{\"content\":\"ok\"}}]}\n\ndata: {\"id\":\"<gw_id>\",\"object\":\"chat.completion.chunk\",\"created\":1793465704,\"model\":\"deepseek-v4.1-flash\",\"choices\":[{\"index\":0,\"finish_reason\":\"stop\",\"delta\":{}}],\"usage\":{\"prompt_tokens\":35,\"completion_tokens\":33,\"total_tokens\":68,\"prompt_tokens_details\":{\"cached_tokens\":0},\"completion_tokens_details\":{\"reasoning_tokens\":30},\"cost\":0,\"opencode\":{\"billing_source\":\"go\",\"list_cost\":0.00002505,\"allowance\":0.00001503,\"tokens\":{\"input\":35,\"output\":33,\"reasoning\":30,\"cache_read\":0,\"cache_write_5m\":0,\"cache_write_1h\":0}}}}\n\ndata: [DONE]\n\n"
+  }
+}

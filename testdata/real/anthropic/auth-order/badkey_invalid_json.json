@@ -1,0 +1,19 @@
+{
+  "provider": "anthropic",
+  "name": "badkey_invalid_json",
+  "recorded_at": "2026-10-31",
+  "request": {
+    "method": "POST",
+    "path": "/v1/messages",
+    "headers": {
+      "anthropic-version": "2023-06-01",
+      "x-api-key": "sk-ant-invalid-wwz-0000000000000000"
+    },
+    "body": "{\"model\": \"claude-haiku-4-5\", "
+  },
+  "response": {
+    "status": 401,
+    "content_type": "application/json",
+    "body": "{\"type\":\"error\",\"error\":{\"type\":\"authentication_error\",\"message\":\"invalid x-api-key\"},\"request_id\":\"<request_id>\"}"
+  }
+}

@@ -1,0 +1,192 @@
+# verify-heavy no servidor pesado (spec 018, ADRs 0017 e 0037).
+#
+# Só templates: o run.sh desta pasta sobe uma rodada por vez com
+#   docker compose -p wwz-heavy --profile <rodada> ...
+# e derruba com down -v ao fim. Recursos todos com prefixo wwz-heavy, rede
+# interna (sem saída nem portas publicadas: o wwz-load fala com o wwz pela rede
+# do compose, nunca pelo Traefik). Teto do servidor: soma de cpus ≤ 32 e de
+# memória ≤ 64g, a rodada mais a produção ainda de pé (o run.sh confere com
+# `docker compose config` e `docker inspect`). Na rodada streams o run.sh troca
+# HEAVY_WWZ_CPUS por HEAVY_STREAMS_WWZ_CPUS (12; ADR da task 269).
+#
+# Variáveis (o run.sh exporta; o .env do servidor pode sobrescrever as de recurso):
+#   WWZ_HEAVY_IMAGE, WWZ_HEAVY_LOAD_IMAGE   imagens :heavy-<sha7> enviadas pelo verify
+#   HEAVY_ROUND                             throughput | streams (YAML em rounds/)
+#   HEAVY_VALKEY_IMAGE                      padrão valkey/valkey:8.1-alpine
+#   HEAVY_*_CPUS / HEAVY_*_MEMORY           ver .env.example
+#   HEAVY_WWZ_GOGC                          GOGC do wwz (200, spec 014)
+
+name: wwz-heavy
+
+x-hardening: &hardening
+  read_only: true
+  security_opt:
+    - no-new-privileges:true
+  cap_drop: [ALL]
+  networks: [heavy]
+  ulimits:
+    nofile: { soft: 1048576, hard: 1048576 }
+
+x-valkey: &valkey
+  <<: *hardening
+  profiles: [cluster]
+  image: ${HEAVY_VALKEY_IMAGE:-valkey/valkey:8.1-alpine}
+  user: "999:1000"
+  command:
+    - valkey-server
+    - --port
+    - "6379"
+    - --cluster-enabled
+    - "yes"
+    - --cluster-config-file
+    - /data/nodes.conf
+    - --cluster-node-timeout
+    - "5000"
+    - --save
+    - ""
+    - --appendonly
+    - "no"
+    - --protected-mode
+    - "no"
+    - --maxmemory
+    - ${HEAVY_VALKEY_MAXMEMORY:-1gb}
+  tmpfs:
+    - /run
+    - /data:mode=1777
+  healthcheck:
+    test: ["CMD", "valkey-cli", "ping"]
+    interval: 2s
+    timeout: 2s
+    retries: 15
+  deploy:
+    resources:
+      limits:
+        cpus: "${HEAVY_VALKEY_CPUS:-2}"
+        memory: ${HEAVY_VALKEY_MEMORY:-2g}
+
+services:
+  # --- rodada cluster: Valkey Cluster com 3 mestres + limits.test -------------
+  valkey-1:
+    <<: *valkey
+    container_name: wwz-heavy-valkey-1
+  valkey-2:
+    <<: *valkey
+    container_name: wwz-heavy-valkey-2
+  valkey-3:
+    <<: *valkey
+    container_name: wwz-heavy-valkey-3
+
+  # Forma o cluster (slots divididos entre os 3 mestres, sem réplicas) e espera
+  # cluster_state:ok. Processo de vida curta (docker compose run --rm).
+  cluster-init:
+    <<: *hardening
+    profiles: [cluster]
+    image: ${HEAVY_VALKEY_IMAGE:-valkey/valkey:8.1-alpine}
+    container_name: wwz-heavy-cluster-init
+    user: "999:1000"
+    tmpfs: [/run, /tmp]
+    entrypoint: ["/bin/sh", "-ec"]
+    command:
+      - |
+        ips=""
+        for h in valkey-1 valkey-2 valkey-3; do
+          ips="$$ips $$(getent hosts $$h | cut -d' ' -f1):6379"
+        done
+        valkey-cli --cluster create $$ips --cluster-replicas 0 --cluster-yes
+        for i in $$(seq 1 60); do
+          ok=1
+          for h in valkey-1 valkey-2 valkey-3; do
+            valkey-cli -h $$h cluster info | grep -q '^cluster_state:ok' || ok=0
+          done
+          [ "$$ok" = 1 ] && { echo "cluster_state:ok"; exit 0; }
+          sleep 1
+        done
+        echo "cluster não ficou ok em 60 s" >&2
+        exit 1
+    deploy:
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: 128m
+
+  # Binário de teste de internal/limits (go test -c, linux/amd64) num container
+  # distroless/static: a própria imagem do wwz-load, com o entrypoint trocado.
+  limits-test:
+    <<: *hardening
+    profiles: [cluster]
+    image: ${WWZ_HEAVY_LOAD_IMAGE:?defina WWZ_HEAVY_LOAD_IMAGE}
+    container_name: wwz-heavy-limits-test
+    tmpfs: [/run, /tmp]
+    entrypoint: ["/heavy/bin/limits.test"]
+    command: ["-test.run", "Valkey", "-test.v", "-test.count=1", "-test.timeout=8m"]
+    environment:
+      WWZ_TEST_VALKEY: cluster
+      WWZ_TEST_VALKEY_ADDR: valkey-1:6379,valkey-2:6379,valkey-3:6379
+    volumes:
+      - ./bin:/heavy/bin:ro
+    deploy:
+      resources:
+        limits:
+          cpus: "${HEAVY_TEST_CPUS:-4}"
+          memory: ${HEAVY_TEST_MEMORY:-2g}
+
+  # --- rodadas throughput e streams: 1 wwz (store memory) + wwz-load ----------
+  wwz:
+    <<: *hardening
+    profiles: [throughput, streams]
+    image: ${WWZ_HEAVY_IMAGE:?defina WWZ_HEAVY_IMAGE}
+    container_name: wwz-heavy-wwz
+    tmpfs: [/run, /tmp]
+    environment:
+      WWZ_PORT: "8000"
+      WWZ_ADMIN_PORT: "9000"
+      WWZ_STORE: memory
+      WWZ_LOG_LEVEL: ${HEAVY_WWZ_LOG_LEVEL:-warn}
+      WWZ_CONFIG: /etc/wwz/wwz.yaml
+      # Spec 014 (tabela de decisões Go): GOGC=200. Com o padrão (100) o
+      # wwz coleta a cada ~2,5 s por ~150 ms e a marcação atrasa os streams:
+      # ITL p99 23,0 contra 21,8-21,9 ms com 200 (9 000 streams; task 378; padrão atual 8 000, task 399).
+      GOGC: ${HEAVY_WWZ_GOGC:-200}
+    volumes:
+      - ./rounds/${HEAVY_ROUND:-throughput}.yaml:/etc/wwz/wwz.yaml:ro
+    sysctls:
+      net.core.somaxconn: 65535
+    deploy:
+      resources:
+        limits:
+          cpus: "${HEAVY_WWZ_CPUS:-8}"
+          memory: ${HEAVY_WWZ_MEMORY:-16g}
+    stop_grace_period: 20s
+    healthcheck:
+      test: ["CMD", "/usr/local/bin/healthcheck", "http://127.0.0.1:9000/health/ready"]
+      interval: 2s
+      timeout: 2s
+      start_period: 5s
+      retries: 15
+
+  # Flags da rodada vêm do run.sh (docker compose run --rm load run ...).
+  load:
+    <<: *hardening
+    profiles: [throughput, streams]
+    image: ${WWZ_HEAVY_LOAD_IMAGE:?defina WWZ_HEAVY_LOAD_IMAGE}
+    container_name: wwz-heavy-load
+    tmpfs: [/run, /tmp]
+    entrypoint: ["/usr/local/bin/wwz-load"]
+    command: ["help"]
+    environment:
+      WWZ_LOAD_KEY: wwz-key-01
+    sysctls:
+      net.ipv4.ip_local_port_range: "1025 65535"
+    depends_on:
+      wwz:
+        condition: service_healthy
+    deploy:
+      resources:
+        limits:
+          cpus: "${HEAVY_LOAD_CPUS:-8}"
+          memory: ${HEAVY_LOAD_MEMORY:-16g}
+
+networks:
+  heavy:
+    name: wwz-heavy-net
+    internal: true

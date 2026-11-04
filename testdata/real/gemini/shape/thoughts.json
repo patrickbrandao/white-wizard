@@ -1,0 +1,27 @@
+{
+  "provider": "gemini",
+  "name": "thoughts",
+  "recorded_at": "2026-10-31",
+  "note": "thinkingLevel HIGH com includeThoughts",
+  "request": {
+    "method": "POST",
+    "path": "/v1beta/models/gemini-3.5-flash-lite:generateContent",
+    "headers": {
+      "x-goog-api-key": "<key>"
+    },
+    "body": "{\"contents\":[{\"role\":\"user\",\"parts\":[{\"text\":\"Um trem sai às 9h a 60 km/h e outro às 10h a 90 km/h no mesmo sentido. Quando o segundo alcança o primeiro? Responda só o horário.\"}]}],\"generationConfig\":{\"maxOutputTokens\":600,\"thinkingConfig\":{\"includeThoughts\":true,\"thinkingLevel\":\"HIGH\"}}}"
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "content-type": "application/json; charset=UTF-8",
+      "server": "scaffolding on HTTPServer2",
+      "server-timing": "gfet4t7; dur=<ms>",
+      "x-content-type-options": "nosniff",
+      "x-frame-options": "SAMEORIGIN",
+      "x-gemini-service-tier": "standard",
+      "x-xss-protection": "0"
+    },
+    "body": "{\n  \"candidates\": [\n    {\n      \"content\": {\n        \"parts\": [\n          {\n            \"text\": \"**My Thought Process on the Train Catch-Up Problem**\\n\\nAlright, let's break this down. The user needs the precise time a second train overtakes a first. My primary goal is to provide *only the time* of the catch-up, nothing more. I need to be exact.\\n\\nFirst, I analyze the setup. Train 1 leaves at 9:00 AM at 60 km/h. Train 2 leaves an hour later, at 10:00 AM, moving at 90 km/h. They're going in the same direction.\\n\\nNow, I calculate. Train 1 has a head start. In that first hour, it covers 60 km. The crucial step is the relative speed. Train 2 is closing the distance at 30 km/h (90 km/h - 60 km/h).\\n\\nI need to figure how long it takes Train 2 to eliminate that 60 km gap. Time = Distance / Relative Speed, so 60 km / 30 km/h = 2 hours.\\n\\nSince Train 2 starts at 10:00 AM, add two hours and we get 12:00 PM. That's the catch-up time.\\n\\nTo ensure I'm on the right track, I do a quick sanity check. Train 1 travels for three hours total (9:00 AM to 12:00 PM) at 60 km/h, covering 180 km. Train 2 travels for two hours at 90 km/h, also covering 180 km. It's consistent.\\n\\nFinally, I need to remember the strict output constraint - just the time. So the answer is 12h.\\n\\n\\n\",\n            \"thought\": true\n          },\n          {\n            \"text\": \"12h\",\n            \"thoughtSignature\": \"<signature>\"\n          }\n        ],\n        \"role\": \"model\"\n      },\n      \"finishReason\": \"STOP\",\n      \"index\": 0\n    }\n  ],\n  \"usageMetadata\": {\n    \"promptTokenCount\": 48,\n    \"candidatesTokenCount\": 3,\n    \"totalTokenCount\": 545,\n    \"promptTokensDetails\": [\n      {\n        \"modality\": \"TEXT\",\n        \"tokenCount\": 48\n      }\n    ],\n    \"thoughtsTokenCount\": 494,\n    \"serviceTier\": \"standard\"\n  },\n  \"modelVersion\": \"gemini-3.5-flash-lite\",\n  \"responseId\": \"<response_id>\"\n}\n"
+  }
+}

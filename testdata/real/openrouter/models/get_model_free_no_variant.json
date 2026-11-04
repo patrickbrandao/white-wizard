@@ -1,0 +1,17 @@
+{
+  "provider": "openrouter",
+  "name": "get_model_free_no_variant",
+  "recorded_at": "2026-10-31",
+  "request": {
+    "method": "GET",
+    "path": "/api/v1/model/openai/gpt-4o-mini:free",
+    "headers": {
+      "authorization": "Bearer <key>"
+    }
+  },
+  "response": {
+    "status": 404,
+    "content_type": "application/json",
+    "body": "{\"error\":{\"message\":\"Model not found: openai/gpt-4o-mini:free\",\"code\":404}}"
+  }
+}

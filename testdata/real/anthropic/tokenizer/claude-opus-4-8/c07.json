@@ -1,0 +1,20 @@
+{
+  "provider": "anthropic",
+  "name": "c07",
+  "recorded_at": "2026-10-31",
+  "note": "claude-opus-4-8, task 301",
+  "request": {
+    "method": "POST",
+    "path": "/v1/messages/count_tokens",
+    "headers": {
+      "x-api-key": "<key>",
+      "anthropic-version": "2023-06-01"
+    },
+    "body": "{\"model\": \"claude-opus-4-8\", \"messages\": [{\"role\": \"user\", \"content\": \"## Passos\\n\\n1. Instale o Go 1.27.\\n2. Rode `go mod download`.\\n3. Suba as dependências: `docker compose up -d`.\\n4. Execute `go run ./cmd/wwz serve --config wwz.yaml`.\\n\\n> Dica: use `make verify-quick` antes de cada commit!\"}]}"
+  },
+  "response": {
+    "status": 200,
+    "content_type": "application/json",
+    "body": "{\"input_tokens\":112}"
+  }
+}

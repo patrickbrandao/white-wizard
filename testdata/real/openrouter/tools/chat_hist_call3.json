@@ -1,0 +1,20 @@
+{
+  "provider": "openrouter",
+  "name": "chat_hist_call3",
+  "recorded_at": "2026-10-31",
+  "note": "openai/gpt-4.1-nano, task 259",
+  "request": {
+    "method": "POST",
+    "path": "/api/v1/chat/completions",
+    "headers": {
+      "authorization": "Bearer <key>",
+      "content-type": "application/json"
+    },
+    "body": "{\"model\": \"openai/gpt-4.1-nano\", \"messages\": [{\"role\": \"user\", \"content\": \"x\"}, {\"role\": \"assistant\", \"content\": null, \"tool_calls\": [{\"id\": \"call_abc\", \"type\": \"function\", \"function\": {\"name\": \"f\", \"arguments\": \"{\\\"a\\\":\\\"b\\\"}\"}}, {\"id\": \"call_def\", \"type\": \"function\", \"function\": {\"name\": \"f\", \"arguments\": \"{\\\"a\\\":\\\"c\\\"}\"}}, {\"id\": \"call_ghi\", \"type\": \"function\", \"function\": {\"name\": \"f\", \"arguments\": \"{\\\"a\\\":\\\"d\\\"}\"}}]}, {\"role\": \"tool\", \"tool_call_id\": \"call_abc\", \"content\": \"sunny\"}, {\"role\": \"tool\", \"tool_call_id\": \"call_def\", \"content\": \"rain\"}, {\"role\": \"tool\", \"tool_call_id\": \"call_ghi\", \"content\": \"snow\"}], \"tools\": [{\"type\": \"function\", \"function\": {\"name\": \"f\", \"parameters\": {\"type\": \"object\", \"properties\": {\"a\": {\"type\": \"string\"}}, \"required\": [\"a\"]}}}], \"max_tokens\": 16}"
+  },
+  "response": {
+    "status": 200,
+    "content_type": "application/json",
+    "body": "{\"id\":\"<generation_id>\",\"object\":\"chat.completion\",\"created\":1793459016,\"model\":\"openai/gpt-4.1-nano\",\"provider\":\"Azure\",\"system_fingerprint\":null,\"service_tier\":\"default\",\"choices\":[{\"index\":0,\"logprobs\":null,\"finish_reason\":\"length\",\"native_finish_reason\":\"max_output_tokens\",\"message\":{\"role\":\"assistant\",\"content\":\"It looks like you've entered a few letters and different weather conditions: sunny,\",\"refusal\":null,\"reasoning\":null}}],\"usage\":{\"prompt_tokens\":89,\"completion_tokens\":16,\"total_tokens\":105,\"cost\":0.0000153,\"is_byok\":false,\"prompt_tokens_details\":{\"cached_tokens\":0,\"cache_write_tokens\":0,\"audio_tokens\":0,\"video_tokens\":0},\"cost_details\":{\"upstream_inference_cost\":0.0000153,\"upstream_inference_prompt_cost\":0.0000089,\"upstream_inference_completions_cost\":0.0000064},\"completion_tokens_details\":{\"reasoning_tokens\":0,\"image_tokens\":0,\"audio_tokens\":0}}}"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "provider": "opencode",
+  "name": "zen_models_delete",
+  "recorded_at": "2026-10-31",
+  "note": "",
+  "request": {
+    "method": "DELETE",
+    "path": "/zen/v1/models",
+    "headers": {
+      "authorization": "Bearer <key>"
+    },
+    "body": null
+  },
+  "response": {
+    "status": 404,
+    "headers": {},
+    "body": ""
+  }
+}

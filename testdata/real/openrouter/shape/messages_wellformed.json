@@ -1,0 +1,23 @@
+{
+  "provider": "openrouter",
+  "name": "messages_wellformed",
+  "recorded_at": "2026-10-31",
+  "note": "401 de chave bem formada inexistente em Messages",
+  "request": {
+    "method": "POST",
+    "path": "/api/v1/messages",
+    "headers": {
+      "authorization": "Bearer sk-or-v1-0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    "body": "{\"model\": \"wwz-nao-existe\", \"max_tokens\": 5, \"messages\": [{\"role\": \"user\", \"content\": \"oi\"}]}"
+  },
+  "response": {
+    "status": 401,
+    "headers": {
+      "access-control-allow-origin": "*",
+      "access-control-expose-headers": "X-Generation-Id,X-Provider-Name,request-id,cf-ray",
+      "content-type": "application/json"
+    },
+    "body": "{\"type\":\"error\",\"error\":{\"type\":\"authentication_error\",\"message\":\"User not found.\",\"error_type\":\"authentication\"},\"request_id\":null}"
+  }
+}

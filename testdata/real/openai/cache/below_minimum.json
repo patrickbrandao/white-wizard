@@ -1,0 +1,123 @@
+{
+  "provider": "openai",
+  "name": "below_minimum",
+  "recorded_at": "2026-10-31",
+  "path": "/v1/chat/completions",
+  "note": "gpt-4o-mini: prompt under 1024 tokens twice",
+  "steps": [
+    {
+      "request": {
+        "body": {
+          "model": "gpt-4o-mini",
+          "max_tokens": 1,
+          "messages": [
+            {
+              "role": "system",
+              "content": "Reference document n9350c50f-os. Papa castle harbor india xray garden desert orchard castle echo garden alpha. Desert quebec bridge oscar mike desert harbor bridge desert zulu orchard juliet. Oscar orchard juliet island yankee alpha city echo kilo castle charlie tango. Bravo romeo desert garden yankee mountain zulu tower forest india xray golf. Charlie india valley november quebec market mountain orchard tango river canyon yankee. Tower whiskey harbor castle river castle oscar victor market bravo romeo garden. City library kilo library uniform harbor tower tower golf village november orchard. Tower romeo sierra hotel echo desert orchard desert foxtrot whiskey echo river. Juliet bravo sierra mountain river hotel charlie garden meadow charlie yankee castle. Victor bridge romeo canyon papa charlie tango alpha echo golf garden harbor. Charlie mike river sierra meadow quebec juliet library charlie victor uniform xray. India yankee yankee ocean island yankee village garden market bridge golf meadow. Canyon romeo mountain orchard papa tango mountain quebec island tango bridge victor. Alpha river castle uniform bravo yankee meadow castle orchard india delta orchard. Orchard victor ocean whiskey market whiskey garden romeo valley bravo castle delta. Market bravo xray quebec orchard ocean tango castle garden uniform lima xray. Lima uniform xray garden quebec tango yankee golf bravo tower market india. Tango canyon oscar village romeo papa uniform lima market mountain village library. Golf golf garden uniform victor market oscar forest kilo foxtrot victor village. November tower forest romeo oscar hotel charlie island mike uniform tower lima. Romeo victor village foxtrot meadow whiskey castle india river sierra island romeo. Ocean whiskey orchard river sierra river tower river charlie river juliet mike. Alpha desert meadow canyon mountain bridge oscar charlie ocean city island sierra. Harbor victor oscar echo castle sierra hotel papa charlie charlie library canyon. Mike mountain tower delta alpha desert hotel kilo canyon tango papa city. Bravo island harbor river delta meadow hotel victor india quebec harbor desert. Delta whiskey oscar mike hotel harbor hotel kilo papa romeo india alpha. Valley orchard tower zulu delta romeo papa romeo meadow island island mountain. Delta desert uniform alpha delta india charlie hotel delta echo desert charlie. Foxtrot canyon canyon valley uniform kilo uniform echo whiskey yankee village yankee. Castle tango xray quebec mike victor mountain hotel india bridge alpha yankee. Foxtrot tower lima charlie xray ocean garden village harbor yankee orchard charlie. Meadow mountain delta xray orchard valley library uniform river library river ocean. Bravo papa november harbor romeo library castle echo mountain oscar mountain india. Bravo uniform xray bridge quebec hotel ocean library hotel city island yankee. City golf uniform tower harbor golf castle alpha desert juliet papa yankee. Charlie island foxtrot tower golf city yankee lima bravo victor hotel bravo. Hotel market desert library sierra castle tango foxtrot charlie tower canyon island. Papa golf bridge golf bridge delta bridge uniform tower lima echo papa. Lima village papa ocean meadow library zulu quebec xray garden zulu whiskey. Bridge river foxtrot yankee canyon papa river kilo river library tower castle. Market island market desert juliet village zulu juliet kilo golf valley desert. Library island forest castle lima india romeo mike juliet castle canyon uniform. Oscar library harbor sierra city river garden castle castle romeo november tango. Bravo romeo desert yankee mike lima tower xray papa uniform desert juliet. River library desert library garden november ocean castle village bridge bravo desert. Echo zulu charlie ocean oscar papa village market echo november quebec papa. Mike quebec india lima meadow market charlie quebec kilo charlie uniform lima. Mountain foxtrot foxtrot hotel foxtrot quebec sierra charlie whiskey forest castle market. Victor alpha bravo victor victor mountain yankee valley echo november village castle."
+            },
+            {
+              "role": "user",
+              "content": "Say ok."
+            }
+          ]
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": {
+          "id": "<id>",
+          "object": "chat.completion",
+          "created": 0,
+          "model": "gpt-4o-mini-2024-07-18",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "Ok",
+                "refusal": null,
+                "annotations": []
+              },
+              "logprobs": null,
+              "finish_reason": "length"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 812,
+            "completion_tokens": 1,
+            "total_tokens": 813,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "audio_tokens": 0
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 0,
+              "audio_tokens": 0,
+              "accepted_prediction_tokens": 0,
+              "rejected_prediction_tokens": 0
+            }
+          },
+          "service_tier": "default",
+          "system_fingerprint": "<fp>"
+        }
+      }
+    },
+    {
+      "request": {
+        "body": {
+          "model": "gpt-4o-mini",
+          "max_tokens": 1,
+          "messages": [
+            {
+              "role": "system",
+              "content": "Reference document n9350c50f-os. Papa castle harbor india xray garden desert orchard castle echo garden alpha. Desert quebec bridge oscar mike desert harbor bridge desert zulu orchard juliet. Oscar orchard juliet island yankee alpha city echo kilo castle charlie tango. Bravo romeo desert garden yankee mountain zulu tower forest india xray golf. Charlie india valley november quebec market mountain orchard tango river canyon yankee. Tower whiskey harbor castle river castle oscar victor market bravo romeo garden. City library kilo library uniform harbor tower tower golf village november orchard. Tower romeo sierra hotel echo desert orchard desert foxtrot whiskey echo river. Juliet bravo sierra mountain river hotel charlie garden meadow charlie yankee castle. Victor bridge romeo canyon papa charlie tango alpha echo golf garden harbor. Charlie mike river sierra meadow quebec juliet library charlie victor uniform xray. India yankee yankee ocean island yankee village garden market bridge golf meadow. Canyon romeo mountain orchard papa tango mountain quebec island tango bridge victor. Alpha river castle uniform bravo yankee meadow castle orchard india delta orchard. Orchard victor ocean whiskey market whiskey garden romeo valley bravo castle delta. Market bravo xray quebec orchard ocean tango castle garden uniform lima xray. Lima uniform xray garden quebec tango yankee golf bravo tower market india. Tango canyon oscar village romeo papa uniform lima market mountain village library. Golf golf garden uniform victor market oscar forest kilo foxtrot victor village. November tower forest romeo oscar hotel charlie island mike uniform tower lima. Romeo victor village foxtrot meadow whiskey castle india river sierra island romeo. Ocean whiskey orchard river sierra river tower river charlie river juliet mike. Alpha desert meadow canyon mountain bridge oscar charlie ocean city island sierra. Harbor victor oscar echo castle sierra hotel papa charlie charlie library canyon. Mike mountain tower delta alpha desert hotel kilo canyon tango papa city. Bravo island harbor river delta meadow hotel victor india quebec harbor desert. Delta whiskey oscar mike hotel harbor hotel kilo papa romeo india alpha. Valley orchard tower zulu delta romeo papa romeo meadow island island mountain. Delta desert uniform alpha delta india charlie hotel delta echo desert charlie. Foxtrot canyon canyon valley uniform kilo uniform echo whiskey yankee village yankee. Castle tango xray quebec mike victor mountain hotel india bridge alpha yankee. Foxtrot tower lima charlie xray ocean garden village harbor yankee orchard charlie. Meadow mountain delta xray orchard valley library uniform river library river ocean. Bravo papa november harbor romeo library castle echo mountain oscar mountain india. Bravo uniform xray bridge quebec hotel ocean library hotel city island yankee. City golf uniform tower harbor golf castle alpha desert juliet papa yankee. Charlie island foxtrot tower golf city yankee lima bravo victor hotel bravo. Hotel market desert library sierra castle tango foxtrot charlie tower canyon island. Papa golf bridge golf bridge delta bridge uniform tower lima echo papa. Lima village papa ocean meadow library zulu quebec xray garden zulu whiskey. Bridge river foxtrot yankee canyon papa river kilo river library tower castle. Market island market desert juliet village zulu juliet kilo golf valley desert. Library island forest castle lima india romeo mike juliet castle canyon uniform. Oscar library harbor sierra city river garden castle castle romeo november tango. Bravo romeo desert yankee mike lima tower xray papa uniform desert juliet. River library desert library garden november ocean castle village bridge bravo desert. Echo zulu charlie ocean oscar papa village market echo november quebec papa. Mike quebec india lima meadow market charlie quebec kilo charlie uniform lima. Mountain foxtrot foxtrot hotel foxtrot quebec sierra charlie whiskey forest castle market. Victor alpha bravo victor victor mountain yankee valley echo november village castle."
+            },
+            {
+              "role": "user",
+              "content": "Say ok."
+            }
+          ]
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": {
+          "id": "<id>",
+          "object": "chat.completion",
+          "created": 0,
+          "model": "gpt-4o-mini-2024-07-18",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "Ok",
+                "refusal": null,
+                "annotations": []
+              },
+              "logprobs": null,
+              "finish_reason": "length"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 812,
+            "completion_tokens": 1,
+            "total_tokens": 813,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "audio_tokens": 0
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 0,
+              "audio_tokens": 0,
+              "accepted_prediction_tokens": 0,
+              "rejected_prediction_tokens": 0
+            }
+          },
+          "service_tier": "default",
+          "system_fingerprint": "<fp>"
+        }
+      }
+    }
+  ]
+}

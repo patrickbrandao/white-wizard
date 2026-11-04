@@ -1,0 +1,20 @@
+{
+  "provider": "anthropic",
+  "name": "c02",
+  "recorded_at": "2026-10-31",
+  "note": "claude-sonnet-4-6, task 301",
+  "request": {
+    "method": "POST",
+    "path": "/v1/messages/count_tokens",
+    "headers": {
+      "x-api-key": "<key>",
+      "anthropic-version": "2023-06-01"
+    },
+    "body": "{\"model\": \"claude-sonnet-4-6\", \"messages\": [{\"role\": \"user\", \"content\": \"func countTokens(text string) int {\\n\\tn := 0\\n\\tfor _, r := range text {\\n\\t\\tif unicode.IsSpace(r) {\\n\\t\\t\\tn++\\n\\t\\t}\\n\\t}\\n\\treturn n + 1\\n}\\n\\n// main prints the count.\\nfunc main() {\\n\\tfmt.Println(countTokens(\\\"hello world\\\"))\\n}\"}]}"
+  },
+  "response": {
+    "status": 200,
+    "content_type": "application/json",
+    "body": "{\"input_tokens\":90}"
+  }
+}

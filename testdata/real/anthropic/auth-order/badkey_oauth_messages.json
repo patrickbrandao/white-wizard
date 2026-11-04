@@ -1,0 +1,22 @@
+{
+  "provider": "anthropic",
+  "name": "badkey_oauth_messages",
+  "note": "Bearer com um token OAuth falso (literal, não é segredo), com o beta oauth-2025-04-20: o 401 de token inválido, com request-id, x-should-retry false e cache-control no-store (sem o beta, o mesmo); curl em 2026-11-03 (real-probes h1/b1, task 443)",
+  "recorded_at": "2026-11-03",
+  "request": {
+    "method": "POST",
+    "path": "/v1/messages",
+    "headers": {
+      "anthropic-beta": "oauth-2025-04-20",
+      "anthropic-version": "2023-06-01",
+      "authorization": "Bearer sk-ant-oat01-invalid",
+      "content-type": "application/json"
+    },
+    "body": "{\"model\": \"claude-haiku-4-5\", \"max_tokens\": 8, \"messages\": [{\"role\": \"user\", \"content\": \"oi\"}]}"
+  },
+  "response": {
+    "status": 401,
+    "content_type": "application/json",
+    "body": "{\"type\":\"error\",\"error\":{\"type\":\"authentication_error\",\"message\":\"OAuth access token is invalid.\"},\"request_id\":\"<request_id>\"}"
+  }
+}

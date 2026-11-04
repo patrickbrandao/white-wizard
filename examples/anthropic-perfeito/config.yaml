@@ -1,0 +1,46 @@
+# anthropic-perfeito: driver Anthropic sem nenhum erro e com latência realista (spec 019).
+# O roteador sob teste deve ver 100 % de respostas 200 em /v1/messages, com a
+# sequência de eventos SSE da Messages API real.
+server:
+  listen: ":8000"
+  auth: keys
+  seed: 20260101 # reproduz as latências sorteadas
+
+admin:
+  listen: ":9000"
+
+keys:
+  - key: wwz-key-01
+    label: roteador-sob-teste
+
+drivers:
+  - name: anthropic # na raiz: /v1/messages, /v1/models, ...
+
+models:
+  - id: claude-sonnet-4-5
+    version: claude-sonnet-4-5-20250929
+    display_name: Claude Sonnet 4.5
+    protocols: [anthropic]
+    context_window: 200000
+    max_output: 64000
+    capabilities: { tools: true, vision: true }
+    latency: realistic
+    errors: none
+    generation: curta
+
+profiles:
+  latency:
+    # Fila curta, TTFT normal em torno de 400 ms e ITL de 15 ms por token.
+    realistic:
+      queue: { dist: lognormal, median: 20ms, p99: 200ms }
+      ttft: { dist: normal, mean: 400ms, stddev: 90ms }
+      itl: { dist: normal, mean: 15ms, stddev: 4ms }
+  errors:
+    none: { rate: 0 } # nenhum erro, nem de rede nem de stream
+  generation:
+    curta:
+      mode: random
+      output_tokens: { dist: uniform, min: 20, max: 60 }
+
+logging:
+  level: warn

@@ -1,0 +1,18 @@
+{
+  "provider": "openai",
+  "name": "type_obj_service_tier",
+  "recorded_at": "2026-10-31",
+  "request": {
+    "method": "POST",
+    "path": "/v1/chat/completions",
+    "headers": {
+      "authorization": "Bearer <key>"
+    },
+    "body": "{\"model\": \"gpt-4o-mini\", \"messages\": [{\"role\": \"user\", \"content\": \"hi\"}], \"service_tier\": {\"x\": [1]}}"
+  },
+  "response": {
+    "status": 400,
+    "content_type": "application/json",
+    "body": "{\n  \"error\": {\n    \"message\": \"Invalid type for 'service_tier': expected one of 'auto', 'default', 'fast', 'flex', or 'priority', but got an object instead.\",\n    \"type\": \"invalid_request_error\",\n    \"param\": \"service_tier\",\n    \"code\": \"invalid_type\"\n  }\n}"
+  }
+}

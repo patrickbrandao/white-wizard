@@ -1,0 +1,19 @@
+{
+  "provider": "openai",
+  "name": "order_messages_before_missing_model",
+  "recorded_at": "2026-10-31",
+  "request": {
+    "method": "POST",
+    "path": "/v1/responses",
+    "headers": {
+      "authorization": "Bearer <key>",
+      "content-type": "application/json"
+    },
+    "body": "{\"messages\": [{\"role\": \"user\", \"content\": \"x\"}]}"
+  },
+  "response": {
+    "status": 400,
+    "content_type": "application/json",
+    "body": "{\n  \"error\": {\n    \"message\": \"Unsupported parameter: 'messages'. In the Responses API, this parameter has moved to 'input'. Try again with the new parameter. See the API documentation for more information: https://platform.openai.com/docs/api-reference/responses/create.\",\n    \"type\": \"invalid_request_error\",\n    \"param\": null,\n    \"code\": \"unsupported_parameter\"\n  }\n}"
+  }
+}

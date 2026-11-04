@@ -1,0 +1,6 @@
+HTTP 200
+Content-Length: 494
+Content-Type: application/json
+Date: Sat, 31 Oct 2026 12:32:05 GMT
+
+{"data":[{"api":{"base_url":"/inference/openai/v1","sdk":"openai"},"capabilities":{"reasoning":{"effort":["low","medium","high"],"supported":false},"structured_output":false,"temperature":true,"tools":{"choice":["auto","none","required"],"supported":true}},"cost":{"text":{"cache_read":0,"cache_write":0,"input":0,"output":0}},"created":1735689600,"id":"glm-4.6","limit":{"context":128000,"input":111616,"output":16384},"name":"glm-4.6","object":"model","owned_by":"opencode"}],"object":"list"}

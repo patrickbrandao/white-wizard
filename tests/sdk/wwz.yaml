@@ -1,0 +1,107 @@
+# Configuração do wwz usada pelos testes de SDK (spec 018, "Testes de SDK").
+# Rodar: go run ./cmd/wwz serve --config tests/sdk/wwz.yaml
+# Bases por driver (WWZ_SDK_BASE_URL = http://127.0.0.1:8000):
+#   openai     -> <base>/openai/v1
+#   anthropic  -> <base>/anthropic
+#   openrouter -> <base>/openrouter/api/v1
+#   opencode   -> <base>/opencode/zen/go/v1 (Go) e <base>/opencode/zen/v1
+#                 (pay-as-you-go: modo public e gratuitos, test_opencode_free)
+#   gemini     -> <base>/gemini (google-genai monta <base>/gemini/v1beta/...)
+#   azure      -> AzureOpenAI(azure_endpoint=<base>/azure) ou <base>/azure/openai/v1
+#   anthropic com client_verification: claude-code -> <base>/anthropic-cc
+#                 (só o Claude Code passa; os SDKs recebem 403
+#                 forged_request_error, spec 020 e test_claude_code_strict)
+server:
+  listen: "127.0.0.1:8000"
+  auth: keys
+  seed: 42
+  # X-Forwarded-For de loopback vale: cada teste de cota diária dos
+  # gratuitos do opencode usa um IP próprio (ADR 0072, item 6).
+  trusted_proxies: ["127.0.0.1/32", "::1/128"]
+admin:
+  listen: "127.0.0.1:9000"
+store:
+  kind: memory
+logging:
+  level: warn
+
+drivers:
+  - {name: openai, prefix: /openai}
+  - {name: anthropic, prefix: /anthropic}
+  - {name: openrouter, prefix: /openrouter}
+  # free_requests_per_day: 2 -> a 3ª chamada a um gratuito no mesmo dia dá
+  # 429 FreeUsageLimitError (test_opencode_free, opencode_free.test.mjs).
+  - {name: opencode, prefix: /opencode, options: {free_requests_per_day: 2}}
+  - {name: gemini, prefix: /gemini}
+  - {name: azure, prefix: /azure}
+  # Modo estrito do cliente (spec 020, ADR 0074): só requisições byte a byte
+  # do Claude Code 2.1.308 passam; a assinatura OAuth é a da chave sdk-oauth.
+  - {name: anthropic, prefix: /anthropic-cc, options: {oauth_key: sdk-oauth, client_verification: claude-code}}
+
+keys:
+  # WWZ_SDK_KEY: sem limites, todos os modelos.
+  - key: sk-wwz-sdk
+    label: sdk
+  # Chave do erro 429 (WWZ_SDK_RL_KEY): só wwz-rl, 1 requisição por minuto.
+  - key: sk-wwz-sdk-rl
+    label: sdk-rl
+    models: [wwz-rl]
+    limits: {rpm: 1}
+  # opencode: cota Go esgotada na 1ª requisição, Extra Usage ligado -> a
+  # seguinte é cobrada do saldo (billing_source balance; ADR 0072, item 12).
+  - key: sk-wwz-oc-extra
+    label: oc-extra
+    account: sdk-oc-extra
+  # Segredo dos tokens OAuth do /anthropic-cc (oauth_key; spec 006 16.2.1).
+  - key: sk-wwz-sdk-oauth-secret
+    label: sdk-oauth
+
+tiers:
+  oc-tiny:
+    limits: {credits_usd: 1000, quota_usd: {monthly_usd: 0.000001}}
+
+accounts:
+  - {id: sdk-oc-extra, tier: oc-tiny, extra_usage: true}
+
+profiles:
+  latency:
+    zero: {}
+  generation:
+    text:
+      mode: lorem
+      output_tokens: {dist: fixed, value: 24}
+    tools:
+      mode: lorem
+      output_tokens: {dist: fixed, value: 24}
+      tool_calls: {probability: 100}
+    reason:
+      mode: lorem
+      output_tokens: {dist: fixed, value: 24}
+      reasoning_tokens: {min: 16, max: 32, probability: 100}
+
+models:
+  - id: wwz-fast
+    latency: zero
+    generation: text
+    pricing: {input_per_m: 1, output_per_m: 2}
+  - id: wwz-tools
+    latency: zero
+    generation: tools
+    capabilities: {tools: true}
+    pricing: {input_per_m: 1, output_per_m: 2}
+  - id: wwz-reason
+    latency: zero
+    generation: reason
+    capabilities: {reasoning: true}
+    pricing: {input_per_m: 1, output_per_m: 2}
+  - id: wwz-rl
+    latency: zero
+    generation: text
+    pricing: {input_per_m: 1, output_per_m: 2}
+  # Gratuito do opencode (pricing declarado com input_per_m 0, ADR 0072,
+  # item 3): só com User-Agent opencode/... (mandado só ao wwz).
+  - id: wwz-free
+    drivers: [opencode]
+    latency: zero
+    generation: text
+    pricing: {input_per_m: 0, output_per_m: 0}

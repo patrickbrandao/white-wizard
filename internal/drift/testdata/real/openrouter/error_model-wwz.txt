@@ -1,0 +1,7 @@
+HTTP 404
+Content-Length: 146
+Content-Type: application/json
+Date: Sat, 31 Oct 2026 12:32:04 GMT
+X-Request-Id: req_2292d12feb58264c8829d372dbf0c858
+
+{"error":{"code":404,"message":"No endpoints found for wwz-drift-modelo-inexistente.","metadata":{"error_type":"not_found"}},"user_id":"user_wwz"}

@@ -1,0 +1,23 @@
+{
+  "provider": "opencode",
+  "name": "type_max_output_tokens",
+  "recorded_at": "2026-10-31",
+  "request": {
+    "method": "POST",
+    "path": "/inference/go/openai/v1/responses",
+    "headers": {
+      "authorization": "Bearer <key>",
+      "x-opencode-session": "<session>"
+    },
+    "body": "{\"model\": \"deepseek-v4.1-flash\", \"input\": \"hi\", \"max_output_tokens\": \"x\"}"
+  },
+  "response": {
+    "status": 400,
+    "headers": {
+      "content-type": "application/json",
+      "x-opencode-log-id": "<log_id>",
+      "x-zen-model": "deepseek-v4.1-flash"
+    },
+    "body": "{\"error\":{\"code\":\"server_error\",\"message\":\"Upstream request failed: [400] body unmarshal json: cannot unmarshal string into Go struct field AnthropicRequest.max_tokens of type int\"}}"
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "provider": "openrouter",
+  "name": "model_unknown_sub",
+  "recorded_at": "2026-10-31",
+  "note": "",
+  "request": {
+    "method": "GET",
+    "path": "/api/v1/models/nope",
+    "headers": {
+      "authorization": "Bearer <key>"
+    },
+    "body": null
+  },
+  "response": {
+    "status": 404,
+    "headers": {
+      "content-type": "application/json",
+      "access-control-allow-origin": "*",
+      "cache-control": "private, no-store",
+      "access-control-expose-headers": "X-Generation-Id,X-Provider-Name,request-id,cf-ray"
+    },
+    "body": "{\"error\":{\"message\":\"Not Found\",\"code\":404}}"
+  }
+}

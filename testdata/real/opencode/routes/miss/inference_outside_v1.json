@@ -1,0 +1,21 @@
+{
+  "provider": "opencode",
+  "name": "inference_outside_v1",
+  "recorded_at": "2026-10-31",
+  "note": "",
+  "request": {
+    "method": "GET",
+    "path": "/inference/nope",
+    "headers": {
+      "authorization": "Bearer <key>"
+    },
+    "body": null
+  },
+  "response": {
+    "status": 404,
+    "headers": {
+      "x-opencode-log-id": "<log_id>"
+    },
+    "body": ""
+  }
+}

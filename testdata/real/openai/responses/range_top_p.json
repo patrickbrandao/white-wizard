@@ -1,0 +1,19 @@
+{
+  "provider": "openai",
+  "name": "range_top_p",
+  "recorded_at": "2026-10-31",
+  "request": {
+    "method": "POST",
+    "path": "/v1/responses",
+    "headers": {
+      "authorization": "Bearer <key>",
+      "content-type": "application/json"
+    },
+    "body": "{\"model\": \"gpt-4o-mini\", \"input\": \"x\", \"top_p\": 2, \"store\": false}"
+  },
+  "response": {
+    "status": 400,
+    "content_type": "application/json",
+    "body": "{\n  \"error\": {\n    \"message\": \"Invalid 'top_p': decimal above maximum value. Expected a value <= 1.0, but got 2 instead.\",\n    \"type\": \"invalid_request_error\",\n    \"param\": \"top_p\",\n    \"code\": \"decimal_above_max_value\"\n  }\n}"
+  }
+}

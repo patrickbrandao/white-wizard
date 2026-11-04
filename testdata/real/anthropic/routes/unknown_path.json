@@ -1,0 +1,23 @@
+{
+  "name": "unknown_path",
+  "note": "rota desconhecida em /v1: 404 sem request_id",
+  "provider": "anthropic",
+  "recorded_at": "2026-10-31",
+  "request": {
+    "body": null,
+    "headers": {
+      "anthropic-version": "2023-06-01",
+      "x-api-key": "<key>"
+    },
+    "method": "GET",
+    "path": "/v1/nope"
+  },
+  "response": {
+    "body": "{\"type\":\"error\",\"error\":{\"type\":\"not_found_error\",\"message\":\"Not found\"},\"request_id\":null}",
+    "headers": {
+      "content-type": "application/json",
+      "x-should-retry": "false"
+    },
+    "status": 404
+  }
+}

@@ -1,0 +1,55 @@
+# Fila de trabalho e temporários (fora do git)
+/tasks/
+/tmp/
+/.grill/
+
+# Segredos
+.env.local
+*.env.local
+deploy/heavy/.env
+*.pem
+*.key
+
+# Build e testes
+/bin/
+/dist/
+*.test
+*.out
+coverage.*
+
+# Dados locais
+*.db
+*.sqlite
+*.sqlite-wal
+*.sqlite-shm
+
+# Editor e SO
+.DS_Store
+.idea/
+.vscode/
+
+# Dependências de testes
+node_modules/
+
+
+# Worktrees dos sub-agentes
+/.claude/worktrees/
+
+# Binários compilados com go build dentro de cmd/
+/cmd/*/wwz*
+!/cmd/*/*.go
+!/cmd/*/*.yaml
+
+# Python
+__pycache__/
+*.pyc
+
+# Binários soltos na raiz (go build ./cmd/...)
+/wwz
+/wwz-load
+/wwz-panel
+/wwz-tools
+/wwz-drift
+
+# Arquivos de implementação do autor: dados do servidor e notas (ADR 0076)
+/autor/

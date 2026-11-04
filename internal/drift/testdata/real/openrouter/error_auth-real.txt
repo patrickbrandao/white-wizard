@@ -1,0 +1,13 @@
+HTTP 401
+Access-Control-Allow-Origin: *
+Access-Control-Expose-Headers: X-Generation-Id,X-Provider-Name,request-id,cf-ray
+Alt-Svc: h3=":443"; ma=86400
+Cf-Ray: a532ae2cb9890683-CNF
+Content-Type: application/json
+Date: Sat, 31 Oct 2026 12:32:04 GMT
+Permissions-Policy: payment=(self "https://checkout.stripe.com" "https://connect-js.stripe.com" "https://js.stripe.com" "https://*.js.stripe.com" "https://hooks.stripe.com")
+Referrer-Policy: no-referrer, strict-origin-when-cross-origin
+Server: cloudflare
+X-Content-Type-Options: nosniff
+
+{"error":{"message":"Missing Authentication header","code":401}}

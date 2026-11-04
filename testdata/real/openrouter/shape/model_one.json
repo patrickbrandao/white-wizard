@@ -1,0 +1,24 @@
+{
+  "provider": "openrouter",
+  "name": "model_one",
+  "recorded_at": "2026-10-31",
+  "note": "um modelo",
+  "request": {
+    "method": "GET",
+    "path": "/api/v1/model/openai/gpt-4.1-nano",
+    "headers": {
+      "authorization": "Bearer <key>"
+    },
+    "body": ""
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "access-control-allow-origin": "*",
+      "access-control-expose-headers": "X-Generation-Id,X-Provider-Name,request-id,cf-ray",
+      "cache-control": "private, no-store",
+      "content-type": "application/json"
+    },
+    "body": "{\"data\":{\"id\":\"openai/gpt-4.1-nano\",\"canonical_slug\":\"openai/gpt-4.1-nano-2025-04-14\",\"hugging_face_id\":\"\",\"name\":\"OpenAI: GPT-4.1 Nano\",\"created\":1744651369,\"description\":\"For tasks that demand low latency, GPT‑4.1 nano is the fastest and cheapest model in the GPT-4.1 series. It delivers exceptional performance at a small size with its 1 million...\",\"context_length\":1047576,\"architecture\":{\"modality\":\"text+image+file->text\",\"input_modalities\":[\"image\",\"text\",\"file\"],\"output_modalities\":[\"text\"],\"tokenizer\":\"GPT\",\"instruct_type\":null},\"pricing\":{\"prompt\":\"0.0000001\",\"completion\":\"0.0000004\",\"web_search\":\"0.01\",\"input_cache_read\":\"0.00000003\"},\"top_provider\":{\"context_length\":1047576,\"max_completion_tokens\":942818,\"is_moderated\":false},\"per_request_limits\":null,\"supported_parameters\":[\"max_completion_tokens\",\"response_format\",\"seed\",\"structured_outputs\",\"temperature\",\"tool_choice\",\"tools\",\"top_p\"],\"default_parameters\":{},\"supported_voices\":null,\"knowledge_cutoff\":\"2024-06-30\",\"expiration_date\":null,\"links\":{\"details\":\"/api/v1/models/openai/gpt-4.1-nano-2025-04-14/endpoints\"},\"endpoints\":[\"/api/v1/chat/completions\",\"/api/v1/completions\",\"/api/v1/messages\",\"/api/v1/responses\"],\"benchmarks\":{\"design_arena\":[{\"arena\":\"models\",\"category\":\"3d\",\"elo\":922,\"win_rate\":46,\"rank\":121},{\"arena\":\"models\",\"category\":\"codecategories\",\"elo\":961,\"win_rate\":47.3,\"rank\":134},{\"arena\":\"models\",\"category\":\"dataviz\",\"elo\":891,\"win_rate\":41.1,\"rank\":130},{\"arena\":\"models\",\"category\":\"gamedev\",\"elo\":969,\"win_rate\":49.6,\"rank\":128},{\"arena\":\"models\",\"category\":\"uicomponent\",\"elo\":911,\"win_rate\":43.9,\"rank\":130},{\"arena\":\"models\",\"category\":\"website\",\"elo\":971,\"win_rate\":48.1,\"rank\":136}],\"artificial_analysis\":{\"intelligence_index\":null,\"coding_index\":11.1,\"agentic_index\":null}}}}"
+  }
+}

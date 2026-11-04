@@ -1,0 +1,257 @@
+delete member aisdk
+delete member allowance
+delete member annotations
+delete member billing_source
+delete member cache
+delete member cache_read
+delete member cache_write_1h
+delete member cache_write_5m
+delete member candidatesTokensDetails
+delete member canonical_id
+delete member choice
+delete member compatibility
+delete member content_index
+delete member created_at
+delete member description
+delete member details
+delete member effort
+delete member effort_updates
+delete member family
+delete member instructions
+delete member item
+delete member knowledge
+delete member last_updated
+delete member list_cost
+delete member logprobs
+delete member max_output_tokens
+delete member modalities
+delete member open_weights
+delete member opencodeai
+delete member output_index
+delete member parallel_tool_calls
+delete member parameters
+delete member part
+delete member properties
+delete member read
+delete member reasoning_field
+delete member release_date
+delete member sdk
+delete member structured_output
+delete member summary
+delete member summary_index
+delete member system_updates
+delete member temperature
+delete member tokenCount
+delete member tokens
+delete member tool_choice
+delete member top_k
+delete member top_p
+delete member updates
+delete member write
+replace value "/inference/go/openai/v1"
+replace value "2023-11"
+replace value "@ai-sdk/openai-compatible"
+replace value "@opencode/ai/providers/openai-compatible"
+replace value "Credit limit exceeded."
+replace value "Invalid JSON: unexpected end of JSON input"
+replace value "Invalid request body"
+replace value "Method Not Allowed"
+replace value "Model A model served by White Wizard (wwz)"
+replace value "Model A"
+replace value "Model B model served by White Wizard (wwz)"
+replace value "Model B"
+replace value "Model C model served by White Wizard (wwz)"
+replace value "Model C"
+replace value "Not Found"
+replace value "Not found"
+replace value "OpenCode is not available in your region"
+replace value "RESOURCE_EXHAUSTED"
+replace value "Request body too large"
+replace value "UNKNOWN"
+replace value "Upstream request failed: Gateway timeout"
+replace value "Upstream request failed: Internal error"
+replace value "Upstream request failed: Invalid credential"
+replace value "Upstream request failed: Overloaded"
+replace value "[] is too short - 'messages'"
+replace value "auto"
+replace value "bad input"
+replace value "bad"
+replace value "balance"
+replace value "blocked by wwz"
+replace value "boom"
+replace value "chat"
+replace value "claude-test"
+replace value "f"
+replace value "go"
+replace value "high"
+replace value "input: at least one message is required"
+replace value "invalid_request_error"
+replace value "lo"
+replace value "low"
+replace value "medium"
+replace value "messages: at least one message is required"
+replace value "model: Field required"
+replace value "no"
+replace value "none"
+replace value "not_found_error"
+replace value "object"
+replace value "ok"
+replace value "partial"
+replace value "reasoning"
+replace value "reasoning_content"
+replace value "request_too_large"
+replace value "required"
+replace value "string"
+replace value "summary_text"
+replace value "teapot"
+replace value "tool"
+replace value "wwz/author/model-c"
+replace value "wwz/model-a"
+replace value "wwz/model-b"
+replace value "x"
+replace value "you must provide a model parameter"
+replace value 0.0015
+replace value 0.0025
+replace value 0.1
+replace value 1.25
+replace value false
+drop header access-control-allow-headers
+drop header access-control-allow-methods
+drop header access-control-allow-origin
+drop header cache-control
+drop header connection
+drop header x-accel-buffering
+zero request field N
+zero request field ResponseFormat
+zero request field ResponseSchema
+zero request field Temperature
+zero request field Seed
+zero request field Headers
+zero request field ClientIP
+zero request field Received
+zero request field RequestID
+zero policy field ExcludeCacheRead
+drop route 2
+drop route 3
+drop route 7
+drop route 11
+drop route 12
+drop route 16
+drop route 20
+drop route 21
+drop route 25
+drop route 29
+drop route 30
+drop route 34
+no model namer
+add header x-request-id 0
+add header x-request-id wwz-other
+add header request-id 0
+add header request-id wwz-other
+add header x-gemini-service-tier 0
+add header x-gemini-service-tier wwz-other
+add header x-wwz-unknown 0
+add header x-wwz-unknown wwz-other
+header access-control-allow-headers becomes "wwz-other"
+header access-control-allow-headers becomes "0"
+header access-control-allow-headers becomes "text/html"
+header access-control-allow-methods becomes "wwz-other"
+header access-control-allow-methods becomes "0"
+header access-control-allow-methods becomes "text/html"
+header access-control-allow-origin becomes "wwz-other"
+header access-control-allow-origin becomes "0"
+header access-control-allow-origin becomes "text/html"
+header cache-control becomes "wwz-other"
+header cache-control becomes "0"
+header cache-control becomes "text/html"
+header connection becomes "wwz-other"
+header connection becomes "0"
+header connection becomes "text/html"
+header x-accel-buffering becomes "wwz-other"
+header x-accel-buffering becomes "0"
+header x-accel-buffering becomes "text/html"
+header x-opencode-log-id becomes "wwz-other"
+header x-opencode-log-id becomes "0"
+header x-opencode-log-id becomes "text/html"
+header x-zen-model becomes "wwz-other"
+header x-zen-model becomes "0"
+header x-zen-model becomes "text/html"
+two data lines
+status 503 becomes 200
+status 503 becomes 302
+perturb request field N
+perturb request field ResponseFormat
+perturb request field ResponseSchema
+perturb request field Temperature
+perturb request field Seed
+perturb request field Headers
+perturb request field ClientIP
+perturb request field Received
+perturb request field RequestID
+model name changes
+unprefix changes
+unprefix always
+unprefix never
+far reset
+broken array body
+no last frame
+wrong generation epoch
+kind messages on route 2
+method GET on route 2
+kind messages on route 3
+method GET on route 3
+kind messages on route 4
+kind messages on route 5
+method GET on route 6
+method GET on route 7
+method GET on route 8
+kind messages on route 11
+method GET on route 11
+kind messages on route 12
+method GET on route 12
+kind messages on route 13
+kind messages on route 14
+method GET on route 15
+method GET on route 16
+method GET on route 17
+kind messages on route 20
+method GET on route 20
+kind messages on route 21
+method GET on route 21
+kind messages on route 22
+kind messages on route 23
+method GET on route 24
+method GET on route 25
+method GET on route 26
+kind messages on route 29
+method GET on route 29
+kind messages on route 30
+method GET on route 30
+kind messages on route 31
+kind messages on route 32
+method GET on route 33
+method GET on route 34
+method GET on route 35
+duplicate route 36
+duplicate route 37
+duplicate route 38
+duplicate route 39
+method GET on route 42
+method GET on route 43
+method GET on route 44
+method GET on route 45
+perturb request leaf 6
+perturb request leaf 7
+perturb request leaf 9
+perturb request leaf 17
+perturb request leaf 24
+perturb request leaf 30
+perturb request leaf 33
+perturb request leaf 41
+perturb request leaf 51
+perturb request leaf 52
+perturb request leaf 53
+perturb request leaf 54
+perturb request leaf 55
+perturb request leaf 56
+perturb request leaf 58

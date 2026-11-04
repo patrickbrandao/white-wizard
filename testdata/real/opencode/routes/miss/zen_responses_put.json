@@ -1,0 +1,19 @@
+{
+  "provider": "opencode",
+  "name": "zen_responses_put",
+  "recorded_at": "2026-10-31",
+  "note": "",
+  "request": {
+    "method": "PUT",
+    "path": "/zen/v1/responses",
+    "headers": {
+      "authorization": "Bearer <key>"
+    },
+    "body": null
+  },
+  "response": {
+    "status": 404,
+    "headers": {},
+    "body": ""
+  }
+}

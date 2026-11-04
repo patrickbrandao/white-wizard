@@ -1,0 +1,18 @@
+HTTP 404
+Content-Length: 290
+Content-Type: application/json; charset=UTF-8
+Date: Sat, 31 Oct 2026 15:09:05 GMT
+Server: scaffolding on HTTPServer2
+Server-Timing: gfet4t7; dur=0
+Vary: Origin, X-Origin, Referer
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+X-Xss-Protection: 0
+
+{
+  "error": {
+    "code": 404,
+    "message": "models/wwz-drift-modelo-inexistente is not found for API version v1beta, or is not supported for generateContent. Call ModelService.ListModels to see the list of available models and their supported methods.",
+    "status": "NOT_FOUND"
+  }
+}
